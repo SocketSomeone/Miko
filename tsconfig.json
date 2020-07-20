@@ -1,0 +1,20 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"target": "es2017",
+		"lib": ["es2017", "es2018", "esnext"],
+		"outDir": "bin",
+		"rootDir": "./src",
+		"noImplicitAny": true,
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"emitDecoratorMetadata": true,
+		"esModuleInterop": true,
+		"sourceMap": true,
+		"removeComments": false,
+		"experimentalDecorators": true,
+		"typeRoots": [],
+		"types": ["node"]
+	},
+	"exclude": ["node_modules", "bin"]
+}

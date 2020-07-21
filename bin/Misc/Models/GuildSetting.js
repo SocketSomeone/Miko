@@ -1,5 +1,6 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
+exports.Defaults = exports.Lang = void 0;
 var Lang;
 (function (Lang) {
 	Lang['ru'] = 'ru';

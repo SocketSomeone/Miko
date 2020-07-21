@@ -1,5 +1,6 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
+exports.GuildPermission = void 0;
 var GuildPermission;
 (function (GuildPermission) {
 	GuildPermission['ADMINISTRATOR'] = 'administrator';

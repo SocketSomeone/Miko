@@ -1,5 +1,6 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
+exports.Command = void 0;
 const Resolver_1 = require('../Resolvers/Resolver');
 class Command {
 	constructor(client, props) {

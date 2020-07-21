@@ -1,5 +1,6 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
+exports.standartCommands = exports.CommandGroup = void 0;
 var CommandGroup;
 (function (CommandGroup) {})((CommandGroup = exports.CommandGroup || (exports.CommandGroup = {})));
 var standartCommands;

@@ -10,7 +10,6 @@ const Client_1 = require('./Client');
 const typeorm_1 = require('typeorm');
 const rawParams = process.argv.slice(2);
 const args = rawParams.filter((a) => !a.startsWith('--'));
-const flags = rawParams.filter((f) => f.startsWith('--'));
 process.on('unhandledRejection', (reason, p) => {
 	console.error('Unhandled Rejection at: Promise', p, 'reason:', reason);
 });

@@ -5,6 +5,7 @@ var __importDefault =
 		return mod && mod.__esModule ? mod : { default: mod };
 	};
 Object.defineProperty(exports, '__esModule', { value: true });
+exports.BaseClient = void 0;
 require('reflect-metadata');
 const moment_1 = __importDefault(require('moment'));
 const eris_1 = require('eris');

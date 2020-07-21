@@ -1,5 +1,6 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
+exports.BooleanResolver = void 0;
 const Resolver_1 = require('./Resolver');
 const ts = new Set(['true', 'on', 'y', 'yes', 'enable', 'вкл', 'включить']);
 const fs = new Set(['false', 'off', 'n', 'no', 'disable', 'выкл', 'выключить']);

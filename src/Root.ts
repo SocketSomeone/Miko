@@ -1,12 +1,11 @@
 import chalk from 'chalk';
 
 import { BaseClient } from './Client';
-import { createConnection, ConnectionOptions } from 'typeorm';
+import { createConnection } from 'typeorm';
 
 const rawParams = process.argv.slice(2);
 
 const args = rawParams.filter((a) => !a.startsWith('--'));
-const flags = rawParams.filter((f) => f.startsWith('--'));
 
 process.on('unhandledRejection', (reason: any, p: any) => {
 	console.error('Unhandled Rejection at: Promise', p, 'reason:', reason);

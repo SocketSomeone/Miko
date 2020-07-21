@@ -12,7 +12,7 @@ child.on('error', (error) => console.log(error));
 child.on('close', () => {
 	console.log('STARTING AND WAITING FOR DEBUGGER');
 
-	child = spawn('node', [`--inspect-brk=19229`, './bin/root.js', dev.TOKEN], {
+	child = spawn('node', [`--inspect=19229`, './bin/root.js', dev.TOKEN], {
 		stdio: 'inherit'
 	});
 

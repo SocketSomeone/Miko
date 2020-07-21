@@ -1,5 +1,6 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
+exports.PermissionsExecute = exports.PermissionsFrom = void 0;
 var PermissionsFrom;
 (function (PermissionsFrom) {
 	PermissionsFrom[(PermissionsFrom['User'] = 0)] = 'User';

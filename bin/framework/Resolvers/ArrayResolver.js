@@ -1,5 +1,6 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
+exports.ArrayResolver = void 0;
 const Resolver_1 = require('./Resolver');
 class ArrayResolver extends Resolver_1.Resolver {
 	constructor(client, resolver) {

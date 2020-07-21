@@ -5,6 +5,7 @@ var __importDefault =
 		return mod && mod.__esModule ? mod : { default: mod };
 	};
 Object.defineProperty(exports, '__esModule', { value: true });
+exports.BaseCache = void 0;
 const moment_1 = __importDefault(require('moment'));
 class BaseCache {
 	constructor(client) {

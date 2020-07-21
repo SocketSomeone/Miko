@@ -1,5 +1,6 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
+exports.MigrateEnitity1595273418244 = void 0;
 class MigrateEnitity1595273418244 {
 	constructor() {
 		this.name = 'MigrateEnitity1595273418244';

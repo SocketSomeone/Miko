@@ -1,5 +1,6 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
+exports.GuildSettingsCache = void 0;
 const Cache_1 = require('./Cache');
 const GuildSetting_1 = require('../../Misc/Models/GuildSetting');
 const Guild_1 = require('../../Entity/Guild');

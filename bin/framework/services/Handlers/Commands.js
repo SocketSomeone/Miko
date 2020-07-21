@@ -5,6 +5,7 @@ var __importDefault =
 		return mod && mod.__esModule ? mod : { default: mod };
 	};
 Object.defineProperty(exports, '__esModule', { value: true });
+exports.CommandService = void 0;
 const Service_1 = require('../Service');
 const path_1 = require('path');
 const Precondition_1 = require('../../../Misc/Classes/Precondition');

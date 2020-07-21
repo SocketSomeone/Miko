@@ -1,5 +1,6 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
+exports.PermissionsCache = void 0;
 const Cache_1 = require('./Cache');
 const Guild_1 = require('../../Entity/Guild');
 class PermissionsCache extends Cache_1.BaseCache {

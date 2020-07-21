@@ -1,5 +1,6 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
+exports.Precondition = void 0;
 const Permisson_1 = require('../Models/Permisson');
 class Precondition {
 	static checkPermissions(context, permissions) {

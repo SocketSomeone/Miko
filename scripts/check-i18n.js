@@ -1,3 +1,5 @@
+console.clear();
+
 const { readFileSync, readdirSync, statSync } = require('fs');
 const { resolve, relative } = require('path');
 const chalk = require('chalk');
@@ -8,8 +10,6 @@ const REGEX = /(?:\W(?:t)\(|phrase:)\s*['`"](.+?)['`"]/gi;
 
 const found = [];
 const variablePrefixes = [];
-
-let hasError = false;
 
 function readDir(dir) {
 	const fileNames = readdirSync(dir);
@@ -84,7 +84,6 @@ for (const [file, matches] of found) {
 		const ruOk = checkLang(ru, match);
 		if (!ruOk) {
 			console.error(chalk.red(`✗ ${chalk.blue(match)} (RU) из файла ${chalk.blue(file)}`));
-			hasError = true;
 		}
 	}
 

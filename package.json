@@ -39,8 +39,8 @@
 	"dependencies": {
 		"@sentry/cli": "1.55.0",
 		"@sentry/node": "5.20.0",
-		"@types/amqplib": "^0.5.13",
-		"amqplib": "^0.6.0",
+		"@types/amqplib": "0.5.13",
+		"amqplib": "0.6.0",
 		"chalk": "4.1.0",
 		"dotenv": "8.2.0",
 		"eris": "0.13.3",

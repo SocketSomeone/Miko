@@ -1,1 +1,0 @@
-{"version":3,"file":"GuildSetting.js","sourceRoot":"","sources":["../../../src/Misc/Models/GuildSetting.ts"],"names":[],"mappings":";;;AAOA,IAAY,IAEX;AAFD,WAAY,IAAI;IACf,iBAAS,CAAA;AACV,CAAC,EAFW,IAAI,GAAJ,YAAI,KAAJ,YAAI,QAEf;AAEY,QAAA,QAAQ,GAAkB;IACtC,MAAM,EAAE,GAAG;IACX,MAAM,EAAE,IAAI,CAAC,EAAE;IACf,cAAc,EAAE,EAAE;IAClB,OAAO,EAAE,IAAI;CACb,CAAC"}

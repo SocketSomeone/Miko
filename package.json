@@ -36,7 +36,7 @@
 		"typescript": "3.9.5"
 	},
 	"dependencies": {
-		"@sentry/cli": "^1.55.0",
+		"@sentry/cli": "1.55.0",
 		"chalk": "4.1.0",
 		"dotenv": "8.2.0",
 		"eris": "0.13.3",

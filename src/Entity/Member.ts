@@ -1,4 +1,4 @@
-import { Entity, BaseEntity, ManyToOne, PrimaryColumn, JoinColumn } from 'typeorm';
+import { Entity, BaseEntity, ManyToOne, PrimaryColumn, JoinColumn, Column } from 'typeorm';
 import { Guild } from './Guild';
 
 @Entity()

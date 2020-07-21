@@ -1,5 +1,3 @@
-console.clear();
-
 const { readFileSync, readdirSync, statSync } = require('fs');
 const { resolve, relative } = require('path');
 const chalk = require('chalk');
@@ -67,7 +65,7 @@ function checkLang(lang, key) {
 	}
 	return true;
 }
-console.clear();
+
 console.log(chalk.blue('\nПроверка того, что все используемые ключи переведены ...\n'));
 
 readDir(resolve(__dirname, '../src'));

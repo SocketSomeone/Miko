@@ -1,5 +1,3 @@
-console.clear();
-
 const fs = require('fs');
 
 let packageJson = JSON.parse(fs.readFileSync('./package.json'));

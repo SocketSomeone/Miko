@@ -3,8 +3,12 @@ const { dev } = require('../config.json');
 
 console.log('STARTING AND WAITING FOR DEBUGGER');
 
-child = spawn('node', [`--inspect=19229`, './bin/root.js', 'dev', dev.TOKEN, 1, 1], {
+let child = spawn('node', [`--inspect=19229`, './bin/root.js', 'dev', dev.TOKEN, 1, 1, '--no-rabbitmq'], {
 	stdio: 'inherit'
 });
 
 child.on('error', (error) => console.log(error));
+
+process.on('beforeExit', () => {
+	child.kill();
+});

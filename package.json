@@ -11,7 +11,8 @@
 		"migrate": "yarn typeorm migration:generate -n MigrateEnitity && yarn typeorm migration:run",
 		"format": "prettier --write \"src/**/*.ts\"",
 		"nxv": "node ./scripts/npm-exact-versions.js",
-		"i18n": "node scripts/check-i18n.js"
+		"i18n": "node scripts/check-i18n.js",
+		"kill-port": "npx kill-port 19229"
 	},
 	"husky": {
 		"hooks": {

@@ -1,14 +1,15 @@
 {
 	"name": "miko",
-	"version": "0.0.1",
+	"version": "0.0.3",
 	"description": "",
 	"main": "./bin/root.js",
 	"scripts": {
 		"build": "tsc",
 		"start": "node scripts/dev-run.js",
-		"release": "npm run build && npm run format && standard-version",
+		"release": "yarn build && yarn format && standard-version",
 		"typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
 		"migrate": "yarn typeorm migration:generate -n MigrateEnitity && yarn typeorm migration:run",
+		"format": "prettier --write \"src/**/*.ts\"",
 		"nxv": "node ./scripts/npm-exact-versions.js",
 		"i18n": "node scripts/check-i18n.js"
 	},

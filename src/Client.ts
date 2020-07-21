@@ -12,6 +12,7 @@ import { PrefixManger } from './Framework/Services/Manager/prefix';
 import { CommandService } from './Framework/Services/Handlers/Commands';
 import { PermissionsCache } from './Framework/Cache/PermissionsCache';
 import { RabbitMqService } from './Framework/Services/Manager/rabbitmq';
+import { captureException } from '@sentry/node';
 
 i18n.configure({
 	locales: ['ru', 'en'],

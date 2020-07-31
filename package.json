@@ -1,6 +1,6 @@
 {
 	"name": "miko",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"description": "",
 	"private": true,
 	"main": "./bin/root.js",
@@ -41,7 +41,7 @@
 	"dependencies": {
 		"@sentry/cli": "1.55.0",
 		"@sentry/node": "5.20.0",
-		"@types/chance": "^1.1.0",
+		"@types/chance": "1.1.0",
 		"amqplib": "0.6.0",
 		"bignumber.js": "9.0.0",
 		"chalk": "4.1.0",

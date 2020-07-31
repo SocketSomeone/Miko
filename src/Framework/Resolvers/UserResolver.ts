@@ -1,7 +1,6 @@
 import { Context } from '../commands/Command';
 
 import { Resolver } from './Resolver';
-import { Member } from '../../Entity/Member';
 
 const idRegex = /^(?:<@!?)?(\d+)>?$/;
 
@@ -14,7 +13,7 @@ interface BasicUser {
 }
 
 export class UserResolver extends Resolver {
-	public async resolve(value: string, { guild, t }: Context): Promise<BasicUser> {
+	public async resolve(value: string, { guild, funcs: { t } }: Context): Promise<BasicUser> {
 		if (!value) {
 			return;
 		}

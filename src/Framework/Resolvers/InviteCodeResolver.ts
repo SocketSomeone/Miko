@@ -7,7 +7,7 @@ import { Resolver } from './Resolver';
 const codeRegex = /^(?:(?:https?:\/\/)?discord.gg\/)?(.*)$/;
 
 export class InviteCodeResolver extends Resolver {
-	public async resolve(value: string, { t }: Context): Promise<RESTInvite> {
+	public async resolve(value: string, { funcs: { t } }: Context): Promise<RESTInvite> {
 		if (!value) {
 			return;
 		}

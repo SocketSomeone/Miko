@@ -6,7 +6,7 @@ const ts = new Set(['true', 'on', 'y', 'yes', 'enable', 'вкл', 'включи�
 const fs = new Set(['false', 'off', 'n', 'no', 'disable', 'выкл', 'выключить']);
 
 export class BooleanResolver extends Resolver {
-	public async resolve(value: string, { t }: Context): Promise<boolean> {
+	public async resolve(value: string, { funcs: { t } }: Context): Promise<boolean> {
 		if (typeof value === typeof undefined) {
 			return;
 		}

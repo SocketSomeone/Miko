@@ -1,9 +1,9 @@
 import { BaseClient } from '../../Client';
-import { Guild, Member, Message } from 'eris';
+import { Guild, Member, Message, EmbedOptions, Embed, TextableChannel, User } from 'eris';
 import { GuildPermission } from '../../Misc/Enums/GuildPermissions';
-import { CommandGroup } from '../../Misc/Enums/Commands';
 import { Resolver, ResolverConstructor } from '../Resolvers/Resolver';
-import { GuildSettings } from '../../Misc/Models/GuildSetting';
+import { GuildSettings, GuildEmojis } from '../../Misc/Models/GuildSetting';
+import { CommandGroup } from '../../Misc/Models/CommandGroup';
 
 interface Arg {
 	name: string;
@@ -12,22 +12,27 @@ interface Arg {
 	rest?: boolean;
 }
 
+export type TranslateFunc = (key: string, replacements?: { [key: string]: any }) => string;
+export type EmojiResolve = (emoji: string) => string;
+
 export type Context = {
 	guild: Guild;
 	me: Member;
-	t: (key: string, replacements?: { [key: string]: any }) => string;
+	funcs: {
+		t: TranslateFunc;
+		e: EmojiResolve;
+	};
 	settings: GuildSettings;
 	isPremium: boolean;
 };
 
 interface CommandOptions {
-	name: string /* TODO: enum */;
+	name: string;
 	aliases: string[];
 	args?: Arg[];
 	group: CommandGroup;
 
 	guildOnly: boolean;
-	adminOnly?: boolean;
 	premiumOnly?: boolean;
 
 	botPermissions?: GuildPermission[];
@@ -44,11 +49,26 @@ export abstract class Command {
 	public group: CommandGroup;
 	public usage: string;
 
-	public strict: boolean;
 	public guildOnly: boolean;
 	public botPermissions?: GuildPermission[];
 	public userPermissions?: GuildPermission[];
 	public premiumOnly?: boolean;
+
+	protected createEmbed: (options?: EmbedOptions) => Embed;
+	protected replyAsync: (message: Message, t: TranslateFunc, reply: EmbedOptions | string) => Promise<Message>;
+	protected sendAsync: (
+		target: TextableChannel,
+		t: TranslateFunc,
+		embed: EmbedOptions | string,
+		fallbackUser?: User
+	) => Promise<Message>;
+	protected showPaginated: (
+		t: TranslateFunc,
+		prevMsg: Message,
+		page: number,
+		maxPage: number,
+		render: (page: number, maxPage: number) => Embed
+	) => Promise<void>;
 
 	public constructor(client: BaseClient, props: CommandOptions) {
 		this.client = client;
@@ -57,14 +77,13 @@ export abstract class Command {
 		this.aliases = props.aliases.map((x) => x.toLowerCase());
 		this.args = (props && props.args) || [];
 		this.group = props.group;
-		this.usage = `{prefix}${this.name}`;
+		this.usage = `{prefix}${this.name} ${this.args.map((x) => (x.required ? `<${x.name}>` : `[${x.name}]`)).join(' ')}`;
 
 		this.botPermissions = (props && props.botPermissions) || [];
 		this.userPermissions = (props && props.userPermissions) || [];
 
 		this.guildOnly = props.guildOnly;
 		this.premiumOnly = props.premiumOnly;
-		this.strict = (props && props.adminOnly) || false;
 
 		this.resolvers = [];
 
@@ -79,6 +98,11 @@ export abstract class Command {
 
 			this.usage += arg.required ? `[${arg.name}] ` : `${arg.name} `;
 		});
+
+		this.createEmbed = client.messages.createEmbed.bind(client.messages);
+		this.replyAsync = client.messages.sendReply.bind(client.messages);
+		this.sendAsync = client.messages.sendEmbed.bind(client.messages);
+		this.showPaginated = client.messages.showPaginated.bind(client.messages);
 	}
 
 	public abstract execute(message: Message, args: any[], context: Context): any;

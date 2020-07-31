@@ -13,7 +13,7 @@ export class EnumResolver extends Resolver {
 		values.forEach((v) => this.values.set(v.toLowerCase(), v));
 	}
 
-	public async resolve(value: string, { t }: Context): Promise<string> {
+	public async resolve(value: string, { funcs: { t } }: Context): Promise<string> {
 		if (!value) {
 			return;
 		}
@@ -25,7 +25,7 @@ export class EnumResolver extends Resolver {
 		throw Error(t(`resolvers.enum.invalid`));
 	}
 
-	public getHelp({ t }: Context) {
+	public getHelp({ funcs: { t } }: Context) {
 		return t(`resolvers.enum.validValues`, {
 			values: [...this.values.values()]
 				.sort((a, b) => a.localeCompare(b))

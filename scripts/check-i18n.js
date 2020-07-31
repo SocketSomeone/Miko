@@ -102,6 +102,7 @@ for (const [lang, key] of keys) {
 		}
 
 		console.error(chalk.red(`✗ ${chalk.blue(key)} (${lang}) нигде не используется`));
+		continue;
 	}
 
 	console.log(chalk.green(`✓ ${key}`));

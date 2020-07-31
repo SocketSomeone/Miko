@@ -3,7 +3,7 @@ import { Command, Context } from '../commands/Command';
 import { Resolver } from './Resolver';
 
 export class CommandResolver extends Resolver {
-	public async resolve(value: string, { guild, t }: Context): Promise<Command> {
+	public async resolve(value: string, { guild, funcs: { t } }: Context): Promise<Command> {
 		if (!guild || !value) {
 			return;
 		}
@@ -33,7 +33,7 @@ export class CommandResolver extends Resolver {
 		}
 	}
 
-	public getHelp({ t }: Context) {
+	public getHelp({ funcs: { t } }: Context) {
 		return t(`resolvers.command.validValues`, {
 			values: this.client.commands.commands.map((c) => '`' + c.name + '`').join(', ')
 		});

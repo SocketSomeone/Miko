@@ -230,7 +230,7 @@ export class RabbitMqService extends BaseService {
 				: !!this.startTicket
 				? 'starting'
 				: 'running',
-			startedAt: this.client.startedAt?.toISOString(),
+			startedAt: this.client.startedAt.toISOString(),
 			gateway: this.client.gatewayConnected,
 			guilds: this.client.guilds.size,
 			error: err ? err.message : null,
@@ -367,9 +367,9 @@ export class RabbitMqService extends BaseService {
 			users: this.client.users.size,
 			channels: channelCount,
 			roles: roleCount,
-			settings: this.client.cache.guilds.getSize(),
+			settings: this.client.cache.guilds.size,
 			//premium: this.client.cache.premium.getSize(),
-			permissions: this.client.cache.permissions.getSize()
+			permissions: this.client.cache.permissions.size
 		};
 	}
 

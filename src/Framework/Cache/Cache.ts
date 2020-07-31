@@ -6,14 +6,14 @@ interface CacheMeta {
 	validUntil: Moment;
 }
 
-export abstract class BaseCache<CachedObject> {
+export abstract class BaseCache<T> {
 	protected client: BaseClient;
 
 	protected maxCacheDuration: Duration = moment.duration(6, 'h');
-	protected cache: Map<string, CachedObject> = new Map();
+	protected cache: Map<string, T> = new Map();
 	protected cacheMeta: Map<string, CacheMeta> = new Map();
 
-	private pending: Map<string, Promise<CachedObject>> = new Map();
+	private pending: Map<string, Promise<T>> = new Map();
 
 	public constructor(client: BaseClient) {
 		this.client = client;
@@ -21,7 +21,7 @@ export abstract class BaseCache<CachedObject> {
 
 	public abstract async init(): Promise<void>;
 
-	public async get(key: string): Promise<CachedObject> {
+	public async get(key: string): Promise<T> {
 		const cached = this.cache.get(key);
 		if (typeof cached !== 'undefined') {
 			const meta = this.cacheMeta.get(key);
@@ -54,9 +54,9 @@ export abstract class BaseCache<CachedObject> {
 		return this.cacheMeta.get(key);
 	}
 
-	protected abstract async _get(key: string): Promise<CachedObject>;
+	protected abstract async _get(key: string): Promise<T>;
 
-	public async set(key: string, value: CachedObject): Promise<CachedObject> {
+	public async set(key: string, value: T): Promise<T> {
 		this.cache.set(key, value);
 		this.cacheMeta.set(key, {
 			cachedAt: moment(),
@@ -64,6 +64,23 @@ export abstract class BaseCache<CachedObject> {
 		});
 
 		return value;
+	}
+
+	public merge(target: any, merge: any) {
+		for (var p in merge) {
+			try {
+				if (merge[p].constructor === Object) {
+					target[p] = this.merge(target[p], merge[p]);
+					continue;
+				}
+
+				target[p] = merge[p];
+			} catch (e) {
+				target[p] = merge[p];
+			}
+		}
+
+		return target;
 	}
 
 	public has(key: string) {
@@ -81,7 +98,21 @@ export abstract class BaseCache<CachedObject> {
 		this.cacheMeta = new Map();
 	}
 
-	public getSize() {
+	public partition(fn: (value: T) => boolean): [Map<string, T>, Map<string, T>] {
+		const results: [Map<string, T>, Map<string, T>] = [new Map(), new Map()];
+
+		for (const [key, val] of this.cache) {
+			if (fn(val)) {
+				results[0].set(key, val);
+			} else {
+				results[1].set(key, val);
+			}
+		}
+
+		return results;
+	}
+
+	get size() {
 		return this.cache.size;
 	}
 }

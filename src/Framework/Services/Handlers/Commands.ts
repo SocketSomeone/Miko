@@ -8,6 +8,12 @@ import { GuildPermission } from '../../../Misc/Enums/GuildPermissions';
 
 import glob from 'glob';
 import moment from 'moment';
+import i18n from 'i18n';
+import { Emoji } from '../../../Misc/Utils/EmojiResolver';
+import { withScope, captureException } from '@sentry/node';
+import { ExecuteError } from '../../Errors/ExecuteError';
+import { Color } from '../../../Misc/Enums/Colors';
+import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 
 const RATE_LIMIT = 1;
 const COOLDOWN = 5;
@@ -39,7 +45,7 @@ export class CommandService extends BaseService {
 				this.commands.push(inst);
 
 				if (this.commandMap.has(inst.name.toLowerCase())) {
-					console.error(`Duplicate command name ${inst.name}`);
+					console.error(`Duplicate command name ${inst.name} in ${relative(process.cwd(), file)}`);
 					process.exit(1);
 				}
 
@@ -83,6 +89,8 @@ export class CommandService extends BaseService {
 
 		const t = (key: string, replacements?: { [key: string]: string }) =>
 			i18n.__({ locale: sets.locale, phrase: key }, replacements);
+
+		const e = (emoji: string) => Emoji.resolve(emoji, guild);
 
 		if (sets.ignoreChannels && sets.ignoreChannels.length) {
 			if (sets.ignoreChannels.includes(channel.id)) {
@@ -136,7 +144,11 @@ export class CommandService extends BaseService {
 					lastCall.warned = true;
 					lastCall.last = now + COOLDOWN;
 
-					// TODO: Message when rate limited
+					await this.client.messages.sendReply(message, t, {
+						color: ColorResolve(Color.RED),
+						title: t('error.ratelimit.title'),
+						description: t('error.ratelimit.desc')
+					});
 				}
 
 				return;
@@ -154,7 +166,10 @@ export class CommandService extends BaseService {
 		let context: Context = {
 			guild,
 			me,
-			t,
+			funcs: {
+				t,
+				e
+			},
 			settings: sets,
 			isPremium
 		};
@@ -197,7 +212,7 @@ export class CommandService extends BaseService {
 						(p) => !(channel as GuildChannel).permissionsOf(member.id).has(p)
 					);
 
-					if (missingPerms.length >= 0) {
+					if (missingPerms.length > 0) {
 						if (sets.verbose) {
 						}
 
@@ -218,7 +233,7 @@ export class CommandService extends BaseService {
 				(p) => !(channel as GuildChannel).permissionsOf(this.client.user.id).has(p)
 			);
 
-			if (missingPerms.length >= 0) {
+			if (missingPerms.length > 0) {
 				// TODO: Missed Permissions message;
 
 				return;
@@ -278,7 +293,7 @@ export class CommandService extends BaseService {
 
 			try {
 				const val = await resolver.resolve(rawVal, context, args);
-
+				cmd;
 				if (typeof val === typeof undefined && arg.required) {
 					// TODO: missingRequired arg cmd.usage.replace('{prefix}, sets.prefix');
 
@@ -287,7 +302,11 @@ export class CommandService extends BaseService {
 
 				args.push(val);
 			} catch (err) {
-				// TODO: Invalid resolver message;
+				await this.client.messages.sendReply(message, t, {
+					color: ColorResolve(Color.RED),
+					title: t('error.arguments.title'),
+					description: err.message
+				});
 
 				return;
 			}
@@ -300,9 +319,20 @@ export class CommandService extends BaseService {
 		let error: any = null;
 
 		try {
+			moment.locale(sets.locale);
 			await cmd.execute(message, args, context);
 		} catch (err) {
-			error = err;
+			if (err instanceof ExecuteError) {
+				const embed = this.client.messages.createEmbed({
+					title: t('error.execCommand.title'),
+					color: ColorResolve(Color.ORANGE),
+					...err.embed
+				});
+
+				await this.client.messages.sendReply(message, t, embed);
+			} else {
+				error = err;
+			}
 		}
 
 		const execTime = moment().unix() - start.unix();
@@ -312,7 +342,28 @@ export class CommandService extends BaseService {
 
 			console.error(error);
 
-			// TODO: Message with Error;
+			withScope((scope) => {
+				if (guild) {
+					scope.setUser({ id: guild.id });
+				}
+
+				scope.setTag('command', cmd.name);
+				scope.setExtra('channel', channel.id);
+				scope.setExtra('message', message.content);
+
+				captureException(error);
+			});
+
+			await this.client.messages.sendReply(message, t, {
+				title: t('error.execCommand.title'),
+				description: t('error.execCommand.desc', {
+					error: error.message
+				}),
+				color: ColorResolve(Color.RED),
+				footer: {
+					text: t('error.execCommand.footer')
+				}
+			});
 		}
 	}
 }

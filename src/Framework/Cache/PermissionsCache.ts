@@ -1,6 +1,6 @@
 import { BaseCache } from './Cache';
 import { GuildSettings, Defaults } from '../../Misc/Models/GuildSetting';
-import { Guild } from '../../Entity/Guild';
+import { BaseGuild } from '../../Entity/Guild';
 import { Permission } from '../../Misc/Models/Permisson';
 
 export class PermissionsCache extends BaseCache<Permission[]> {
@@ -9,7 +9,7 @@ export class PermissionsCache extends BaseCache<Permission[]> {
 	}
 
 	public async _get(guildId: string): Promise<Permission[]> {
-		const { permissions } = await Guild.findOne(guildId);
+		const { permissions } = await BaseGuild.get(guildId, ['permissions']);
 
 		return permissions;
 	}

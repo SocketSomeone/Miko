@@ -17,7 +17,7 @@ export class NumberResolver extends Resolver {
 		this.max = max;
 	}
 
-	public async resolve(value: string, { t }: Context): Promise<number> {
+	public async resolve(value: string, { funcs: { t } }: Context): Promise<number> {
 		if (typeof value === typeof undefined || value.length === 0) {
 			return;
 		}

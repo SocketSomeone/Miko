@@ -1,6 +1,8 @@
 import { BaseCache } from './Cache';
 import { GuildSettings, Defaults } from '../../Misc/Models/GuildSetting';
-import { Guild } from '../../Entity/Guild';
+import { BaseGuild } from '../../Entity/Guild';
+import { createQueryBuilder } from 'typeorm';
+import { Guild } from 'eris';
 
 export class GuildSettingsCache extends BaseCache<GuildSettings> {
 	public async init() {
@@ -8,8 +10,16 @@ export class GuildSettingsCache extends BaseCache<GuildSettings> {
 	}
 
 	public async _get(guildId: string): Promise<GuildSettings> {
-		const { sets } = await Guild.findOne(guildId);
+		const { sets } = await BaseGuild.get(guildId, ['sets']);
 
-		return { ...Defaults, ...sets };
+		return this.merge(Defaults, sets);
+	}
+
+	public async updateOne(guild: Guild) {
+		const sets = this.cache.get(guild.id);
+
+		await BaseGuild.update(guild.id, { sets });
+
+		return sets;
 	}
 }

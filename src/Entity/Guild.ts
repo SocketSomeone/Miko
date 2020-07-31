@@ -1,16 +1,16 @@
 import { Entity, BaseEntity, OneToMany, PrimaryColumn, JoinColumn, Column, CreateDateColumn } from 'typeorm';
-import { Member } from './Member';
 import { GuildSettings, Defaults as SettingsDefaults } from '../Misc/Models/GuildSetting';
 import { Permission } from '../Misc/Models/Permisson';
+import { BaseMember } from './Member';
 
 @Entity()
-export class Guild extends BaseEntity {
+export class BaseGuild extends BaseEntity {
 	@PrimaryColumn()
 	public id: string;
 
-	@OneToMany((type) => Member, (user) => user.guild)
+	@OneToMany((type) => BaseMember, (user) => user.guild)
 	@JoinColumn()
-	public members: Member[];
+	public members: BaseMember[];
 
 	@Column({ type: 'json', default: SettingsDefaults })
 	public sets: GuildSettings;
@@ -18,9 +18,23 @@ export class Guild extends BaseEntity {
 	@Column({ type: 'json', default: [] })
 	public permissions: Permission[];
 
-	@Column()
-	public membersCount: number;
-
 	@CreateDateColumn()
 	public joinedAt: Date;
+
+	static async get(guildId: string, select?: (keyof BaseGuild)[]) {
+		const hasFounded = await this.findOne({
+			select,
+			where: {
+				id: guildId
+			}
+		});
+
+		if (hasFounded) return hasFounded;
+
+		const guild = await this.create({
+			id: guildId
+		});
+
+		return guild;
+	}
 }

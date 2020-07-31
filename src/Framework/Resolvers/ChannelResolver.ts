@@ -7,7 +7,7 @@ import { Resolver } from './Resolver';
 const channelRegex = /^(?:<#)?(\d+)>?$/;
 
 export class ChannelResolver extends Resolver {
-	public async resolve(value: string, { guild, t }: Context): Promise<Channel> {
+	public async resolve(value: string, { guild, funcs: { t } }: Context): Promise<Channel> {
 		if (!guild || !value) {
 			return;
 		}

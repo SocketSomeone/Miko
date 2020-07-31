@@ -1,23 +1,29 @@
 import 'reflect-metadata';
+import 'moment-timezone';
 
 import i18n from 'i18n';
 import chalk from 'chalk';
 
 import moment, { Moment } from 'moment';
-import { Client, Guild } from 'eris';
+
+import { Client } from 'eris';
 import { BaseService } from './Framework/Services/Service';
-import { BaseCache } from './Framework/Cache/Cache';
-import { GuildSettingsCache } from './Framework/Cache/GuildSettingsCache';
 import { PrefixManger } from './Framework/Services/Manager/prefix';
 import { CommandService } from './Framework/Services/Handlers/Commands';
-import { PermissionsCache } from './Framework/Cache/PermissionsCache';
 import { RabbitMqService } from './Framework/Services/Manager/rabbitmq';
-import { captureException } from '@sentry/node';
+import { MessageService } from './Framework/Services/Manager/message';
+import { BaseCache, GuildSettingsCache, PermissionsCache } from './Framework/Cache';
+import { glob } from 'glob';
+import { resolve } from 'path';
+import { ModerationService } from './Modules/Moderation/Services/Moderation';
+
+moment.tz.setDefault('Europe/Moscow');
 
 i18n.configure({
 	locales: ['ru', 'en'],
 	defaultLocale: 'ru',
 	syncFiles: true,
+	autoReload: true,
 	directory: __dirname + '/../i18n',
 	objectNotation: true,
 	logDebugFn: function (msg: string) {
@@ -45,6 +51,8 @@ export interface BaseClient {
 	prefixManager: PrefixManger;
 	commands: CommandService;
 	rabbitmq: RabbitMqService;
+	messages: MessageService;
+	moderation: ModerationService;
 }
 
 interface ClientOptions {
@@ -57,7 +65,7 @@ interface ClientOptions {
 
 export class BaseClient extends Client {
 	public hasStarted: boolean = false;
-	public startedAt: Moment;
+	public startedAt: Moment = moment();
 
 	public config: any;
 	public flags: string[];
@@ -119,7 +127,9 @@ export class BaseClient extends Client {
 		this.service = {
 			prefixManager: new PrefixManger(this),
 			commands: new CommandService(this),
-			rabbitmq: new RabbitMqService(this)
+			rabbitmq: new RabbitMqService(this),
+			messages: new MessageService(this),
+			moderation: new ModerationService(this)
 		};
 
 		Object.entries(this.service).map(([key, service]) => {
@@ -144,7 +154,9 @@ export class BaseClient extends Client {
 	}
 
 	public async init() {
-		// NO-OP
+		const files = glob.sync('./**/Extensions/**/*.ext.js');
+
+		await Promise.all(files.map((x) => import(resolve(__dirname, `../${x.substr(0, x.length - 3)}`))));
 
 		await Promise.all(Object.values(this.service).map((x) => x.init()));
 	}

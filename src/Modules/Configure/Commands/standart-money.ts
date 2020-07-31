@@ -24,7 +24,7 @@ export default class extends Command {
 			group: CommandGroup.CONFIGURE,
 			guildOnly: true,
 			premiumOnly: false,
-			botPermissions: [GuildPermission.MANAGE_GUILD]
+			userPermissions: [GuildPermission.MANAGE_GUILD]
 		});
 	}
 
@@ -35,7 +35,7 @@ export default class extends Command {
 		}
 
 		await this.replyAsync(message, t, {
-			color: ColorResolve(Color.PRIMARY),
+			color: ColorResolve(Color.MAGENTA),
 			title: t('modules.configure.title', {
 				guild: guild.name
 			}),

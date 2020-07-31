@@ -10,8 +10,8 @@ import {
 } from 'typeorm';
 import { BaseGuild } from './Guild';
 import { Member } from 'eris';
-import { Moment } from 'moment';
-import { DateTransformer, BigNumberTransformer } from './Transformers/';
+import { Moment, Duration, duration } from 'moment';
+import { DateTransformer, BigNumberTransformer, DurationTransformer } from './Transformers/';
 
 import BigNumber from 'bignumber.js';
 
@@ -48,7 +48,10 @@ export class BaseMember extends BaseEntity {
 	@Column({ type: 'varchar', default: {}, array: true })
 	public savedRoles: string[];
 
-	static async get(user: Member) {
+	@Column({ type: 'varchar', transformer: DurationTransformer })
+	public voiceOnline: Duration;
+
+	public static async get(user: Member) {
 		const hasFounded = await this.findOne({
 			where: {
 				guild: {
@@ -62,13 +65,20 @@ export class BaseMember extends BaseEntity {
 
 		const guild = await BaseGuild.get(user.guild.id);
 
+		const member = BaseMember.getDefaultMember(guild, user.id);
+
+		await member.save();
+
+		return member;
+	}
+
+	public static getDefaultMember(guild: BaseGuild, userId: string) {
 		const member = new BaseMember();
 
 		member.guild = guild;
-		member.user = user.id;
+		member.user = userId;
+		member.voiceOnline = duration(0, 'minutes');
 		member.money = new BigNumber(guild.sets.prices.standart);
-
-		await member.save();
 
 		return member;
 	}

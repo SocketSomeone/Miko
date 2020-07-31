@@ -101,7 +101,6 @@ export class BaseClient extends Client {
 			disableEvents: {
 				TYPING_START: true,
 				PRESENCE_UPDATE: true,
-				VOICE_STATE_UPDATE: true,
 				USER_UPDATE: true
 			},
 			restMode: true,
@@ -179,6 +178,8 @@ export class BaseClient extends Client {
 		}
 
 		await Promise.all(Object.values(this.service).map((s) => s.onClientReady()));
+
+		this.emit('onModulesReady');
 
 		this.hasStarted = true;
 		this.startedAt = moment();

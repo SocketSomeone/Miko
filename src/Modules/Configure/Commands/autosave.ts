@@ -17,7 +17,8 @@ export default class extends Command {
 			group: CommandGroup.CONFIGURE,
 			guildOnly: true,
 			premiumOnly: false,
-			botPermissions: [GuildPermission.MANAGE_GUILD]
+			botPermissions: [GuildPermission.MANAGE_ROLES],
+			userPermissions: [GuildPermission.MANAGE_GUILD]
 		});
 
 		this.client.on('guildMemberAdd', this.returnRoles.bind(this));
@@ -57,9 +58,7 @@ export default class extends Command {
 		if (!settings.saveroles) return;
 
 		const person = await BaseMember.get(member);
-
 		person.savedRoles = member.roles;
-
 		await person.save();
 	}
 
@@ -68,7 +67,7 @@ export default class extends Command {
 		await this.client.cache.guilds.updateOne(guild);
 
 		await this.replyAsync(message, t, {
-			color: ColorResolve(Color.PRIMARY),
+			color: ColorResolve(Color.MAGENTA),
 			title: t('modules.configure.title'),
 			description: t(`modules.configure.autosave.${settings.saveroles ? 'enable' : 'disable'}`)
 		});

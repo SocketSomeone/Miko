@@ -6,16 +6,17 @@ import chalk from 'chalk';
 
 import moment, { Moment } from 'moment';
 
-import { Client } from 'eris';
+import { Client, Guild } from 'eris';
 import { BaseService } from './Framework/Services/Service';
-import { PrefixManger } from './Framework/Services/Manager/prefix';
 import { CommandService } from './Framework/Services/Handlers/Commands';
-import { RabbitMqService } from './Framework/Services/Manager/rabbitmq';
-import { MessageService } from './Framework/Services/Manager/message';
+import { RabbitMqService } from './Framework/Services/Manager/RabbitMQ';
+import { MessageService } from './Framework/Services/Manager/Message';
 import { BaseCache, GuildSettingsCache, PermissionsCache } from './Framework/Cache';
 import { glob } from 'glob';
 import { resolve } from 'path';
 import { ModerationService } from './Modules/Moderation/Services/Moderation';
+import { SchedulerService } from './Framework/Services/Manager/Scheduler';
+import { BaseGuild } from './Entity/Guild';
 
 moment.tz.setDefault('Europe/Moscow');
 
@@ -48,11 +49,11 @@ interface BaseCacheObject {
  * Shortcuts
  */
 export interface BaseClient {
-	prefixManager: PrefixManger;
 	commands: CommandService;
 	rabbitmq: RabbitMqService;
 	messages: MessageService;
 	moderation: ModerationService;
+	schduler: SchedulerService;
 }
 
 interface ClientOptions {
@@ -78,6 +79,7 @@ export class BaseClient extends Client {
 
 	public cache: BaseCacheObject;
 	private startingServices: BaseService[];
+	private activityInterval: NodeJS.Timeout;
 
 	public gatewayConnected: boolean;
 	public stats: {
@@ -124,11 +126,11 @@ export class BaseClient extends Client {
 		};
 
 		this.service = {
-			prefixManager: new PrefixManger(this),
 			commands: new CommandService(this),
 			rabbitmq: new RabbitMqService(this),
 			messages: new MessageService(this),
-			moderation: new ModerationService(this)
+			moderation: new ModerationService(this),
+			scheduler: new SchedulerService(this)
 		};
 
 		Object.entries(this.service).map(([key, service]) => {
@@ -146,6 +148,7 @@ export class BaseClient extends Client {
 
 		this.on('ready', this.onClientReady);
 		this.on('connect', this.onConnect);
+		this.on('guildUnavailable', this.onGuildUnavailable);
 		this.on('shardDisconnect', this.onDisconnect);
 		this.on('warn', this.onWarn);
 		this.on('error', this.onError);
@@ -153,7 +156,7 @@ export class BaseClient extends Client {
 	}
 
 	public async init() {
-		const files = glob.sync('./**/Extensions/**/*.ext.js');
+		const files = glob.sync('./bin/Extensions/**/*.ext.js');
 
 		await Promise.all(files.map((x) => import(resolve(__dirname, `../${x.substr(0, x.length - 3)}`))));
 
@@ -187,6 +190,15 @@ export class BaseClient extends Client {
 		console.log(chalk.green(`Client ready! Serving ${chalk.blue(this.guilds.size)} guilds.`));
 
 		await Promise.all(Object.values(this.cache).map((c) => c.init()));
+
+		await BaseGuild.saveGuilds(this.guilds.map((g) => g));
+
+		await this.setActivity();
+		this.activityInterval = setInterval(() => this.setActivity(), 1 * 60 * 1000);
+	}
+
+	private async setActivity() {
+		this.editStatus('online', { name: '💘 Want`s your love >///<', type: 0 });
 	}
 
 	public serviceStartupDone(service: BaseService) {
@@ -212,6 +224,10 @@ export class BaseClient extends Client {
 		if (err) {
 			console.error(err);
 		}
+	}
+
+	private async onGuildUnavailable(guild: Guild) {
+		console.error('DISCORD GUILD_UNAVAILABLE:', guild.id);
 	}
 
 	private async onWarn(warn: string) {

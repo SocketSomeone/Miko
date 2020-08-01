@@ -90,6 +90,22 @@
 				"enable": "modules.configure.autosave.enable",
 				"disable": "modules.configure.autosave.disable"
 			}
+		},
+		"moderation": {
+			"ban": {
+				"title": "modules.moderation.ban.title",
+				"canNotBan": "modules.moderation.ban.canNotBan",
+				"error": "modules.moderation.ban.error",
+				"done": "modules.moderation.ban.done"
+			},
+			"canNotBan": "modules.moderation.canNotBan",
+			"dm": {
+				"ban": {
+					"title": "modules.moderation.dm.ban.title"
+				}
+			},
+			"noreason": "modules.moderation.noreason",
+			"reason": "modules.moderation.reason"
 		}
 	},
 	"error": {
@@ -123,6 +139,11 @@
 		"number": {
 			"tooSmall": "resolvers.number.tooSmall",
 			"invalid": "resolvers.number.invalid"
+		}
+	},
+	"key": {
+		"fields": {
+			"amount": "key.fields.amount"
 		}
 	}
 }

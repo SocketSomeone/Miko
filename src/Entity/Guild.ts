@@ -1,7 +1,19 @@
-import { Entity, BaseEntity, OneToMany, PrimaryColumn, JoinColumn, Column, CreateDateColumn } from 'typeorm';
+import {
+	Entity,
+	BaseEntity,
+	OneToMany,
+	PrimaryColumn,
+	JoinColumn,
+	Column,
+	CreateDateColumn,
+	createQueryBuilder
+} from 'typeorm';
 import { GuildSettings, Defaults as SettingsDefaults } from '../Misc/Models/GuildSetting';
 import { Permission } from '../Misc/Models/Permisson';
 import { BaseMember } from './Member';
+import { BaseScheduledAction } from './ScheduledAction';
+import { Guild } from 'eris';
+import { BasePunishment } from './Punishment';
 
 @Entity()
 export class BaseGuild extends BaseEntity {
@@ -11,6 +23,14 @@ export class BaseGuild extends BaseEntity {
 	@OneToMany((type) => BaseMember, (user) => user.guild)
 	@JoinColumn()
 	public members: BaseMember[];
+
+	@OneToMany((type) => BaseScheduledAction, (a) => a.guild)
+	@JoinColumn()
+	public scheduledActions: BaseScheduledAction[];
+
+	@OneToMany((type) => BasePunishment, (a) => a.guild)
+	@JoinColumn()
+	public punishments: BasePunishment[];
 
 	@Column({ type: 'json', default: SettingsDefaults })
 	public sets: GuildSettings;
@@ -31,10 +51,27 @@ export class BaseGuild extends BaseEntity {
 
 		if (hasFounded) return hasFounded;
 
-		const guild = await this.create({
-			id: guildId
-		});
+		const guild = this.getDefaultGuild(guildId);
+
+		await guild.save();
 
 		return guild;
+	}
+
+	static getDefaultGuild(guildId: string) {
+		const guild = new this();
+
+		guild.id = guildId;
+
+		return guild;
+	}
+
+	static async saveGuilds(guilds: Guild[]) {
+		await createQueryBuilder()
+			.insert()
+			.into(this)
+			.values(guilds.map((i) => this.getDefaultGuild(i.id)))
+			.onConflict(`("id") DO NOTHING`)
+			.execute();
 	}
 }

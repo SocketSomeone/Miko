@@ -1,0 +1,10 @@
+export enum ShardCommand {
+	CACHE = 'CACHE',
+	CUSTOM = 'CUSTOM',
+	FLUSH_CACHE = 'FLUSH_CACHE',
+	SUDO = 'SUDO',
+	OWNER_DM = 'OWNER_DM',
+	USER_DM = 'USER_DM',
+	LEAVE_GUILD = 'LEAVE_GUILD',
+	STATUS = 'STATUS'
+}

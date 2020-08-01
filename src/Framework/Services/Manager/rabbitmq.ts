@@ -4,7 +4,7 @@ import chalk from 'chalk';
 import { Message, TextChannel } from 'eris';
 import moment from 'moment';
 
-import { ShardCommand } from '../../../Types';
+import { ShardCommand } from '../../../Misc/Models/ShardCommands';
 
 import { BaseService } from '../Service';
 
@@ -176,6 +176,7 @@ export class RabbitMqService extends BaseService {
 			);
 		});
 	}
+
 	public async endStartup() {
 		if (!this.channelStartup) {
 			return;

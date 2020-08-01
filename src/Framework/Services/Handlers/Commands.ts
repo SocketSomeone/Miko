@@ -98,7 +98,7 @@ export class CommandService extends BaseService {
 			}
 		}
 
-		content = this.client.prefixManager.hasPrefix(content, sets.prefix);
+		content = this.hasPrefix(content, sets.prefix);
 
 		if (!content) {
 			return;
@@ -365,5 +365,25 @@ export class CommandService extends BaseService {
 				}
 			});
 		}
+	}
+
+	hasPrefix(content: string, prefix?: string) {
+		if (prefix && content.startsWith(prefix)) {
+			return content.substring(prefix.length).trim();
+		}
+
+		const regex = /^(?:<@!?)?(\d+)>? ?(.*)$/;
+
+		if (regex.test(content)) {
+			const matches = content.match(content);
+
+			if (matches[1] !== this.client.user.id) {
+				return null;
+			}
+
+			return matches[2].trim();
+		}
+
+		return null;
 	}
 }

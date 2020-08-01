@@ -6,10 +6,11 @@ import {
 	Column,
 	PrimaryGeneratedColumn,
 	OneToMany,
-	ManyToMany
+	ManyToMany,
+	createQueryBuilder
 } from 'typeorm';
 import { BaseGuild } from './Guild';
-import { Member } from 'eris';
+import { Member, Guild } from 'eris';
 import { Moment, Duration, duration } from 'moment';
 import { DateTransformer, BigNumberTransformer, DurationTransformer } from './Transformers/';
 
@@ -72,7 +73,7 @@ export class BaseMember extends BaseEntity {
 		return member;
 	}
 
-	public static getDefaultMember(guild: BaseGuild, userId: string) {
+	private static getDefaultMember(guild: BaseGuild, userId: string) {
 		const member = new BaseMember();
 
 		member.guild = guild;
@@ -81,5 +82,16 @@ export class BaseMember extends BaseEntity {
 		member.money = new BigNumber(guild.sets.prices.standart);
 
 		return member;
+	}
+
+	public static async saveMembers(g: Guild, users: Member[]) {
+		const guild = await BaseGuild.get(g.id);
+
+		await createQueryBuilder()
+			.insert()
+			.into(this)
+			.values(users.map((i) => this.getDefaultMember(guild, i.id)))
+			.onConflict(`("id") DO NOTHING`)
+			.execute();
 	}
 }

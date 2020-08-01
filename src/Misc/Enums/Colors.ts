@@ -1,9 +1,8 @@
 export enum Color {
 	PRIMARY = '#e19ba3',
-	RED = '#f04848',
-	PEACH = '#ea907a',
-	SUN = '#fee65f',
-	YELLOW = '#d0e9a2',
+	RED = '#e23e57',
+	PEACH = '#ffd3b6',
+	YELLOW = '#fee65f',
 	ORANGE = '#faa61b',
 	MAGENTA = '#d089c0',
 	GREEN = '#44b581',

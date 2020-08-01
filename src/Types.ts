@@ -1,10 +1,7 @@
-export enum ShardCommand {
-	CACHE = 'CACHE',
-	CUSTOM = 'CUSTOM',
-	FLUSH_CACHE = 'FLUSH_CACHE',
-	SUDO = 'SUDO',
-	OWNER_DM = 'OWNER_DM',
-	USER_DM = 'USER_DM',
-	LEAVE_GUILD = 'LEAVE_GUILD',
-	STATUS = 'STATUS'
+export enum ChannelType {
+	GUILD_TEXT = 0,
+	DM = 1,
+	GUILD_VOICE = 2,
+	GROUP_DM = 3,
+	GUILD_CATEGORY = 4
 }

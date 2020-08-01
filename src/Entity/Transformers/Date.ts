@@ -1,8 +1,14 @@
 import { ValueTransformer } from 'typeorm';
 
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 
 export const DateTransformer: ValueTransformer = {
-	from: (date) => (date ? moment(date) : null),
-	to: (date) => (date ? date.toDate() : null)
+	from: (date: Date) => (date ? moment(date) : null),
+	to: (date: Moment) => {
+		if (!date) {
+			return null;
+		}
+
+		return date.toDate();
+	}
 };

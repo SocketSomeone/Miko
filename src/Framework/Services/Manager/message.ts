@@ -1,10 +1,11 @@
 import { BaseService } from '../Service';
-import { EmbedOptions, Embed, TextableChannel, Message, GuildChannel, User, Emoji } from 'eris';
+import { EmbedOptions, Embed, TextableChannel, Message, GuildChannel, User, Emoji, Guild } from 'eris';
 import { withScope, captureException } from '@sentry/node';
 import { GuildPermission } from '../../../Misc/Enums/GuildPermissions';
 import { TranslateFunc } from '../../Commands/Command';
 import { Color } from '../../../Misc/Enums/Colors';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
+import { ChannelType } from '../../../Types';
 
 const upSymbol = 'left:736460400656384090';
 const downSymbol = 'right:736460400089890867';
@@ -270,5 +271,20 @@ export class MessageService extends BaseService {
 
 			timer = setTimeout(timeOut, 15000);
 		}
+	}
+
+	private async getDefaultChannel(guild: Guild) {
+		if (guild.channels.has(guild.id)) {
+			return guild.channels.get(guild.id);
+		}
+
+		const gen = guild.channels.find((c) => c.name === 'general' && c.type === ChannelType.GUILD_TEXT);
+		if (gen) {
+			return gen;
+		}
+
+		return guild.channels
+			.filter((c) => c.type === ChannelType.GUILD_TEXT && c.permissionsOf(this.client.user.id).has('SEND_MESSAGES'))
+			.sort((a, b) => a.position - b.position || a.id.localeCompare(b.id))[0];
 	}
 }

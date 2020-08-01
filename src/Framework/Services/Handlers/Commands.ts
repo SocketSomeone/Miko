@@ -193,7 +193,7 @@ export class CommandService extends BaseService {
 				return;
 			}
 
-			if (!member.permission.has(GuildPermission.ADMINISTRATOR) && guild.ownerID !== member.id) {
+			if (guild.ownerID !== member.id) {
 				const permissions = await this.client.cache.permissions.get(guild.id);
 
 				const { answer, permission } = Precondition.checkPermissions(
@@ -207,7 +207,7 @@ export class CommandService extends BaseService {
 					}
 
 					return;
-				} else if (answer && permission === null) {
+				} else if (answer && permission === null && !member.permission.has(GuildPermission.ADMINISTRATOR)) {
 					const missingPerms = cmd.userPermissions.filter(
 						(p) => !(channel as GuildChannel).permissionsOf(member.id).has(p)
 					);

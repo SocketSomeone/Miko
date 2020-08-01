@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js';
+import { Punishment } from '../../Entity/Punishment';
 
 export interface GuildPrices {
 	timely: BigNumber;
@@ -19,6 +20,12 @@ export interface GuildSettings {
 
 	modlog: string;
 	saveroles: boolean;
+	mutedRole: string;
+
+	autoMod: {
+		enabled: boolean;
+		invites: Punishment;
+	};
 }
 
 export enum Lang {
@@ -37,11 +44,16 @@ export const Defaults: GuildSettings = {
 	verbose: true,
 	saveroles: false,
 	modlog: null,
+	mutedRole: null,
 	prices: {
 		timely: new BigNumber(15),
 		standart: new BigNumber(100)
 	},
 	emojis: {
 		wallet: EmojisDefault.WALLET
+	},
+	autoMod: {
+		enabled: true,
+		invites: Punishment.IGNORE
 	}
 };

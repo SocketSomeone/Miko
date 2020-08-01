@@ -15,8 +15,9 @@ import { settings } from 'cluster';
 export enum Punishment {
 	BAN = 'ban',
 	KICK = 'kick',
-	softban = 'softban',
-	mute = 'mute'
+	SOFTBAN = 'softban',
+	MUTE = 'mute',
+	IGNORE = 'ignore'
 }
 
 interface ContextLog {

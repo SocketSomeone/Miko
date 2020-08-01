@@ -15,6 +15,7 @@ import { Moment, Duration, duration } from 'moment';
 import { DateTransformer, BigNumberTransformer, DurationTransformer } from './Transformers/';
 
 import BigNumber from 'bignumber.js';
+import { Violation } from '../Misc/Models/Violation';
 
 BigNumber.config({
 	FORMAT: {
@@ -51,6 +52,9 @@ export class BaseMember extends BaseEntity {
 
 	@Column({ type: 'varchar', transformer: DurationTransformer })
 	public voiceOnline: Duration;
+
+	@Column({ type: 'json', default: [] })
+	public warns: { type: Violation; createdAt: Date }[];
 
 	public static async get(user: Member) {
 		const hasFounded = await this.findOne({

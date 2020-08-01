@@ -11,7 +11,7 @@ import { BaseService } from './Framework/Services/Service';
 import { CommandService } from './Framework/Services/Handlers/Commands';
 import { RabbitMqService } from './Framework/Services/Manager/RabbitMQ';
 import { MessageService } from './Framework/Services/Manager/Message';
-import { BaseCache, GuildSettingsCache, PermissionsCache } from './Framework/Cache';
+import { BaseCache, GuildSettingsCache, PermissionsCache, PunishmentsCache } from './Framework/Cache';
 import { glob } from 'glob';
 import { resolve } from 'path';
 import { ModerationService } from './Modules/Moderation/Services/Moderation';
@@ -43,6 +43,7 @@ interface BaseCacheObject {
 
 	guilds: GuildSettingsCache;
 	permissions: PermissionsCache;
+	punishments: PunishmentsCache;
 }
 
 /**
@@ -143,7 +144,8 @@ export class BaseClient extends Client {
 
 		this.cache = {
 			guilds: new GuildSettingsCache(this),
-			permissions: new PermissionsCache(this)
+			permissions: new PermissionsCache(this),
+			punishments: new PunishmentsCache(this)
 		};
 
 		this.on('ready', this.onClientReady);

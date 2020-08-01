@@ -14,6 +14,7 @@ import { BaseMember } from './Member';
 import { BaseScheduledAction } from './ScheduledAction';
 import { Guild } from 'eris';
 import { BasePunishment } from './Punishment';
+import { PunishmentConfig } from '../Misc/Models/Violation';
 
 @Entity()
 export class BaseGuild extends BaseEntity {
@@ -37,6 +38,9 @@ export class BaseGuild extends BaseEntity {
 
 	@Column({ type: 'json', default: [] })
 	public permissions: Permission[];
+
+	@Column({ type: 'json', default: [] })
+	public punishmentConfig: PunishmentConfig[];
 
 	@CreateDateColumn()
 	public joinedAt: Date;

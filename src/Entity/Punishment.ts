@@ -63,9 +63,11 @@ export class BasePunishment extends BaseEntity {
 	public createdAt: Date;
 
 	public static async new(ctx: ContextLog) {
-		const guild = await BaseGuild.get(ctx.target.guild.id);
-
-		const punishment = this.create({ ...ctx.opts, guild, member: ctx.target.id });
+		const punishment = this.create({
+			...ctx.opts,
+			guild: BaseGuild.create({ id: ctx.member.guild.id }),
+			member: ctx.target.id
+		});
 
 		await punishment.save();
 
@@ -122,24 +124,25 @@ export class BasePunishment extends BaseEntity {
 		member: Member,
 		type: Punishment,
 		settings: GuildSettings,
-		{ reason, amount }: { reason?: string; amount?: number }
+		extra?: { name: string; value: string }[]
 	) {
 		const dmChannel = await member.user.getDMChannel();
 
 		const t: TranslateFunc = (key, replacements) => i18n.__({ locale: settings.locale, phrase: key }, replacements);
 
 		const fields = [
-			{
-				name: reason ? t(`modules.moderation.reason`) : t(`modules.moderation.amount`),
-				value: reason ? reason : `${amount}`
-			}
-		].filter((x) => !!x.value);
+			...extra
+				.filter((x) => !!x.value)
+				.map((e) => {
+					return { name: t(e.name), value: e.value.substr(0, 1024), inline: true };
+				})
+		];
 
 		return dmChannel
 			.createMessage({
 				embed: {
 					color: ColorResolve(Color.LOGS),
-					title: t(`modules.moderation.dm.${type}`, {
+					title: t(`moderation.dm.${type}`, {
 						guild: member.guild.name
 					}),
 					fields,

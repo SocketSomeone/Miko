@@ -38,7 +38,7 @@ export default class extends Command {
 			title: t('configure.title', {
 				guild: guild.name
 			}),
-			description: t(`modules.configure.prefix.${prefix && prefix.length ? 'new' : 'info'}`, {
+			description: t(`configure.prefix.${prefix && prefix.length ? 'new' : 'info'}`, {
 				prefix: settings.prefix
 			}),
 			footer: {

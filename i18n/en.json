@@ -168,13 +168,24 @@
 			"user": "logs.mod.user",
 			"punish": "logs.mod.punish",
 			"reason": "logs.mod.reason",
-			"moderator": "logs.mod.moderator"
+			"moderator": "logs.mod.moderator",
+			"duration": "logs.mod.duration"
 		}
 	},
 	"moderation": {
 		"purge": {
 			"title": "moderation.purge.title",
 			"text": "moderation.purge.text"
+		},
+		"ban": {
+			"title": "moderation.ban.title",
+			"error": "moderation.ban.error",
+			"done": "moderation.ban.done",
+			"until": "moderation.ban.until"
+		},
+		"reason": "moderation.reason",
+		"dm": {
+			"ban": "moderation.dm.ban"
 		}
 	}
 }

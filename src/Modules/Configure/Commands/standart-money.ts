@@ -39,7 +39,7 @@ export default class extends Command {
 			title: t('configure.title', {
 				guild: guild.name
 			}),
-			description: t(`modules.configure.standart.${money ? 'new' : 'info'}`, {
+			description: t(`configure.standart.${money ? 'new' : 'info'}`, {
 				amount: `${settings.prices.standart.toFormat()} ${e(settings.emojis.wallet)}`
 			}),
 			footer: {

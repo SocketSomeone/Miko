@@ -39,7 +39,7 @@ export default class extends Command {
 				guild: guild.name
 			}),
 			description: settings.modlog
-				? t(`modules.configure.modlog.${channel ? 'new' : 'info'}`, {
+				? t(`configure.modlog.${channel ? 'new' : 'info'}`, {
 						channel: channel.mention
 				  })
 				: t('configure.modlog.notFound'),

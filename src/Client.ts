@@ -54,7 +54,7 @@ export interface BaseClient {
 	rabbitmq: RabbitMqService;
 	messages: MessageService;
 	moderation: ModerationService;
-	schduler: SchedulerService;
+	scheduler: SchedulerService;
 }
 
 interface ClientOptions {

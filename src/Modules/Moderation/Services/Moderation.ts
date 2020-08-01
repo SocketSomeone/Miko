@@ -137,7 +137,9 @@ export class ModerationService extends BaseService {
 				return;
 			}
 
-			await BasePunishment.informUser(member, punishmentConfig.type, settings, { reason: `Automod: ${type}` });
+			await BasePunishment.informUser(member, punishmentConfig.type, settings, [
+				{ name: 'logs.mod.reason', value: 'Automod' }
+			]);
 
 			const punishmentResult = await func(member, punishmentConfig.amount, { guild, settings });
 

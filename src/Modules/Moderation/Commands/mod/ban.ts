@@ -56,7 +56,7 @@ export default class extends Command {
 		);
 
 		if (this.client.moderation.isPunishable(guild, member, message.member, me)) {
-			await BasePunishment.informUser(member, Punishment.BAN, settings, { reason });
+			await BasePunishment.informUser(member, Punishment.BAN, settings, [{ name: 'logs.mod.reason', value: reason }]);
 
 			try {
 				await guild.banMember(member.id, 7, encodeURIComponent(reason));

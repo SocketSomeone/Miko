@@ -4,7 +4,8 @@ import { Moment } from 'moment';
 import { DateTransformer } from './Transformers';
 
 export enum ScheduledAction {
-	unmute = 'unmute'
+	UNMUTE = 'unmute',
+	UNBAN = 'unban'
 }
 
 @Entity()
@@ -23,10 +24,7 @@ export class BaseScheduledAction extends BaseEntity {
 	public type: ScheduledAction;
 
 	@Column({ type: 'json' })
-	public args: any;
-
-	@Column()
-	public reason: string;
+	public args: { [key: string]: any };
 
 	@CreateDateColumn()
 	public createdAt: Date;

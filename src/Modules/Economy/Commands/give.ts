@@ -55,8 +55,8 @@ export default class extends Command {
 		await target.save();
 
 		await this.sendAsync(message.channel, t, {
-			title: t('modules.economy.give.title'),
-			description: t('modules.economy.give.desc', {
+			title: t('economy.give.title'),
+			description: t('economy.give.desc', {
 				member: message.member.mention,
 				target: user.mention,
 				amount: `${money} ${e(settings.emojis.wallet)}`

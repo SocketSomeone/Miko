@@ -14,109 +14,109 @@
 		"economy": {
 			"bal": {
 				"success": {
-					"title": "modules.economy.bal.success.title",
-					"desc": "modules.economy.bal.success.desc"
+					"title": "economy.bal.success.title",
+					"desc": "economy.bal.success.desc"
 				},
-				"title": "modules.economy.bal.title",
-				"desc": "modules.economy.bal.desc"
+				"title": "economy.bal.title",
+				"desc": "economy.bal.desc"
 			},
 			"daily": {
 				"wait": {
-					"title": "modules.economy.daily.wait.title",
-					"desc": "modules.economy.daily.wait.desc"
+					"title": "economy.daily.wait.title",
+					"desc": "economy.daily.wait.desc"
 				},
-				"title": "modules.economy.daily.title",
-				"desc": "modules.economy.daily.desc"
+				"title": "economy.daily.title",
+				"desc": "economy.daily.desc"
 			},
 			"give": {
-				"title": "modules.economy.give.title",
-				"desc": "modules.economy.give.desc"
+				"title": "economy.give.title",
+				"desc": "economy.give.desc"
 			}
 		},
 		"waifu": {
 			"gifts": {
-				"title": "modules.waifu.gifts.title",
+				"title": "waifu.gifts.title",
 				"fields": {
-					"kiss": "modules.waifu.gifts.fields.kiss",
-					"hearts": "modules.waifu.gifts.fields.hearts",
-					"fishcake": "modules.waifu.gifts.fields.fishcake",
-					"flower": "modules.waifu.gifts.fields.flower",
-					"cat": "modules.waifu.gifts.fields.cat",
-					"melon": "modules.waifu.gifts.fields.melon",
-					"cake": "modules.waifu.gifts.fields.cake",
-					"coffe": "modules.waifu.gifts.fields.coffe",
-					"beer": "modules.waifu.gifts.fields.beer",
-					"bow": "modules.waifu.gifts.fields.bow",
-					"stars": "modules.waifu.gifts.fields.stars",
-					"ring": "modules.waifu.gifts.fields.ring",
-					"crown": "modules.waifu.gifts.fields.crown"
+					"kiss": "waifu.gifts.fields.kiss",
+					"hearts": "waifu.gifts.fields.hearts",
+					"fishcake": "waifu.gifts.fields.fishcake",
+					"flower": "waifu.gifts.fields.flower",
+					"cat": "waifu.gifts.fields.cat",
+					"melon": "waifu.gifts.fields.melon",
+					"cake": "waifu.gifts.fields.cake",
+					"coffe": "waifu.gifts.fields.coffe",
+					"beer": "waifu.gifts.fields.beer",
+					"bow": "waifu.gifts.fields.bow",
+					"stars": "waifu.gifts.fields.stars",
+					"ring": "waifu.gifts.fields.ring",
+					"crown": "waifu.gifts.fields.crown"
 				}
 			}
 		},
 		"gambling": {
 			"wis": {
-				"title": "modules.gambling.wis.title",
-				"desc": "modules.gambling.wis.desc",
-				"result": "modules.gambling.wis.result"
+				"title": "gambling.wis.title",
+				"desc": "gambling.wis.desc",
+				"result": "gambling.wis.result"
 			},
 			"fortune": {
-				"title": "modules.gambling.fortune.title",
-				"desc": "modules.gambling.fortune.desc",
+				"title": "gambling.fortune.title",
+				"desc": "gambling.fortune.desc",
 				"fields": {
-					"bet": "modules.gambling.fortune.fields.bet",
-					"result": "modules.gambling.fortune.fields.result"
+					"bet": "gambling.fortune.fields.bet",
+					"result": "gambling.fortune.fields.result"
 				}
 			}
 		},
 		"configure": {
 			"prefix": {
-				"title": "modules.configure.prefix.title",
+				"title": "configure.prefix.title",
 				"info": {
-					"desc": "modules.configure.prefix.info.desc"
+					"desc": "configure.prefix.info.desc"
 				},
 				"new": {
-					"desc": "modules.configure.prefix.new.desc"
+					"desc": "configure.prefix.new.desc"
 				}
 			},
 			"standart": {
 				"info": {
-					"desc": "modules.configure.standart.info.desc"
+					"desc": "configure.standart.info.desc"
 				},
-				"title": "modules.configure.standart.title"
+				"title": "configure.standart.title"
 			},
-			"title": "modules.configure.title",
+			"title": "configure.title",
 			"autosave": {
-				"title": "modules.configure.autosave.title",
-				"enable": "modules.configure.autosave.enable",
-				"disable": "modules.configure.autosave.disable"
+				"title": "configure.autosave.title",
+				"enable": "configure.autosave.enable",
+				"disable": "configure.autosave.disable"
 			},
 			"modlog": {
-				"notFound": "modules.configure.modlog.notFound",
-				"new": "modules.configure.modlog.new"
+				"notFound": "configure.modlog.notFound",
+				"new": "configure.modlog.new"
 			}
 		},
 		"moderation": {
 			"ban": {
-				"title": "modules.moderation.ban.title",
-				"canNotBan": "modules.moderation.ban.canNotBan",
-				"error": "modules.moderation.ban.error",
-				"done": "modules.moderation.ban.done"
+				"title": "moderation.ban.title",
+				"canNotBan": "moderation.ban.canNotBan",
+				"error": "moderation.ban.error",
+				"done": "moderation.ban.done"
 			},
-			"canNotBan": "modules.moderation.canNotBan",
+			"canNotBan": "moderation.canNotBan",
 			"dm": {
 				"ban": {
-					"title": "modules.moderation.dm.ban.title"
+					"title": "moderation.dm.ban.title"
 				},
-				"kick": "modules.moderation.dm.kick"
+				"kick": "moderation.dm.kick"
 			},
-			"noreason": "modules.moderation.noreason",
-			"reason": "modules.moderation.reason",
+			"noreason": "moderation.noreason",
+			"reason": "moderation.reason",
 			"kick": {
-				"canNotKick": "modules.moderation.kick.canNotKick",
-				"title": "modules.moderation.kick.title",
-				"cannot": "modules.moderation.kick.cannot",
-				"done": "modules.moderation.kick.done",
-				"error": "modules.moderation.kick.error"
+				"canNotKick": "moderation.kick.canNotKick",
+				"title": "moderation.kick.title",
+				"cannot": "moderation.kick.cannot",
+				"done": "moderation.kick.done",
+				"error": "moderation.kick.error"
 			}
 		}
 	},
@@ -169,6 +169,12 @@
 			"punish": "logs.mod.punish",
 			"reason": "logs.mod.reason",
 			"moderator": "logs.mod.moderator"
+		}
+	},
+	"moderation": {
+		"purge": {
+			"title": "moderation.purge.title",
+			"text": "moderation.purge.text"
 		}
 	}
 }

@@ -69,10 +69,10 @@ export default class extends Command {
 		const person = await BaseMember.get(target);
 
 		await this.sendAsync(message.channel, t, {
-			title: t('modules.economy.bal.title', {
+			title: t('economy.bal.title', {
 				member: `${target.user.username}#${target.user.discriminator}`
 			}),
-			description: t('modules.economy.bal.desc', {
+			description: t('economy.bal.desc', {
 				member: target.user.mention,
 				amount: `${person.money.toFormat()} ${e(settings.emojis.wallet)}`
 			})

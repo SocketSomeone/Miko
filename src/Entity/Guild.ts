@@ -63,9 +63,12 @@ export class BaseGuild extends BaseEntity {
 	}
 
 	static getDefaultGuild(guildId: string) {
-		const guild = new this();
-
-		guild.id = guildId;
+		const guild = this.create({
+			id: guildId,
+			sets: SettingsDefaults,
+			permissions: [],
+			punishmentConfig: []
+		});
 
 		return guild;
 	}

@@ -31,7 +31,7 @@ export default class extends Command {
 
 		await this.showPaginated(t, message, startPage, maxPage, (page) => {
 			return this.createEmbed({
-				title: t('modules.waifu.gifts.title'),
+				title: t('waifu.gifts.title'),
 				fields: Gifts.sort((a, b) => a.cost - b.cost)
 					.slice(page * GIFTS_PER_PAGE, (page + 1) * GIFTS_PER_PAGE)
 					.map((gift) => {

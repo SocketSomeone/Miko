@@ -74,18 +74,18 @@ export default class extends Command {
 
 		let em = this.createEmbed({
 			color: ColorResolve(multiplier >= 1 ? Color.GREEN : Color.RED),
-			title: t('modules.gambling.fortune.title'),
-			description: t('modules.gambling.fortune.desc', {
+			title: t('gambling.fortune.title'),
+			description: t('gambling.fortune.desc', {
 				circle: text.markdown(Syntax.AHK)
 			}),
 			fields: [
 				{
-					name: t('modules.gambling.fortune.fields.bet'),
+					name: t('gambling.fortune.fields.bet'),
 					value: `${bet.toFormat()} ${e(wallet)}`,
 					inline: true
 				},
 				{
-					name: t('modules.gambling.fortune.fields.result'),
+					name: t('gambling.fortune.fields.result'),
 					value: `${result.toFormat()} ${e(wallet)}`,
 					inline: true
 				}

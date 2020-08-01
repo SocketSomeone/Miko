@@ -1,22 +1,22 @@
-import { Command, Context } from '../../../Framework/Commands/Command';
-import { BaseClient } from '../../../Client';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
+import { Command, Context } from '../../../../Framework/Commands/Command';
+import { BaseClient } from '../../../../Client';
+import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
 import { Message, Member } from 'eris';
-import { BaseMember } from '../../../Entity/Member';
-import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
+import { BaseMember } from '../../../../Entity/Member';
+import { ExecuteError } from '../../../../Framework/Errors/ExecuteError';
 
 import moment from 'moment';
-import { Color } from '../../../Misc/Enums/Colors';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
-import { MemberResolver, StringResolver } from '../../../Framework/Resolvers';
-import { GuildPermission } from '../../../Misc/Enums/GuildPermissions';
-import { Punishment, BasePunishment } from '../../../Entity/Punishment';
+import { Color } from '../../../../Misc/Enums/Colors';
+import { ColorResolve } from '../../../../Misc/Utils/ColorResolver';
+import { MemberResolver, StringResolver } from '../../../../Framework/Resolvers';
+import { GuildPermission } from '../../../../Misc/Enums/GuildPermissions';
+import { Punishment, BasePunishment } from '../../../../Entity/Punishment';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
 		super(client, {
-			name: 'kick',
-			aliases: ['кик', 'кикнуть'],
+			name: 'ban',
+			aliases: ['бан', 'забанить'],
 			group: CommandGroup.MODERATION,
 			args: [
 				{
@@ -31,8 +31,8 @@ export default class extends Command {
 				}
 			],
 			guildOnly: true,
-			botPermissions: [GuildPermission.KICK_MEMBERS],
-			userPermissions: [GuildPermission.KICK_MEMBERS],
+			botPermissions: [GuildPermission.BAN_MEMBERS],
+			userPermissions: [GuildPermission.BAN_MEMBERS],
 			premiumOnly: false
 		});
 	}
@@ -42,12 +42,12 @@ export default class extends Command {
 		[member, reason]: [Member, string],
 		{ funcs: { t, e }, guild, me, settings }: Context
 	) {
-		reason = reason || t('modules.moderation.noreason');
+		reason = reason || t('moderation.noreason');
 
 		const embed = this.client.messages.createEmbed(
 			{
 				color: ColorResolve(Color.RED),
-				title: t('modules.moderation.kick.title'),
+				title: t('moderation.ban.title'),
 				footer: {
 					text: ''
 				}
@@ -56,10 +56,10 @@ export default class extends Command {
 		);
 
 		if (this.client.moderation.isPunishable(guild, member, message.member, me)) {
-			await BasePunishment.informUser(member, Punishment.KICK, settings, { reason });
+			await BasePunishment.informUser(member, Punishment.BAN, settings, { reason });
 
 			try {
-				await guild.kickMember(member.id, encodeURIComponent(reason));
+				await guild.banMember(member.id, 7, encodeURIComponent(reason));
 
 				await BaseMember.saveMembers(guild, [member]);
 
@@ -70,7 +70,7 @@ export default class extends Command {
 					target: member,
 					extra: [{ name: 'logs.mod.reason', value: reason }],
 					opts: {
-						type: Punishment.KICK,
+						type: Punishment.BAN,
 						amount: 0,
 						args: '',
 						reason,
@@ -79,16 +79,15 @@ export default class extends Command {
 				});
 
 				embed.color = ColorResolve(Color.LOGS);
-				embed.description = t('modules.moderation.kick.done', {
+				embed.description = t('moderation.ban.done', {
 					user: `${message.author.username}#${message.author.discriminator}`,
 					target: `${member.user.username}#${member.user.discriminator}`
 				});
 			} catch (err) {
-				console.log(err);
-				embed.description = t('modules.moderation.kick.error');
+				embed.description = t('moderation.ban.error');
 			}
 		} else {
-			embed.description = t('modules.moderation.kick.cannot');
+			embed.description = t('moderation.ban.cannot');
 		}
 
 		await this.replyAsync(message, t, embed);

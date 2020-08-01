@@ -25,8 +25,8 @@ export default class extends Command {
 
 		if (moment().isBefore(person.timelyAt))
 			throw new ExecuteError({
-				title: t('modules.economy.daily.wait.title'),
-				description: t('modules.economy.daily.wait.desc', {
+				title: t('economy.daily.wait.title'),
+				description: t('economy.daily.wait.desc', {
 					timeout: moment.duration(person.timelyAt.diff(moment())).humanize(false)
 				})
 			});
@@ -37,8 +37,8 @@ export default class extends Command {
 
 		await this.sendAsync(message.channel, t, {
 			color: ColorResolve(Color.PRIMARY),
-			title: t('modules.economy.daily.title'),
-			description: t('modules.economy.daily.desc', {
+			title: t('economy.daily.title'),
+			description: t('economy.daily.desc', {
 				member: message.member.mention,
 				amount: `${settings.prices.timely} ${e(settings.emojis.wallet)}`
 			})

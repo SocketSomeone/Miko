@@ -56,8 +56,8 @@ export default class extends Command {
 			timer: NodeJS.Timeout;
 
 		const embed = await this.createEmbed({
-			title: t('modules.gambling.wis.title'),
-			description: t('modules.gambling.wis.desc', {
+			title: t('gambling.wis.title'),
+			description: t('gambling.wis.desc', {
 				doors: doors.join(' ')
 			})
 		});
@@ -100,9 +100,9 @@ export default class extends Command {
 			await m.edit({
 				embed: {
 					...embed,
-					description: `${t('modules.gambling.wis.desc', {
+					description: `${t('gambling.wis.desc', {
 						doors: doors.join(' ')
-					})}\n${t('modules.gambling.wis.result', {
+					})}\n${t('gambling.wis.result', {
 						result: s === c ? '🎉' : '☠'
 					})}`,
 					color: ColorResolve(s === c ? Color.GREEN : Color.RED)

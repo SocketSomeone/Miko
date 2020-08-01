@@ -4,7 +4,7 @@ export interface IGiftItem {
 	cost: number;
 }
 
-const translate = 'modules.waifu.gifts.fields.';
+const translate = 'waifu.gifts.fields.';
 
 export const Gifts: IGiftItem[] = [
 	{

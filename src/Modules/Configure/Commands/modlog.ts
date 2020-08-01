@@ -35,14 +35,14 @@ export default class extends Command {
 
 		await this.replyAsync(message, t, {
 			color: ColorResolve(Color.MAGENTA),
-			title: t('modules.configure.title', {
+			title: t('configure.title', {
 				guild: guild.name
 			}),
 			description: settings.modlog
 				? t(`modules.configure.modlog.${channel ? 'new' : 'info'}`, {
 						channel: channel.mention
 				  })
-				: t('modules.configure.modlog.notFound'),
+				: t('configure.modlog.notFound'),
 			footer: {
 				text: ''
 			}

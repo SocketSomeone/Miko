@@ -35,7 +35,7 @@ export default class extends Command {
 
 		await this.replyAsync(message, t, {
 			color: ColorResolve(Color.MAGENTA),
-			title: t('modules.configure.title', {
+			title: t('configure.title', {
 				guild: guild.name
 			}),
 			description: t(`modules.configure.prefix.${prefix && prefix.length ? 'new' : 'info'}`, {

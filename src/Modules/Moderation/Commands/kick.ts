@@ -15,8 +15,8 @@ import { Punishment, BasePunishment } from '../../../Entity/Punishment';
 export default class extends Command {
 	public constructor(client: BaseClient) {
 		super(client, {
-			name: 'ban',
-			aliases: ['бан', 'забанить'],
+			name: 'kick',
+			aliases: ['кик', 'кикнуть'],
 			group: CommandGroup.MODERATION,
 			args: [
 				{
@@ -31,8 +31,8 @@ export default class extends Command {
 				}
 			],
 			guildOnly: true,
-			botPermissions: [GuildPermission.BAN_MEMBERS],
-			userPermissions: [GuildPermission.BAN_MEMBERS],
+			botPermissions: [GuildPermission.KICK_MEMBERS],
+			userPermissions: [GuildPermission.KICK_MEMBERS],
 			premiumOnly: false
 		});
 	}
@@ -47,7 +47,7 @@ export default class extends Command {
 		const embed = this.client.messages.createEmbed(
 			{
 				color: ColorResolve(Color.RED),
-				title: t('modules.moderation.ban.title'),
+				title: t('modules.moderation.kick.title'),
 				footer: {
 					text: ''
 				}
@@ -56,10 +56,10 @@ export default class extends Command {
 		);
 
 		if (this.client.moderation.isPunishable(guild, member, message.member, me)) {
-			await BasePunishment.informUser(member, Punishment.BAN, settings, { reason });
+			await BasePunishment.informUser(member, Punishment.KICK, settings, { reason });
 
 			try {
-				await guild.banMember(member.id, 7, encodeURIComponent(reason));
+				await guild.kickMember(member.id, encodeURIComponent(reason));
 
 				await BaseMember.saveMembers(guild, [member]);
 
@@ -70,7 +70,7 @@ export default class extends Command {
 					target: member,
 					extra: [{ name: 'logs.mod.reason', value: reason }],
 					opts: {
-						type: Punishment.BAN,
+						type: Punishment.KICK,
 						amount: 0,
 						args: '',
 						reason,
@@ -79,15 +79,16 @@ export default class extends Command {
 				});
 
 				embed.color = ColorResolve(Color.LOGS);
-				embed.description = t('modules.moderation.ban.done', {
+				embed.description = t('modules.moderation.kick.done', {
 					user: `${message.author.username}#${message.author.discriminator}`,
 					target: `${member.user.username}#${member.user.discriminator}`
 				});
 			} catch (err) {
-				embed.description = t('modules.moderation.ban.error');
+				console.log(err);
+				embed.description = t('modules.moderation.kick.error');
 			}
 		} else {
-			embed.description = t('modules.moderation.ban.cannot');
+			embed.description = t('modules.moderation.kick.cannot');
 		}
 
 		await this.replyAsync(message, t, embed);

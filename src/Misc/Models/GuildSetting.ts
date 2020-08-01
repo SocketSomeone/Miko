@@ -17,6 +17,7 @@ export interface GuildSettings {
 	verbose: boolean;
 	emojis: GuildEmojis;
 
+	modlog: string;
 	saveroles: boolean;
 }
 
@@ -35,6 +36,7 @@ export const Defaults: GuildSettings = {
 	ignoreChannels: [],
 	verbose: true,
 	saveroles: false,
+	modlog: null,
 	prices: {
 		timely: new BigNumber(15),
 		standart: new BigNumber(100)

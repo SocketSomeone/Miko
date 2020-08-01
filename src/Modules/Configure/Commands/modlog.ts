@@ -1,8 +1,8 @@
 import { Command, Context } from '../../../Framework/Commands/Command';
 import { BaseClient } from '../../../Client';
-import { StringResolver } from '../../../Framework/Resolvers';
+import { StringResolver, ChannelResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
-import { Message, Member } from 'eris';
+import { Message, Member, Channel } from 'eris';
 import { BaseMember } from '../../../Entity/Member';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
@@ -11,12 +11,12 @@ import { GuildPermission } from '../../../Misc/Enums/GuildPermissions';
 export default class extends Command {
 	public constructor(client: BaseClient) {
 		super(client, {
-			name: 'prefix',
-			aliases: ['префикс'],
+			name: 'modlog',
+			aliases: [],
 			args: [
 				{
-					name: 'new-prefx',
-					resolver: StringResolver,
+					name: 'channel',
+					resolver: ChannelResolver,
 					required: false
 				}
 			],
@@ -27,9 +27,9 @@ export default class extends Command {
 		});
 	}
 
-	public async execute(message: Message, [prefix]: [string], { funcs: { t, e }, guild, settings }: Context) {
-		if (prefix && prefix.length) {
-			settings.prefix = prefix;
+	public async execute(message: Message, [channel]: [Channel], { funcs: { t, e }, guild, settings }: Context) {
+		if (channel) {
+			settings.modlog = channel.id;
 			await this.client.cache.guilds.updateOne(guild);
 		}
 
@@ -38,9 +38,11 @@ export default class extends Command {
 			title: t('modules.configure.title', {
 				guild: guild.name
 			}),
-			description: t(`modules.configure.prefix.${prefix && prefix.length ? 'new' : 'info'}`, {
-				prefix: settings.prefix
-			}),
+			description: settings.modlog
+				? t(`modules.configure.modlog.${channel ? 'new' : 'info'}`, {
+						channel: channel.mention
+				  })
+				: t('modules.configure.modlog.notFound'),
 			footer: {
 				text: ''
 			}

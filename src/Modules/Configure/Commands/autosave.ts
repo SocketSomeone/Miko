@@ -69,7 +69,10 @@ export default class extends Command {
 		await this.replyAsync(message, t, {
 			color: ColorResolve(Color.MAGENTA),
 			title: t('modules.configure.title'),
-			description: t(`modules.configure.autosave.${settings.saveroles ? 'enable' : 'disable'}`)
+			description: t(`modules.configure.autosave.${settings.saveroles ? 'enable' : 'disable'}`),
+			footer: {
+				text: ''
+			}
 		});
 	}
 }

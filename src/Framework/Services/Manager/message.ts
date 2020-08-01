@@ -279,6 +279,7 @@ export class MessageService extends BaseService {
 		}
 
 		const gen = guild.channels.find((c) => c.name === 'general' && c.type === ChannelType.GUILD_TEXT);
+
 		if (gen) {
 			return gen;
 		}

@@ -2,19 +2,30 @@ import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColu
 import { BaseGuild } from './Guild';
 import { Moment } from 'moment';
 import { DateTransformer } from './Transformers';
-import { Guild, Member } from 'eris';
-import { TranslateFunc } from '../Framework/Commands/Command';
+import { Guild, Member, TextChannel } from 'eris';
+import { TranslateFunc, Command } from '../Framework/Commands/Command';
 import { GuildSettings } from '../Misc/Models/GuildSetting';
 import { ColorResolve } from '../Misc/Utils/ColorResolver';
 import { Color } from '../Misc/Enums/Colors';
+import { BaseClient } from '../Client';
 
 import i18n from 'i18n';
+import { settings } from 'cluster';
 
 export enum Punishment {
 	BAN = 'ban',
 	KICK = 'kick',
 	softban = 'softban',
 	mute = 'mute'
+}
+
+interface ContextLog {
+	client: BaseClient;
+	settings: GuildSettings;
+	member: Member;
+	target: Member;
+	opts: Partial<BasePunishment>;
+	extra?: { name: string; value: string }[];
 }
 
 @Entity()
@@ -50,15 +61,63 @@ export class BasePunishment extends BaseEntity {
 	@CreateDateColumn()
 	public createdAt: Date;
 
-	static async new(g: Guild, opts: Partial<BasePunishment>) {
-		const guild = await BaseGuild.get(g.id);
+	public static async new(ctx: ContextLog) {
+		const guild = await BaseGuild.get(ctx.target.guild.id);
 
-		const punishment = this.create({ ...opts, guild });
+		const punishment = this.create({ ...ctx.opts, guild, member: ctx.target.id });
 
 		await punishment.save();
+
+		await this.logPunishment(ctx);
 	}
 
-	static async informUser(
+	private static async logPunishment({ client, settings: sets, member, target, opts, extra }: ContextLog) {
+		const t: TranslateFunc = (k, r) => i18n.__({ locale: sets.locale, phrase: k }, r);
+
+		if (!sets.modlog) return;
+
+		const modLogChannel = (await member.guild.channels.get(sets.modlog)) as TextChannel;
+
+		if (!modLogChannel) return;
+
+		extra = extra || [];
+
+		const embed = client.messages.createEmbed(
+			{
+				color: ColorResolve(Color.LOGS),
+				author: {
+					name: `[${opts.type.toUpperCase()}] ` + t('logs.mod.title'),
+					icon_url: client.user.dynamicAvatarURL('png', 4096)
+				},
+				fields: [
+					{
+						name: t('logs.mod.user'),
+						value: target.user.mention,
+						inline: true
+					},
+					{
+						name: t('logs.mod.moderator'),
+						value: member.user.mention,
+						inline: true
+					},
+					...extra
+						.filter((x) => !!x.value)
+						.map((e) => {
+							return { name: t(e.name), value: e.value.substr(0, 1024), inline: true };
+						})
+				],
+				timestamp: new Date().toISOString(),
+				footer: {
+					text: null
+				}
+			},
+			false
+		);
+
+		await client.messages.sendEmbed(modLogChannel, t, embed);
+	}
+
+	public static async informUser(
 		member: Member,
 		type: Punishment,
 		settings: GuildSettings,
@@ -78,7 +137,7 @@ export class BasePunishment extends BaseEntity {
 		return dmChannel
 			.createMessage({
 				embed: {
-					color: ColorResolve(Color.PEACH),
+					color: ColorResolve(Color.LOGS),
 					title: t(`modules.moderation.dm.${type}`, {
 						guild: member.guild.name
 					}),

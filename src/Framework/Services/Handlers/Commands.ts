@@ -213,8 +213,20 @@ export class CommandService extends BaseService {
 					);
 
 					if (missingPerms.length > 0) {
-						if (sets.verbose) {
-						}
+						// TODO: verbose configure
+						// if (sets.verbose) {
+						// }
+
+						await this.client.messages.sendReply(message, t, {
+							color: ColorResolve(Color.RED),
+							title: t('error.missedUserPermissions.title'),
+							description: t('error.missedUserPermissions.desc', {
+								missed: Object.entries(GuildPermission)
+									.filter(([s, v]) => missingPerms.some((x) => x === v))
+									.map(([s]) => `\`${s}\``)
+									.join(', ')
+							})
+						});
 
 						return;
 					}
@@ -234,7 +246,16 @@ export class CommandService extends BaseService {
 			);
 
 			if (missingPerms.length > 0) {
-				// TODO: Missed Permissions message;
+				await this.client.messages.sendReply(message, t, {
+					color: ColorResolve(Color.RED),
+					title: t('error.missedBotPermissions.title'),
+					description: t('error.missedBotPermissions.desc', {
+						missed: Object.entries(GuildPermission)
+							.filter(([s, v]) => missingPerms.some((x) => x === v))
+							.map(([s]) => `\`${s}\``)
+							.join(', ')
+					})
+				});
 
 				return;
 			}
@@ -372,10 +393,10 @@ export class CommandService extends BaseService {
 			return content.substring(prefix.length).trim();
 		}
 
-		const regex = /^(?:<@!?)?(\d+)>? ?(.*)$/;
+		const regex = /^(?:<@!?)?(\d+)>? (.*)$/;
 
 		if (regex.test(content)) {
-			const matches = content.match(content);
+			const matches = content.match(regex);
 
 			if (matches[1] !== this.client.user.id) {
 				return null;

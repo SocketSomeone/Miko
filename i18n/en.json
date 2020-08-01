@@ -89,6 +89,10 @@
 				"title": "modules.configure.autosave.title",
 				"enable": "modules.configure.autosave.enable",
 				"disable": "modules.configure.autosave.disable"
+			},
+			"modlog": {
+				"notFound": "modules.configure.modlog.notFound",
+				"new": "modules.configure.modlog.new"
 			}
 		},
 		"moderation": {
@@ -102,10 +106,18 @@
 			"dm": {
 				"ban": {
 					"title": "modules.moderation.dm.ban.title"
-				}
+				},
+				"kick": "modules.moderation.dm.kick"
 			},
 			"noreason": "modules.moderation.noreason",
-			"reason": "modules.moderation.reason"
+			"reason": "modules.moderation.reason",
+			"kick": {
+				"canNotKick": "modules.moderation.kick.canNotKick",
+				"title": "modules.moderation.kick.title",
+				"cannot": "modules.moderation.kick.cannot",
+				"done": "modules.moderation.kick.done",
+				"error": "modules.moderation.kick.error"
+			}
 		}
 	},
 	"error": {
@@ -122,6 +134,10 @@
 		},
 		"arguments": {
 			"title": "error.arguments.title"
+		},
+		"missedUserPermissions": {
+			"title": "error.missedUserPermissions.title",
+			"desc": "error.missedUserPermissions.desc"
 		}
 	},
 	"others": {
@@ -144,6 +160,15 @@
 	"key": {
 		"fields": {
 			"amount": "key.fields.amount"
+		}
+	},
+	"logs": {
+		"mod": {
+			"title": "logs.mod.title",
+			"user": "logs.mod.user",
+			"punish": "logs.mod.punish",
+			"reason": "logs.mod.reason",
+			"moderator": "logs.mod.moderator"
 		}
 	}
 }

@@ -41,7 +41,10 @@ export default class extends Command {
 			}),
 			description: t(`modules.configure.standart.${money ? 'new' : 'info'}`, {
 				amount: `${settings.prices.standart.toFormat()} ${e(settings.emojis.wallet)}`
-			})
+			}),
+			footer: {
+				text: ''
+			}
 		});
 	}
 }

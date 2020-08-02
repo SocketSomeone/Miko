@@ -11,7 +11,7 @@ import {
 } from 'typeorm';
 import { BaseGuild } from './Guild';
 import { Moment } from 'moment';
-import { DateTransformer } from './Transformers';
+import { DateTransformer, BigIntTransformer } from './Transformers';
 import { Guild, Member, TextChannel } from 'eris';
 import { TranslateFunc, Command } from '../Framework/Commands/Command';
 import { GuildSettings } from '../Misc/Models/GuildSetting';
@@ -43,7 +43,7 @@ interface ContextLog {
 
 @Entity()
 export class BasePunishment extends BaseEntity {
-	@PrimaryColumn({ type: 'bigint' })
+	@PrimaryColumn({ type: 'bigint', transformer: BigIntTransformer })
 	public id: bigint;
 
 	@BeforeInsert()

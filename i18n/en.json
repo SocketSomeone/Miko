@@ -7,6 +7,10 @@
 			},
 			"title": "economy.bal.title",
 			"desc": "economy.bal.desc"
+		},
+		"daily": {
+			"title": "economy.daily.title",
+			"desc": "economy.daily.desc"
 		}
 	},
 	"embed": {
@@ -140,6 +144,9 @@
 		"missed.userpermissions": {
 			"title": "error.missed.userpermissions.title",
 			"desc": "error.missed.userpermissions.desc"
+		},
+		"missed": {
+			"muterole": "error.missed.muterole"
 		}
 	},
 	"others": {
@@ -210,6 +217,17 @@
 		},
 		"prefix": {
 			"new": "configure.prefix.new"
+		},
+		"modlog": {
+			"notFound": "configure.modlog.notFound",
+			"new": "configure.modlog.new"
+		}
+	},
+	"gambling": {
+		"wis": {
+			"title": "gambling.wis.title",
+			"desc": "gambling.wis.desc",
+			"result": "gambling.wis.result"
 		}
 	}
 }

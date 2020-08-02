@@ -21,13 +21,8 @@ export enum ScheduledAction {
 
 @Entity()
 export class BaseScheduledAction extends BaseEntity {
-	@PrimaryColumn({ type: 'bigint' })
+	@PrimaryGeneratedColumn({ type: 'bigint' })
 	public id: bigint;
-
-	@BeforeInsert()
-	setId() {
-		this.id = snowFlakeID();
-	}
 
 	@ManyToOne((type) => BaseGuild, (g) => g.id, { eager: true, nullable: false, onDelete: 'NO ACTION', cascade: true })
 	@JoinColumn()

@@ -6,6 +6,7 @@
 	"password": "3EQ6VtAdCQ",
 	"database": "Miko",
 	"synchronize": true,
+	"bigNumberStrings": true,
 	"logging": false,
 	"entities": ["bin/Entity/**/*.js"],
 	"migrations": ["bin/Migration/**/*.js"],

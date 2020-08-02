@@ -54,6 +54,7 @@ export default class extends Command {
 			{
 				color: ColorResolve(Color.RED),
 				title: t('moderation.ban.title'),
+				fields: [],
 				footer: {
 					text: ''
 				}
@@ -97,15 +98,26 @@ export default class extends Command {
 					moment().add(duration)
 				);
 
-				embed.color = ColorResolve(Color.LOGS);
-				embed.description =
-					t('moderation.ban.done', {
-						user: `${message.author.username}#${message.author.discriminator}`,
-						target: `${member.user.username}#${member.user.discriminator}`
-					}) +
-					t('moderation.ban.until', {
-						duration: moment().add(duration).format('HH:mm:ss DD.MM.YYYY')
-					});
+				embed.color = ColorResolve(Color.DARK);
+				embed.timestamp = moment().add(duration).toISOString();
+				embed.footer = { icon_url: message.author.avatarURL, text: t('moderation.ban.until') };
+				embed.description = t('moderation.ban.done', {
+					user: `${message.author.username}#${message.author.discriminator}`,
+					target: `${member.user.username}#${member.user.discriminator}`,
+					reason
+				});
+
+				embed.fields.push(
+					...extra
+						.filter((x) => !!x.value)
+						.map((x) => {
+							return {
+								name: t(x.name),
+								value: x.value.substr(0, 1024),
+								inline: true
+							};
+						})
+				);
 			} catch (err) {
 				console.log(err);
 				embed.description = t('moderation.ban.error');

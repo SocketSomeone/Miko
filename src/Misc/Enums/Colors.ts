@@ -7,5 +7,5 @@ export enum Color {
 	GREEN = '#44b581',
 	MILK = '#f3edfe',
 	GRAY = '#6b7580',
-	LOGS = '#87556f'
+	DARK = '#87556f'
 }

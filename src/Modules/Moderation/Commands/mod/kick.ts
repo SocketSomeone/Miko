@@ -53,7 +53,9 @@ export default class extends Command {
 		);
 
 		if (this.client.moderation.isPunishable(guild, member, message.member, me)) {
-			await BasePunishment.informUser(member, Punishment.KICK, settings, [{ name: 'logs.mod.reason', value: reason }]);
+			const extra = [{ name: 'logs.mod.reason', value: reason }];
+
+			await BasePunishment.informUser(member, Punishment.KICK, settings, extra);
 
 			try {
 				await guild.kickMember(member.id, encodeURIComponent(reason));
@@ -65,7 +67,7 @@ export default class extends Command {
 					settings,
 					member: message.member,
 					target: member,
-					extra: [{ name: 'logs.mod.reason', value: reason }],
+					extra,
 					opts: {
 						type: Punishment.KICK,
 						amount: 0,
@@ -75,11 +77,21 @@ export default class extends Command {
 					}
 				});
 
-				embed.color = ColorResolve(Color.LOGS);
+				embed.color = ColorResolve(Color.DARK);
 				embed.description = t('moderation.kick.done', {
 					user: `${message.author.username}#${message.author.discriminator}`,
 					target: `${member.user.username}#${member.user.discriminator}`
 				});
+
+				//#region
+				embed.fields.push(
+					...extra
+						.filter((x) => !!x.value)
+						.map((x) => {
+							return { name: t(x.name), value: x.value.substr(0, 1024), inline: true };
+						})
+				);
+				//#endregion
 			} catch (err) {
 				console.log(err);
 				embed.description = t('moderation.kick.error');

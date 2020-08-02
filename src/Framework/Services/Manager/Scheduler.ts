@@ -121,6 +121,7 @@ export class SchedulerService extends BaseService {
 	private async unban(guild: Guild, { memberId }: { memberId: string }) {
 		try {
 			await guild.unbanMember(memberId, 'Punishment is timed out');
+			return true;
 		} catch (err) {
 			console.error(`SCHEDULED TASK: UNBAN: ${err.message}`);
 			return false;

@@ -87,7 +87,7 @@ export class BasePunishment extends BaseEntity {
 
 		const embed = client.messages.createEmbed(
 			{
-				color: ColorResolve(Color.LOGS),
+				color: ColorResolve(Color.DARK),
 				author: {
 					name: `[${opts.type.toUpperCase()}] ` + t('logs.mod.title'),
 					icon_url: client.user.dynamicAvatarURL('png', 4096)
@@ -141,7 +141,7 @@ export class BasePunishment extends BaseEntity {
 		return dmChannel
 			.createMessage({
 				embed: {
-					color: ColorResolve(Color.LOGS),
+					color: ColorResolve(Color.DARK),
 					title: t(`moderation.dm.${type}`, {
 						guild: member.guild.name
 					}),

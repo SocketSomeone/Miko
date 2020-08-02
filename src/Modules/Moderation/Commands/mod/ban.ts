@@ -56,7 +56,12 @@ export default class extends Command {
 		);
 
 		if (this.client.moderation.isPunishable(guild, member, message.member, me)) {
-			await BasePunishment.informUser(member, Punishment.BAN, settings, [{ name: 'logs.mod.reason', value: reason }]);
+			const extra = [
+				{ name: 'logs.mod.reason', value: reason },
+				{ name: 'logs.mod.duration', value: `∞` }
+			];
+
+			await BasePunishment.informUser(member, Punishment.BAN, settings, extra);
 
 			try {
 				await guild.banMember(member.id, 7, encodeURIComponent(reason));
@@ -68,7 +73,7 @@ export default class extends Command {
 					settings,
 					member: message.member,
 					target: member,
-					extra: [{ name: 'logs.mod.reason', value: reason }],
+					extra,
 					opts: {
 						type: Punishment.BAN,
 						amount: 0,
@@ -78,11 +83,19 @@ export default class extends Command {
 					}
 				});
 
-				embed.color = ColorResolve(Color.LOGS);
+				embed.color = ColorResolve(Color.DARK);
 				embed.description = t('moderation.ban.done', {
 					user: `${message.author.username}#${message.author.discriminator}`,
 					target: `${member.user.username}#${member.user.discriminator}`
 				});
+
+				embed.fields.push(
+					...extra
+						.filter((x) => !!x.value)
+						.map((x) => {
+							return { name: t(x.name), value: x.value.substr(0, 1024), inline: true };
+						})
+				);
 			} catch (err) {
 				embed.description = t('moderation.ban.error');
 			}

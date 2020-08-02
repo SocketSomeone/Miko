@@ -55,10 +55,18 @@ export default class extends Command {
 		const mutedRole = settings.mutedRole;
 
 		if (!mutedRole || !guild.roles.has(mutedRole)) {
-			embed.description = t('moderation.mute.missedRole');
+			embed.description = t('error.missed.muterole');
 		} else if (this.client.moderation.isPunishable(guild, member, message.member, me)) {
 			try {
 				await member.removeRole(mutedRole, `Unmuted by ${message.author.username}#${message.author.discriminator}`);
+
+				await BasePunishment.logModAction({
+					client: this.client,
+					settings,
+					member: message.member,
+					target: member,
+					type: 'UNMUTE'
+				});
 
 				embed.color = ColorResolve(Color.DARK);
 				embed.description = t('moderation.unmute.done', {
@@ -67,10 +75,10 @@ export default class extends Command {
 				});
 			} catch (err) {
 				console.log(err);
-				embed.description = t('moderation.mute.error');
+				embed.description = t('moderation.unmute.error');
 			}
 		} else {
-			embed.description = t('moderation.mute.cannot');
+			embed.description = t('moderation.unmute.cannot');
 		}
 
 		await this.replyAsync(message, t, embed);

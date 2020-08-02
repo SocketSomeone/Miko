@@ -219,8 +219,8 @@ export class CommandService extends BaseService {
 
 						await this.client.messages.sendReply(message, t, {
 							color: ColorResolve(Color.RED),
-							title: t('error.missedUserPermissions.title'),
-							description: t('error.missedUserPermissions.desc', {
+							title: t('error.missed.userpermissions.title'),
+							description: t('error.missed.userpermissions.desc', {
 								missed: Object.entries(GuildPermission)
 									.filter(([s, v]) => missingPerms.some((x) => x === v))
 									.map(([s]) => `\`${s}\``)
@@ -248,8 +248,8 @@ export class CommandService extends BaseService {
 			if (missingPerms.length > 0) {
 				await this.client.messages.sendReply(message, t, {
 					color: ColorResolve(Color.RED),
-					title: t('error.missedBotPermissions.title'),
-					description: t('error.missedBotPermissions.desc', {
+					title: t('error.missed.botpermissions.title'),
+					description: t('error.missed.botpermissions.desc', {
 						missed: Object.entries(GuildPermission)
 							.filter(([s, v]) => missingPerms.some((x) => x === v))
 							.map(([s]) => `\`${s}\``)

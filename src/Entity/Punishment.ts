@@ -25,7 +25,8 @@ interface ContextLog {
 	settings: GuildSettings;
 	member: Member;
 	target: Member;
-	opts: Partial<BasePunishment>;
+	type?: Punishment | string;
+	opts?: Partial<BasePunishment>;
 	extra?: { name: string; value: string }[];
 }
 
@@ -71,10 +72,10 @@ export class BasePunishment extends BaseEntity {
 
 		await punishment.save();
 
-		await this.logPunishment(ctx);
+		await this.logModAction(ctx);
 	}
 
-	private static async logPunishment({ client, settings: sets, member, target, opts, extra }: ContextLog) {
+	public static async logModAction({ client, settings: sets, member, target, type, extra }: ContextLog) {
 		const t: TranslateFunc = (k, r) => i18n.__({ locale: sets.locale, phrase: k }, r);
 
 		if (!sets.modlog) return;
@@ -89,7 +90,7 @@ export class BasePunishment extends BaseEntity {
 			{
 				color: ColorResolve(Color.DARK),
 				author: {
-					name: `[${opts.type.toUpperCase()}] ` + t('logs.mod.title'),
+					name: `[${type.toUpperCase()}] ` + t('logs.mod.title'),
 					icon_url: client.user.dynamicAvatarURL('png', 4096)
 				},
 				fields: [

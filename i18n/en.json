@@ -135,9 +135,9 @@
 		"arguments": {
 			"title": "error.arguments.title"
 		},
-		"missedUserPermissions": {
-			"title": "error.missedUserPermissions.title",
-			"desc": "error.missedUserPermissions.desc"
+		"missed.userpermissions": {
+			"title": "error.missed.userpermissions.title",
+			"desc": "error.missed.userpermissions.desc"
 		}
 	},
 	"others": {
@@ -190,11 +190,15 @@
 		},
 		"mute": {
 			"title": "moderation.mute.title",
-			"missedRole": "moderation.mute.missedRole",
+			"missedRole": "error.missed.muterole",
 			"until": "moderation.mute.until",
 			"done": "moderation.mute.done"
 		},
-		"noreason": "moderation.noreason"
+		"noreason": "moderation.noreason",
+		"unmute": {
+			"title": "moderation.unmute.title",
+			"done": "moderation.unmute.done"
+		}
 	},
 	"configure": {
 		"title": "configure.title",

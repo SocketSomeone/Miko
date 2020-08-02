@@ -61,6 +61,8 @@ export default class extends Command {
 
 		if (!mutedRole || !guild.roles.has(mutedRole)) {
 			embed.description = t('error.missed.muterole');
+		} else if (member.roles.includes(mutedRole)) {
+			embed.description = t('moderation.mute.already');
 		} else if (this.client.moderation.isPunishable(guild, member, message.member, me)) {
 			const extra = [
 				{ name: 'logs.mod.reason', value: reason },

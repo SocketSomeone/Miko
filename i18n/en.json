@@ -4,7 +4,9 @@
 			"success": {
 				"title": "economy.bal.success.title",
 				"desc": "economy.bal.success.desc"
-			}
+			},
+			"title": "economy.bal.title",
+			"desc": "economy.bal.desc"
 		}
 	},
 	"embed": {
@@ -205,6 +207,9 @@
 		"muterole": {
 			"new": "configure.muterole.new",
 			"info": "configure.muterole.info"
+		},
+		"prefix": {
+			"new": "configure.prefix.new"
 		}
 	}
 }

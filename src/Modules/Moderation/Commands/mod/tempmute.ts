@@ -3,15 +3,14 @@ import { BaseClient } from '../../../../Client';
 import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
 import { Message, Member } from 'eris';
 import { BaseMember } from '../../../../Entity/Member';
-import { ExecuteError } from '../../../../Framework/Errors/ExecuteError';
-
-import moment, { Duration } from 'moment';
 import { Color } from '../../../../Misc/Enums/Colors';
 import { ColorResolve } from '../../../../Misc/Utils/ColorResolver';
 import { MemberResolver, StringResolver, DurationResolver } from '../../../../Framework/Resolvers';
 import { GuildPermission } from '../../../../Misc/Enums/GuildPermissions';
 import { Punishment, BasePunishment } from '../../../../Entity/Punishment';
 import { ScheduledAction } from '../../../../Entity/ScheduledAction';
+
+import moment, { Duration } from 'moment';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -66,6 +65,8 @@ export default class extends Command {
 
 		if (!mutedRole || !guild.roles.has(mutedRole)) {
 			embed.description = t('error.missed.muterole');
+		} else if (member.roles.includes(mutedRole)) {
+			embed.description = t('moderation.mute.already');
 		} else if (this.client.moderation.isPunishable(guild, member, message.member, me)) {
 			const extra = [
 				{ name: 'logs.mod.reason', value: reason },

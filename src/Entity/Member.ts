@@ -7,7 +7,9 @@ import {
 	PrimaryGeneratedColumn,
 	OneToMany,
 	ManyToMany,
-	createQueryBuilder
+	createQueryBuilder,
+	PrimaryColumn,
+	BeforeInsert
 } from 'typeorm';
 import { BaseGuild } from './Guild';
 import { Member, Guild } from 'eris';
@@ -16,6 +18,8 @@ import { DateTransformer, BigNumberTransformer, DurationTransformer } from './Tr
 
 import BigNumber from 'bignumber.js';
 import { Violation } from '../Misc/Models/Violation';
+import './Snowflakes/SnowflakeID';
+import { snowFlakeID } from './Snowflakes/SnowflakeID';
 
 BigNumber.config({
 	FORMAT: {
@@ -27,8 +31,13 @@ BigNumber.config({
 
 @Entity()
 export class BaseMember extends BaseEntity {
-	@PrimaryGeneratedColumn()
-	public id: string;
+	@PrimaryColumn({ type: 'bigint' })
+	public id: bigint;
+
+	@BeforeInsert()
+	setId() {
+		this.id = snowFlakeID();
+	}
 
 	@Column({ nullable: false })
 	public user: string;

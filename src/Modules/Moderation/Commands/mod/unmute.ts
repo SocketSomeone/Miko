@@ -56,6 +56,8 @@ export default class extends Command {
 
 		if (!mutedRole || !guild.roles.has(mutedRole)) {
 			embed.description = t('error.missed.muterole');
+		} else if (!member.roles.includes(mutedRole)) {
+			embed.description = t('moderation.unmute.notmuted');
 		} else if (this.client.moderation.isPunishable(guild, member, message.member, me)) {
 			try {
 				await member.removeRole(mutedRole, `Unmuted by ${message.author.username}#${message.author.discriminator}`);

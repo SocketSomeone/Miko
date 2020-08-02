@@ -1,4 +1,14 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, CreateDateColumn } from 'typeorm';
+import {
+	BaseEntity,
+	Entity,
+	PrimaryGeneratedColumn,
+	Column,
+	ManyToOne,
+	JoinColumn,
+	CreateDateColumn,
+	PrimaryColumn,
+	BeforeInsert
+} from 'typeorm';
 import { BaseGuild } from './Guild';
 import { Moment } from 'moment';
 import { DateTransformer } from './Transformers';
@@ -11,6 +21,7 @@ import { BaseClient } from '../Client';
 
 import i18n from 'i18n';
 import { settings } from 'cluster';
+import { snowFlakeID } from './Snowflakes/SnowflakeID';
 
 export enum Punishment {
 	BAN = 'ban',
@@ -32,8 +43,13 @@ interface ContextLog {
 
 @Entity()
 export class BasePunishment extends BaseEntity {
-	@PrimaryGeneratedColumn()
-	public id: number;
+	@PrimaryColumn({ type: 'bigint' })
+	public id: bigint;
+
+	@BeforeInsert()
+	setId() {
+		this.id = snowFlakeID();
+	}
 
 	@ManyToOne((type) => BaseGuild, (g) => g.id, { eager: true, nullable: false, onDelete: 'NO ACTION', cascade: true })
 	@JoinColumn()

@@ -16,8 +16,8 @@ import { ScheduledAction } from '../../../../Entity/ScheduledAction';
 export default class extends Command {
 	public constructor(client: BaseClient) {
 		super(client, {
-			name: 'tempban',
-			aliases: ['темпбан', 'тбан'],
+			name: 'tempmute',
+			aliases: ['темпмут', 'тмут'],
 			group: CommandGroup.MODERATION,
 			args: [
 				{
@@ -37,8 +37,8 @@ export default class extends Command {
 				}
 			],
 			guildOnly: true,
-			botPermissions: [GuildPermission.BAN_MEMBERS],
-			userPermissions: [GuildPermission.BAN_MEMBERS],
+			botPermissions: [GuildPermission.MANAGE_ROLES],
+			userPermissions: [GuildPermission.MANAGE_ROLES],
 			premiumOnly: false
 		});
 	}
@@ -53,7 +53,7 @@ export default class extends Command {
 		const embed = this.client.messages.createEmbed(
 			{
 				color: ColorResolve(Color.RED),
-				title: t('moderation.ban.title'),
+				title: t('moderation.mute.title'),
 				fields: [],
 				footer: {
 					text: ''
@@ -62,16 +62,20 @@ export default class extends Command {
 			false
 		);
 
-		if (this.client.moderation.isPunishable(guild, member, message.member, me)) {
+		const mutedRole = settings.mutedRole;
+
+		if (!mutedRole || !guild.roles.has(mutedRole)) {
+			embed.description = t('moderation.mute.missedRole');
+		} else if (this.client.moderation.isPunishable(guild, member, message.member, me)) {
 			const extra = [
 				{ name: 'logs.mod.reason', value: reason },
 				{ name: 'logs.mod.duration', value: duration.locale(settings.locale).humanize(false) }
 			];
 
-			await BasePunishment.informUser(member, Punishment.BAN, settings, extra);
+			await BasePunishment.informUser(member, Punishment.MUTE, settings, extra);
 
 			try {
-				await guild.banMember(member.id, 7, encodeURIComponent(reason));
+				await member.addRole(mutedRole, encodeURIComponent(reason));
 
 				await BaseMember.saveMembers(guild, [member]);
 
@@ -82,7 +86,7 @@ export default class extends Command {
 					target: member,
 					extra,
 					opts: {
-						type: Punishment.BAN,
+						type: Punishment.MUTE,
 						amount: 0,
 						args: '',
 						date: moment().add(duration),
@@ -93,17 +97,18 @@ export default class extends Command {
 
 				await this.client.scheduler.addScheduledAction(
 					guild.id,
-					ScheduledAction.UNBAN,
-					{ memberId: member.id },
+					ScheduledAction.UNMUTE,
+					{ memberId: member.id, roleId: mutedRole },
 					moment().add(duration)
 				);
 
 				embed.color = ColorResolve(Color.DARK);
 				embed.timestamp = moment().add(duration).toISOString();
-				embed.footer = { icon_url: message.author.avatarURL, text: t('moderation.ban.until') };
-				embed.description = t('moderation.ban.done', {
+				embed.footer = { icon_url: message.author.avatarURL, text: t('moderation.mute.until') };
+				embed.description = t('moderation.mute.done', {
 					user: `${message.author.username}#${message.author.discriminator}`,
-					target: `${member.user.username}#${member.user.discriminator}`
+					target: `${member.user.username}#${member.user.discriminator}`,
+					reason
 				});
 
 				embed.fields.push(
@@ -119,10 +124,10 @@ export default class extends Command {
 				);
 			} catch (err) {
 				console.log(err);
-				embed.description = t('moderation.ban.error');
+				embed.description = t('moderation.mute.error');
 			}
 		} else {
-			embed.description = t('moderation.ban.cannot');
+			embed.description = t('moderation.mute.cannot');
 		}
 
 		await this.replyAsync(message, t, embed);

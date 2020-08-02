@@ -185,7 +185,22 @@
 		},
 		"reason": "moderation.reason",
 		"dm": {
-			"ban": "moderation.dm.ban"
+			"ban": "moderation.dm.ban",
+			"mute": "moderation.dm.mute"
+		},
+		"mute": {
+			"title": "moderation.mute.title",
+			"missedRole": "moderation.mute.missedRole",
+			"until": "moderation.mute.until",
+			"done": "moderation.mute.done"
+		},
+		"noreason": "moderation.noreason"
+	},
+	"configure": {
+		"title": "configure.title",
+		"muterole": {
+			"new": "configure.muterole.new",
+			"info": "configure.muterole.info"
 		}
 	}
 }

@@ -68,7 +68,9 @@ export default class extends Command {
 
 		await this.replyAsync(message, t, {
 			color: ColorResolve(Color.MAGENTA),
-			title: t('configure.title'),
+			title: t('configure.title', {
+				guild: guild.name
+			}),
 			description: t(`configure.autosave.${settings.saveroles ? 'enable' : 'disable'}`),
 			footer: {
 				text: ''

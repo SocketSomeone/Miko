@@ -1,8 +1,8 @@
 import { Command, Context } from '../../../Framework/Commands/Command';
 import { BaseClient } from '../../../Client';
-import { StringResolver, ChannelResolver } from '../../../Framework/Resolvers';
+import { StringResolver, RoleResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
-import { Message, Member, Channel } from 'eris';
+import { Message, Member, Guild, User, Role } from 'eris';
 import { BaseMember } from '../../../Entity/Member';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
@@ -11,25 +11,25 @@ import { GuildPermission } from '../../../Misc/Enums/GuildPermissions';
 export default class extends Command {
 	public constructor(client: BaseClient) {
 		super(client, {
-			name: 'modlog',
-			aliases: [],
+			name: 'muterole',
+			aliases: ['мутроль'],
 			args: [
 				{
-					name: 'channel',
-					resolver: ChannelResolver,
-					required: false
+					name: 'role',
+					resolver: RoleResolver
 				}
 			],
 			group: CommandGroup.CONFIGURE,
 			guildOnly: true,
 			premiumOnly: false,
-			userPermissions: [GuildPermission.MANAGE_GUILD]
+			botPermissions: [GuildPermission.MANAGE_ROLES],
+			userPermissions: [GuildPermission.MANAGE_ROLES]
 		});
 	}
 
-	public async execute(message: Message, [channel]: [Channel], { funcs: { t, e }, guild, settings }: Context) {
-		if (channel) {
-			settings.modlog = channel.id;
+	public async execute(message: Message, [role]: [Role], { funcs: { t, e }, guild, settings }: Context) {
+		if (role) {
+			settings.mutedRole = role.id;
 			await this.client.cache.guilds.updateOne(guild);
 		}
 
@@ -39,10 +39,10 @@ export default class extends Command {
 				guild: guild.name
 			}),
 			description:
-				!settings.modlog || !guild.channels.has(settings.modlog)
-					? t('configure.modlog.notFound')
-					: t(`configure.modlog.${channel ? 'new' : 'info'}`, {
-							channel: `<#${settings.modlog}>`
+				!settings.mutedRole || !guild.roles.has(settings.mutedRole)
+					? t('configure.muterole.notFound')
+					: t(`configure.muterole.${role ? 'new' : 'info'}`, {
+							role: `<@&${settings.mutedRole}>`
 					  }),
 			footer: {
 				text: ''

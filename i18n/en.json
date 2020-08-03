@@ -14,7 +14,8 @@
 		}
 	},
 	"embed": {
-		"disabled": "embed.disabled"
+		"disabled": "embed.disabled",
+		"notificationDeveloper": "embed.notificationDeveloper"
 	},
 	"modules": {
 		"economy": {
@@ -146,7 +147,16 @@
 			"desc": "error.missed.userpermissions.desc"
 		},
 		"missed": {
-			"muterole": "error.missed.muterole"
+			"muterole": "error.missed.muterole",
+			"userpermissions": {
+				"title": "error.missed.userpermissions.title",
+				"desc": "error.missed.userpermissions.desc"
+			}
+		},
+		"unknown": "error.unknown",
+		"ratelimit": {
+			"title": "error.ratelimit.title",
+			"desc": "error.ratelimit.desc"
 		}
 	},
 	"others": {
@@ -163,7 +173,8 @@
 		},
 		"number": {
 			"tooSmall": "resolvers.number.tooSmall",
-			"invalid": "resolvers.number.invalid"
+			"invalid": "resolvers.number.invalid",
+			"tooLarge": "resolvers.number.tooLarge"
 		}
 	},
 	"key": {
@@ -221,6 +232,9 @@
 		"modlog": {
 			"notFound": "configure.modlog.notFound",
 			"new": "configure.modlog.new"
+		},
+		"autosave": {
+			"enable": "configure.autosave.enable"
 		}
 	},
 	"gambling": {
@@ -228,6 +242,14 @@
 			"title": "gambling.wis.title",
 			"desc": "gambling.wis.desc",
 			"result": "gambling.wis.result"
+		},
+		"fortune": {
+			"title": "gambling.fortune.title",
+			"desc": "gambling.fortune.desc",
+			"fields": {
+				"bet": "gambling.fortune.fields.bet",
+				"result": "gambling.fortune.fields.result"
+			}
 		}
 	}
 }

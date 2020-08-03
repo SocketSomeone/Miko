@@ -11,4 +11,4 @@ export * from './NumberResolver';
 export * from './Resolver';
 export * from './RoleResolver';
 export * from './StringResolver';
-export * from './BigNumberResolver';
+export * from './BigIntResolver';

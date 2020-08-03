@@ -12,7 +12,6 @@ import {
 import { BaseGuild } from './Guild';
 import { Moment } from 'moment';
 import { DateTransformer } from './Transformers';
-import { snowFlakeID } from './Snowflakes/SnowflakeID';
 
 export enum ScheduledAction {
 	UNMUTE = 'unmute',
@@ -21,8 +20,8 @@ export enum ScheduledAction {
 
 @Entity()
 export class BaseScheduledAction extends BaseEntity {
-	@PrimaryGeneratedColumn({ type: 'bigint' })
-	public id: bigint;
+	@PrimaryGeneratedColumn()
+	public id: number;
 
 	@ManyToOne((type) => BaseGuild, (g) => g.id, { eager: true, nullable: false, onDelete: 'NO ACTION', cascade: true })
 	@JoinColumn()

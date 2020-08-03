@@ -74,7 +74,7 @@ export default class extends Command {
 			}),
 			description: t('economy.bal.desc', {
 				member: target.user.mention,
-				amount: `${person.money.toFormat()} ${e(settings.emojis.wallet)}`
+				amount: `${person.money} ${e(settings.emojis.wallet)}`
 			})
 		});
 	}

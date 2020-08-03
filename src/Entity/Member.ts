@@ -4,35 +4,20 @@ import {
 	ManyToOne,
 	JoinColumn,
 	Column,
-	PrimaryGeneratedColumn,
-	OneToMany,
-	ManyToMany,
 	createQueryBuilder,
 	PrimaryColumn,
-	BeforeInsert
+	PrimaryGeneratedColumn
 } from 'typeorm';
 import { BaseGuild } from './Guild';
 import { Member, Guild } from 'eris';
 import { Moment, Duration, duration } from 'moment';
-import { DateTransformer, BigNumberTransformer, DurationTransformer, BigIntTransformer } from './Transformers/';
-
-import BigNumber from 'bignumber.js';
+import { DateTransformer, DurationTransformer, BigIntTransformer } from './Transformers/';
 import { Violation } from '../Misc/Models/Violation';
-import './Snowflakes/SnowflakeID';
-import { snowFlakeID } from './Snowflakes/SnowflakeID';
-
-BigNumber.config({
-	FORMAT: {
-		decimalSeparator: ',',
-		groupSeparator: '.',
-		groupSize: 3
-	}
-});
 
 @Entity()
 export class BaseMember extends BaseEntity {
-	@PrimaryColumn({ type: 'bigint', transformer: BigIntTransformer })
-	public id: bigint;
+	@PrimaryGeneratedColumn()
+	public id: number;
 
 	@Column({ nullable: false })
 	public user: string;
@@ -41,8 +26,8 @@ export class BaseMember extends BaseEntity {
 	@JoinColumn()
 	public guild: BaseGuild;
 
-	@Column({ type: 'varchar', default: new BigNumber(0), transformer: BigNumberTransformer })
-	public money: BigNumber;
+	@Column({ type: 'bigint', transformer: BigIntTransformer })
+	public money: bigint;
 
 	@Column({
 		type: 'timestamp without time zone',
@@ -73,7 +58,6 @@ export class BaseMember extends BaseEntity {
 		if (hasFounded) return hasFounded;
 
 		const guild = await BaseGuild.get(user.guild.id);
-
 		const member = BaseMember.getDefaultMember(guild, user.id);
 
 		await member.save();
@@ -84,11 +68,10 @@ export class BaseMember extends BaseEntity {
 	private static getDefaultMember(guild: BaseGuild, userId: string) {
 		const member = new BaseMember();
 
-		member.id = snowFlakeID();
 		member.guild = guild;
 		member.user = userId;
 		member.voiceOnline = duration(0, 'minutes');
-		member.money = new BigNumber(guild.sets.prices.standart);
+		member.money = BigInt(guild.sets.prices.standart);
 
 		return member;
 	}

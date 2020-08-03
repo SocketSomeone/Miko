@@ -1,6 +1,5 @@
 import { Command, Context } from '../../../Framework/Commands/Command';
 import { BaseClient } from '../../../Client';
-import { NumberResolver, BigNumberResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message, Member, Emoji } from 'eris';
 import { BaseMember } from '../../../Entity/Member';
@@ -8,8 +7,8 @@ import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { Color } from '../../../Misc/Enums/Colors';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { chance } from '../../../Misc/Utils/Chance';
-import BigNumber from 'bignumber.js';
 import { Syntax } from '../../../Misc/Enums/Syntax';
+import { BigIntResolver } from '../../../Framework/Resolvers';
 
 const multipliers: number[] = [0.1, 0.2, 0.3, 0.5, 1.3, 1.7, 1.5, 2],
 	side_arrows: string[] = ['⬆️', '↗️', '➡️', '↘️', '⬇️', '↙️', '⬅️', '↖️'];
@@ -22,7 +21,7 @@ export default class extends Command {
 			args: [
 				{
 					name: 'money',
-					resolver: new BigNumberResolver(client, 50),
+					resolver: new BigIntResolver(client, 50n),
 					required: true
 				}
 			],
@@ -34,7 +33,7 @@ export default class extends Command {
 
 	public async execute(
 		message: Message,
-		[bet]: [BigNumber],
+		[bet]: [bigint],
 		{
 			funcs: { t, e },
 			guild,
@@ -45,18 +44,18 @@ export default class extends Command {
 	) {
 		const person = await BaseMember.get(message.member);
 
-		if (person.money.lt(bet))
+		if (person.money < bet)
 			throw new ExecuteError(
 				t('error.enough.money', {
 					emoji: e(wallet),
-					amount: bet.minus(person.money)
+					amount: bet - person.money
 				})
 			);
 
 		const multiplier = chance.pickone(multipliers);
-		const result = bet.times(multiplier);
+		const result = (bet * BigInt(multiplier * 100)) / 100n;
 
-		person.money = person.money.plus(result).minus(bet);
+		person.money += result - bet;
 		await person.save();
 
 		let text = '',
@@ -81,12 +80,12 @@ export default class extends Command {
 			fields: [
 				{
 					name: t('gambling.fortune.fields.bet'),
-					value: `${bet.toFormat()} ${e(wallet)}`,
+					value: `${bet} ${e(wallet)}`,
 					inline: true
 				},
 				{
 					name: t('gambling.fortune.fields.result'),
-					value: `${result.toFormat()} ${e(wallet)}`,
+					value: `${result} ${e(wallet)}`,
 					inline: true
 				}
 			],

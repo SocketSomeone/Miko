@@ -13,7 +13,7 @@ type ScheduledActionsFunctions = {
 };
 
 export class SchedulerService extends BaseService {
-	private scheduledActionTimers: Map<bigint, NodeJS.Timer> = new Map();
+	private scheduledActionTimers: Map<number, NodeJS.Timer> = new Map();
 	private scheduledActionsFuncs: ScheduledActionsFunctions = {
 		[ScheduledAction.UNMUTE]: (g, a) => this.unmute(g, a),
 		[ScheduledAction.UNBAN]: (g, a) => this.unban(g, a)

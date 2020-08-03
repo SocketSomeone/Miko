@@ -61,7 +61,7 @@ export class ModerationService extends BaseService {
 		setInterval(scanMessageCache, 60 * 1000);
 
 		this.client.on('messageCreate', this.onMessage.bind(this));
-		this.client.on('messageUpdate', this.onMessage.bind(this));
+		//this.client.on('messageUpdate', this.onMessage.bind(this));
 	}
 
 	private async onMessage(message: Message) {

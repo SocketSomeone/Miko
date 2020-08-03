@@ -16,8 +16,8 @@ import { UserResolver } from '../../../../Framework/Resolvers/UserResolver';
 export default class extends Command {
 	public constructor(client: BaseClient) {
 		super(client, {
-			name: 'purge',
-			aliases: ['prune', 'очистить'],
+			name: 'clear',
+			aliases: ['prune', 'purge', 'очистить'],
 			group: CommandGroup.MODERATION,
 			args: [
 				{

@@ -39,6 +39,6 @@ export class BigNumberResolver extends Resolver {
 			}
 		}
 
-		return val;
+		return val.toString().length >= 25 ? new BigNumber('Infinity') : val;
 	}
 }

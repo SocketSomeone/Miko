@@ -11,7 +11,7 @@ import {
 } from 'typeorm';
 import { BaseGuild } from './Guild';
 import { Moment } from 'moment';
-import { DateTransformer, BigIntTransformer } from './Transformers';
+import { DateTransformer } from './Transformers';
 import { Guild, Member, TextChannel } from 'eris';
 import { TranslateFunc, Command } from '../Framework/Commands/Command';
 import { GuildSettings } from '../Misc/Models/GuildSetting';
@@ -43,13 +43,8 @@ interface ContextLog {
 
 @Entity()
 export class BasePunishment extends BaseEntity {
-	@PrimaryColumn({ type: 'bigint', transformer: BigIntTransformer })
-	public id: bigint;
-
-	@BeforeInsert()
-	setId() {
-		this.id = snowFlakeID();
-	}
+	@PrimaryGeneratedColumn()
+	public id: number;
 
 	@ManyToOne((type) => BaseGuild, (g) => g.id, { eager: true, nullable: false, onDelete: 'NO ACTION', cascade: true })
 	@JoinColumn()

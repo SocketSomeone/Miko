@@ -8,6 +8,6 @@ export const BigNumberTransformer: ValueTransformer = {
 	to: (n: BigNumber) => {
 		if (!n) return '0';
 
-		return n.toString().length >= 1850 ? 'Infinity' : n.toString();
+		return n.toString().length >= 25 ? 'Infinity' : n.toString();
 	}
 };

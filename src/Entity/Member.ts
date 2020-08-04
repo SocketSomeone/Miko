@@ -14,7 +14,7 @@ import {
 import { BaseGuild } from './Guild';
 import { Member, Guild } from 'eris';
 import { Moment, Duration, duration } from 'moment';
-import { DateTransformer, BigNumberTransformer, DurationTransformer, BigIntTransformer } from './Transformers/';
+import { DateTransformer, BigNumberTransformer, DurationTransformer } from './Transformers/';
 
 import BigNumber from 'bignumber.js';
 import { Violation } from '../Misc/Models/Violation';
@@ -31,8 +31,8 @@ BigNumber.config({
 
 @Entity()
 export class BaseMember extends BaseEntity {
-	@PrimaryColumn({ type: 'bigint', transformer: BigIntTransformer })
-	public id: bigint;
+	@PrimaryGeneratedColumn()
+	public id: number;
 
 	@Column({ nullable: false })
 	public user: string;
@@ -84,7 +84,6 @@ export class BaseMember extends BaseEntity {
 	private static getDefaultMember(guild: BaseGuild, userId: string) {
 		const member = new BaseMember();
 
-		member.id = snowFlakeID();
 		member.guild = guild;
 		member.user = userId;
 		member.voiceOnline = duration(0, 'minutes');

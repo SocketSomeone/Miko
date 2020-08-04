@@ -1,5 +1,6 @@
 import { Command, Context } from '../../../Framework/Commands/Command';
 import { BaseClient } from '../../../Client';
+import { NumberResolver, BigNumberResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message, Member, Emoji } from 'eris';
 import { BaseMember } from '../../../Entity/Member';
@@ -7,7 +8,7 @@ import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { Color } from '../../../Misc/Enums/Colors';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { chance } from '../../../Misc/Utils/Chance';
-import { BigIntResolver } from '../../../Framework/Resolvers';
+import BigNumber from 'bignumber.js';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -17,7 +18,7 @@ export default class extends Command {
 			args: [
 				{
 					name: 'money',
-					resolver: new BigIntResolver(client, 1n, 300n),
+					resolver: new BigNumberResolver(client, 1, 300),
 					required: true
 				}
 			],
@@ -29,7 +30,7 @@ export default class extends Command {
 
 	public async execute(
 		message: Message,
-		[money]: [bigint],
+		[money]: [BigNumber],
 		{
 			funcs: { t, e },
 			guild,
@@ -40,15 +41,15 @@ export default class extends Command {
 	) {
 		const person = await BaseMember.get(message.member);
 
-		if (person.money < money)
+		if (person.money.lt(money))
 			throw new ExecuteError(
 				t('error.enough.money', {
 					emoji: e(wallet),
-					amount: money - person.money
+					amount: money.minus(person.money)
 				})
 			);
 
-		person.money -= money;
+		person.money = person.money.minus(money);
 		await person.save();
 
 		let doors = ['🚪', '🚪', '🚪'],
@@ -92,7 +93,7 @@ export default class extends Command {
 			doors[c - 1] = '🐣';
 
 			if (s === c) {
-				person.money += money * 2n;
+				person.money = person.money.plus(money.times(2));
 				await person.save();
 			}
 
@@ -112,7 +113,7 @@ export default class extends Command {
 		this.client.addListener('messageReactionAdd', func);
 
 		timer = setTimeout(async () => {
-			person.money += money;
+			person.money = person.money.plus(money);
 			await person.save();
 
 			this.client.removeListener('messageReactionAdd', func);

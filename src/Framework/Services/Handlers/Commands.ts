@@ -343,7 +343,6 @@ export class CommandService extends BaseService {
 			moment.locale(sets.locale);
 			await cmd.execute(message, args, context);
 		} catch (err) {
-			console.error(error);
 			if (err instanceof ExecuteError) {
 				const embed = this.client.messages.createEmbed({
 					title: t('error.execCommand.title'),

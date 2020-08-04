@@ -23,8 +23,11 @@ export default class extends Command {
 	}
 
 	public async execute(message: Message, []: [], { funcs: { t, e }, guild, settings }: Context) {
+		settings.saveroles = !settings.saveroles;
+		await this.client.cache.guilds.updateOne(guild);
+
 		await this.replyAsync(message, t, {
-			color: ColorResolve(Color.GRAY),
+			color: ColorResolve(Color.MAGENTA),
 			title: t('configure.title', {
 				guild: guild.name
 			}),

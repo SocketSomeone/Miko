@@ -9,6 +9,6 @@ export const BigIntTransformer: ValueTransformer = {
 			return null;
 		}
 
-		return String(date);
+		return date.toString();
 	}
 };

@@ -20,6 +20,8 @@ import { Color } from '../Misc/Enums/Colors';
 import { BaseClient } from '../Client';
 
 import i18n from 'i18n';
+import { settings } from 'cluster';
+import { snowFlakeID } from './Snowflakes/SnowflakeID';
 
 export enum Punishment {
 	BAN = 'ban',
@@ -41,8 +43,13 @@ interface ContextLog {
 
 @Entity()
 export class BasePunishment extends BaseEntity {
-	@PrimaryGeneratedColumn()
-	public id: number;
+	@PrimaryColumn({ type: 'bigint', transformer: BigIntTransformer })
+	public id: bigint;
+
+	@BeforeInsert()
+	setId() {
+		this.id = snowFlakeID();
+	}
 
 	@ManyToOne((type) => BaseGuild, (g) => g.id, { eager: true, nullable: false, onDelete: 'NO ACTION', cascade: true })
 	@JoinColumn()

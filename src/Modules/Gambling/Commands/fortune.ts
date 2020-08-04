@@ -8,8 +8,8 @@ import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { Color } from '../../../Misc/Enums/Colors';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { chance } from '../../../Misc/Utils/Chance';
-import BigNumber from 'bignumber.js';
 import { Syntax } from '../../../Misc/Enums/Syntax';
+import BigNumber from 'bignumber.js';
 
 const multipliers: number[] = [0.1, 0.2, 0.3, 0.5, 1.3, 1.7, 1.5, 2],
 	side_arrows: string[] = ['⬆️', '↗️', '➡️', '↘️', '⬇️', '↙️', '⬅️', '↖️'];

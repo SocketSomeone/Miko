@@ -18,7 +18,7 @@ export default class extends Command {
 			args: [
 				{
 					name: 'money',
-					resolver: new BigNumberResolver(client, 1, 300),
+					resolver: new BigNumberResolver(client, 1),
 					required: true
 				}
 			],
@@ -66,7 +66,7 @@ export default class extends Command {
 
 		const emojis = ['1️⃣', '2️⃣', '3️⃣'];
 
-		for (const emoji of emojis) await m.addReaction(emoji);
+		for (const emoji of emojis) m.addReaction(emoji);
 
 		const func = async (msg: Message, emoji: Emoji, userId: string) => {
 			if (msg.id !== m.id || userId !== message.author.id) {

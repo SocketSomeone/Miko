@@ -22,6 +22,7 @@ export interface GuildSettings {
 	saveroles: boolean;
 	mutedRole: string;
 
+	privateManager: string;
 	autoMod: {
 		enabled: boolean;
 		invites: Punishment;
@@ -45,6 +46,7 @@ export const Defaults: GuildSettings = {
 	saveroles: false,
 	modlog: null,
 	mutedRole: null,
+	privateManager: null,
 	prices: {
 		timely: new BigNumber(15),
 		standart: new BigNumber(100)

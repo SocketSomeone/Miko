@@ -5,14 +5,19 @@ import { Resolver } from './Resolver';
 import BigNumber from 'bignumber.js';
 
 export class BigNumberResolver extends Resolver {
-	private min?: number;
-	private max?: number;
+	private min?: BigNumber;
+	private max?: BigNumber;
 	private canInfinity: boolean = false;
 
-	public constructor(client: BaseClient, min?: number, max?: number, canInfinity: boolean = false) {
+	public constructor(
+		client: BaseClient,
+		min?: number,
+		max: BigNumber = new BigNumber('1' + '0'.repeat(24)),
+		canInfinity: boolean = false
+	) {
 		super(client);
 
-		this.min = min;
+		this.min = new BigNumber(min);
 		this.max = max;
 		this.canInfinity = canInfinity;
 	}

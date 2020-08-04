@@ -105,5 +105,9 @@ export abstract class Command {
 		this.showPaginated = client.messages.showPaginated.bind(client.messages);
 	}
 
+	public async onLoaded() {
+		// NO-OP
+	}
+
 	public abstract execute(message: Message, args: any[], context: Context): any;
 }

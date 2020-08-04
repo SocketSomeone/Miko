@@ -70,6 +70,7 @@ export class CommandService extends BaseService {
 	public async onClientReady() {
 		this.client.on('messageCreate', this.onMessage.bind(this));
 
+		await Promise.all(this.commands.map((x) => x.onLoaded()));
 		await super.onClientReady();
 	}
 
@@ -326,7 +327,10 @@ export class CommandService extends BaseService {
 				await this.client.messages.sendReply(message, t, {
 					color: ColorResolve(Color.RED),
 					title: t('error.arguments.title'),
-					description: err.message
+					description: err.message,
+					footer: {
+						text: ''
+					}
 				});
 
 				return;
@@ -344,11 +348,17 @@ export class CommandService extends BaseService {
 			await cmd.execute(message, args, context);
 		} catch (err) {
 			if (err instanceof ExecuteError) {
-				const embed = this.client.messages.createEmbed({
-					title: t('error.execCommand.title'),
-					color: ColorResolve(Color.ORANGE),
-					...err.embed
-				});
+				const embed = this.client.messages.createEmbed(
+					{
+						title: t('error.execCommand.title'),
+						color: ColorResolve(Color.ORANGE),
+						footer: {
+							text: ''
+						},
+						...err.embed
+					},
+					false
+				);
 
 				await this.client.messages.sendReply(message, t, embed);
 			} else {
@@ -371,6 +381,7 @@ export class CommandService extends BaseService {
 				scope.setTag('command', cmd.name);
 				scope.setExtra('channel', channel.id);
 				scope.setExtra('message', message.content);
+				scope.setExtra('Execute Time', execTime);
 
 				captureException(error);
 			});

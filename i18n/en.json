@@ -216,11 +216,20 @@
 			"info": "configure.muterole.info"
 		},
 		"prefix": {
-			"new": "configure.prefix.new"
+			"new": "configure.prefix.new",
+			"info": "configure.prefix.info"
 		},
 		"modlog": {
 			"notFound": "configure.modlog.notFound",
 			"new": "configure.modlog.new"
+		},
+		"privates": {
+			"enabled": "configure.privates.enabled",
+			"disabled": "configure.privates.disabled"
+		},
+		"autosave": {
+			"enable": "configure.autosave.enable",
+			"disable": "configure.autosave.disable"
 		}
 	},
 	"gambling": {
@@ -228,6 +237,14 @@
 			"title": "gambling.wis.title",
 			"desc": "gambling.wis.desc",
 			"result": "gambling.wis.result"
+		},
+		"fortune": {
+			"title": "gambling.fortune.title",
+			"desc": "gambling.fortune.desc",
+			"fields": {
+				"bet": "gambling.fortune.fields.bet",
+				"result": "gambling.fortune.fields.result"
+			}
 		}
 	}
 }

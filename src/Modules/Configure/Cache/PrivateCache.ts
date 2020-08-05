@@ -11,4 +11,15 @@ export class PrivatesCache extends BaseCache<BasePrivate> {
 
 		return pr || null;
 	}
+
+	public async add(object: Partial<BasePrivate>) {
+		const pr = await BasePrivate.save(BasePrivate.create(object));
+
+		this.set(pr.id, pr);
+	}
+
+	public async delete(pr: BasePrivate) {
+		this.flush(pr.id);
+		await pr.remove();
+	}
 }

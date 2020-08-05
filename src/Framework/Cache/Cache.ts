@@ -66,17 +66,24 @@ export abstract class BaseCache<T> {
 		return value;
 	}
 
-	public merge(target: any, merge: any) {
-		for (var p in merge) {
-			try {
-				if (merge[p] && merge[p].constructor === Object) {
-					target[p] = this.merge(target[p], merge[p]);
-					continue;
-				}
+	protected isObject(item: Partial<T>) {
+		return item && typeof item === 'object' && !Array.isArray(item);
+	}
 
-				target[p] = merge[p];
-			} catch (e) {
-				target[p] = merge[p];
+	public merge(target: any, ...sources: any[]) {
+		if (!sources.length) return target;
+
+		const source = sources.shift();
+
+		if (this.isObject(target) && this.isObject(source)) {
+			for (const key in source) {
+				if (this.isObject(source[key])) {
+					if (!target[key]) Object.assign(target, { [key]: {} });
+
+					this.merge(target[key], source[key]);
+				} else {
+					Object.assign(target, { [key]: source[key] });
+				}
 			}
 		}
 

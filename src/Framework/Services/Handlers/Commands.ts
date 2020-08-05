@@ -344,7 +344,7 @@ export class CommandService extends BaseService {
 		let error: any = null;
 
 		try {
-			moment.locale(sets.locale);
+			//moment.locale(sets.locale);
 			await cmd.execute(message, args, context);
 		} catch (err) {
 			if (err instanceof ExecuteError) {

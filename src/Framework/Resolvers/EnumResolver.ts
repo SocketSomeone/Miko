@@ -13,7 +13,7 @@ export class EnumResolver extends Resolver {
 		values.forEach((v) => this.values.set(v.toLowerCase(), v));
 	}
 
-	public async resolve(value: string, { funcs: { t } }: Context): Promise<string> {
+	public async resolve(value: string, ctx: Context): Promise<string> {
 		if (!value) {
 			return;
 		}
@@ -22,7 +22,11 @@ export class EnumResolver extends Resolver {
 		if (this.values.has(val)) {
 			return this.values.get(val);
 		}
-		throw Error(t(`resolvers.enum.invalid`));
+		throw Error(
+			ctx.funcs.t(`resolvers.enum.invalid`, {
+				options: this.getHelp(ctx)
+			})
+		);
 	}
 
 	public getHelp({ funcs: { t } }: Context) {

@@ -6,6 +6,7 @@ import { Message, Member, VoiceState, OldVoiceState } from 'eris';
 import { BaseMember } from '../../../Entity/Member';
 import { createQueryBuilder, In, Any } from 'typeorm';
 import { BaseGuild } from '../../../Entity/Guild';
+import { Syntax } from '../../../Misc/Enums/Syntax';
 
 export default class extends Command {
 	// private intervals: {

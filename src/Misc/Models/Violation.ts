@@ -1,16 +1,13 @@
 import { Punishment } from '../../Entity/Punishment';
 
 export enum Violation {
-	invites = 'Sending Invites'
-	// links = 'links',
-	// words = 'words',
-	// allCaps = 'allCaps',
-	// duplicateText = 'duplicateText',
-	// quickMessages = 'quickMessages',
-	// mentionUsers = 'mentionUsers',
-	// mentionRoles = 'mentionRoles',
-	// emojis = 'emojis',
-	// hoist = 'hoist'
+	invites = 'invites',
+	allCaps = 'caps',
+	duplicateText = 'duplicate',
+	zalgo = 'zalgo',
+	emojis = 'emojis',
+	externalLinks = 'exlinks',
+	mentions = 'mentions'
 }
 
 export class PunishmentConfig {

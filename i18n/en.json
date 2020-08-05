@@ -146,7 +146,15 @@
 			"desc": "error.missed.userpermissions.desc"
 		},
 		"missed": {
-			"muterole": "error.missed.muterole"
+			"muterole": "error.missed.muterole",
+			"userpermissions": {
+				"title": "error.missed.userpermissions.title",
+				"desc": "error.missed.userpermissions.desc"
+			}
+		},
+		"ratelimit": {
+			"title": "error.ratelimit.title",
+			"desc": "error.ratelimit.desc"
 		}
 	},
 	"others": {
@@ -164,6 +172,10 @@
 		"number": {
 			"tooSmall": "resolvers.number.tooSmall",
 			"invalid": "resolvers.number.invalid"
+		},
+		"enum": {
+			"invalid": "resolvers.enum.invalid",
+			"validValues": "resolvers.enum.validValues"
 		}
 	},
 	"key": {
@@ -230,6 +242,85 @@
 		"autosave": {
 			"enable": "configure.autosave.enable",
 			"disable": "configure.autosave.disable"
+		},
+		"conf": {
+			"main": {
+				"prefix": "configure.conf.main.prefix",
+				"locale": "configure.conf.main.locale",
+				"ignoreChannels": "configure.conf.main.ignoreChannels",
+				"verbose": "configure.conf.main.verbose",
+				"saveroles": "configure.conf.main.saveroles",
+				"modlog": "configure.conf.main.modlog",
+				"mutedRole": "configure.conf.main.mutedRole",
+				"privateManager": "configure.conf.main.privateManager",
+				"prices": "configure.conf.main.prices",
+				"emojis": "configure.conf.main.emojis",
+				"autoMod": "configure.conf.main.autoMod",
+				"privateRoom": "configure.conf.main.privateRoom",
+				"privateRooms": "configure.conf.main.privateRooms"
+			},
+			"automod": {
+				"settings": {
+					"invites": "configure.conf.automod.settings.invites",
+					"allCaps": "configure.conf.automod.settings.allCaps",
+					"duplicateText": "configure.conf.automod.settings.duplicateText",
+					"zalgo": "configure.conf.automod.settings.zalgo",
+					"emojis": "configure.conf.automod.settings.emojis",
+					"exlinks": "configure.conf.automod.settings.exlinks",
+					"mentions": "configure.conf.automod.settings.mentions"
+				},
+				"invites": "configure.conf.automod.invites",
+				"allCaps": "configure.conf.automod.allCaps",
+				"duplicateText": "configure.conf.automod.duplicateText",
+				"zalgo": "configure.conf.automod.zalgo",
+				"emojis": "configure.conf.automod.emojis",
+				"exlinks": "configure.conf.automod.exlinks",
+				"mentions": "configure.conf.automod.mentions",
+				"caps": "configure.conf.automod.caps",
+				"duplicate": "configure.conf.automod.duplicate"
+			},
+			"settings": {
+				"invites": "configure.conf.settings.invites",
+				"allCaps": "configure.conf.settings.allCaps",
+				"duplicateText": "configure.conf.settings.duplicateText",
+				"zalgo": "configure.conf.settings.zalgo",
+				"emojis": "configure.conf.settings.emojis",
+				"exlinks": "configure.conf.settings.exlinks",
+				"mentions": "configure.conf.settings.mentions"
+			}
+		},
+		"automod": {
+			"invites": {
+				"enable": "configure.automod.invites.enable",
+				"disable": "configure.automod.invites.disable"
+			},
+			"mentions": {
+				"enable": "configure.automod.mentions.enable"
+			},
+			"zalgo": {
+				"disable": "configure.automod.zalgo.disable",
+				"enable": "configure.automod.zalgo.enable"
+			},
+			"exlinks": {
+				"enable": "configure.automod.exlinks.enable"
+			},
+			"allCaps": {
+				"enable": "configure.automod.allCaps.enable"
+			},
+			"duplicateText": {
+				"enable": "configure.automod.duplicateText.enable"
+			},
+			"emojis": {
+				"enable": "configure.automod.emojis.enable"
+			},
+			"duplicate": {
+				"enable": "configure.automod.duplicate.enable",
+				"disable": "configure.automod.duplicate.disable"
+			},
+			"caps": {
+				"enable": "configure.automod.caps.enable",
+				"disable": "configure.automod.caps.disable"
+			}
 		}
 	},
 	"gambling": {
@@ -245,6 +336,28 @@
 				"bet": "gambling.fortune.fields.bet",
 				"result": "gambling.fortune.fields.result"
 			}
+		}
+	},
+	"automod": {
+		"title": "automod.title",
+		"violations": {
+			"invites": "automod.violations.invites",
+			"exlinks": "automod.violations.exlinks",
+			"duplicateText": "automod.violations.duplicateText",
+			"duplicate": "automod.violations.duplicate",
+			"caps": "automod.violations.caps"
+		},
+		"desc": "automod.desc",
+		"footer": "automod.footer",
+		"settings": {
+			"invites": "automod.settings.invites",
+			"allCaps": "automod.settings.allCaps",
+			"duplicateText": "automod.settings.duplicateText",
+			"zalgo": "automod.settings.zalgo",
+			"emojis": "automod.settings.emojis",
+			"exlinks": "automod.settings.exlinks",
+			"mentions": "automod.settings.mentions",
+			"enabled": "automod.settings.enabled"
 		}
 	}
 }

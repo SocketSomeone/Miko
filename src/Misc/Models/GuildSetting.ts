@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js';
 import { Punishment } from '../../Entity/Punishment';
+import { Violation } from './Violation';
 
 export interface GuildPrices {
 	timely: BigNumber;
@@ -23,9 +24,10 @@ export interface GuildSettings {
 	mutedRole: string;
 
 	privateManager: string;
+	autoModIgnoreRoles: string[];
+	autoModIgnoreChannels: string[];
 	autoMod: {
-		enabled: boolean;
-		invites: Punishment;
+		[key in Violation]: boolean;
 	};
 }
 
@@ -35,7 +37,9 @@ export enum Lang {
 
 export enum EmojisDefault {
 	UNKNOWN = '<:unknown_emoji:735361731580264448>',
-	WALLET = '<:miko_coins:735507574027190303>'
+	WALLET = '<:miko_coins:735507574027190303>',
+	ENABLED = '<:enabled:740536635833188352>',
+	DISABLED = '<:disabled:740536635762016277>'
 }
 
 export const Defaults: GuildSettings = {
@@ -54,8 +58,15 @@ export const Defaults: GuildSettings = {
 	emojis: {
 		wallet: EmojisDefault.WALLET
 	},
+	autoModIgnoreRoles: [],
+	autoModIgnoreChannels: [],
 	autoMod: {
-		enabled: true,
-		invites: Punishment.IGNORE
+		[Violation.invites]: false,
+		[Violation.allCaps]: false,
+		[Violation.duplicateText]: false,
+		[Violation.zalgo]: false,
+		[Violation.emojis]: false,
+		[Violation.externalLinks]: false,
+		[Violation.mentions]: false
 	}
 };

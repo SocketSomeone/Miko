@@ -58,7 +58,11 @@ export class BaseMember extends BaseEntity {
 	public voiceOnline: Duration;
 
 	@Column({ type: 'json', default: [] })
-	public warns: { type: Violation; createdAt: Date }[];
+	public warns: {
+		type: Violation;
+		expireAt: Date;
+		moderator: string;
+	}[];
 
 	public static async get(user: Member) {
 		const hasFounded = await this.findOne({

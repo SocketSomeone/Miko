@@ -69,7 +69,7 @@ export abstract class BaseCache<T> {
 	public merge(target: any, merge: any) {
 		for (var p in merge) {
 			try {
-				if (merge[p].constructor === Object) {
+				if (merge[p] && merge[p].constructor === Object) {
 					target[p] = this.merge(target[p], merge[p]);
 					continue;
 				}

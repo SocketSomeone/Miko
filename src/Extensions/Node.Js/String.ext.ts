@@ -8,5 +8,5 @@ String.prototype.isNullOrEmpty = function (): boolean {
 };
 
 String.prototype.markdown = function (type: string): string {
-	return `\`\`\`${type ? type : ''}\n${this}\`\`\``;
+	return `\`\`\`${type ? `${type}\n` : ''}${this}\`\`\``;
 };

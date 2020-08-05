@@ -24,7 +24,7 @@ i18n.configure({
 	locales: ['ru', 'en'],
 	defaultLocale: 'ru',
 	syncFiles: true,
-	autoReload: true,
+	autoReload: false,
 	directory: __dirname + '/../i18n',
 	objectNotation: true,
 	logDebugFn: function (msg: string) {

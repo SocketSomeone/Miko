@@ -54,7 +54,7 @@ export abstract class Command {
 	public userPermissions?: GuildPermission[];
 	public premiumOnly?: boolean;
 
-	protected createEmbed: (options?: EmbedOptions) => Embed;
+	protected createEmbed: (options?: EmbedOptions, overrideFooter?: boolean) => Embed;
 	protected replyAsync: (message: Message, t: TranslateFunc, reply: EmbedOptions | string) => Promise<Message>;
 	protected sendAsync: (
 		target: TextableChannel,
@@ -77,7 +77,7 @@ export abstract class Command {
 		this.aliases = props.aliases.map((x) => x.toLowerCase());
 		this.args = (props && props.args) || [];
 		this.group = props.group;
-		this.usage = `{prefix}${this.name} ${this.args.map((x) => (x.required ? `<${x.name}>` : `[${x.name}]`)).join(' ')}`;
+		this.usage = `{prefix}${this.name} `;
 
 		this.botPermissions = (props && props.botPermissions) || [];
 		this.userPermissions = (props && props.userPermissions) || [];
@@ -96,7 +96,7 @@ export abstract class Command {
 
 			delete arg.resolver;
 
-			this.usage += arg.required ? `[${arg.name}] ` : `${arg.name} `;
+			this.usage += arg.required ? `<${arg.name}> ` : `[${arg.name}] `;
 		});
 
 		this.createEmbed = client.messages.createEmbed.bind(client.messages);

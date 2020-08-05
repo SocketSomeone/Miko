@@ -19,6 +19,7 @@ interface Arguments {
 
 interface MiniMessage {
 	id: string;
+	author: string;
 	createdAt: number;
 	content: string;
 	mentions: number;
@@ -78,6 +79,7 @@ export class ModerationService extends BaseService {
 	private getMiniMessage(message: Message): MiniMessage {
 		return {
 			id: message.id,
+			author: message.author.id,
 			createdAt: message.createdAt,
 			content: message.content,
 			mentions: message.mentions.length,
@@ -278,6 +280,7 @@ export class ModerationService extends BaseService {
 		cached = cached.filter(
 			(m) =>
 				m.id !== message.id &&
+				m.author === message.author.id &&
 				m.content.toLowerCase() === message.content.toLowerCase() &&
 				moment().diff(m.createdAt, 'second') < timeframe
 		);

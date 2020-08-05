@@ -26,7 +26,7 @@ export default class extends Command {
 					required: true
 				}
 			],
-			group: CommandGroup.ECONOMY,
+			group: CommandGroup.GAMBLING,
 			guildOnly: true,
 			premiumOnly: false
 		});

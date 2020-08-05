@@ -3,5 +3,6 @@ export enum CommandGroup {
 	WAIFU = 'Waifu',
 	GAMBLING = 'Gambling',
 	MODERATION = 'Moderation',
-	CONFIGURE = 'Configuration'
+	CONFIGURE = 'Configuration',
+	INFO = 'Info'
 }

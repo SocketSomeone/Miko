@@ -1,5 +1,5 @@
 import { BaseService } from '../Service';
-import { EmbedOptions, Embed, TextableChannel, Message, GuildChannel, User, Emoji, Guild } from 'eris';
+import { EmbedOptions, Embed, TextableChannel, Message, GuildChannel, User, Emoji, Guild, VoiceChannel } from 'eris';
 import { withScope, captureException } from '@sentry/node';
 import { GuildPermission } from '../../../Misc/Enums/GuildPermissions';
 import { TranslateFunc } from '../../Commands/Command';
@@ -175,7 +175,6 @@ export class MessageService extends BaseService {
 		page: number,
 		maxPage: number,
 		render: (page: number, maxPage: number) => Embed,
-		isInitial: boolean = true,
 		author?: User
 	) {
 		const embed = render(page, maxPage);
@@ -192,7 +191,7 @@ export class MessageService extends BaseService {
 			}
 		}
 
-		if (page > 0 || page < maxPage - 1) {
+		if ((page > 0 || page < maxPage - 1) && !embed.footer) {
 			embed.footer = {
 				...embed.footer,
 				text: `${t('others.page')}: ${page + 1}/${maxPage}`
@@ -203,14 +202,12 @@ export class MessageService extends BaseService {
 
 		if (prevMsg.author.id === this.client.user.id) {
 			await prevMsg.edit({ embed });
-			if (!author) {
-				throw new Error(
-					'Either the message of the original author must be passed, or you must explicitly specify the original author'
-				);
-			}
 		} else {
 			author = prevMsg.author;
 			prevMsg = await this.sendEmbed(prevMsg.channel, t, embed, prevMsg.author);
+
+			await prevMsg.addReaction(upSymbol);
+			await prevMsg.addReaction(downSymbol);
 
 			if (!prevMsg) {
 				return;
@@ -223,11 +220,6 @@ export class MessageService extends BaseService {
 
 		if (!doPaginate) {
 			return;
-		}
-
-		if (isInitial) {
-			await prevMsg.addReaction(upSymbol);
-			await prevMsg.addReaction(downSymbol);
 		}
 
 		if (page > 0 || page < maxPage - 1) {
@@ -255,10 +247,10 @@ export class MessageService extends BaseService {
 
 				if (isUp && page > 0) {
 					clear();
-					await this.showPaginated(t, prevMsg, page - 1, maxPage, render, false, author);
+					await this.showPaginated(t, prevMsg, page - 1, maxPage, render, author);
 				} else if (!isUp && page < maxPage - 1) {
 					clear();
-					await this.showPaginated(t, prevMsg, page + 1, maxPage, render, false, author);
+					await this.showPaginated(t, prevMsg, page + 1, maxPage, render, author);
 				}
 			};
 

@@ -359,5 +359,11 @@
 			"mentions": "automod.settings.mentions",
 			"enabled": "automod.settings.enabled"
 		}
+	},
+	"info": {
+		"help": {
+			"title": "info.help.title",
+			"footer": "info.help.footer"
+		}
 	}
 }

@@ -1,8 +1,8 @@
-import { BaseEntity, Entity, Column, CreateDateColumn, PrimaryColumn } from 'typeorm';
+import { BaseEntity, Entity, Column, CreateDateColumn, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class BaseReactionRole extends BaseEntity {
-	@PrimaryColumn({ type: 'bigint' })
+	@PrimaryGeneratedColumn({ type: 'bigint' })
 	public id: string;
 
 	@Column({ type: 'bigint' })

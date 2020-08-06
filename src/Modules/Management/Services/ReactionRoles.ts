@@ -4,7 +4,7 @@ import { BaseClient } from '../../../Client';
 import { ReactionRoleCache } from '../Cache/ReactionRole';
 
 export class ReactionRoleService extends BaseService {
-	private cache: ReactionRoleCache;
+	public cache: ReactionRoleCache;
 
 	public constructor(client: BaseClient) {
 		super(client);

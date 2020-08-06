@@ -9,7 +9,7 @@ export default class extends Command {
 		super(client, {
 			name: 'help',
 			aliases: ['помощь'],
-			group: CommandGroup.INFO,
+			group: null,
 			args: [],
 			guildOnly: false,
 			botPermissions: [GuildPermission.EMBED_LINKS, GuildPermission.ADD_REACTIONS],
@@ -36,12 +36,12 @@ export default class extends Command {
 						inline: true
 					});
 				} else {
-					page.value += `\n${x.usage.replace(/{prefix}/g, prefix).replace(/</g, '\\<')}`;
+					page.value += `\n\n${x.usage.replace(/{prefix}/g, prefix).replace(/</g, '\\<')}`;
 				}
 			});
 
 			const name = key.toString();
-			const side = '⠀'.repeat(~~((50 - name.length) / 2));
+			const side = '⠀'.repeat(~~((44 - name.length) / 2));
 
 			const embed = this.createEmbed(
 				{

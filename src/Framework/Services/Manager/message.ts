@@ -258,10 +258,10 @@ export class MessageService extends BaseService {
 
 			const timeOut = async () => {
 				this.client.removeListener('messageReactionAdd', func);
-				await prevMsg.removeReactions();
+				prevMsg.removeReactions().catch(() => undefined);
 			};
 
-			timer = setTimeout(timeOut, 15000);
+			timer = setTimeout(timeOut, 5 * 60 * 1000);
 		}
 	}
 

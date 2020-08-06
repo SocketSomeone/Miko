@@ -12,7 +12,7 @@ export class GuildSettingsCache extends BaseCache<GuildSettings> {
 	public async _get(guildId: string): Promise<GuildSettings> {
 		const { sets } = await BaseGuild.get(guildId, ['sets']);
 
-		return this.merge(Defaults, sets);
+		return { ...Defaults, ...sets };
 	}
 
 	public async updateOne(guild: Guild) {

@@ -59,7 +59,8 @@ export class BaseMember extends BaseEntity {
 
 	@Column({ type: 'json', default: [] })
 	public warns: {
-		type: Violation;
+		reason: string;
+		createdAt: Date;
 		expireAt: Date;
 		moderator: string;
 	}[];

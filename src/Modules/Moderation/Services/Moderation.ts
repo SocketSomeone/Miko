@@ -150,6 +150,7 @@ export class ModerationService extends BaseService {
 	private async addWarnAndPunish(message: Message, type: Violation, { guild, settings }: Arguments) {
 		const member = message.member;
 		const person = await BaseMember.get(member);
+		const t: TranslateFunc = (phrase, replace) => i18n.__({ locale: settings.locale, phrase }, replace);
 
 		let warnsBefore = person.warns.length;
 
@@ -158,7 +159,8 @@ export class ModerationService extends BaseService {
 		}
 
 		person.warns.push({
-			type,
+			reason: t(`automod.reasons.${type.toString()}`),
+			createdAt: moment().toDate(),
 			moderator: this.client.user.id,
 			expireAt: moment().add(7, 'd').toDate()
 		});
@@ -242,7 +244,6 @@ export class ModerationService extends BaseService {
 			return false;
 		}
 
-		console.log(guild.id);
 		const numUppercase = message.content.length - message.content.replace(/[A-ZА-Я]/g, '').length;
 		return numUppercase / message.content.length > percentageCaps;
 	}

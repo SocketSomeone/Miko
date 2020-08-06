@@ -41,11 +41,7 @@ export abstract class BaseCache<T> {
 
 		const obj = await promise;
 
-		this.cache.set(key, obj);
-		this.cacheMeta.set(key, {
-			cachedAt: moment(),
-			validUntil: moment().add(this.maxCacheDuration)
-		});
+		this.set(key, obj);
 
 		return obj;
 	}
@@ -68,26 +64,6 @@ export abstract class BaseCache<T> {
 
 	protected isObject(item: Partial<T>) {
 		return item && typeof item === 'object' && !Array.isArray(item);
-	}
-
-	public merge(target: any, ...sources: any[]) {
-		if (!sources.length) return target;
-
-		const source = sources.shift();
-
-		if (this.isObject(target) && this.isObject(source)) {
-			for (const key in source) {
-				if (this.isObject(source[key])) {
-					if (!target[key]) Object.assign(target, { [key]: {} });
-
-					this.merge(target[key], source[key]);
-				} else {
-					Object.assign(target, { [key]: source[key] });
-				}
-			}
-		}
-
-		return target;
 	}
 
 	public has(key: string) {

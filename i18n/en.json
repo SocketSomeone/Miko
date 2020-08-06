@@ -358,12 +358,21 @@
 			"exlinks": "automod.settings.exlinks",
 			"mentions": "automod.settings.mentions",
 			"enabled": "automod.settings.enabled"
+		},
+		"reasons": {
+			"invites": "automod.reasons.invites"
 		}
 	},
 	"info": {
 		"help": {
 			"title": "info.help.title",
 			"footer": "info.help.footer"
+		},
+		"warns": {
+			"title": "info.warns.title",
+			"has": "info.warns.has",
+			"by": "info.warns.by",
+			"no": "info.warns.no"
 		}
 	}
 }

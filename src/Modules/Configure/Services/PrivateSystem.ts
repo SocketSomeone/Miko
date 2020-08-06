@@ -42,6 +42,7 @@ export class PrivateService extends BaseService {
 
 		const house = await guild.createChannel(`🏡 Домик ${member.username}`, ChannelType.GUILD_VOICE, {
 			parentID: channel.parentID,
+
 			userLimit: 2
 		});
 
@@ -60,7 +61,7 @@ export class PrivateService extends BaseService {
 	}
 
 	protected async onLeave(member: Member, channel: VoiceChannel) {
-		if (channel.voiceMembers.filter((x) => !x.user.bot).length > 1) return;
+		if (channel.voiceMembers.filter((x) => !x.user.bot).length > 0) return;
 
 		const pr = await this.cache.get(channel.id);
 

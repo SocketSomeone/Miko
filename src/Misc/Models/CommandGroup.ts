@@ -1,9 +1,9 @@
 export enum CommandGroup {
-	ECONOMY = 'Economy',
-	WAIFU = 'Waifu',
-	GAMBLING = 'Gambling',
-	MODERATION = 'Moderation',
-	CONFIGURE = 'Configuration',
-	INFO = 'INFO',
-	MANAGEMENT = 'Management'
+	ECONOMY = '💰 Economy',
+	WAIFU = '🎀 Waifu',
+	GAMBLING = '🎮 Gambling',
+	MODERATION = '🛡 Moderation',
+	CONFIGURE = '⚙ Configuration',
+	INFO = '📃 Info',
+	MANAGEMENT = '⚒ Management'
 }

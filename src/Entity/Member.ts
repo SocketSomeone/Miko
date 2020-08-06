@@ -1,25 +1,9 @@
-import {
-	Entity,
-	BaseEntity,
-	ManyToOne,
-	JoinColumn,
-	Column,
-	PrimaryGeneratedColumn,
-	OneToMany,
-	ManyToMany,
-	createQueryBuilder,
-	PrimaryColumn,
-	BeforeInsert
-} from 'typeorm';
+import { Entity, BaseEntity, ManyToOne, JoinColumn, Column, PrimaryGeneratedColumn, createQueryBuilder } from 'typeorm';
 import { BaseGuild } from './Guild';
 import { Member, Guild } from 'eris';
 import { Moment, Duration, duration } from 'moment';
 import { DateTransformer, BigNumberTransformer, DurationTransformer } from './Transformers/';
-
 import BigNumber from 'bignumber.js';
-import { Violation } from '../Misc/Models/Violation';
-import './Snowflakes/SnowflakeID';
-import { snowFlakeID } from './Snowflakes/SnowflakeID';
 
 BigNumber.config({
 	FORMAT: {
@@ -34,7 +18,7 @@ export class BaseMember extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	public id: number;
 
-	@Column({ nullable: false })
+	@Column({ nullable: false, type: 'bigint' })
 	public user: string;
 
 	@ManyToOne((type) => BaseGuild, (g) => g.id, { eager: true, nullable: false, onDelete: 'CASCADE', cascade: true })

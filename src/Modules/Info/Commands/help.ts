@@ -20,13 +20,52 @@ export default class extends Command {
 	public async execute(message: Message, []: [], { funcs: { t }, guild, settings: { prefix } }: Context) {
 		const groups = Object.entries(CommandGroup).sort(([a], [b]) => a.localeCompare(b));
 
-		this.showPaginated(t, message, 0, groups.length, (page, maxPage) => {
-			const [key, val] = groups[page];
+		this.showPaginated(t, message, 0, groups.length + 1, (page, maxPage) => {
+			if (page === 0) {
+				const embed = this.createEmbed({
+					title: t('info.help.first.title'),
+					thumbnail: {
+						url: this.client.user.dynamicAvatarURL('png', 4096)
+					},
+					fields: [
+						{
+							name: t('info.help.first.fields.info'),
+							value:
+								'Здесь я должна была рассказать о себе и о том какая я клёвая, но видимо мой создатель ещё не дал мне листочек с которого должна читать :c',
+							inline: false
+						},
+						{
+							name: t('info.help.first.fields.modules'),
+							value: `\n${groups.map(([key, val]) => `${val.toString()}`).join('\n')}`,
+							inline: false
+						},
+						{
+							name: t('info.help.first.fields.links'),
+							value: `[SUPPORT](https://discord.gg/bRGH277)`,
+							inline: true
+						},
+						{
+							name: '\u200b',
+							value: `[INVITE](https://discord.com/oauth2/authorize?client_id=718758028639207524&permissions=8&scope=bot)`,
+							inline: true
+						},
+						{
+							name: '\u200b',
+							value: `[DEVELOPER](https://t.me/someonewillkillyou)`,
+							inline: true
+						}
+					]
+				});
+
+				return embed;
+			}
+
+			const [key, val] = groups[page - 1];
 			const commands = this.client.commands.commands.filter((x) => x.group === val);
 			const pages: { name: string; value: string; inline?: boolean }[] = [];
 
 			commands.map((x, i) => {
-				const name = i === 0 ? 'А вот и список команд:' : '\u200b';
+				const name = i === 0 ? '📖 Вот и список команд:' : '\u200b';
 				const page = pages[~~(i / 5)];
 
 				if (!page) {
@@ -40,15 +79,14 @@ export default class extends Command {
 				}
 			});
 
-			const name = key.toString();
-			const side = '⠀'.repeat(~~((44 - name.length) / 2));
+			const name = val.toString();
 
 			const embed = this.createEmbed(
 				{
 					title: t('info.help.title'),
 					fields: [
 						{
-							name: `${side}${name}${side}`.markdown(''),
+							name,
 							value:
 								'Здесь должно было описание самого клёвого модуля в данном боте, но видимо создатель немножко поленился и ещё не успел добавить его, подождите ещё немного! <3'
 						},

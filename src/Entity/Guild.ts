@@ -18,7 +18,7 @@ import { PunishmentConfig } from '../Misc/Models/Violation';
 
 @Entity()
 export class BaseGuild extends BaseEntity {
-	@PrimaryColumn()
+	@PrimaryColumn({ type: 'bigint' })
 	public id: string;
 
 	@OneToMany((type) => BaseMember, (user) => user.guild)
@@ -62,6 +62,15 @@ export class BaseGuild extends BaseEntity {
 		return guild;
 	}
 
+	static async saveGuilds(guilds: Guild[]) {
+		await createQueryBuilder()
+			.insert()
+			.into(this)
+			.values(guilds.map((i) => this.getDefaultGuild(i.id)))
+			.onConflict(`("id") DO NOTHING`)
+			.execute();
+	}
+
 	static getDefaultGuild(guildId: string) {
 		const guild = this.create({
 			id: guildId,
@@ -71,14 +80,5 @@ export class BaseGuild extends BaseEntity {
 		});
 
 		return guild;
-	}
-
-	static async saveGuilds(guilds: Guild[]) {
-		await createQueryBuilder()
-			.insert()
-			.into(this)
-			.values(guilds.map((i) => this.getDefaultGuild(i.id)))
-			.onConflict(`("id") DO NOTHING`)
-			.execute();
 	}
 }

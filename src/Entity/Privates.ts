@@ -2,7 +2,7 @@ import { BaseEntity, Entity, Column, CreateDateColumn, PrimaryColumn } from 'typ
 
 @Entity()
 export class BasePrivate extends BaseEntity {
-	@PrimaryColumn()
+	@PrimaryColumn({ type: 'bigint' })
 	public id: string;
 
 	@Column()

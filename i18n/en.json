@@ -368,7 +368,15 @@
 	"info": {
 		"help": {
 			"title": "info.help.title",
-			"footer": "info.help.footer"
+			"footer": "info.help.footer",
+			"first": {
+				"title": "info.help.first.title",
+				"fields": {
+					"links": "info.help.first.fields.links",
+					"info": "info.help.first.fields.info",
+					"modules": "info.help.first.fields.modules"
+				}
+			}
 		},
 		"warns": {
 			"title": "info.warns.title",
@@ -380,6 +388,12 @@
 	"manage": {
 		"embed": {
 			"error": "manage.embed.error"
+		},
+		"reactionrole": {
+			"notFound": {
+				"title": "manage.reactionrole.notFound.title",
+				"desc": "manage.reactionrole.notFound.desc"
+			}
 		}
 	}
 }

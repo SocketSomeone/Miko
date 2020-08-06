@@ -19,6 +19,10 @@ export class EmbedResolver extends Resolver {
 				};
 			}
 
+			embed.footer = embed.footer || {
+				text: null
+			};
+
 			return embed;
 		} catch (err) {
 			return value;

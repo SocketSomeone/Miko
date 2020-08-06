@@ -207,7 +207,6 @@ export class ModerationService extends BaseService {
 				extra,
 				opts: {
 					type: punishmentConfig.type,
-					amount: 0,
 					args: '',
 					reason: 'Automod',
 					moderator: member.id

@@ -70,7 +70,6 @@ export default class extends Command {
 					extra,
 					opts: {
 						type: Punishment.KICK,
-						amount: 0,
 						args: '',
 						reason,
 						moderator: message.author.id

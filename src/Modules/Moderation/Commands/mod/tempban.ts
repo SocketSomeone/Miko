@@ -83,7 +83,6 @@ export default class extends Command {
 					extra,
 					opts: {
 						type: Punishment.BAN,
-						amount: 0,
 						args: '',
 						date: moment().add(duration),
 						reason,

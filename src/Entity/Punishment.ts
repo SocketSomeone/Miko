@@ -43,8 +43,8 @@ interface ContextLog {
 
 @Entity()
 export class BasePunishment extends BaseEntity {
-	@PrimaryGeneratedColumn()
-	public id: number;
+	@PrimaryGeneratedColumn({ type: 'bigint' })
+	public id: bigint;
 
 	@ManyToOne((type) => BaseGuild, (g) => g.id, { eager: true, nullable: false, onDelete: 'NO ACTION', cascade: true })
 	@JoinColumn()
@@ -56,19 +56,16 @@ export class BasePunishment extends BaseEntity {
 	@Column({ type: 'varchar', nullable: false })
 	public type: Punishment;
 
-	@Column({ type: 'integer' })
-	public amount: number;
-
 	@Column({ type: 'json' })
 	public args: any;
 
 	@Column({ type: 'varchar', nullable: false })
 	public reason: string;
 
-	@Column({ type: 'varchar', nullable: false })
+	@Column({ type: 'bigint', nullable: false })
 	public member: string;
 
-	@Column({ type: 'varchar', nullable: false })
+	@Column({ type: 'bigint', nullable: false })
 	public moderator: string;
 
 	@CreateDateColumn()

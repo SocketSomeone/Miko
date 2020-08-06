@@ -7,6 +7,7 @@ import { GuildPermission } from '../../../../Misc/Enums/GuildPermissions';
 import { BaseMessage } from '../../../../Entity/Message';
 import { ReactionRoleService } from '../../Services/ReactionRoles';
 import { BaseReactionRole } from '../../../../Entity/ReactionRole';
+import { ExecuteError } from '../../../../Framework/Errors/ExecuteError';
 
 const CUSTOM_EMOJI_REGEX = /<(?:.*)?:(\w+):(\d+)>/;
 
@@ -61,7 +62,10 @@ export default class extends Command {
 		});
 
 		if (!dbMessage) {
-			return this.replyAsync(message, t, 'manage.reactionrole.notfound');
+			throw new ExecuteError({
+				title: t('manage.reactionrole.notFound.title'),
+				description: t('manage.reactionrole.notFound.desc')
+			});
 		}
 
 		const matches = emoji.match(CUSTOM_EMOJI_REGEX);
@@ -80,7 +84,7 @@ export default class extends Command {
 			);
 		} catch (error) {
 			if (error.code === 10014) {
-				await this.replyAsync(message, t, t('manage.reactionrole.unknownEmoji'));
+				throw new ExecuteError(t('manage.reactionrole.unknownEmoji'));
 			} else {
 				throw error;
 			}

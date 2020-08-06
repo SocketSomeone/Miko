@@ -1,13 +1,4 @@
-import {
-	BaseEntity,
-	Entity,
-	PrimaryGeneratedColumn,
-	Column,
-	ManyToOne,
-	JoinColumn,
-	CreateDateColumn,
-	PrimaryColumn
-} from 'typeorm';
+import { BaseEntity, Entity, Column, CreateDateColumn, PrimaryColumn } from 'typeorm';
 import { Embed } from 'eris';
 
 @Entity()

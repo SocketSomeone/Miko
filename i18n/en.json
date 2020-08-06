@@ -213,7 +213,9 @@
 			"title": "moderation.mute.title",
 			"missedRole": "error.missed.muterole",
 			"until": "moderation.mute.until",
-			"done": "moderation.mute.done"
+			"done": "moderation.mute.done",
+			"error": "moderation.mute.error",
+			"already": "moderation.mute.already"
 		},
 		"noreason": "moderation.noreason",
 		"unmute": {
@@ -373,6 +375,11 @@
 			"has": "info.warns.has",
 			"by": "info.warns.by",
 			"no": "info.warns.no"
+		}
+	},
+	"manage": {
+		"embed": {
+			"error": "manage.embed.error"
 		}
 	}
 }

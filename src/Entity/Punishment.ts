@@ -101,7 +101,7 @@ export class BasePunishment extends BaseEntity {
 			{
 				color: ColorResolve(Color.DARK),
 				author: {
-					name: `[${type.toUpperCase()}] ` + t('logs.mod.title'),
+					name: `[${String(type).toUpperCase()}] ` + t('logs.mod.title'),
 					icon_url: client.user.dynamicAvatarURL('png', 4096)
 				},
 				fields: [

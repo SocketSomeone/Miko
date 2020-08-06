@@ -265,30 +265,25 @@ export class CommandService extends BaseService {
 		const rawArgs: string[] = [];
 
 		let quote = false;
-		let acc = '';
 
 		for (let j = 1; j < splits.length; j++) {
 			const split = splits[j];
-
 			if (split.length === 0) {
 				continue;
 			}
 
 			if (!quote && split.startsWith(`"`)) {
 				quote = true;
-				acc = '';
 			}
 
 			if (split.endsWith(`"`)) {
 				quote = false;
-				acc += `${split.substring(0, split.length - 1)}`;
-
-				rawArgs.push(acc.substring(2));
+				rawArgs[rawArgs.length - 1] += `${split.substring(0, split.length - 1)}`;
 				continue;
 			}
 
 			if (quote) {
-				acc += ` ${split}`;
+				rawArgs[rawArgs.length - 1] += ` ${split}`;
 			} else {
 				rawArgs.push(split);
 			}
@@ -313,9 +308,13 @@ export class CommandService extends BaseService {
 				}
 			}
 
+			if (arg.full) {
+				rawVal = rawArgs.slice(i, rawArgs.length).join(' ');
+			}
+
 			try {
 				const val = await resolver.resolve(rawVal, context, args);
-				cmd;
+
 				if (typeof val === typeof undefined && arg.required) {
 					// TODO: missingRequired arg cmd.usage.replace('{prefix}, sets.prefix');
 

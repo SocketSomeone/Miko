@@ -32,7 +32,7 @@ export default class extends Command {
 				{
 					name: 'reason',
 					resolver: StringResolver,
-					rest: true
+					full: true
 				}
 			],
 			guildOnly: true,

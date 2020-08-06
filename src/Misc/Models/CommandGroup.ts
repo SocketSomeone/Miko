@@ -4,5 +4,6 @@ export enum CommandGroup {
 	GAMBLING = 'Gambling',
 	MODERATION = 'Moderation',
 	CONFIGURE = 'Configuration',
-	INFO = 'INFO'
+	INFO = 'INFO',
+	MANAGEMENT = 'Management'
 }

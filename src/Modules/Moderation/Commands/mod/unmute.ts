@@ -76,7 +76,6 @@ export default class extends Command {
 					target: `${member.user.username}#${member.user.discriminator}`
 				});
 			} catch (err) {
-				console.log(err);
 				embed.description = t('moderation.unmute.error');
 			}
 		} else {

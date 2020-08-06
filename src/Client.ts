@@ -200,7 +200,7 @@ export class BaseClient extends Client {
 	}
 
 	private async setActivity() {
-		this.editStatus('online', { name: '💘 Want`s your love >///<', type: 0 });
+		this.editStatus('online', { name: '💘 Want`s your love', type: 0 });
 	}
 
 	public serviceStartupDone(service: BaseService) {

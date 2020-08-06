@@ -22,7 +22,7 @@ export default class extends Command {
 					required: false
 				}
 			],
-			guildOnly: false,
+			guildOnly: true,
 			premiumOnly: false
 		});
 	}

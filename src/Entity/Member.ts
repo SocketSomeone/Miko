@@ -2,16 +2,7 @@ import { Entity, BaseEntity, ManyToOne, JoinColumn, Column, PrimaryGeneratedColu
 import { BaseGuild } from './Guild';
 import { Member, Guild } from 'eris';
 import { Moment, Duration, duration } from 'moment';
-import { DateTransformer, BigNumberTransformer, DurationTransformer } from './Transformers/';
-import BigNumber from 'bignumber.js';
-
-BigNumber.config({
-	FORMAT: {
-		decimalSeparator: ',',
-		groupSeparator: '.',
-		groupSize: 3
-	}
-});
+import { DateTransformer, DurationTransformer } from './Transformers/';
 
 @Entity()
 export class BaseMember extends BaseEntity {
@@ -25,8 +16,8 @@ export class BaseMember extends BaseEntity {
 	@JoinColumn()
 	public guild: BaseGuild;
 
-	@Column({ type: 'varchar', default: new BigNumber(0), transformer: BigNumberTransformer })
-	public money: BigNumber;
+	@Column({ type: 'bigint', default: 0n })
+	public money: bigint;
 
 	@Column({
 		type: 'timestamp without time zone',
@@ -76,7 +67,7 @@ export class BaseMember extends BaseEntity {
 		member.guild = guild;
 		member.user = userId;
 		member.voiceOnline = duration(0, 'minutes');
-		member.money = new BigNumber(guild.sets.prices.standart);
+		member.money = BigInt(guild.sets.prices.standart);
 
 		return member;
 	}

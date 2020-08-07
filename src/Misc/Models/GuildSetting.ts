@@ -3,8 +3,8 @@ import { Punishment } from '../../Entity/Punishment';
 import { Violation } from './Violation';
 
 export interface GuildPrices {
-	timely: BigNumber;
-	standart: BigNumber;
+	timely: string;
+	standart: string;
 }
 
 export interface GuildEmojis {
@@ -52,8 +52,8 @@ export const Defaults: GuildSettings = {
 	mutedRole: null,
 	privateManager: null,
 	prices: {
-		timely: new BigNumber(15),
-		standart: new BigNumber(100)
+		timely: '15',
+		standart: '100'
 	},
 	emojis: {
 		wallet: EmojisDefault.WALLET

@@ -31,7 +31,7 @@ export default class extends Command {
 				})
 			});
 
-		person.money = person.money.plus(settings.prices.timely);
+		person.money += BigInt(settings.prices.timely);
 		person.timelyAt = moment().add(24, 'h');
 		await person.save();
 

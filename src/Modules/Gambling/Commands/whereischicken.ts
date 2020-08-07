@@ -1,6 +1,5 @@
 import { Command, Context } from '../../../Framework/Commands/Command';
 import { BaseClient } from '../../../Client';
-import { NumberResolver, BigNumberResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message, Member, Emoji } from 'eris';
 import { BaseMember } from '../../../Entity/Member';
@@ -9,6 +8,7 @@ import { Color } from '../../../Misc/Enums/Colors';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { chance } from '../../../Misc/Utils/Chance';
 import BigNumber from 'bignumber.js';
+import { BigIntResolver } from '../../../Framework/Resolvers';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -18,7 +18,7 @@ export default class extends Command {
 			args: [
 				{
 					name: 'money',
-					resolver: new BigNumberResolver(client, 1),
+					resolver: new BigIntResolver(client, 1n),
 					required: true
 				}
 			],
@@ -30,7 +30,7 @@ export default class extends Command {
 
 	public async execute(
 		message: Message,
-		[money]: [BigNumber],
+		[money]: [bigint],
 		{
 			funcs: { t, e },
 			guild,
@@ -41,15 +41,15 @@ export default class extends Command {
 	) {
 		const person = await BaseMember.get(message.member);
 
-		if (person.money.lt(money))
+		if (person.money < money)
 			throw new ExecuteError(
 				t('error.enough.money', {
 					emoji: e(wallet),
-					amount: money.minus(person.money)
+					amount: money - person.money
 				})
 			);
 
-		person.money = person.money.minus(money);
+		person.money -= money;
 		await person.save();
 
 		let doors = ['🚪', '🚪', '🚪'],
@@ -93,7 +93,7 @@ export default class extends Command {
 			doors[c - 1] = '🐣';
 
 			if (s === c) {
-				person.money = person.money.plus(money.times(2));
+				person.money += money * 2n;
 				await person.save();
 			}
 
@@ -113,7 +113,9 @@ export default class extends Command {
 		this.client.addListener('messageReactionAdd', func);
 
 		timer = setTimeout(async () => {
-			person.money = person.money.plus(money);
+			await person.reload();
+
+			person.money += money;
 			await person.save();
 
 			this.client.removeListener('messageReactionAdd', func);

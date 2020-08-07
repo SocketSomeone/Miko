@@ -1,11 +1,10 @@
 import { Command, Context } from '../../../Framework/Commands/Command';
 import { BaseClient } from '../../../Client';
-import { MemberResolver, BigNumberResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message, Member } from 'eris';
 import { BaseMember } from '../../../Entity/Member';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
-import BigNumber from 'bignumber.js';
+import { BigIntResolver, MemberResolver } from '../../../Framework/Resolvers';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -20,7 +19,7 @@ export default class extends Command {
 				},
 				{
 					name: 'money',
-					resolver: new BigNumberResolver(client, 0),
+					resolver: new BigIntResolver(client, 0n),
 					required: true
 				}
 			],
@@ -32,7 +31,7 @@ export default class extends Command {
 
 	public async execute(
 		message: Message,
-		[user, money]: [Member, BigNumber],
+		[user, money]: [Member, bigint],
 		{ funcs: { t, e }, guild, settings }: Context
 	) {
 		if (user.id === message.author.id) throw new ExecuteError(t('error.similar.member'));
@@ -40,16 +39,16 @@ export default class extends Command {
 		const target = await BaseMember.get(user);
 		const person = await BaseMember.get(message.member);
 
-		if (person.money.lt(money))
+		if (person.money < money)
 			throw new ExecuteError({
 				description: t('error.enough.money', {
 					emoji: e(settings.emojis.wallet),
-					amount: money.minus(person.money)
+					amount: money - person.money
 				})
 			});
 
-		target.money = target.money.plus(money);
-		person.money = person.money.minus(money);
+		target.money += money;
+		person.money -= money;
 
 		await person.save();
 		await target.save();

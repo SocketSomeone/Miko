@@ -1,6 +1,5 @@
 import { Command, Context } from '../../../Framework/Commands/Command';
 import { BaseClient } from '../../../Client';
-import { StringResolver, BigNumberResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message, Member } from 'eris';
 import { BaseMember } from '../../../Entity/Member';
@@ -8,6 +7,7 @@ import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Enums/GuildPermissions';
 import BigNumber from 'bignumber.js';
+import { BigIntResolver } from '../../../Framework/Resolvers';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -17,7 +17,7 @@ export default class extends Command {
 			args: [
 				{
 					name: 'money',
-					resolver: new BigNumberResolver(client, 0),
+					resolver: new BigIntResolver(client, 0n),
 					required: false
 				}
 			],
@@ -28,9 +28,9 @@ export default class extends Command {
 		});
 	}
 
-	public async execute(message: Message, [money]: [BigNumber], { funcs: { t, e }, guild, settings }: Context) {
+	public async execute(message: Message, [money]: [bigint], { funcs: { t, e }, guild, settings }: Context) {
 		if (money) {
-			settings.prices.standart = money;
+			settings.prices.standart = String(money);
 			await this.client.cache.guilds.updateOne(guild);
 		}
 
@@ -40,7 +40,7 @@ export default class extends Command {
 				guild: guild.name
 			}),
 			description: t(`configure.standart.${money ? 'new' : 'info'}`, {
-				amount: `${settings.prices.standart.toFormat()} ${e(settings.emojis.wallet)}`
+				amount: `${settings.prices.standart} ${e(settings.emojis.wallet)}`
 			}),
 			footer: {
 				text: ''

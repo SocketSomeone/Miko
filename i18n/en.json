@@ -11,6 +11,9 @@
 		"daily": {
 			"title": "economy.daily.title",
 			"desc": "economy.daily.desc"
+		},
+		"shop": {
+			"empty": "economy.shop.empty"
 		}
 	},
 	"embed": {

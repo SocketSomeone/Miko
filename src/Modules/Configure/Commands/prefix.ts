@@ -15,7 +15,7 @@ export default class extends Command {
 			aliases: ['префикс'],
 			args: [
 				{
-					name: 'new-prefx',
+					name: 'new-prefix',
 					resolver: StringResolver,
 					required: false
 				}

@@ -415,6 +415,15 @@
 					"info": "info.help.first.fields.info",
 					"modules": "info.help.first.fields.modules"
 				}
+			},
+			"cmd": {
+				"title": "info.help.cmd.title",
+				"ex": "info.help.cmd.ex",
+				"desc": "info.help.cmd.desc",
+				"args": "info.help.cmd.args",
+				"req": "info.help.cmd.req",
+				"aliases": "info.help.cmd.aliases",
+				"struct": "info.help.cmd.struct"
 			}
 		},
 		"warns": {

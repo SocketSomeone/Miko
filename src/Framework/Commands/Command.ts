@@ -31,7 +31,9 @@ interface CommandOptions {
 	name: string;
 	aliases: string[];
 	args?: Arg[];
+	desc?: string;
 	group: CommandGroup;
+	extraExamples?: string;
 
 	guildOnly: boolean;
 	premiumOnly?: boolean;
@@ -49,6 +51,8 @@ export abstract class Command {
 	public args: Arg[];
 	public group: CommandGroup;
 	public usage: string;
+	public desc: string;
+	public extraExamples: string;
 
 	public guildOnly: boolean;
 	public botPermissions?: GuildPermission[];
@@ -79,6 +83,8 @@ export abstract class Command {
 		this.args = (props && props.args) || [];
 		this.group = props.group;
 		this.usage = `{prefix}${this.name} `;
+		this.desc = (props && props.desc) || '';
+		this.extraExamples = (props && props.extraExamples) || '';
 
 		this.botPermissions = (props && props.botPermissions) || [];
 		this.userPermissions = (props && props.userPermissions) || [];

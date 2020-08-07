@@ -342,6 +342,14 @@
 			"caps": {
 				"enable": "configure.automod.caps.enable",
 				"disable": "configure.automod.caps.disable"
+			},
+			"amic": {
+				"added": "configure.automod.amic.added",
+				"deleted": "configure.automod.amic.deleted"
+			},
+			"amir": {
+				"added": "configure.automod.amir.added",
+				"deleted": "configure.automod.amir.deleted"
 			}
 		},
 		"aar": {

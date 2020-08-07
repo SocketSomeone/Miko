@@ -103,16 +103,17 @@ export class ModerationService extends BaseService {
 			return;
 		}
 
-		if (settings.autoModIgnoreChannels.length >= 1 && settings.autoModIgnoreChannels.includes(message.channel.id)) {
+		if (
+			settings.autoModIgnoreChannels.length >= 1 &&
+			settings.autoModIgnoreChannels.some((x) => x === message.channel.id)
+		)
 			return;
-		}
 
 		if (
 			settings.autoModIgnoreRoles.length >= 1 &&
 			message.member.roles.some((x) => settings.autoModIgnoreRoles.includes(x))
-		) {
+		)
 			return;
-		}
 
 		const cacheKey = `${guild.id}-${message.author.id}`;
 		const msgs = this.messageCache.get(cacheKey);

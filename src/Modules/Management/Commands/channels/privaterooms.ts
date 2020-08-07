@@ -1,14 +1,14 @@
-import { Command, Context } from '../../../Framework/Commands/Command';
-import { BaseClient } from '../../../Client';
-import { StringResolver } from '../../../Framework/Resolvers';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
+import { Command, Context } from '../../../../Framework/Commands/Command';
+import { BaseClient } from '../../../../Client';
+import { StringResolver } from '../../../../Framework/Resolvers';
+import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
 import { Message, Member, Guild, VoiceChannel } from 'eris';
-import { BaseMember } from '../../../Entity/Member';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
-import { Color } from '../../../Misc/Enums/Colors';
-import { GuildPermission } from '../../../Misc/Enums/GuildPermissions';
-import { ChannelType } from '../../../Types';
-import { PrivateService } from '../Services/PrivateSystem';
+import { BaseMember } from '../../../../Entity/Member';
+import { ColorResolve } from '../../../../Misc/Utils/ColorResolver';
+import { Color } from '../../../../Misc/Enums/Colors';
+import { GuildPermission } from '../../../../Misc/Enums/GuildPermissions';
+import { ChannelType } from '../../../../Types';
+import { PrivateService } from '../../../Configure/Services/PrivateSystem';
 
 export default class extends Command {
 	private system: PrivateService;
@@ -18,7 +18,7 @@ export default class extends Command {
 			name: 'privaterooms',
 			aliases: ['pr', 'приватки'],
 			args: [],
-			group: CommandGroup.CONFIGURE,
+			group: CommandGroup.MANAGEMENT,
 			guildOnly: true,
 			premiumOnly: false,
 			botPermissions: [GuildPermission.MANAGE_CHANNELS],

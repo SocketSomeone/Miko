@@ -33,7 +33,7 @@ export default class extends Command {
 				{
 					name: 'role',
 					resolver: RoleResolver,
-					required: false
+					required: true
 				}
 			],
 			guildOnly: true,

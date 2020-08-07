@@ -12,7 +12,7 @@ export default class extends Command {
 	public constructor(client: BaseClient) {
 		super(client, {
 			name: 'buyshop',
-			aliases: [],
+			aliases: ['buy', 'купить'],
 			args: [
 				{
 					name: 'index',

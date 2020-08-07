@@ -14,8 +14,8 @@ import BigNumber from 'bignumber.js';
 
 @Entity()
 export class BaseShopRole extends BaseEntity {
-	@PrimaryGeneratedColumn({ type: 'bigint' })
-	public id: bigint;
+	@PrimaryColumn({ type: 'bigint' })
+	public id: string;
 
 	@ManyToOne((type) => BaseGuild, (g) => g.id, { eager: true, nullable: false, onDelete: 'NO ACTION', cascade: true })
 	@JoinColumn()

@@ -13,7 +13,13 @@
 			"desc": "economy.daily.desc"
 		},
 		"shop": {
-			"empty": "economy.shop.empty"
+			"empty": "economy.shop.empty",
+			"fields": {
+				"index": "economy.shop.fields.index",
+				"role": "economy.shop.fields.role",
+				"cost": "economy.shop.fields.cost"
+			},
+			"title": "economy.shop.title"
 		}
 	},
 	"embed": {
@@ -337,6 +343,12 @@
 			"notFound": "configure.aar.notFound",
 			"new": "configure.aar.new",
 			"info": "configure.aar.info"
+		},
+		"addshop": {
+			"new": "configure.addshop.new"
+		},
+		"removeshop": {
+			"deleted": "configure.removeshop.deleted"
 		}
 	},
 	"gambling": {

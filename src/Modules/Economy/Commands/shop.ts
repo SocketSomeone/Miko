@@ -36,7 +36,8 @@ export default class extends Command {
 				}
 			},
 			order: {
-				cost: 'ASC'
+				cost: 'ASC',
+				createdAt: 'ASC'
 			}
 		});
 
@@ -71,10 +72,18 @@ export default class extends Command {
 				);
 			});
 
-			return this.createEmbed({
-				title: t('economy.shop.title'),
-				fields
-			});
+			return this.createEmbed(
+				{
+					title: t('economy.shop.title', {
+						guild: guild.name
+					}),
+					fields,
+					footer: {
+						text: null
+					}
+				},
+				false
+			);
 		});
 	}
 }

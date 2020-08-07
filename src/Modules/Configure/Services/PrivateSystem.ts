@@ -1,16 +1,13 @@
 import { BaseService } from '../../../Framework/Services/Service';
-import { Member, VoiceChannel } from 'eris';
+import { Member, VoiceChannel, Guild } from 'eris';
 import { ChannelType } from '../../../Types';
 
 import { PrivatesCache } from '../Cache/PrivateCache';
 import { Moment } from 'moment';
 import moment from 'moment';
 
-const RATE_LIMIT = 1;
-const COOLDOWN = 5;
-
 export class PrivateService extends BaseService {
-	protected recently: Map<string, Moment> = new Map();
+	protected ratelimit: Map<string, Moment> = new Map();
 	protected cache: PrivatesCache;
 
 	public async init() {
@@ -20,29 +17,54 @@ export class PrivateService extends BaseService {
 	}
 
 	public async onClientReady() {
+		this.client.on('voiceChannelSwitch', this.onSwitch.bind(this));
 		this.client.on('voiceChannelLeave', this.onLeave.bind(this));
-
 		this.client.on('voiceChannelJoin', this.onJoin.bind(this));
-		this.client.on('voiceChannelSwitch', this.onJoin.bind(this));
-
-		//this.client.on('voiceChannelSwitch', this.onLeave)
 
 		await super.onClientReady();
 	}
 
-	private async onJoin(member: Member, channel: VoiceChannel) {
-		if (this.recently.has(member.id) && moment().isBefore(this.recently.get(member.id))) return;
-
+	private async onSwitch(member: Member, newChannel: VoiceChannel, oldChannel: VoiceChannel) {
 		const guild = member.guild;
 		const sets = await this.client.cache.guilds.get(guild.id);
+		const pr = await this.cache.get(oldChannel.id);
 
-		if (!sets.privateManager || channel.id !== sets.privateManager) return;
+		const isRatelimited = this.ratelimit.has(member.id) && moment().isBefore(this.ratelimit.get(member.id));
 
-		this.recently.set(member.id, moment().add(5, 'seconds'));
+		if (sets.privateManager && newChannel.id === sets.privateManager && !isRatelimited) {
+			this.ratelimit.set(member.id, moment().add(5, 'seconds'));
+
+			if (
+				pr !== undefined &&
+				pr !== null &&
+				pr.owner === member.id &&
+				oldChannel.voiceMembers.filter((x) => !x.user.bot).length < 1
+			) {
+				member
+					.edit({
+						channelID: pr.id
+					})
+					.catch(() => undefined);
+			} else {
+				this.createRoom(member, guild, newChannel).catch(() => undefined);
+			}
+
+			return;
+		}
+
+		if (oldChannel.voiceMembers.filter((x) => !x.user.bot).length > 0) return;
+
+		if (pr === null) return;
+
+		oldChannel.delete('Empty private room').catch(() => undefined);
+		await this.cache.delete(pr);
+	}
+
+	protected async createRoom(member: Member, guild: Guild, channel: VoiceChannel) {
+		this.ratelimit.set(member.id, moment().add(5, 'seconds'));
 
 		const house = await guild.createChannel(`🏡 Домик ${member.username}`, ChannelType.GUILD_VOICE, {
 			parentID: channel.parentID,
-
 			userLimit: 2
 		});
 
@@ -58,6 +80,19 @@ export class PrivateService extends BaseService {
 		} catch (err) {
 			house.delete().catch(() => undefined);
 		}
+	}
+
+	private async onJoin(member: Member, channel: VoiceChannel) {
+		const isRatelimited = this.ratelimit.has(member.id) && moment().isBefore(this.ratelimit.get(member.id));
+
+		if (isRatelimited) return;
+
+		const guild = member.guild;
+		const sets = await this.client.cache.guilds.get(guild.id);
+
+		if (!sets.privateManager || channel.id !== sets.privateManager) return;
+
+		this.createRoom(member, guild, channel).catch(() => undefined);
 	}
 
 	protected async onLeave(member: Member, channel: VoiceChannel) {

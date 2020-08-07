@@ -51,6 +51,10 @@ export class MemberResolver extends Resolver {
 			}
 		}
 
+		if (member.id === this.client.user.id) {
+			throw Error(t(`resolvers.member.bot`));
+		}
+
 		return member;
 	}
 }

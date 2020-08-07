@@ -170,7 +170,8 @@
 	},
 	"resolvers": {
 		"member": {
-			"notFound": "resolvers.member.notFound"
+			"notFound": "resolvers.member.notFound",
+			"bot": "resolvers.member.bot"
 		},
 		"number": {
 			"tooSmall": "resolvers.number.tooSmall",
@@ -262,7 +263,8 @@
 				"emojis": "configure.conf.main.emojis",
 				"autoMod": "configure.conf.main.autoMod",
 				"privateRoom": "configure.conf.main.privateRoom",
-				"privateRooms": "configure.conf.main.privateRooms"
+				"privateRooms": "configure.conf.main.privateRooms",
+				"autoassignRole": "configure.conf.main.autoassignRole"
 			},
 			"automod": {
 				"settings": {

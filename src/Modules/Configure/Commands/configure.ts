@@ -44,7 +44,7 @@ export default class extends Command {
 			if (page === 0) {
 				embed.fields = [
 					{
-						name: `⠀⠀⠀⠀⠀⠀⠀⠀Стандартные⠀⠀⠀⠀⠀⠀⠀⠀⠀`.markdown(''),
+						name: `⠀⠀⠀⠀⠀⠀⠀⠀Стандартные⠀⠀⠀⠀⠀⠀⠀⠀`.markdown(''),
 						value: Object.entries(settings)
 							.map(([key, i]) => {
 								if (i !== null && typeof i === 'object') return null;
@@ -78,7 +78,7 @@ export default class extends Command {
 			} else if (page === 1) {
 				embed.fields = [
 					{
-						name: `⠀⠀⠀⠀⠀⠀⠀⠀⠀Автомодерация⠀⠀⠀⠀⠀⠀⠀`.markdown(''),
+						name: `⠀⠀⠀⠀⠀⠀⠀⠀Автомодерация⠀⠀⠀⠀⠀⠀⠀⠀`.markdown(''),
 						value: Object.entries(settings.autoMod)
 							.map(([type, bool]) => `${t(`configure.conf.automod.${type.toString()}`)} - ${bool ? '✔' : '❌'}`)
 							.sort((a, b) => a.localeCompare(b))

@@ -180,6 +180,10 @@
 		"enum": {
 			"invalid": "resolvers.enum.invalid",
 			"validValues": "resolvers.enum.validValues"
+		},
+		"role": {
+			"notFound": "resolvers.role.notFound",
+			"everyone": "resolvers.role.everyone"
 		}
 	},
 	"key": {

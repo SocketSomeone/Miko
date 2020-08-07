@@ -3,10 +3,19 @@ import { Role } from 'eris';
 import { Context } from '../commands/Command';
 
 import { Resolver } from './Resolver';
+import { BaseClient } from '../../Client';
 
 const idRegex = /^(?:<@&)?(\d+)>?$/;
 
 export class RoleResolver extends Resolver {
+	private allowEveryone: boolean;
+
+	public constructor(client: BaseClient, allowEveryone: boolean = false) {
+		super(client);
+
+		this.allowEveryone = allowEveryone;
+	}
+
 	public async resolve(value: string, { guild, funcs: { t } }: Context): Promise<Role> {
 		if (!guild || !value) {
 			return;
@@ -52,6 +61,10 @@ export class RoleResolver extends Resolver {
 					);
 				}
 			}
+		}
+
+		if (guild.id === role.id && this.allowEveryone === false) {
+			throw Error(t(`resolvers.role.everyone`));
 		}
 
 		return role;

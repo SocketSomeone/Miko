@@ -264,6 +264,10 @@
 		"enum": {
 			"invalid": "Вы ввели **неправильную опцию**, попробуйте ещё раз!\n{{{ options }}}",
 			"validValues": "**Доступные опции:** {{{ values }}}"
+		},
+		"role": {
+			"notFound": "resolvers.role.notFound",
+			"everyone": "resolvers.role.everyone"
 		}
 	},
 	"logs": {

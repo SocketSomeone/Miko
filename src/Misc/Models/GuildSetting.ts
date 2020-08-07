@@ -22,6 +22,7 @@ export interface GuildSettings {
 	modlog: string;
 	saveroles: boolean;
 	mutedRole: string;
+	autoassignRole: string;
 
 	privateManager: string;
 	autoModIgnoreRoles: string[];
@@ -43,13 +44,14 @@ export enum EmojisDefault {
 }
 
 export const Defaults: GuildSettings = {
-	prefix: '#',
+	prefix: '!',
 	locale: Lang.ru,
 	ignoreChannels: [],
 	verbose: true,
 	saveroles: false,
 	modlog: null,
 	mutedRole: null,
+	autoassignRole: null,
 	privateManager: null,
 	prices: {
 		timely: '15',

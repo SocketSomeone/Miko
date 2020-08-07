@@ -326,6 +326,11 @@
 				"enable": "configure.automod.caps.enable",
 				"disable": "configure.automod.caps.disable"
 			}
+		},
+		"aar": {
+			"notFound": "configure.aar.notFound",
+			"new": "configure.aar.new",
+			"info": "configure.aar.info"
 		}
 	},
 	"gambling": {

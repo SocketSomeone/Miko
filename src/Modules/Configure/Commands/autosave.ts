@@ -29,23 +29,33 @@ export default class extends Command {
 		if (member.user.bot) return;
 
 		const settings = await this.client.cache.guilds.get(guild.id);
+		const roles = [];
 
-		if (!settings.saveroles) return;
-
-		const person = await BaseMember.get(member);
 		const me = guild.members.get(this.client.user.id);
 
-		if (person.savedRoles && person.savedRoles.length > 0) {
-			if (!me.permission.has(GuildPermission.MANAGE_ROLES)) {
-				console.log(`TRYING TO SET JOIN ROLES IN ${guild.id} WITHOUT MANAGE_ROLES PERMISSION`);
-				return;
-			}
+		if (!me.permission.has(GuildPermission.MANAGE_ROLES)) {
+			console.log(`TRYING TO SET JOIN ROLES IN ${guild.id} WITHOUT MANAGE_ROLES PERMISSION`);
+			return;
+		}
 
+		if (settings.saveroles) {
+			const person = await BaseMember.get(member);
+
+			if (person.savedRoles && person.savedRoles.length > 0) {
+				roles.push(...person.savedRoles);
+			}
+		}
+
+		if (settings.autoassignRole && guild.roles.has(settings.autoassignRole)) {
+			roles.push(settings.autoassignRole);
+		}
+
+		if (roles && roles.length >= 1) {
 			await member.edit(
 				{
-					roles: this.client.moderation.editableRoles(guild, person.savedRoles, me).map((x) => x.id)
+					roles: this.client.moderation.editableRoles(guild, roles, me).map((x) => x.id)
 				},
-				'Saved Roles'
+				'Auto Assign Role OR Saved Roles'
 			);
 		}
 	}

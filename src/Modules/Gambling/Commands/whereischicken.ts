@@ -7,7 +7,6 @@ import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { Color } from '../../../Misc/Enums/Colors';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { chance } from '../../../Misc/Utils/Chance';
-import BigNumber from 'bignumber.js';
 import { BigIntResolver } from '../../../Framework/Resolvers';
 
 export default class extends Command {

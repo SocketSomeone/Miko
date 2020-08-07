@@ -76,6 +76,10 @@ export default class extends Command {
 					}
 				];
 			} else if (page === 1) {
+				const ignoredChannels = settings.autoModIgnoreChannels.filter((x) => guild.channels.has(x));
+
+				const ignoredRoles = settings.autoModIgnoreRoles.filter((x) => guild.roles.has(x));
+
 				embed.fields = [
 					{
 						name: `⠀⠀⠀⠀⠀⠀⠀⠀Автомодерация⠀⠀⠀⠀⠀⠀⠀⠀`.markdown(''),
@@ -83,7 +87,30 @@ export default class extends Command {
 							.map(([type, bool]) => `${t(`configure.conf.automod.${type.toString()}`)} - ${bool ? '✔' : '❌'}`)
 							.sort((a, b) => a.localeCompare(b))
 							.join('\n')
-							.markdown(Syntax.YAML)
+							.markdown(Syntax.YAML),
+						inline: false
+					},
+					{
+						name: `⠀Игнорируемые Роли⠀`.markdown(''),
+						inline: true,
+						value:
+							ignoredRoles.length < 1
+								? 'Отсутствуют.'
+								: ignoredRoles
+										.map((r) => guild.roles.get(r).mention)
+										.join('\n')
+										.slice(0, 1024)
+					},
+					{
+						name: `⠀Игнорируемые Чаты⠀`.markdown(''),
+						inline: true,
+						value:
+							ignoredChannels.length < 1
+								? 'Отсутствуют.'
+								: ignoredChannels
+										.map((c) => guild.channels.get(c).mention)
+										.join('\n')
+										.slice(0, 1024)
 					}
 				];
 			}

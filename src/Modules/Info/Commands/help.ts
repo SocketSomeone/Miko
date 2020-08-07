@@ -71,11 +71,11 @@ export default class extends Command {
 				if (!page) {
 					pages.push({
 						name,
-						value: x.usage.replace(/{prefix}/g, prefix).replace(/</g, '\\<'),
+						value: `\`${x.usage.replace(/{prefix}/g, prefix)}\``,
 						inline: true
 					});
 				} else {
-					page.value += `\n\n${x.usage.replace(/{prefix}/g, prefix).replace(/</g, '\\<')}`;
+					page.value += `\n\n\`${x.usage.replace(/{prefix}/g, prefix)}\``;
 				}
 			});
 

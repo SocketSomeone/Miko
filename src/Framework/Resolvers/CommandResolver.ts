@@ -10,7 +10,7 @@ export class CommandResolver extends Resolver {
 
 		const name = value.toLowerCase();
 		const cmds = this.client.commands.commands.filter(
-			(c) => c.name.toLowerCase().includes(name) || c.aliases.indexOf(name) >= 0
+			(c) => (c.name.toLowerCase().includes(name) || c.aliases.indexOf(name) >= 0) && c.group !== null
 		);
 
 		if (cmds.length === 0) {

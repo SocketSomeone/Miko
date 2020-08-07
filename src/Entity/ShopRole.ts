@@ -10,7 +10,7 @@ import {
 	BeforeInsert
 } from 'typeorm';
 import { BaseGuild } from './Guild';
-import BigNumber from 'bignumber.js';
+import { BigIntTransformer } from './Transformers';
 
 @Entity()
 export class BaseShopRole extends BaseEntity {
@@ -21,7 +21,7 @@ export class BaseShopRole extends BaseEntity {
 	@JoinColumn()
 	public guild: BaseGuild;
 
-	@Column({ type: 'bigint', default: 0n })
+	@Column({ type: 'bigint', default: 0n, transformer: BigIntTransformer })
 	public cost: bigint;
 
 	@CreateDateColumn()

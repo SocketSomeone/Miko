@@ -6,11 +6,12 @@ import { Message } from 'eris';
 import { GuildPermission } from '../../../Misc/Enums/GuildPermissions';
 import { BaseShopRole } from '../../../Entity/ShopRole';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
+import { BaseMember } from '../../../Entity/Member';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
 		super(client, {
-			name: 'removeshop',
+			name: 'buyshop',
 			aliases: [],
 			args: [
 				{
@@ -19,11 +20,10 @@ export default class extends Command {
 					required: true
 				}
 			],
-			group: CommandGroup.CONFIGURE,
+			group: CommandGroup.ECONOMY,
 			guildOnly: true,
 			premiumOnly: false,
-			botPermissions: [GuildPermission.MANAGE_ROLES],
-			userPermissions: [GuildPermission.MANAGE_GUILD, GuildPermission.MANAGE_ROLES]
+			botPermissions: [GuildPermission.MANAGE_ROLES]
 		});
 	}
 
@@ -43,14 +43,31 @@ export default class extends Command {
 		const role = roles[index - 1];
 
 		if (roles.length < 1 || !role) {
-			throw new ExecuteError(t('configure.removeshop.notFound'));
+			throw new ExecuteError(t('economy.buyshop.notFound'));
 		}
 
-		role.remove().catch(() => undefined);
+		if (message.member.roles.includes(role.id)) {
+			throw new ExecuteError(t('economy.buyshop.has'));
+		}
+
+		const person = await BaseMember.get(message.member);
+
+		if (person.money < role.cost) {
+			throw new ExecuteError(
+				t('error.enough.money', {
+					emoji: e(settings.emojis.wallet)
+				})
+			);
+		}
+
+		person.money -= role.cost;
+		await person.save();
+
+		message.member.addRole(role.id).catch(() => undefined);
 
 		await this.replyAsync(message, t, {
-			title: t('configure.title'),
-			description: t('configure.removeshop.deleted', {
+			title: t('economy.buyshop.title'),
+			description: t('economy.buyshop.ok', {
 				role: `<@&${role.id}>`
 			}),
 			footer: {

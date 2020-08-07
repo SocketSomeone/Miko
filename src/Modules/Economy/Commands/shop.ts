@@ -66,7 +66,9 @@ export default class extends Command {
 					},
 					{
 						name: t('economy.shop.fields.cost'),
-						value: `${role.cost} ${e(settings.emojis.wallet)}`,
+						value: message.member.roles.includes(role.id)
+							? t('economy.shop.bought')
+							: `${role.cost} ${e(settings.emojis.wallet)}`,
 						inline: true
 					}
 				);

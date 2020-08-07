@@ -2,7 +2,7 @@ import { Entity, BaseEntity, ManyToOne, JoinColumn, Column, PrimaryGeneratedColu
 import { BaseGuild } from './Guild';
 import { Member, Guild } from 'eris';
 import { Moment, Duration, duration } from 'moment';
-import { DateTransformer, DurationTransformer } from './Transformers/';
+import { DateTransformer, BigIntTransformer, DurationTransformer } from './Transformers/';
 
 @Entity()
 export class BaseMember extends BaseEntity {
@@ -16,7 +16,7 @@ export class BaseMember extends BaseEntity {
 	@JoinColumn()
 	public guild: BaseGuild;
 
-	@Column({ type: 'bigint', default: 0n })
+	@Column({ type: 'bigint', default: 0n, transformer: BigIntTransformer })
 	public money: bigint;
 
 	@Column({

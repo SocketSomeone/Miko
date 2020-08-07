@@ -19,7 +19,12 @@
 				"role": "economy.shop.fields.role",
 				"cost": "economy.shop.fields.cost"
 			},
-			"title": "economy.shop.title"
+			"title": "economy.shop.title",
+			"bought": "economy.shop.bought"
+		},
+		"buyshop": {
+			"title": "economy.buyshop.title",
+			"ok": "economy.buyshop.ok"
 		}
 	},
 	"embed": {

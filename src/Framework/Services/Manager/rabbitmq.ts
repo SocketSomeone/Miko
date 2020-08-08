@@ -271,7 +271,7 @@ export class RabbitMqService extends BaseService {
 					guilds: this.client.guilds.map((g) => ({
 						id: g.id,
 						name: g.name,
-						icon: g.iconURL,
+						icon: g.dynamicIconURL('png', 4096),
 						memberCount: g.memberCount
 					}))
 				});

@@ -34,6 +34,11 @@ export default class extends Command {
 				}),
 				fields: [
 					{
+						name: t('info.help.cmd.desc'),
+						value: `${c.desc ? c.desc : 'Отсутствует.'}`,
+						inline: false
+					},
+					{
 						name: t('info.help.cmd.ex'),
 						inline: false,
 						value: `${c.usage
@@ -61,19 +66,11 @@ export default class extends Command {
 							.join(' ')}${c.extraExamples.length < 1 ? '' : '\n' + c.extraExamples}`
 					},
 					{
-						name: t('info.help.cmd.desc'),
-						value: `${c.desc ? c.desc : 'Отсутствует.'}`,
-						inline: false
-					},
-					{
 						name: t('info.help.cmd.aliases'),
 						value: `${c.aliases.length >= 1 ? c.aliases.map((a) => `\`${a}\``).join(', ') : 'Отсутствуют'}`,
 						inline: false
 					}
 				],
-				thumbnail: {
-					url: this.client.user.dynamicAvatarURL('png', 4096)
-				},
 				footer: {
 					text: null
 				}

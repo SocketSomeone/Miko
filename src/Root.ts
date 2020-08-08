@@ -29,6 +29,14 @@ configureScope((scope) => {
 	scope.setTag('shard', `${shardId} / ${shardCount}`);
 });
 
+process.on('uncaughtException', (reason: any, p: any) => {
+	console.error('Uncaught Exception at: Promise', p, 'reason:', reason);
+});
+
+process.on('unhandledRejection', (reason: any, p: any) => {
+	console.error('Unhandled Rejection at: Promise', p, 'reason:', reason);
+});
+
 const main = async () => {
 	console.log(chalk.green('-------------------------------------'));
 	console.log(chalk.green(`This is shard ${chalk.blue(`${shardId}/${shardCount}`)} of instance ${chalk.blue('Miko')}`));
@@ -64,9 +72,5 @@ const main = async () => {
 	console.log(chalk.green('-------------------------------------'));
 	await client.connect();
 };
-
-process.on('unhandledRejection', (reason: any, p: any) => {
-	console.error('Unhandled Rejection at: Promise', p, 'reason:', reason);
-});
 
 main().catch((err) => console.error(err));

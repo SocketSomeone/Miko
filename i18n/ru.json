@@ -295,8 +295,11 @@
 			"validValues": "**Доступные опции:** {{{ values }}}"
 		},
 		"role": {
-			"notFound": "resolvers.role.notFound",
-			"everyone": "resolvers.role.everyone"
+			"notFound": "Не удалось найти роль!",
+			"everyone": "Не удалось найти роль!"
+		},
+		"command": {
+			"notFound": "Не удалось найти команду!"
 		}
 	},
 	"logs": {

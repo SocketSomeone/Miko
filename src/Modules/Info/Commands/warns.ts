@@ -41,7 +41,7 @@ export default class extends Command {
 					icon_url: member.avatarURL
 				},
 				thumbnail: {
-					url: guild.iconURL
+					url: guild.dynamicIconURL('png', 4096)
 				},
 				footer: {
 					text: null

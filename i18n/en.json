@@ -195,6 +195,9 @@
 		"role": {
 			"notFound": "resolvers.role.notFound",
 			"everyone": "resolvers.role.everyone"
+		},
+		"command": {
+			"notFound": "resolvers.command.notFound"
 		}
 	},
 	"key": {

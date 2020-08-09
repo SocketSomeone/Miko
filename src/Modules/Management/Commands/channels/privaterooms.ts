@@ -54,7 +54,7 @@ export default class extends Command {
 	}
 
 	protected async createManager(guild: Guild): Promise<string> {
-		const channel = await guild.createChannel('🏠 Создать домик Miko [+]', ChannelType.GUILD_VOICE);
+		const channel = await guild.createChannel('🏠 Создать домик Miko', ChannelType.GUILD_VOICE);
 
 		return channel.id;
 	}

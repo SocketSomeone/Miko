@@ -11,8 +11,8 @@ import { GuildPermission } from '../../../Misc/Enums/GuildPermissions';
 export default class extends Command {
 	public constructor(client: BaseClient) {
 		super(client, {
-			name: 'autosave',
-			aliases: ['saveroles'],
+			name: 'saveroles',
+			aliases: ['autosave'],
 			args: [],
 			group: CommandGroup.CONFIGURE,
 			guildOnly: true,
@@ -69,6 +69,7 @@ export default class extends Command {
 
 		const person = await BaseMember.get(member);
 		person.savedRoles = member.roles;
+
 		await person.save();
 	}
 

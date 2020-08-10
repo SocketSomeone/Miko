@@ -90,7 +90,7 @@ export default class extends Command {
 				}
 			],
 			thumbnail: {
-				url: 'https://i.imgur.com/9JyBh7t.png'
+				url: 'https://i.imgur.com/ukWSQGs.png'
 			}
 		});
 

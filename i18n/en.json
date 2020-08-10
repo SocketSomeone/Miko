@@ -380,6 +380,11 @@
 				"bet": "gambling.fortune.fields.bet",
 				"result": "gambling.fortune.fields.result"
 			}
+		},
+		"br": {
+			"title": "gambling.br.title",
+			"lose": "gambling.br.lose",
+			"win": "gambling.br.win"
 		}
 	},
 	"automod": {

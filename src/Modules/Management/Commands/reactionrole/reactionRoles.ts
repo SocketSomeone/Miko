@@ -47,6 +47,8 @@ export default class extends Command {
 
 	public async onLoaded() {
 		await this.service.init();
+
+		super.startupDone();
 	}
 
 	public async execute(

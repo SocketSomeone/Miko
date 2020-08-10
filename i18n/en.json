@@ -169,7 +169,8 @@
 		"ratelimit": {
 			"title": "error.ratelimit.title",
 			"desc": "error.ratelimit.desc"
-		}
+		},
+		"no": "error.no"
 	},
 	"others": {
 		"page": "others.page"
@@ -432,6 +433,41 @@
 				"req": "info.help.cmd.req",
 				"aliases": "info.help.cmd.aliases",
 				"struct": "info.help.cmd.struct"
+			},
+			"cmdDesc": {
+				"autoassignrole": "info.help.cmdDesc.autoassignrole",
+				"automod": "info.help.cmdDesc.automod",
+				"automodignorechannel": "info.help.cmdDesc.automodignorechannel",
+				"automodignorerole": "info.help.cmdDesc.automodignorerole",
+				"saveroles": "info.help.cmdDesc.saveroles",
+				"config": "info.help.cmdDesc.config",
+				"modlog": "info.help.cmdDesc.modlog",
+				"muterole": "info.help.cmdDesc.muterole",
+				"prefix": "info.help.cmdDesc.prefix",
+				"standart-money": "info.help.cmdDesc.standart-money",
+				"bal": "info.help.cmdDesc.bal",
+				"buyshop": "info.help.cmdDesc.buyshop",
+				"daily": "info.help.cmdDesc.daily",
+				"give": "info.help.cmdDesc.give",
+				"shop": "info.help.cmdDesc.shop",
+				"br": "info.help.cmdDesc.br",
+				"fortune": "info.help.cmdDesc.fortune",
+				"whereischicken": "info.help.cmdDesc.whereischicken",
+				"help": "info.help.cmdDesc.help",
+				"warns": "info.help.cmdDesc.warns",
+				"privaterooms": "info.help.cmdDesc.privaterooms",
+				"embed": "info.help.cmdDesc.embed",
+				"reactionrole": "info.help.cmdDesc.reactionrole",
+				"addshop": "info.help.cmdDesc.addshop",
+				"removeshop": "info.help.cmdDesc.removeshop",
+				"ban": "info.help.cmdDesc.ban",
+				"kick": "info.help.cmdDesc.kick",
+				"mute": "info.help.cmdDesc.mute",
+				"tempban": "info.help.cmdDesc.tempban",
+				"tempmute": "info.help.cmdDesc.tempmute",
+				"unmute": "info.help.cmdDesc.unmute",
+				"clear": "info.help.cmdDesc.clear",
+				"gifts": "info.help.cmdDesc.gifts"
 			}
 		},
 		"warns": {

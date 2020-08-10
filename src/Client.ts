@@ -184,8 +184,6 @@ export class BaseClient extends Client {
 
 		await Promise.all(Object.values(this.service).map((s) => s.onClientReady()));
 
-		this.emit('onModulesReady');
-
 		this.hasStarted = true;
 		this.startedAt = moment();
 

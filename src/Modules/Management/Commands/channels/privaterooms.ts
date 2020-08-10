@@ -30,6 +30,8 @@ export default class extends Command {
 
 	public async onLoaded() {
 		await this.system.init();
+
+		super.startupDone();
 	}
 
 	public async execute(message: Message, [], { funcs: { t, e }, guild, settings }: Context) {

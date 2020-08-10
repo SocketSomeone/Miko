@@ -46,7 +46,7 @@ const main = async () => {
 		token,
 		shardId,
 		shardCount,
-		config,
+		config: { ...config, runEnv },
 		flags
 	});
 

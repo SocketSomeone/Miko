@@ -28,6 +28,8 @@ export default class extends Command {
 
 	public async execute(message: Message, [c]: [Command], { funcs: { t }, guild, settings: { prefix } }: Context) {
 		if (c) {
+			const desc = `info.help.cmdDesc.${c.name.toLowerCase()}`;
+
 			await this.replyAsync(message, t, {
 				title: t('info.help.cmd.title', {
 					cmd: c.name
@@ -35,7 +37,7 @@ export default class extends Command {
 				fields: [
 					{
 						name: t('info.help.cmd.desc'),
-						value: `${c.desc ? c.desc : 'Отсутствует.'}`,
+						value: `${t(desc) === desc ? t('error.no') : t(desc)}`,
 						inline: false
 					},
 					{

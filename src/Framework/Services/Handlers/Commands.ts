@@ -71,6 +71,7 @@ export class CommandService extends BaseService {
 		this.client.on('messageCreate', this.onMessage.bind(this));
 
 		await Promise.all(this.commands.map((x) => x.onLoaded()));
+
 		await super.onClientReady();
 	}
 

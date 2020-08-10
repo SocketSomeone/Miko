@@ -5,6 +5,8 @@ import { Resolver, ResolverConstructor } from '../Resolvers/Resolver';
 import { GuildSettings, GuildEmojis } from '../../Misc/Models/GuildSetting';
 import { CommandGroup } from '../../Misc/Models/CommandGroup';
 
+import i18n from 'i18n';
+
 interface Arg {
 	name: string;
 	resolver: Resolver | ResolverConstructor;
@@ -113,7 +115,13 @@ export abstract class Command {
 	}
 
 	public async onLoaded() {
-		// NO-OP
+		this.startupDone();
+	}
+
+	protected startupDone() {
+		if (this.client.config.runEnv === 'dev') {
+			i18n.__({ locale: 'ru', phrase: `info.help.cmdDesc.${this.name.toLowerCase()}` });
+		}
 	}
 
 	public abstract execute(message: Message, args: any[], context: Context): any;

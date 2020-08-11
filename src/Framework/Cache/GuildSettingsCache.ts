@@ -1,25 +1,17 @@
 import { BaseCache } from './Cache';
-import { GuildSettings, Defaults } from '../../Misc/Models/GuildSetting';
 import { BaseGuild } from '../../Entity/Guild';
 import { createQueryBuilder } from 'typeorm';
 import { Guild } from 'eris';
+import { BaseSettings } from '../../Entity/GuildSettings';
 
-export class GuildSettingsCache extends BaseCache<GuildSettings> {
+export class GuildSettingsCache extends BaseCache<BaseSettings> {
 	public async init() {
 		// NO-OP
 	}
 
-	public async _get(guildId: string): Promise<GuildSettings> {
-		const { sets } = await BaseGuild.get(guildId, ['sets']);
+	public async _get(guildId: string): Promise<BaseSettings> {
+		let sets = await BaseSettings.findOne(guildId);
 
-		return { ...Defaults, ...sets };
-	}
-
-	public async updateOne(guild: Guild) {
-		const sets = this.cache.get(guild.id);
-
-		await BaseGuild.update(guild.id, { sets });
-
-		return sets;
+		return sets ? sets : BaseSettings.create({ id: guildId });
 	}
 }

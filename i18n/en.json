@@ -24,7 +24,8 @@
 		},
 		"buyshop": {
 			"title": "economy.buyshop.title",
-			"ok": "economy.buyshop.ok"
+			"ok": "economy.buyshop.ok",
+			"notFound": "economy.buyshop.notFound"
 		}
 	},
 	"embed": {
@@ -283,7 +284,10 @@
 				"autoMod": "configure.conf.main.autoMod",
 				"privateRoom": "configure.conf.main.privateRoom",
 				"privateRooms": "configure.conf.main.privateRooms",
-				"autoassignRole": "configure.conf.main.autoassignRole"
+				"autoassignRole": "configure.conf.main.autoassignRole",
+				"currency": "configure.conf.main.currency",
+				"welcomeEnabled": "configure.conf.main.welcomeEnabled",
+				"id": "configure.conf.main.id"
 			},
 			"automod": {
 				"settings": {
@@ -411,6 +415,9 @@
 		},
 		"reasons": {
 			"invites": "automod.reasons.invites"
+		},
+		"enabled": {
+			"caps": "automod.enabled.caps"
 		}
 	},
 	"info": {
@@ -467,7 +474,16 @@
 				"tempmute": "info.help.cmdDesc.tempmute",
 				"unmute": "info.help.cmdDesc.unmute",
 				"clear": "info.help.cmdDesc.clear",
-				"gifts": "info.help.cmdDesc.gifts"
+				"gifts": "info.help.cmdDesc.gifts",
+				"privatevoices": "info.help.cmdDesc.privatevoices",
+				"welcome": "info.help.cmdDesc.welcome",
+				"automod enable": "info.help.cmdDesc.automod enable",
+				"automod disable": "info.help.cmdDesc.automod disable",
+				"welcome enable": "info.help.cmdDesc.welcome enable",
+				"mute role": "info.help.cmdDesc.mute role",
+				"welcome disable": "info.help.cmdDesc.welcome disable",
+				"welcome roles": "info.help.cmdDesc.welcome roles",
+				"welcome saveroles": "info.help.cmdDesc.welcome saveroles"
 			}
 		},
 		"warns": {

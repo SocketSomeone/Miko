@@ -30,20 +30,14 @@ export default class extends Command {
 	public async execute(
 		message: Message,
 		[money]: [bigint],
-		{
-			funcs: { t, e },
-			guild,
-			settings: {
-				emojis: { wallet }
-			}
-		}: Context
+		{ funcs: { t, e }, guild, settings: { currency } }: Context
 	) {
 		const person = await BaseMember.get(message.member);
 
 		if (person.money < money)
 			throw new ExecuteError(
 				t('error.enough.money', {
-					emoji: e(wallet),
+					emoji: e(currency),
 					amount: money - person.money
 				})
 			);

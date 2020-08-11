@@ -31,23 +31,13 @@ export default class extends Command {
 		});
 	}
 
-	public async execute(
-		message: Message,
-		[bet]: [bigint],
-		{
-			funcs: { t, e },
-			guild,
-			settings: {
-				emojis: { wallet }
-			}
-		}: Context
-	) {
+	public async execute(message: Message, [bet]: [bigint], { funcs: { t, e }, guild, settings: { currency } }: Context) {
 		const person = await BaseMember.get(message.member);
 
 		if (person.money < bet)
 			throw new ExecuteError(
 				t('error.enough.money', {
-					emoji: e(wallet),
+					emoji: e(currency),
 					amount: bet - person.money
 				})
 			);
@@ -80,12 +70,12 @@ export default class extends Command {
 			fields: [
 				{
 					name: t('gambling.fortune.fields.bet'),
-					value: `${bet} ${e(wallet)}`,
+					value: `${bet} ${e(currency)}`,
 					inline: true
 				},
 				{
 					name: t('gambling.fortune.fields.result'),
-					value: `${result} ${e(wallet)}`,
+					value: `${result} ${e(currency)}`,
 					inline: true
 				}
 			],

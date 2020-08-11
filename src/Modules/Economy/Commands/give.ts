@@ -42,7 +42,7 @@ export default class extends Command {
 		if (person.money < money)
 			throw new ExecuteError({
 				description: t('error.enough.money', {
-					emoji: e(settings.emojis.wallet),
+					emoji: e(settings.currency),
 					amount: money - person.money
 				})
 			});
@@ -58,7 +58,7 @@ export default class extends Command {
 			description: t('economy.give.desc', {
 				member: message.member.mention,
 				target: user.mention,
-				amount: `${money} ${e(settings.emojis.wallet)}`
+				amount: `${money} ${e(settings.currency)}`
 			})
 		});
 	}

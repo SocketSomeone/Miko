@@ -15,7 +15,7 @@ export default class extends Command {
 			name: 'automodignorechannel',
 			aliases: ['amic'],
 			args: [],
-			group: CommandGroup.CONFIGURE,
+			group: CommandGroup.AUTOMOD,
 			guildOnly: true,
 			premiumOnly: false,
 			botPermissions: [GuildPermission.ADMINISTRATOR],
@@ -33,15 +33,15 @@ export default class extends Command {
 			settings.autoModIgnoreChannels.push(message.channel.id);
 		}
 
-		await this.client.cache.guilds.updateOne(guild);
+		await settings.save();
 
 		await this.replyAsync(message, t, {
 			color: ColorResolve(Color.MAGENTA),
-			title: t('configure.title', {
+			title: t('automod.title', {
 				guild: guild.name
 			}),
 			description: t(
-				`configure.automod.amic.${settings.autoModIgnoreChannels.includes(message.channel.id) ? 'added' : 'deleted'}`,
+				`automod.${settings.autoModIgnoreChannels.includes(message.channel.id) ? 'enabled' : 'disabled'}.amic`,
 				{
 					channel: message.channel.mention
 				}

@@ -49,8 +49,8 @@ export class MessageService extends BaseService {
 			type: 'rich',
 			color,
 			footer,
-			fields: options.fields ? options.fields : []
-			//timestamp: new Date().toISOString()
+			fields: options.fields ? options.fields : [],
+			timestamp: new Date().toISOString()
 		};
 	}
 

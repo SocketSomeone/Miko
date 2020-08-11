@@ -12,8 +12,8 @@ import { Violation } from '../../../Misc/Models/Violation';
 export default class extends Command {
 	public constructor(client: BaseClient) {
 		super(client, {
-			name: 'automod',
-			aliases: ['автомод'],
+			name: 'automod disable',
+			aliases: ['автомод выключить'],
 			args: [
 				{
 					name: 'type',
@@ -21,7 +21,7 @@ export default class extends Command {
 					required: true
 				}
 			],
-			group: CommandGroup.CONFIGURE,
+			group: CommandGroup.AUTOMOD,
 			guildOnly: true,
 			premiumOnly: false,
 			botPermissions: [GuildPermission.ADMINISTRATOR],
@@ -30,15 +30,15 @@ export default class extends Command {
 	}
 
 	public async execute(message: Message, [type]: [Violation], { funcs: { t, e }, guild, settings }: Context) {
-		settings.autoMod[type] = !settings.autoMod[type];
-		await this.client.cache.guilds.updateOne(guild);
+		settings.autoMod[type] = false;
+		await settings.save();
 
 		await this.replyAsync(message, t, {
 			color: ColorResolve(Color.MAGENTA),
-			title: t('configure.title', {
+			title: t('automod.title', {
 				guild: guild.name
 			}),
-			description: t(`configure.automod.${type}.${settings.autoMod[type] ? 'enable' : 'disable'}`),
+			description: t(`automod.disabled.${type}.`),
 			footer: {
 				text: ''
 			}

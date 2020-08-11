@@ -1,5 +1,4 @@
 import { BaseCache } from './Cache';
-import { GuildSettings, Defaults } from '../../Misc/Models/GuildSetting';
 import { BaseGuild } from '../../Entity/Guild';
 import { Permission } from '../../Misc/Models/Permisson';
 

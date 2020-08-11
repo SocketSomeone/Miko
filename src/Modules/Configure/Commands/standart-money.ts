@@ -31,7 +31,7 @@ export default class extends Command {
 	public async execute(message: Message, [money]: [bigint], { funcs: { t, e }, guild, settings }: Context) {
 		if (money) {
 			settings.prices.standart = String(money);
-			await this.client.cache.guilds.updateOne(guild);
+			await settings.save();
 		}
 
 		await this.replyAsync(message, t, {
@@ -40,7 +40,7 @@ export default class extends Command {
 				guild: guild.name
 			}),
 			description: t(`configure.standart.${money ? 'new' : 'info'}`, {
-				amount: `${settings.prices.standart} ${e(settings.emojis.wallet)}`
+				amount: `${settings.prices.standart} ${e(settings.currency)}`
 			}),
 			footer: {
 				text: ''

@@ -129,16 +129,19 @@ export default class extends Command {
 
 			commands.map((x, i) => {
 				const name = i === 0 ? '📖 Вот и список команд:' : '\u200b';
+				const desc = `info.help.cmdDesc.${x.name.toLowerCase()}`;
 				const page = pages[~~(i / 5)];
 
 				if (!page) {
 					pages.push({
 						name,
-						value: `\`${x.usage.replace(/{prefix}/g, prefix)}\``,
-						inline: true
+						value: `\`${x.usage.replace(/{prefix}/g, prefix)}\` - ${t(desc) === desc ? t('error.no') : t(desc)}`,
+						inline: false
 					});
 				} else {
-					page.value += `\n\n\`${x.usage.replace(/{prefix}/g, prefix)}\``;
+					page.value += `\n\n\`${x.usage.replace(/{prefix}/g, prefix)}\` - ${
+						t(desc) === desc ? t('error.no') : t(desc)
+					}`;
 				}
 			});
 

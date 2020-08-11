@@ -53,7 +53,7 @@ export default class extends Command {
 
 								const phrase = t(`configure.conf.main.${key}`);
 
-								if (phrase.length < 1) return null;
+								if (phrase.length < 1 || phrase === `configure.conf.main.${key}`) return null;
 
 								let eq = `"${i}"`;
 

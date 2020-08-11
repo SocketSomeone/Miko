@@ -55,7 +55,7 @@ export default class extends Command {
 		if (person.money < role.cost) {
 			throw new ExecuteError(
 				t('error.enough.money', {
-					emoji: e(settings.emojis.wallet)
+					emoji: e(settings.currency)
 				})
 			);
 		}

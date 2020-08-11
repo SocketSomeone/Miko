@@ -3,7 +3,6 @@ import { Command, Context } from '../../Commands/Command';
 import { resolve, relative } from 'path';
 import { Precondition } from '../../../Misc/Classes/Precondition';
 import { Message, GuildChannel, PrivateChannel, Member } from 'eris';
-import { Defaults as GuildSettingsDefault } from '../../../Misc/Models/GuildSetting';
 import { GuildPermission } from '../../../Misc/Enums/GuildPermissions';
 
 import glob from 'glob';
@@ -14,6 +13,7 @@ import { withScope, captureException } from '@sentry/node';
 import { ExecuteError } from '../../Errors/ExecuteError';
 import { Color } from '../../../Misc/Enums/Colors';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
+import { BaseSettings } from '../../../Entity/GuildSettings';
 
 const RATE_LIMIT = 1;
 const COOLDOWN = 5;
@@ -87,7 +87,7 @@ export class CommandService extends BaseService {
 		const guild = (channel as GuildChannel).guild;
 		let content = message.content.trim();
 
-		const sets = guild ? await this.client.cache.guilds.get(guild.id) : { ...GuildSettingsDefault };
+		const sets = guild ? await this.client.cache.guilds.get(guild.id) : new BaseSettings();
 
 		const t = (key: string, replacements?: { [key: string]: string }) =>
 			i18n.__({ locale: sets.locale, phrase: key }, replacements);
@@ -106,9 +106,16 @@ export class CommandService extends BaseService {
 			return;
 		}
 
-		const splits = content.split(' ');
+		let splits = content.split(' ');
 
-		const cmd = this.commandMap.get(splits[0].toLowerCase());
+		let cmd = this.commandMap.get(splits[0].toLowerCase());
+
+		if (!cmd && splits.length >= 2) {
+			cmd = this.commandMap.get(splits.slice(0, 2).join(' ').toLowerCase());
+			splits = splits.slice(2, splits.length);
+		} else if (cmd) {
+			splits = splits.slice(1, splits.length);
+		}
 
 		if (!cmd) {
 			if (channel instanceof PrivateChannel) {
@@ -204,9 +211,7 @@ export class CommandService extends BaseService {
 				);
 
 				if (!answer) {
-					if (sets.verbose) {
-						// ErrorEmbed.send(this.message, `Доступ запрещён правилом #${ permission.index + 1 }`);
-					}
+					// ErrorEmbed.send(this.message, `Доступ запрещён правилом #${ permission.index + 1 }`);
 
 					return;
 				} else if (answer && permission === null && !member.permission.has(GuildPermission.ADMINISTRATOR)) {
@@ -267,7 +272,7 @@ export class CommandService extends BaseService {
 
 		let quote = false;
 
-		for (let j = 1; j < splits.length; j++) {
+		for (let j = 0; j < splits.length; j++) {
 			const split = splits[j];
 			if (split.length === 0) {
 				continue;

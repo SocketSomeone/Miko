@@ -3,7 +3,6 @@ import i18n from 'i18n';
 
 import { BaseService } from '../../../Framework/Services/Service';
 import { Guild, Role, Member, Message, TextChannel, EmbedOptions } from 'eris';
-import { GuildSettings } from '../../../Misc/Models/GuildSetting';
 import { Punishment, BasePunishment } from '../../../Entity/Punishment';
 import { Violation } from '../../../Misc/Models/Violation';
 import { BaseMember } from '../../../Entity/Member';
@@ -11,10 +10,11 @@ import { TranslateFunc } from '../../../Framework/Commands/Command';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Enums/GuildPermissions';
+import { BaseSettings } from '../../../Entity/GuildSettings';
 
 interface Arguments {
 	guild: Guild;
-	settings: GuildSettings;
+	settings: BaseSettings;
 }
 
 interface MiniMessage {
@@ -128,6 +128,10 @@ export class ModerationService extends BaseService {
 		let allViolations: Violation[] = Object.values(Violation);
 
 		for (const violation of allViolations) {
+			if (settings.autoMod[violation] !== true) {
+				continue;
+			}
+
 			const func = this.warnFunctions[violation];
 
 			if (!func) {
@@ -222,10 +226,6 @@ export class ModerationService extends BaseService {
 
 	//#region
 	private async invites(message: Message, { settings, guild }: Arguments): Promise<boolean> {
-		if (!settings.autoMod.invites) {
-			return false;
-		}
-
 		const regex = new RegExp(/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-zA-Z0-9]/);
 		const hasInviteLink = regex.test(message.content);
 
@@ -233,10 +233,6 @@ export class ModerationService extends BaseService {
 	}
 
 	private async allCaps(message: Message, { settings, guild }: Arguments): Promise<boolean> {
-		if (!settings.autoMod.caps) {
-			return false;
-		}
-
 		const minCharacters = 5;
 		const percentageCaps = 0.5;
 
@@ -249,27 +245,15 @@ export class ModerationService extends BaseService {
 	}
 
 	private async zalgoDetect(message: Message, { settings }: Arguments): Promise<boolean> {
-		if (!settings.autoMod.zalgo) {
-			return false;
-		}
-
 		const hasZalgo = (txt: string) => /%CC%/g.test(encodeURIComponent(txt));
 		return hasZalgo(message.content.trim());
 	}
 
 	private async emojis(message: Message, { settings }: Arguments): Promise<boolean> {
-		if (!settings.autoMod.emojis) {
-			return false;
-		}
-
 		return this.countEmojis(message) >= 5;
 	}
 
 	private async duplicateText(message: Message, { settings, guild }: Arguments): Promise<boolean> {
-		if (!settings.autoMod.duplicate) {
-			return false;
-		}
-
 		const timeframe = 60 * 1000;
 
 		let cached = this.messageCache.get(`${guild.id}-${message.author.id}`);
@@ -289,10 +273,6 @@ export class ModerationService extends BaseService {
 	}
 
 	private async externalLinks(message: Message, { settings }: Arguments): Promise<boolean> {
-		if (!settings.autoMod.exlinks) {
-			return false;
-		}
-
 		const LINK_REGEX = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.\w{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
 		const matches = message.content.match(LINK_REGEX);
 		const hasLinks = matches && matches.length > 0;
@@ -301,10 +281,6 @@ export class ModerationService extends BaseService {
 	}
 
 	private async mentions(message: Message, { settings }: Arguments): Promise<boolean> {
-		if (!settings.autoMod.mentions) {
-			return false;
-		}
-
 		return message.mentions.length > 3 || message.roleMentions.length > 2;
 	}
 	//#endregion
@@ -437,7 +413,7 @@ export class ModerationService extends BaseService {
 		);
 	}
 
-	private async sendReplyAndDelete(message: Message, type: Violation, settings: GuildSettings) {
+	private async sendReplyAndDelete(message: Message, type: Violation, settings: BaseSettings) {
 		const t: TranslateFunc = (phrase, replace) => i18n.__({ locale: settings.locale, phrase }, replace);
 
 		const reply = await this.client.messages.sendReply(message, t, {

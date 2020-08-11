@@ -30,7 +30,7 @@ export default class extends Command {
 	public async execute(message: Message, [channel]: [Channel], { funcs: { t, e }, guild, settings }: Context) {
 		if (channel) {
 			settings.modlog = channel.id;
-			await this.client.cache.guilds.updateOne(guild);
+			await settings.save();
 		}
 
 		await this.replyAsync(message, t, {

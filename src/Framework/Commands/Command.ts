@@ -2,10 +2,10 @@ import { BaseClient } from '../../Client';
 import { Guild, Member, Message, EmbedOptions, Embed, TextableChannel, User } from 'eris';
 import { GuildPermission } from '../../Misc/Enums/GuildPermissions';
 import { Resolver, ResolverConstructor } from '../Resolvers/Resolver';
-import { GuildSettings, GuildEmojis } from '../../Misc/Models/GuildSetting';
 import { CommandGroup } from '../../Misc/Models/CommandGroup';
 
 import i18n from 'i18n';
+import { BaseSettings } from '../../Entity/GuildSettings';
 
 interface Arg {
 	name: string;
@@ -25,7 +25,7 @@ export type Context = {
 		t: TranslateFunc;
 		e: EmojiResolve;
 	};
-	settings: GuildSettings;
+	settings: BaseSettings;
 	isPremium: boolean;
 };
 

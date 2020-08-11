@@ -15,8 +15,8 @@ export default class extends Command {
 
 	public constructor(client: BaseClient) {
 		super(client, {
-			name: 'privaterooms',
-			aliases: ['pr', 'приватки'],
+			name: 'privatevoices',
+			aliases: ['pv', 'приватки'],
 			args: [],
 			group: CommandGroup.MANAGEMENT,
 			guildOnly: true,
@@ -39,7 +39,7 @@ export default class extends Command {
 			? await this.deleteManager(guild, settings.privateManager)
 			: await this.createManager(guild);
 
-		await this.client.cache.guilds.updateOne(guild);
+		await settings.save();
 
 		await this.replyAsync(message, t, {
 			color: ColorResolve(Color.MAGENTA),
@@ -56,7 +56,11 @@ export default class extends Command {
 	}
 
 	protected async createManager(guild: Guild): Promise<string> {
-		const channel = await guild.createChannel('🏠 Создать домик Miko', ChannelType.GUILD_VOICE);
+		const topic = await guild.createChannel('Домики Miko', ChannelType.GUILD_CATEGORY);
+
+		const channel = await guild.createChannel('🏠 Создать домик', ChannelType.GUILD_VOICE, {
+			parentID: topic.id
+		});
 
 		return channel.id;
 	}

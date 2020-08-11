@@ -1,8 +1,8 @@
 import { Command, Context } from '../../../Framework/Commands/Command';
 import { BaseClient } from '../../../Client';
-import { StringResolver, EnumResolver, RoleResolver } from '../../../Framework/Resolvers';
+import { StringResolver, EnumResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
-import { Message, Member, Guild, User, Role } from 'eris';
+import { Message, Member, Guild, User } from 'eris';
 import { BaseMember } from '../../../Entity/Member';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
@@ -12,16 +12,16 @@ import { Violation } from '../../../Misc/Models/Violation';
 export default class extends Command {
 	public constructor(client: BaseClient) {
 		super(client, {
-			name: 'automodignorerole',
-			aliases: ['amir'],
+			name: 'automod enable',
+			aliases: ['автомод включить'],
 			args: [
 				{
-					name: 'role',
-					resolver: RoleResolver,
+					name: 'type',
+					resolver: new EnumResolver(client, Object.values(Violation)),
 					required: true
 				}
 			],
-			group: CommandGroup.CONFIGURE,
+			group: CommandGroup.AUTOMOD,
 			guildOnly: true,
 			premiumOnly: false,
 			botPermissions: [GuildPermission.ADMINISTRATOR],
@@ -29,25 +29,16 @@ export default class extends Command {
 		});
 	}
 
-	public async execute(message: Message, [role]: [Role], { funcs: { t, e }, guild, settings }: Context) {
-		if (settings.autoModIgnoreRoles.includes(role.id)) {
-			settings.autoModIgnoreRoles.splice(
-				settings.autoModIgnoreRoles.findIndex((x) => x === role.id),
-				1
-			);
-		} else {
-			settings.autoModIgnoreRoles.push(role.id);
-		}
-		await this.client.cache.guilds.updateOne(guild);
+	public async execute(message: Message, [type]: [Violation], { funcs: { t, e }, guild, settings }: Context) {
+		settings.autoMod[type] = true;
+		await settings.save();
 
 		await this.replyAsync(message, t, {
 			color: ColorResolve(Color.MAGENTA),
-			title: t('configure.title', {
+			title: t('automod.title', {
 				guild: guild.name
 			}),
-			description: t(`configure.automod.amir.${settings.autoModIgnoreRoles.includes(role.id) ? 'added' : 'deleted'}`, {
-				role: role.mention
-			}),
+			description: t(`automod.enabled.${type}`),
 			footer: {
 				text: ''
 			}

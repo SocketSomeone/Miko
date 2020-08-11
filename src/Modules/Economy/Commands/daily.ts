@@ -40,7 +40,7 @@ export default class extends Command {
 			title: t('economy.daily.title'),
 			description: t('economy.daily.desc', {
 				member: message.member.mention,
-				amount: `${settings.prices.timely} ${e(settings.emojis.wallet)}`
+				amount: `${settings.prices.timely} ${e(settings.currency)}`
 			})
 		});
 	}

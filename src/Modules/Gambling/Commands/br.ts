@@ -30,20 +30,14 @@ export default class extends Command {
 	public async execute(
 		message: Message,
 		[money]: [bigint],
-		{
-			funcs: { t, e },
-			guild,
-			settings: {
-				emojis: { wallet }
-			}
-		}: Context
+		{ funcs: { t, e }, guild, settings: { currency } }: Context
 	) {
 		const person = await BaseMember.get(message.member);
 
 		if (person.money < money)
 			throw new ExecuteError(
 				t('error.enough.money', {
-					emoji: e(wallet),
+					emoji: e(currency),
 					amount: money - person.money
 				})
 			);
@@ -72,7 +66,7 @@ export default class extends Command {
 			embed.description = t('gambling.br.win', {
 				int,
 				bet: money * 3n,
-				emoji: e(wallet)
+				emoji: e(currency)
 			});
 		} else if (int.range([95, 101])) {
 			person.money += money * 3n;
@@ -80,7 +74,7 @@ export default class extends Command {
 			embed.description = t('gambling.br.win', {
 				int,
 				bet: money * 3n,
-				emoji: e(wallet)
+				emoji: e(currency)
 			});
 		} else {
 			embed.description = t('gambling.br.lose', {

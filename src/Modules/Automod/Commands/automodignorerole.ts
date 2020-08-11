@@ -1,49 +1,57 @@
 import { Command, Context } from '../../../Framework/Commands/Command';
 import { BaseClient } from '../../../Client';
-import { StringResolver, RoleResolver } from '../../../Framework/Resolvers';
+import { StringResolver, EnumResolver, RoleResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message, Member, Guild, User, Role } from 'eris';
 import { BaseMember } from '../../../Entity/Member';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Enums/GuildPermissions';
+import { Violation } from '../../../Misc/Models/Violation';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
 		super(client, {
-			name: 'autoassignrole',
-			aliases: ['aar', 'рольпризаходе'],
+			name: 'automodignorerole',
+			aliases: ['amir'],
 			args: [
 				{
 					name: 'role',
-					resolver: RoleResolver
+					resolver: RoleResolver,
+					required: true
 				}
 			],
-			group: CommandGroup.CONFIGURE,
+			group: CommandGroup.AUTOMOD,
 			guildOnly: true,
 			premiumOnly: false,
-			botPermissions: [GuildPermission.MANAGE_ROLES],
+			botPermissions: [GuildPermission.ADMINISTRATOR],
 			userPermissions: [GuildPermission.ADMINISTRATOR]
 		});
 	}
 
 	public async execute(message: Message, [role]: [Role], { funcs: { t, e }, guild, settings }: Context) {
-		if (role) {
-			settings.autoassignRole = role.id;
-			await this.client.cache.guilds.updateOne(guild);
+		if (settings.autoModIgnoreRoles.includes(role.id)) {
+			settings.autoModIgnoreRoles.splice(
+				settings.autoModIgnoreRoles.findIndex((x) => x === role.id),
+				1
+			);
+		} else {
+			settings.autoModIgnoreRoles.push(role.id);
 		}
+
+		await settings.save();
 
 		await this.replyAsync(message, t, {
 			color: ColorResolve(Color.MAGENTA),
-			title: t('configure.title', {
+			title: t('automod.title', {
 				guild: guild.name
 			}),
-			description:
-				!settings.autoassignRole || !guild.roles.has(settings.autoassignRole)
-					? t('configure.aar.notFound')
-					: t(`configure.aar.${role ? 'new' : 'info'}`, {
-							role: `<@&${settings.autoassignRole}>`
-					  }),
+			description: t(
+				`automod.${settings.autoModIgnoreChannels.includes(message.channel.id) ? 'enabled' : 'disabled'}.amir`,
+				{
+					role: role.mention
+				}
+			),
 			footer: {
 				text: ''
 			}

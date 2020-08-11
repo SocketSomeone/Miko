@@ -14,14 +14,12 @@ import { Moment } from 'moment';
 import { DateTransformer } from './Transformers';
 import { Guild, Member, TextChannel } from 'eris';
 import { TranslateFunc, Command } from '../Framework/Commands/Command';
-import { GuildSettings } from '../Misc/Models/GuildSetting';
 import { ColorResolve } from '../Misc/Utils/ColorResolver';
 import { Color } from '../Misc/Enums/Colors';
 import { BaseClient } from '../Client';
 
 import i18n from 'i18n';
-import { settings } from 'cluster';
-import { snowFlakeID } from './Snowflakes/SnowflakeID';
+import { BaseSettings } from './GuildSettings';
 
 export enum Punishment {
 	BAN = 'ban',
@@ -33,7 +31,7 @@ export enum Punishment {
 
 interface ContextLog {
 	client: BaseClient;
-	settings: GuildSettings;
+	settings: BaseSettings;
 	member: Member;
 	target: Member;
 	type?: Punishment | string;
@@ -132,7 +130,7 @@ export class BasePunishment extends BaseEntity {
 	public static async informUser(
 		member: Member,
 		type: Punishment,
-		settings: GuildSettings,
+		settings: BaseSettings,
 		extra?: { name: string; value: string }[]
 	) {
 		const dmChannel = await member.user.getDMChannel();

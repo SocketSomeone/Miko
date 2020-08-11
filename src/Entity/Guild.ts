@@ -6,15 +6,17 @@ import {
 	JoinColumn,
 	Column,
 	CreateDateColumn,
-	createQueryBuilder
+	createQueryBuilder,
+	OneToOne
 } from 'typeorm';
-import { GuildSettings, Defaults as SettingsDefaults } from '../Misc/Models/GuildSetting';
 import { Permission } from '../Misc/Models/Permisson';
 import { BaseMember } from './Member';
 import { BaseScheduledAction } from './ScheduledAction';
 import { Guild } from 'eris';
 import { BasePunishment } from './Punishment';
 import { PunishmentConfig } from '../Misc/Models/Violation';
+import JsonConverter from './Metadata/JsonConverter';
+import { BaseSettings } from './GuildSettings';
 
 @Entity()
 export class BaseGuild extends BaseEntity {
@@ -32,9 +34,6 @@ export class BaseGuild extends BaseEntity {
 	@OneToMany((type) => BasePunishment, (a) => a.guild)
 	@JoinColumn()
 	public punishments: BasePunishment[];
-
-	@Column({ type: 'json', default: SettingsDefaults })
-	public sets: GuildSettings;
 
 	@Column({ type: 'json', default: [] })
 	public permissions: Permission[];
@@ -74,7 +73,6 @@ export class BaseGuild extends BaseEntity {
 	static getDefaultGuild(guildId: string) {
 		const guild = this.create({
 			id: guildId,
-			sets: SettingsDefaults,
 			permissions: [],
 			punishmentConfig: []
 		});

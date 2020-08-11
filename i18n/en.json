@@ -390,6 +390,14 @@
 			"title": "gambling.br.title",
 			"lose": "gambling.br.lose",
 			"win": "gambling.br.win"
+		},
+		"slots": {
+			"title": "gambling.slots.title",
+			"desc": "gambling.slots.desc",
+			"fields": {
+				"bet": "gambling.slots.fields.bet",
+				"result": "gambling.slots.fields.result"
+			}
 		}
 	},
 	"automod": {
@@ -483,7 +491,8 @@
 				"mute role": "info.help.cmdDesc.mute role",
 				"welcome disable": "info.help.cmdDesc.welcome disable",
 				"welcome roles": "info.help.cmdDesc.welcome roles",
-				"welcome saveroles": "info.help.cmdDesc.welcome saveroles"
+				"welcome saveroles": "info.help.cmdDesc.welcome saveroles",
+				"slotmachine": "info.help.cmdDesc.slotmachine"
 			}
 		},
 		"warns": {

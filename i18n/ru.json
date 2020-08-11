@@ -128,7 +128,8 @@
 				"mute role": "info.help.cmdDesc.mute role",
 				"welcome disable": "info.help.cmdDesc.welcome disable",
 				"welcome roles": "info.help.cmdDesc.welcome roles",
-				"welcome saveroles": "info.help.cmdDesc.welcome saveroles"
+				"welcome saveroles": "info.help.cmdDesc.welcome saveroles",
+				"slotmachine": "info.help.cmdDesc.slotmachine"
 			}
 		},
 		"warns": {
@@ -233,6 +234,14 @@
 			"title": "Кости",
 			"win": "О, тебе выпало **{{{ int }}}**\nМожешь забрать свои **{{{ bet }}}** {{{ emoji }}}",
 			"lose": "Блин, тебе выпало **{{{ int }}}**\nТы не расстраивайся, в следующий раз повезет."
+		},
+		"slots": {
+			"title": "🎰 Игровой автомат",
+			"desc": "Результат игры в игровой автомат:\n{{{ result }}}",
+			"fields": {
+				"bet": "💰 Ставка",
+				"result": "⛩ Ваш результат:"
+			}
 		}
 	},
 	"waifu": {

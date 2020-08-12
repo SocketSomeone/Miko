@@ -48,7 +48,7 @@ export default class extends Command {
 
 		const times = BigInt(3) * money;
 		const result = machine.play();
-		const winned = times * BigInt(result.totalPoints);
+		const winned = (times * BigInt(result.totalPoints)) >> 2n;
 		const isWon = result.winCount > 0;
 
 		person.money += winned - money;

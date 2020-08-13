@@ -46,7 +46,7 @@ export default class extends Command {
 				})
 			);
 
-		const times = BigInt(3) * money;
+		const times = 3n * money;
 		const result = machine.play();
 		const winned = (times * BigInt(result.totalPoints)) >> 2n;
 		const isWon = result.winCount > 0;

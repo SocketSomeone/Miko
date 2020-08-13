@@ -200,6 +200,9 @@
 		},
 		"command": {
 			"notFound": "resolvers.command.notFound"
+		},
+		"channel": {
+			"notFound": "resolvers.channel.notFound"
 		}
 	},
 	"key": {
@@ -287,7 +290,10 @@
 				"autoassignRole": "configure.conf.main.autoassignRole",
 				"currency": "configure.conf.main.currency",
 				"welcomeEnabled": "configure.conf.main.welcomeEnabled",
-				"id": "configure.conf.main.id"
+				"id": "configure.conf.main.id",
+				"welcomeSaveRoles": "configure.conf.main.welcomeSaveRoles",
+				"welcomeChannelType": "configure.conf.main.welcomeChannelType",
+				"welcomeChannel": "configure.conf.main.welcomeChannel"
 			},
 			"automod": {
 				"settings": {
@@ -492,7 +498,8 @@
 				"welcome disable": "info.help.cmdDesc.welcome disable",
 				"welcome roles": "info.help.cmdDesc.welcome roles",
 				"welcome saveroles": "info.help.cmdDesc.welcome saveroles",
-				"slotmachine": "info.help.cmdDesc.slotmachine"
+				"slotmachine": "info.help.cmdDesc.slotmachine",
+				"welcome channel": "info.help.cmdDesc.welcome channel"
 			}
 		},
 		"warns": {
@@ -512,5 +519,13 @@
 				"desc": "manage.reactionrole.notFound.desc"
 			}
 		}
+	},
+	"welcome": {
+		"title": "welcome.title",
+		"channel": {
+			"set": "welcome.channel.set",
+			"dm": "welcome.channel.dm"
+		},
+		"enable": "welcome.enable"
 	}
 }

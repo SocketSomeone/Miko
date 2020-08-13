@@ -9,9 +9,11 @@ import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { chance } from '../../../Misc/Utils/Chance';
 import { BigIntResolver, BooleanResolver } from '../../../Framework/Resolvers';
 import { RolesService } from '../Services/RolesService';
+import { MessageService } from '../Services/MessageService';
 
 export default class extends Command {
 	protected roleService: RolesService;
+	protected messageService: MessageService;
 
 	public constructor(client: BaseClient) {
 		super(client, {
@@ -24,6 +26,12 @@ export default class extends Command {
 		});
 
 		this.roleService = new RolesService(client);
+		this.messageService = new MessageService(client);
+	}
+
+	public async onLoaded() {
+		await this.roleService.init();
+		await this.messageService.init();
 	}
 
 	public async execute(message: Message, [], { funcs: { t, e }, guild, settings }: Context) {

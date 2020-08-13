@@ -13,7 +13,7 @@ export class RolesService extends BaseService {
 		if (member.user.bot) return;
 
 		const settings = await this.client.cache.guilds.get(guild.id);
-		const roles = [];
+		const roles: string[] = [];
 
 		const me = guild.members.get(this.client.user.id);
 
@@ -26,7 +26,7 @@ export class RolesService extends BaseService {
 			return;
 		}
 
-		if (settings.saveroles) {
+		if (settings.welcomeSaveRoles) {
 			const person = await BaseMember.get(member);
 
 			if (person.savedRoles && person.savedRoles.length > 0) {
@@ -55,7 +55,7 @@ export class RolesService extends BaseService {
 
 		const settings = await this.client.cache.guilds.get(guild.id);
 
-		if (!settings.welcomeEnabled || !settings.saveroles) return;
+		if (!settings.welcomeEnabled || !settings.welcomeSaveRoles) return;
 
 		const person = await BaseMember.get(member);
 		person.savedRoles = member.roles;

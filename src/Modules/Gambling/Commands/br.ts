@@ -65,7 +65,7 @@ export default class extends Command {
 
 			embed.description = t('gambling.br.win', {
 				int,
-				bet: money * 3n,
+				bet: money * 2n - money,
 				emoji: e(currency)
 			});
 		} else if (int.range([95, 101])) {
@@ -73,7 +73,7 @@ export default class extends Command {
 
 			embed.description = t('gambling.br.win', {
 				int,
-				bet: money * 3n,
+				bet: money * 3n - money,
 				emoji: e(currency)
 			});
 		} else {

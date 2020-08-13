@@ -19,9 +19,11 @@ export class EnumResolver extends Resolver {
 		}
 
 		const val = value.toLowerCase();
+
 		if (this.values.has(val)) {
 			return this.values.get(val);
 		}
+
 		throw Error(
 			ctx.funcs.t(`resolvers.enum.invalid`, {
 				options: this.getHelp(ctx)

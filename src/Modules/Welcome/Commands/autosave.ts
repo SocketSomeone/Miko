@@ -23,7 +23,7 @@ export default class extends Command {
 	}
 
 	public async execute(message: Message, []: [], { funcs: { t, e }, guild, settings }: Context) {
-		settings.saveroles = !settings.saveroles;
+		settings.welcomeSaveRoles = !settings.welcomeSaveRoles;
 		await settings.save();
 
 		await this.replyAsync(message, t, {
@@ -31,7 +31,7 @@ export default class extends Command {
 			title: t('configure.title', {
 				guild: guild.name
 			}),
-			description: t(`configure.autosave.${settings.saveroles ? 'enable' : 'disable'}`),
+			description: t(`configure.autosave.${settings.welcomeSaveRoles ? 'enable' : 'disable'}`),
 			footer: {
 				text: ''
 			}

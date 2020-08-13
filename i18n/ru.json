@@ -59,7 +59,10 @@
 				"autoassignRole": "Роль при заходе",
 				"currency": "configure.conf.main.currency",
 				"welcomeEnabled": "configure.conf.main.welcomeEnabled",
-				"id": "configure.conf.main.id"
+				"id": "configure.conf.main.id",
+				"welcomeSaveRoles": "configure.conf.main.welcomeSaveRoles",
+				"welcomeChannelType": "configure.conf.main.welcomeChannelType",
+				"welcomeChannel": "configure.conf.main.welcomeChannel"
 			}
 		},
 		"removeshop": {
@@ -129,7 +132,8 @@
 				"welcome disable": "info.help.cmdDesc.welcome disable",
 				"welcome roles": "info.help.cmdDesc.welcome roles",
 				"welcome saveroles": "info.help.cmdDesc.welcome saveroles",
-				"slotmachine": "info.help.cmdDesc.slotmachine"
+				"slotmachine": "info.help.cmdDesc.slotmachine",
+				"welcome channel": "info.help.cmdDesc.welcome channel"
 			}
 		},
 		"warns": {
@@ -324,6 +328,9 @@
 		},
 		"command": {
 			"notFound": "Не удалось найти команду!"
+		},
+		"channel": {
+			"notFound": "resolvers.channel.notFound"
 		}
 	},
 	"logs": {
@@ -395,6 +402,12 @@
 	"welcome": {
 		"title": "Приветствие",
 		"enable": "Модуль `Приветствие` был **включен**",
-		"disable": "Модуль `Приветствие` был **выключен**"
+		"disable": "Модуль `Приветствие` был **выключен**",
+		"channel": {
+			"wrong": "Не удалось найти чат.",
+			"dm": "Вы установили **личные сообщения**, как чат для приветствия!",
+			"set": "Вы установили {{{ channel }}}, как чат для приветствия!",
+			"deleted": "Чат для приветствия был очищен!"
+		}
 	}
 }

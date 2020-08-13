@@ -216,11 +216,7 @@ export class MessageService extends BaseService {
 			}
 		}
 
-		if (sudo) {
-			return;
-		}
-
-		if (!doPaginate) {
+		if (sudo || !doPaginate) {
 			return;
 		}
 

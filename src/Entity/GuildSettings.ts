@@ -3,6 +3,7 @@ import { EmojisDefault } from '../Misc/Models/EmojisDefaults';
 import { Violation } from '../Misc/Models/Violation';
 import { SetTransformer } from './Transformers/SetTransformer';
 import { BaseGuild } from './Guild';
+import { WelcomeChannelType } from '../Misc/Models/WelcomeTypes';
 
 interface GuildPrices {
 	timely: string;
@@ -26,9 +27,6 @@ export class BaseSettings extends BaseEntity {
 
 	@Column({ type: 'varchar', default: {}, array: true })
 	public ignoreChannels: string[] = [];
-
-	@Column({ type: 'boolean', default: false })
-	public saveroles: boolean = false;
 
 	@Column({ type: 'varchar', default: null, nullable: true })
 	public modlog: string = null;
@@ -54,12 +52,6 @@ export class BaseSettings extends BaseEntity {
 		standart: '100'
 	};
 
-	@Column({ type: 'varchar', default: {}, array: true })
-	public autoModIgnoreRoles: string[] = [];
-
-	@Column({ type: 'varchar', default: {}, array: true })
-	public autoModIgnoreChannels: string[] = [];
-
 	@Column({
 		type: 'json',
 		default: {
@@ -84,9 +76,24 @@ export class BaseSettings extends BaseEntity {
 		[Violation.mentions]: false
 	};
 
+	@Column({ type: 'varchar', default: {}, array: true })
+	public autoModIgnoreRoles: string[] = [];
+
+	@Column({ type: 'varchar', default: {}, array: true })
+	public autoModIgnoreChannels: string[] = [];
+
 	@Column({ type: 'boolean', default: false })
 	public welcomeEnabled: boolean = false;
 
 	@Column({ type: 'varchar', default: {}, array: true, transformer: SetTransformer })
 	public onWelcomeRoles: Set<string> = new Set();
+
+	@Column({ type: 'boolean', default: false })
+	public welcomeSaveRoles: boolean = false;
+
+	@Column({ type: 'integer', default: null, nullable: true })
+	public welcomeChannelType: WelcomeChannelType = null;
+
+	@Column({ type: 'bigint', default: null, nullable: true })
+	public welcomeChannel: string = null;
 }

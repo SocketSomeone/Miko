@@ -75,7 +75,7 @@ export default class extends Command {
 				},
 				{
 					name: t('gambling.fortune.fields.result'),
-					value: `${result} ${e(currency)}`,
+					value: `${result - bet} ${e(currency)}`,
 					inline: true
 				}
 			],

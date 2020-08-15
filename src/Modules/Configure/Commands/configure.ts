@@ -78,9 +78,9 @@ export default class extends Command {
 					}
 				];
 			} else if (page === 1) {
-				const ignoredChannels = settings.autoModIgnoreChannels.filter((x) => guild.channels.has(x));
+				const ignoredChannels = [...settings.autoModIgnoreChannels].filter((x) => guild.channels.has(x));
 
-				const ignoredRoles = settings.autoModIgnoreRoles.filter((x) => guild.roles.has(x));
+				const ignoredRoles = [...settings.autoModIgnoreRoles].filter((x) => guild.roles.has(x));
 
 				embed.fields = [
 					{

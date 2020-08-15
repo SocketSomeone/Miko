@@ -13,3 +13,4 @@ export * from './RoleResolver';
 export * from './StringResolver';
 export * from './BigIntResolver';
 export * from './EmbedResolver';
+export * from './AnyResolver';

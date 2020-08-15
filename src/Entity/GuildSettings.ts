@@ -77,11 +77,11 @@ export class BaseSettings extends BaseEntity {
 		[Violation.mentions]: false
 	};
 
-	@Column({ type: 'varchar', default: {}, array: true })
-	public autoModIgnoreRoles: string[] = [];
+	@Column({ type: 'varchar', default: {}, array: true, transformer: SetTransformer })
+	public autoModIgnoreRoles: Set<string> = new Set();
 
-	@Column({ type: 'varchar', default: {}, array: true })
-	public autoModIgnoreChannels: string[] = [];
+	@Column({ type: 'varchar', default: {}, array: true, transformer: SetTransformer })
+	public autoModIgnoreChannels: Set<string> = new Set();
 
 	@Column({ type: 'boolean', default: false })
 	public welcomeEnabled: boolean = false;

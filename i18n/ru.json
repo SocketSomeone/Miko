@@ -125,7 +125,8 @@
 				"welcome content": "info.help.cmdDesc.welcome content",
 				"reactionrole": "info.help.cmdDesc.reactionrole",
 				"privatevoices": "info.help.cmdDesc.privatevoices",
-				"welcome": "info.help.cmdDesc.welcome"
+				"welcome": "info.help.cmdDesc.welcome",
+				"automod ignore": "info.help.cmdDesc.automod ignore"
 			}
 		},
 		"warns": {

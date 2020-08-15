@@ -500,7 +500,8 @@
 				"welcome saveroles": "info.help.cmdDesc.welcome saveroles",
 				"slotmachine": "info.help.cmdDesc.slotmachine",
 				"welcome channel": "info.help.cmdDesc.welcome channel",
-				"welcome content": "info.help.cmdDesc.welcome content"
+				"welcome content": "info.help.cmdDesc.welcome content",
+				"automod ignore": "info.help.cmdDesc.automod ignore"
 			}
 		},
 		"warns": {

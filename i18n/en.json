@@ -499,7 +499,8 @@
 				"welcome roles": "info.help.cmdDesc.welcome roles",
 				"welcome saveroles": "info.help.cmdDesc.welcome saveroles",
 				"slotmachine": "info.help.cmdDesc.slotmachine",
-				"welcome channel": "info.help.cmdDesc.welcome channel"
+				"welcome channel": "info.help.cmdDesc.welcome channel",
+				"welcome content": "info.help.cmdDesc.welcome content"
 			}
 		},
 		"warns": {
@@ -526,6 +527,9 @@
 			"set": "welcome.channel.set",
 			"dm": "welcome.channel.dm"
 		},
-		"enable": "welcome.enable"
+		"enable": "welcome.enable",
+		"message": {
+			"ok": "welcome.message.ok"
+		}
 	}
 }

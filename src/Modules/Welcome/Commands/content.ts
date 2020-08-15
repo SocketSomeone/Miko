@@ -1,15 +1,13 @@
 import { Command, Context } from '../../../Framework/Commands/Command';
 import { BaseClient } from '../../../Client';
-import { StringResolver, EnumResolver, ChannelResolver } from '../../../Framework/Resolvers';
+import { EnumResolver, EmbedResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
-import { Message, Member, Guild, User, Channel, TextChannel } from 'eris';
-import { BaseMember } from '../../../Entity/Member';
+import { Message, TextChannel, EmbedOptions } from 'eris';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Enums/GuildPermissions';
-import { AnyResolver } from '../../../Framework/Resolvers/AnyResolver';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
-import { WelcomeChannelType } from '../../../Misc/Models/WelcomeTypes';
+import { WelcomeChannelType, WelcomeMessage } from '../../../Misc/Models/WelcomeTypes';
 
 enum Action {
 	SET = 'set',
@@ -19,7 +17,7 @@ enum Action {
 export default class extends Command {
 	public constructor(client: BaseClient) {
 		super(client, {
-			name: 'welcome channel',
+			name: 'welcome content',
 			aliases: [],
 			args: [
 				{
@@ -27,8 +25,8 @@ export default class extends Command {
 					resolver: new EnumResolver(client, Object.values(Action))
 				},
 				{
-					name: 'channel',
-					resolver: new AnyResolver(client, ChannelResolver, StringResolver),
+					name: 'message',
+					resolver: EmbedResolver,
 					full: true
 				}
 			],
@@ -42,7 +40,7 @@ export default class extends Command {
 
 	public async execute(
 		message: Message,
-		[action, channel]: [Action, TextChannel | string],
+		[action, m]: [Action, EmbedOptions | string],
 		{ funcs: { t, e }, guild, settings }: Context
 	) {
 		const embed = this.createEmbed(
@@ -58,30 +56,36 @@ export default class extends Command {
 
 		switch (action) {
 			case Action.SET: {
-				if (channel instanceof TextChannel) {
-					settings.welcomeChannelType = WelcomeChannelType.GUILD_CHANNEL;
-					settings.welcomeChannel = channel.id;
-
-					embed.description = t('welcome.channel.set', {
-						channel: channel.mention
-					});
-				} else if (/^(DM|ЛС|Личка|Личные сообщения)$/i.test(channel)) {
-					settings.welcomeChannelType = WelcomeChannelType.DM;
-					settings.welcomeChannel = null;
-
-					embed.description = t('welcome.channel.dm');
+				if (typeof m === 'string') {
+					settings.welcomeMessageType = WelcomeMessage.TEXT;
+					settings.welcomeMessage = m;
 				} else {
-					throw new ExecuteError(t('welcome.channel.wrong'));
+					try {
+						const embed = this.createEmbed(m, false);
+
+						settings.welcomeMessageType = WelcomeMessage.EMBED;
+						settings.welcomeMessage = JSON.stringify(embed);
+					} catch (error) {
+						throw new ExecuteError(
+							t('manage.embed.error', {
+								error: error.message
+									.split(/[\r?\n]/)
+									.slice(1, 2)
+									.join('\n')
+							})
+						);
+					}
 				}
 
+				embed.description = t('welcome.message.ok');
 				break;
 			}
 
 			case Action.DELETE: {
-				settings.welcomeChannelType = null;
-				settings.welcomeChannel = null;
+				settings.welcomeMessageType = null;
+				settings.welcomeMessage = null;
 
-				embed.description = t('welcome.channel.deleted');
+				embed.description = t('welcome.message.deleted');
 				break;
 			}
 

@@ -133,7 +133,8 @@
 				"welcome roles": "info.help.cmdDesc.welcome roles",
 				"welcome saveroles": "info.help.cmdDesc.welcome saveroles",
 				"slotmachine": "info.help.cmdDesc.slotmachine",
-				"welcome channel": "info.help.cmdDesc.welcome channel"
+				"welcome channel": "info.help.cmdDesc.welcome channel",
+				"welcome content": "info.help.cmdDesc.welcome content"
 			}
 		},
 		"warns": {
@@ -408,6 +409,10 @@
 			"dm": "Вы установили **личные сообщения**, как чат для приветствия!",
 			"set": "Вы установили {{{ channel }}}, как чат для приветствия!",
 			"deleted": "Чат для приветствия был очищен!"
+		},
+		"message": {
+			"ok": "Установлено новое сообщение",
+			"deleted": "Сообщение для приветствие было удалено!"
 		}
 	}
 }

@@ -1,6 +1,6 @@
 import { BaseService } from '../../../Framework/Services/Service';
-import { Guild, Member, TextChannel } from 'eris';
-import { WelcomeChannelType } from '../../../Misc/Models/WelcomeTypes';
+import { Guild, Member, TextChannel, EmbedOptions } from 'eris';
+import { WelcomeChannelType, WelcomeMessage } from '../../../Misc/Models/WelcomeTypes';
 import { GuildPermission } from '../../../Misc/Enums/GuildPermissions';
 
 export class MessageService extends BaseService {
@@ -8,23 +8,33 @@ export class MessageService extends BaseService {
 		this.client.on('guildMemberAdd', this.onGuildMemberAdd.bind(this));
 	}
 
-	public async onGuildMemberAdd(guild: Guild, { user }: Member) {
+	public async onGuildMemberAdd(guild: Guild, { user, mention }: Member) {
 		const sets = await this.client.cache.guilds.get(guild.id);
 
 		if (sets.welcomeEnabled !== true) {
 			return;
 		}
 
-		const embed = this.client.messages.createEmbed({
-			title: '123'
-		});
+		if (sets.welcomeChannelType === null || sets.welcomeMessageType === null || sets.welcomeMessage === null) {
+			return;
+		}
+
+		const processed = sets.welcomeMessage
+			.replace(/\[members\]/gi, guild.memberCount.toString())
+			.replace(/\[mention\]/gi, mention)
+			.replace(/\[server\]/gi, guild.name);
+
+		const message =
+			sets.welcomeMessageType === WelcomeMessage.TEXT
+				? { content: processed }
+				: { embed: JSON.parse(processed) as EmbedOptions };
 
 		switch (sets.welcomeChannelType) {
 			case WelcomeChannelType.DM: {
 				const channel = await user.getDMChannel();
 
 				try {
-					await channel.createMessage({ embed });
+					await channel.createMessage(message);
 				} catch (err) {
 					if (err.code === 50007) {
 						// NO-OP
@@ -45,7 +55,7 @@ export class MessageService extends BaseService {
 
 				if (!perm.has(GuildPermission.SEND_MESSAGES) || !perm.has(GuildPermission.READ_MESSAGE_HISTORY)) return;
 
-				await channel.createMessage({ embed });
+				await channel.createMessage(message);
 
 				break;
 			}

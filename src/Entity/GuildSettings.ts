@@ -3,7 +3,8 @@ import { EmojisDefault } from '../Misc/Models/EmojisDefaults';
 import { Violation } from '../Misc/Models/Violation';
 import { SetTransformer } from './Transformers/SetTransformer';
 import { BaseGuild } from './Guild';
-import { WelcomeChannelType } from '../Misc/Models/WelcomeTypes';
+import { WelcomeChannelType, WelcomeMessage } from '../Misc/Models/WelcomeTypes';
+import { EmbedOptions } from 'eris';
 
 interface GuildPrices {
 	timely: string;
@@ -96,4 +97,10 @@ export class BaseSettings extends BaseEntity {
 
 	@Column({ type: 'bigint', default: null, nullable: true })
 	public welcomeChannel: string = null;
+
+	@Column({ type: 'integer', default: null, nullable: true })
+	public welcomeMessageType: WelcomeMessage = null;
+
+	@Column({ type: 'varchar', default: null, nullable: true })
+	public welcomeMessage: string = null;
 }

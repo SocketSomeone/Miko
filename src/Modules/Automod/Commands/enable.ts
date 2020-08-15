@@ -12,8 +12,8 @@ import { Violation } from '../../../Misc/Models/Violation';
 export default class extends Command {
 	public constructor(client: BaseClient) {
 		super(client, {
-			name: 'automod enable',
-			aliases: ['автомод включить'],
+			name: 'automod',
+			aliases: ['автомод'],
 			args: [
 				{
 					name: 'type',
@@ -30,7 +30,7 @@ export default class extends Command {
 	}
 
 	public async execute(message: Message, [type]: [Violation], { funcs: { t, e }, guild, settings }: Context) {
-		settings.autoMod[type] = true;
+		settings.autoMod[type] = !settings.autoMod[type];
 		await settings.save();
 
 		await this.replyAsync(message, t, {
@@ -38,7 +38,7 @@ export default class extends Command {
 			title: t('automod.title', {
 				guild: guild.name
 			}),
-			description: t(`automod.enabled.${type}`),
+			description: t(`automod.${settings.autoMod[type] ? `enabled` : `disabled`}.${type}`),
 			footer: {
 				text: ''
 			}

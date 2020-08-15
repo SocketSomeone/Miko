@@ -17,7 +17,7 @@ export default class extends Command {
 
 	public constructor(client: BaseClient) {
 		super(client, {
-			name: 'welcome enable',
+			name: 'welcome',
 			aliases: [],
 			args: [],
 			group: CommandGroup.WELCOME,
@@ -35,7 +35,7 @@ export default class extends Command {
 	}
 
 	public async execute(message: Message, [], { funcs: { t, e }, guild, settings }: Context) {
-		settings.welcomeEnabled = true;
+		settings.welcomeEnabled = !settings.welcomeEnabled;
 		await settings.save();
 
 		await this.replyAsync(message, t, {
@@ -43,7 +43,7 @@ export default class extends Command {
 			title: t('welcome.title', {
 				guild: guild.name
 			}),
-			description: t(`welcome.enable`),
+			description: settings.welcomeEnabled ? t(`welcome.enable`) : t('welcome.disable'),
 			footer: {
 				text: ''
 			}

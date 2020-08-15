@@ -40,7 +40,7 @@ export class MessageService extends BaseService {
 			color = ColorResolve(color);
 		}
 
-		const footer = overrideFooter || !options.footer ? this.defaultFooter : options.footer;
+		const footer = overrideFooter || typeof options.footer === 'undefined' ? this.defaultFooter : options.footer;
 
 		delete options.color;
 
@@ -56,7 +56,7 @@ export class MessageService extends BaseService {
 
 	get defaultFooter() {
 		return {
-			text: `Made by someone with ❤️`,
+			text: `✨ Miko`,
 			icon_url: this.client.user.dynamicAvatarURL('png', 4096)
 		};
 	}

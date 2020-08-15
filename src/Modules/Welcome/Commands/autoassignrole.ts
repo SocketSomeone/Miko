@@ -42,26 +42,47 @@ export default class extends Command {
 		[action, role]: [Action, Role],
 		{ funcs: { t, e }, guild, settings }: Context
 	) {
+		const embed = this.createEmbed(
+			{
+				color: ColorResolve(Color.MAGENTA),
+				title: t('configure.title', {
+					guild: guild.name
+				}),
+				description: t('welcome.aar.list', {
+					roles: [...settings.onWelcomeRoles]
+						.filter((x) => guild.roles.has(x))
+						.map((x) => `<@&${x}>`)
+						.join(', ')
+				}),
+				footer: null
+			},
+			false
+		);
+
 		if (role) {
-			if (settings.onWelcomeRoles.has(role.id)) settings.onWelcomeRoles.delete(role.id);
-			else settings.onWelcomeRoles.add(role.id);
+			switch (action) {
+				case Action.ADD: {
+					if (!settings.onWelcomeRoles.has(role.id)) settings.onWelcomeRoles.add(role.id);
+
+					embed.description = t('welcome.aar.added', {
+						role: role.mention
+					});
+					break;
+				}
+
+				case Action.DELETE: {
+					if (settings.onWelcomeRoles.has(role.id)) settings.onWelcomeRoles.delete(role.id);
+
+					embed.description = t('welcome.aar.deleted', {
+						role: role.mention
+					});
+					break;
+				}
+			}
 
 			await settings.save();
 		}
 
-		await this.replyAsync(message, t, {
-			color: ColorResolve(Color.MAGENTA),
-			title: t('configure.title', {
-				guild: guild.name
-			}),
-			description: !guild.roles.some((x) => settings.onWelcomeRoles.has(x.id))
-				? t('configure.aar.notFound')
-				: t(`configure.aar.${role ? 'new' : 'info'}`, {
-						role: [...settings.onWelcomeRoles].map((x) => `<@&${x}>`).join('\n')
-				  }),
-			footer: {
-				text: ''
-			}
-		});
+		await this.replyAsync(message, t, embed);
 	}
 }

@@ -90,14 +90,12 @@
 				"aliases": "Алиасы:"
 			},
 			"cmdDesc": {
-				"autoassignrole": "info.help.cmdDesc.autoassignrole",
-				"automod": "info.help.cmdDesc.automod",
 				"automodignorechannel": "info.help.cmdDesc.automodignorechannel",
 				"automodignorerole": "info.help.cmdDesc.automodignorerole",
-				"saveroles": "info.help.cmdDesc.saveroles",
+				"automod": "info.help.cmdDesc.automod",
 				"config": "info.help.cmdDesc.config",
 				"modlog": "info.help.cmdDesc.modlog",
-				"muterole": "info.help.cmdDesc.muterole",
+				"mute role": "info.help.cmdDesc.mute role",
 				"prefix": "info.help.cmdDesc.prefix",
 				"standart-money": "info.help.cmdDesc.standart-money",
 				"bal": "info.help.cmdDesc.bal",
@@ -107,12 +105,11 @@
 				"shop": "info.help.cmdDesc.shop",
 				"br": "info.help.cmdDesc.br",
 				"fortune": "info.help.cmdDesc.fortune",
+				"slotmachine": "info.help.cmdDesc.slotmachine",
 				"whereischicken": "info.help.cmdDesc.whereischicken",
 				"help": "info.help.cmdDesc.help",
 				"warns": "info.help.cmdDesc.warns",
-				"privaterooms": "info.help.cmdDesc.privaterooms",
 				"embed": "info.help.cmdDesc.embed",
-				"reactionrole": "info.help.cmdDesc.reactionrole",
 				"addshop": "info.help.cmdDesc.addshop",
 				"removeshop": "info.help.cmdDesc.removeshop",
 				"ban": "info.help.cmdDesc.ban",
@@ -122,19 +119,13 @@
 				"tempmute": "info.help.cmdDesc.tempmute",
 				"unmute": "info.help.cmdDesc.unmute",
 				"clear": "info.help.cmdDesc.clear",
-				"gifts": "info.help.cmdDesc.gifts",
-				"privatevoices": "info.help.cmdDesc.privatevoices",
-				"welcome": "info.help.cmdDesc.welcome",
-				"automod enable": "info.help.cmdDesc.automod enable",
-				"automod disable": "info.help.cmdDesc.automod disable",
-				"welcome enable": "info.help.cmdDesc.welcome enable",
-				"mute role": "info.help.cmdDesc.mute role",
-				"welcome disable": "info.help.cmdDesc.welcome disable",
 				"welcome roles": "info.help.cmdDesc.welcome roles",
 				"welcome saveroles": "info.help.cmdDesc.welcome saveroles",
-				"slotmachine": "info.help.cmdDesc.slotmachine",
 				"welcome channel": "info.help.cmdDesc.welcome channel",
-				"welcome content": "info.help.cmdDesc.welcome content"
+				"welcome content": "info.help.cmdDesc.welcome content",
+				"reactionrole": "info.help.cmdDesc.reactionrole",
+				"privatevoices": "info.help.cmdDesc.privatevoices",
+				"welcome": "info.help.cmdDesc.welcome"
 			}
 		},
 		"warns": {
@@ -413,6 +404,11 @@
 		"message": {
 			"ok": "Установлено новое сообщение",
 			"deleted": "Сообщение для приветствие было удалено!"
+		},
+		"aar": {
+			"list": "Список ролей, которые выдаются при заходе:\n{{{ roles }}}",
+			"added": "Добавлена новая роль при входе - {{{ role }}}",
+			"deleted": "Удалена роль при входе - {{{ role }}}"
 		}
 	}
 }

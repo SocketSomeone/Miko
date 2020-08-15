@@ -47,7 +47,7 @@ export default class extends Command {
 	) {
 		const embed = this.createEmbed(
 			{
-				color: ColorResolve(Color.PRIMARY),
+				color: ColorResolve(Color.MAGENTA),
 				title: t('welcome.title'),
 				footer: {
 					text: null

@@ -530,6 +530,13 @@
 		"enable": "welcome.enable",
 		"message": {
 			"ok": "welcome.message.ok"
+		},
+		"aar": {
+			"list": "welcome.aar.list",
+			"added": "welcome.aar.added"
+		},
+		"arr": {
+			"added": "welcome.arr.added"
 		}
 	}
 }

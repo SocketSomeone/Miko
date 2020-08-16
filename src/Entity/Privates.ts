@@ -2,9 +2,15 @@ import { BaseEntity, Entity, Column, CreateDateColumn, PrimaryColumn } from 'typ
 import { SetTransformer } from './Transformers/SetTransformer';
 import { ExecuteError } from '../Framework/Errors/ExecuteError';
 import { TranslateFunc } from '../Framework/Commands/Command';
-import { Member, VoiceChannel, Permission } from 'eris';
+import { Member, VoiceChannel, Permission, Role, Guild, Collection, PermissionOverwrite } from 'eris';
 import { GuildPermission } from '../Misc/Models/GuildPermissions';
 import { Permissions } from '../Misc/Utils/PermissionResolver';
+import { reverse } from 'dns';
+
+export enum ActionRoom {
+	LOCK = 'locked',
+	HIDE = 'hidden'
+}
 
 @Entity()
 export class BasePrivate extends BaseEntity {
@@ -26,7 +32,7 @@ export class BasePrivate extends BaseEntity {
 	@CreateDateColumn()
 	private createdAt: Date;
 
-	public isOwner(user: string) {
+	private isOwner(user: string) {
 		return this.owner === user;
 	}
 
@@ -34,72 +40,43 @@ export class BasePrivate extends BaseEntity {
 		return this.isOwner(user) || this.admins.has(user);
 	}
 
-	public async lockRoom(t: TranslateFunc, { id, guild }: Member) {
+	public async actionRoom(
+		t: TranslateFunc,
+		{ id, guild }: Member,
+		target: Member | Role | Guild,
+		action: ActionRoom,
+		reverse: boolean
+	) {
 		if (!this.isAdmin(id)) throw new ExecuteError(t('voice.error.notAdmin'));
 
 		const channel = guild.channels.get(this.id) as VoiceChannel;
-		const permissions = channel.permissionOverwrites.get(guild.id);
-		const isLocked = permissions.json[GuildPermission.CONNECT] === false;
+		const permissions = channel.permissionOverwrites.get(target.id) || new PermissionOverwrite({ allow: 0, deny: 0 });
 
-		if (isLocked) throw new ExecuteError(t('voice.error.locked'));
+		let allow: number, deny: number, json: GuildPermission;
 
-		await channel.editPermission(
-			guild.id,
-			permissions.allow & ~Permissions.voiceConnect,
-			permissions.deny | Permissions.voiceConnect,
-			'role'
-		);
-	}
+		switch (action) {
+			case ActionRoom.LOCK: {
+				allow = reverse ? permissions.allow | Permissions.voiceConnect : permissions.allow & ~Permissions.voiceConnect;
+				deny = reverse ? permissions.deny & ~Permissions.voiceConnect : permissions.deny | Permissions.voiceConnect;
+				json = GuildPermission.CONNECT;
 
-	public async unlockRoom(t: TranslateFunc, { id, guild }: Member) {
-		if (!this.isAdmin(id)) throw new ExecuteError(t('voice.error.notAdmin'));
+				break;
+			}
 
-		const channel = guild.channels.get(this.id) as VoiceChannel;
-		const permissions = channel.permissionOverwrites.get(guild.id);
-		const isUnlocked = permissions.json[GuildPermission.CONNECT] === true;
+			case ActionRoom.HIDE: {
+				allow = reverse ? permissions.allow | Permissions.readMessages : permissions.allow & ~Permissions.readMessages;
+				deny = reverse ? permissions.deny & ~Permissions.readMessages : permissions.deny | Permissions.readMessages;
+				json = GuildPermission.VIEW_CHANNEL;
 
-		if (isUnlocked) throw new ExecuteError(t('voice.error.unlocked'));
+				break;
+			}
+		}
 
-		await channel.editPermission(
-			guild.id,
-			permissions.allow | Permissions.voiceConnect,
-			permissions.deny & ~Permissions.voiceConnect,
-			'role'
-		);
-	}
+		const already = permissions.json[json] === reverse;
 
-	public async hideRoom(t: TranslateFunc, { id, guild }: Member) {
-		if (!this.isAdmin(id)) throw new ExecuteError(t('voice.error.notAdmin'));
+		if (already) throw new ExecuteError(t(`voice.error.${reverse ? 'un' : ''}${action.toString()}`));
 
-		const channel = guild.channels.get(this.id) as VoiceChannel;
-		const permissions = channel.permissionOverwrites.get(guild.id);
-		const isHidden = permissions.json[GuildPermission.VIEW_CHANNEL] === false;
-
-		if (isHidden) throw new ExecuteError(t('voice.error.hidden'));
-
-		await channel.editPermission(
-			guild.id,
-			permissions.allow & ~Permissions.readMessages,
-			permissions.deny | Permissions.readMessages,
-			'role'
-		);
-	}
-
-	public async unhideRoom(t: TranslateFunc, { id, guild }: Member) {
-		if (!this.isAdmin(id)) throw new ExecuteError(t('voice.error.notAdmin'));
-
-		const channel = guild.channels.get(this.id) as VoiceChannel;
-		const permissions = channel.permissionOverwrites.get(guild.id);
-		const isShowed = permissions.json[GuildPermission.VIEW_CHANNEL] === true;
-
-		if (isShowed) throw new ExecuteError(t('voice.error.unhidden'));
-
-		await channel.editPermission(
-			guild.id,
-			permissions.allow | Permissions.readMessages,
-			permissions.deny & ~Permissions.readMessages,
-			'role'
-		);
+		await channel.editPermission(target.id, allow, deny, target instanceof Member ? 'member' : 'role');
 	}
 
 	public async actionAdmin(t: TranslateFunc, user: Member, target: Member) {

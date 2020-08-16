@@ -568,6 +568,7 @@
 		"locked": "voice.locked",
 		"hidden": "voice.hidden",
 		"unhidden": "voice.unhidden",
-		"unlocked": "voice.unlocked"
+		"unlocked": "voice.unlocked",
+		"all": "voice.all"
 	}
 }

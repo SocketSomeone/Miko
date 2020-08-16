@@ -1,7 +1,7 @@
 import { BaseService } from '../Service';
 import { EmbedOptions, Embed, TextableChannel, Message, GuildChannel, User, Emoji, Guild, VoiceChannel } from 'eris';
 import { withScope, captureException } from '@sentry/node';
-import { GuildPermission } from '../../../Misc/Enums/GuildPermissions';
+import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { TranslateFunc } from '../../Commands/Command';
 import { Color } from '../../../Misc/Enums/Colors';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
@@ -40,7 +40,7 @@ export class MessageService extends BaseService {
 			color = ColorResolve(color);
 		}
 
-		const footer = overrideFooter || typeof options.footer === 'undefined' ? this.defaultFooter : options.footer;
+		const footer = overrideFooter ? this.defaultFooter : options.footer;
 
 		delete options.color;
 

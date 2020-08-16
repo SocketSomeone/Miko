@@ -14,7 +14,7 @@ import { BaseMember } from './Member';
 import { BaseScheduledAction } from './ScheduledAction';
 import { Guild } from 'eris';
 import { BasePunishment } from './Punishment';
-import { PunishmentConfig } from '../Misc/Models/Violation';
+import { PunishmentConfig } from '../Misc/Enums/Violation';
 import JsonConverter from './Metadata/JsonConverter';
 import { BaseSettings } from './GuildSettings';
 

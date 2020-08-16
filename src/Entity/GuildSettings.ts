@@ -1,9 +1,9 @@
 import { BaseEntity, Entity, Column, PrimaryColumn, OneToOne, JoinColumn } from 'typeorm';
-import { EmojisDefault } from '../Misc/Models/EmojisDefaults';
-import { Violation } from '../Misc/Models/Violation';
+import { EmojisDefault } from '../Misc/Enums/EmojisDefaults';
+import { Violation } from '../Misc/Enums/Violation';
 import { SetTransformer } from './Transformers/SetTransformer';
 import { BaseGuild } from './Guild';
-import { WelcomeChannelType, WelcomeMessage } from '../Misc/Models/WelcomeTypes';
+import { WelcomeChannelType, WelcomeMessage } from '../Misc/Enums/WelcomeTypes';
 import { EmbedOptions } from 'eris';
 
 interface GuildPrices {

@@ -5,7 +5,7 @@ import { Message, Member } from 'eris';
 import { BaseMember } from '../../../Entity/Member';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
-import { GuildPermission } from '../../../Misc/Enums/GuildPermissions';
+import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import BigNumber from 'bignumber.js';
 import { BigIntResolver } from '../../../Framework/Resolvers';
 

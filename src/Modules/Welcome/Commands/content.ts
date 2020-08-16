@@ -5,9 +5,9 @@ import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message, TextChannel, EmbedOptions } from 'eris';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
-import { GuildPermission } from '../../../Misc/Enums/GuildPermissions';
+import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
-import { WelcomeChannelType, WelcomeMessage } from '../../../Misc/Models/WelcomeTypes';
+import { WelcomeChannelType, WelcomeMessage } from '../../../Misc/Enums/WelcomeTypes';
 
 enum Action {
 	SET = 'set',

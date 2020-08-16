@@ -126,7 +126,10 @@
 				"reactionrole": "info.help.cmdDesc.reactionrole",
 				"privatevoices": "info.help.cmdDesc.privatevoices",
 				"welcome": "info.help.cmdDesc.welcome",
-				"automod ignore": "info.help.cmdDesc.automod ignore"
+				"automod ignore": "info.help.cmdDesc.automod ignore",
+				"voice limit": "info.help.cmdDesc.voice limit",
+				"voice name": "info.help.cmdDesc.voice name",
+				"voice admin": "info.help.cmdDesc.voice admin"
 			}
 		},
 		"warns": {
@@ -410,6 +413,21 @@
 			"list": "Список ролей, которые выдаются при заходе:\n{{{ roles }}}",
 			"added": "Добавлена новая роль при входе - {{{ role }}}",
 			"deleted": "Удалена роль при входе - {{{ role }}}"
+		}
+	},
+	"voice": {
+		"title": "Приватные комнаты",
+		"error": {
+			"notFound": "Вы не находитесь в приватной комнате!",
+			"notAdmin": "Вы не администратор команты!",
+			"notOwner": "Вы не владелец команты!",
+			"similar": "Вы не можете взаимодействовать с самим собой!"
+		},
+		"limit": "Вы успешно изменили лимит комнаты!",
+		"name": "Вы успешно изменили название комнаты!",
+		"admin": {
+			"setted": "Вы установили нового администратора приватной комнаты!",
+			"deleted": "Вы удалили администратора приватной комнаты!"
 		}
 	}
 }

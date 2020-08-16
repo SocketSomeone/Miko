@@ -2,10 +2,10 @@ import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { BaseClient } from '../../../Client';
 import { Context, Command, TranslateFunc } from '../../../Framework/Commands/Command';
 import { Message, Guild, GuildChannel } from 'eris';
-import { GuildPermission } from '../../../Misc/Enums/GuildPermissions';
+import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { CommandResolver } from '../../../Framework/Resolvers';
 import { settings } from 'cluster';
-import { Syntax } from '../../../Misc/Enums/Syntax';
+import { Syntax } from '../../../Misc/Models/Syntax';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {

@@ -501,7 +501,10 @@
 				"slotmachine": "info.help.cmdDesc.slotmachine",
 				"welcome channel": "info.help.cmdDesc.welcome channel",
 				"welcome content": "info.help.cmdDesc.welcome content",
-				"automod ignore": "info.help.cmdDesc.automod ignore"
+				"automod ignore": "info.help.cmdDesc.automod ignore",
+				"voice limit": "info.help.cmdDesc.voice limit",
+				"voice name": "info.help.cmdDesc.voice name",
+				"voice admin": "info.help.cmdDesc.voice admin"
 			}
 		},
 		"warns": {
@@ -538,6 +541,21 @@
 		},
 		"arr": {
 			"added": "welcome.arr.added"
+		}
+	},
+	"voice": {
+		"title": "voice.title",
+		"error": {
+			"notFound": "voice.error.notFound"
+		},
+		"limit": "voice.limit",
+		"name": "voice.name",
+		"add": {
+			"setted": "voice.add.setted"
+		},
+		"admin": {
+			"setted": "voice.admin.setted",
+			"deleted": "voice.admin.deleted"
 		}
 	}
 }

@@ -4,7 +4,7 @@ import { Message, EmbedOptions } from 'eris';
 import { EmbedResolver } from '../../../../Framework/Resolvers';
 import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
 import { ExecuteError } from '../../../../Framework/Errors/ExecuteError';
-import { GuildPermission } from '../../../../Misc/Enums/GuildPermissions';
+import { GuildPermission } from '../../../../Misc/Models/GuildPermissions';
 import { BaseMessage } from '../../../../Entity/Message';
 
 export default class extends Command {

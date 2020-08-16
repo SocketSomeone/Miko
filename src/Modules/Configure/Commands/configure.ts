@@ -4,8 +4,8 @@ import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message } from 'eris';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
-import { GuildPermission } from '../../../Misc/Enums/GuildPermissions';
-import { Syntax } from '../../../Misc/Enums/Syntax';
+import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
+import { Syntax } from '../../../Misc/Models/Syntax';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {

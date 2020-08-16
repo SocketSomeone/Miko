@@ -1,7 +1,7 @@
 import { BaseService } from '../../../Framework/Services/Service';
 import { Guild, Member, TextChannel, EmbedOptions } from 'eris';
-import { WelcomeChannelType, WelcomeMessage } from '../../../Misc/Models/WelcomeTypes';
-import { GuildPermission } from '../../../Misc/Enums/GuildPermissions';
+import { WelcomeChannelType, WelcomeMessage } from '../../../Misc/Enums/WelcomeTypes';
+import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 
 export class MessageService extends BaseService {
 	public async init() {

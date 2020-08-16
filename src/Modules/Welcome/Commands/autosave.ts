@@ -6,7 +6,7 @@ import { Message, Member, Guild, User } from 'eris';
 import { BaseMember } from '../../../Entity/Member';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
-import { GuildPermission } from '../../../Misc/Enums/GuildPermissions';
+import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {

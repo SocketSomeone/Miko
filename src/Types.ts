@@ -5,3 +5,13 @@ export enum ChannelType {
 	GROUP_DM = 3,
 	GUILD_CATEGORY = 4
 }
+
+export interface ChannelOptions {
+	name?: string;
+	topic?: string;
+	bitrate?: number;
+	userLimit?: number;
+	rateLimitPerUser?: number;
+	nsfw?: boolean;
+	parentID?: string;
+}

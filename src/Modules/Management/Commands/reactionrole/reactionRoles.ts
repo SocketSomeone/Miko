@@ -3,7 +3,7 @@ import { Context, Command } from '../../../../Framework/Commands/Command';
 import { Message, Role } from 'eris';
 import { StringResolver, RoleResolver } from '../../../../Framework/Resolvers';
 import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
-import { GuildPermission } from '../../../../Misc/Enums/GuildPermissions';
+import { GuildPermission } from '../../../../Misc/Models/GuildPermissions';
 import { BaseMessage } from '../../../../Entity/Message';
 import { ReactionRoleService } from '../../Services/ReactionRoles';
 import { BaseReactionRole } from '../../../../Entity/ReactionRole';

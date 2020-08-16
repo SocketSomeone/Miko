@@ -1,7 +1,7 @@
 import { BaseService } from '../../../Framework/Services/Service';
 import { BaseMember } from '../../../Entity/Member';
 import { Guild, Member } from 'eris';
-import { GuildPermission } from '../../../Misc/Enums/GuildPermissions';
+import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 
 export class RolesService extends BaseService {
 	public async init() {

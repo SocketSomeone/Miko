@@ -9,7 +9,7 @@ import moment, { Duration } from 'moment';
 import { Color } from '../../../../Misc/Enums/Colors';
 import { ColorResolve } from '../../../../Misc/Utils/ColorResolver';
 import { MemberResolver, StringResolver, DurationResolver } from '../../../../Framework/Resolvers';
-import { GuildPermission } from '../../../../Misc/Enums/GuildPermissions';
+import { GuildPermission } from '../../../../Misc/Models/GuildPermissions';
 import { Punishment, BasePunishment } from '../../../../Entity/Punishment';
 import { ScheduledAction } from '../../../../Entity/ScheduledAction';
 

@@ -6,10 +6,10 @@ import { Message, Member, Guild, User, Channel, TextChannel } from 'eris';
 import { BaseMember } from '../../../Entity/Member';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
-import { GuildPermission } from '../../../Misc/Enums/GuildPermissions';
+import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { AnyResolver } from '../../../Framework/Resolvers/AnyResolver';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
-import { WelcomeChannelType } from '../../../Misc/Models/WelcomeTypes';
+import { WelcomeChannelType } from '../../../Misc/Enums/WelcomeTypes';
 
 enum Action {
 	SET = 'set',

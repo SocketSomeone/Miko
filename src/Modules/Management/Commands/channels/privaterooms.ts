@@ -6,13 +6,10 @@ import { Message, Member, Guild, VoiceChannel } from 'eris';
 import { BaseMember } from '../../../../Entity/Member';
 import { ColorResolve } from '../../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../../Misc/Enums/Colors';
-import { GuildPermission } from '../../../../Misc/Enums/GuildPermissions';
+import { GuildPermission } from '../../../../Misc/Models/GuildPermissions';
 import { ChannelType } from '../../../../Types';
-import { PrivateService } from '../../../Configure/Services/PrivateSystem';
 
 export default class extends Command {
-	private system: PrivateService;
-
 	public constructor(client: BaseClient) {
 		super(client, {
 			name: 'privatevoices',
@@ -24,14 +21,6 @@ export default class extends Command {
 			botPermissions: [GuildPermission.MANAGE_CHANNELS],
 			userPermissions: [GuildPermission.MANAGE_GUILD]
 		});
-
-		this.system = new PrivateService(client);
-	}
-
-	public async onLoaded() {
-		await this.system.init();
-
-		super.startupDone();
 	}
 
 	public async execute(message: Message, [], { funcs: { t, e }, guild, settings }: Context) {

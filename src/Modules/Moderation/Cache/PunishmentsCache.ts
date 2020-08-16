@@ -1,5 +1,5 @@
 import { Guild } from 'eris';
-import { PunishmentConfig } from '../../../Misc/Models/Violation';
+import { PunishmentConfig } from '../../../Misc/Enums/Violation';
 import { BaseCache } from '../../../Framework/Cache';
 import { BaseGuild } from '../../../Entity/Guild';
 

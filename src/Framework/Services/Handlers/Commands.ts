@@ -3,7 +3,7 @@ import { Command, Context } from '../../Commands/Command';
 import { resolve, relative } from 'path';
 import { Precondition } from '../../../Misc/Classes/Precondition';
 import { Message, GuildChannel, PrivateChannel, Member } from 'eris';
-import { GuildPermission } from '../../../Misc/Enums/GuildPermissions';
+import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 
 import glob from 'glob';
 import moment from 'moment';

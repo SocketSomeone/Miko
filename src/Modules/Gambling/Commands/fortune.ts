@@ -7,7 +7,7 @@ import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { Color } from '../../../Misc/Enums/Colors';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { chance } from '../../../Misc/Utils/Chance';
-import { Syntax } from '../../../Misc/Enums/Syntax';
+import { Syntax } from '../../../Misc/Models/Syntax';
 import { BigIntResolver } from '../../../Framework/Resolvers';
 
 const multipliers: number[] = [0.1, 0.2, 0.3, 0.5, 1.3, 1.7, 1.5, 2],

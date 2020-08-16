@@ -3,7 +3,7 @@ import { BaseClient } from '../../../../Client';
 import { NumberResolver } from '../../../../Framework/Resolvers';
 import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
 import { Message } from 'eris';
-import { GuildPermission } from '../../../../Misc/Enums/GuildPermissions';
+import { GuildPermission } from '../../../../Misc/Models/GuildPermissions';
 import { BaseShopRole } from '../../../../Entity/ShopRole';
 import { ExecuteError } from '../../../../Framework/Errors/ExecuteError';
 

@@ -1,6 +1,6 @@
 import { BaseClient } from '../../Client';
 import { Guild, Member, Message, EmbedOptions, Embed, TextableChannel, User } from 'eris';
-import { GuildPermission } from '../../Misc/Enums/GuildPermissions';
+import { GuildPermission } from '../../Misc/Models/GuildPermissions';
 import { Resolver, ResolverConstructor } from '../Resolvers/Resolver';
 import { CommandGroup } from '../../Misc/Models/CommandGroup';
 

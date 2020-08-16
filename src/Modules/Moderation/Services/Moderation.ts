@@ -4,12 +4,12 @@ import i18n from 'i18n';
 import { BaseService } from '../../../Framework/Services/Service';
 import { Guild, Role, Member, Message, TextChannel, EmbedOptions } from 'eris';
 import { Punishment, BasePunishment } from '../../../Entity/Punishment';
-import { Violation } from '../../../Misc/Models/Violation';
+import { Violation } from '../../../Misc/Enums/Violation';
 import { BaseMember } from '../../../Entity/Member';
 import { TranslateFunc } from '../../../Framework/Commands/Command';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
-import { GuildPermission } from '../../../Misc/Enums/GuildPermissions';
+import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { BaseSettings } from '../../../Entity/GuildSettings';
 
 interface Arguments {

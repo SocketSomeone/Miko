@@ -6,8 +6,8 @@ import { Message, Member, Guild, User, Role, Channel } from 'eris';
 import { BaseMember } from '../../../Entity/Member';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
-import { GuildPermission } from '../../../Misc/Enums/GuildPermissions';
-import { Violation } from '../../../Misc/Models/Violation';
+import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
+import { Violation } from '../../../Misc/Enums/Violation';
 import { AnyResolver } from '../../../Framework/Resolvers/AnyResolver';
 
 export default class extends Command {
@@ -35,10 +35,7 @@ export default class extends Command {
 			color: ColorResolve(Color.MAGENTA),
 			title: t('automod.title', {
 				guild: guild.name
-			}),
-			footer: {
-				text: ''
-			}
+			})
 		});
 
 		if (target instanceof Role) {

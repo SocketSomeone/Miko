@@ -1,10 +1,15 @@
 import { BaseService } from '../../../Framework/Services/Service';
-import { Member, VoiceChannel, Guild } from 'eris';
-import { ChannelType } from '../../../Types';
+import { Member, VoiceChannel, Guild, PermissionOverwrite } from 'eris';
+import { ChannelType, ChannelOptions } from '../../../Types';
 
 import { PrivatesCache } from '../Cache/PrivateCache';
 import { Moment } from 'moment';
 import moment from 'moment';
+import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
+import { TranslateFunc } from '../../../Framework/Commands/Command';
+import { BasePrivate } from '../../../Entity/Privates';
+import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
+import PermissionResolver, { Permissions } from '../../../Misc/Utils/PermissionResolver';
 
 export class PrivateService extends BaseService {
 	protected ratelimit: Map<string, Moment> = new Map();
@@ -13,15 +18,9 @@ export class PrivateService extends BaseService {
 	public async init() {
 		this.cache = new PrivatesCache(this.client);
 
-		await this.onClientReady();
-	}
-
-	public async onClientReady() {
 		this.client.on('voiceChannelSwitch', this.onSwitch.bind(this));
 		this.client.on('voiceChannelLeave', this.onLeave.bind(this));
 		this.client.on('voiceChannelJoin', this.onJoin.bind(this));
-
-		await super.onClientReady();
 	}
 
 	private async onSwitch(member: Member, newChannel: VoiceChannel, oldChannel: VoiceChannel) {
@@ -40,13 +39,13 @@ export class PrivateService extends BaseService {
 				pr.owner === member.id &&
 				oldChannel.voiceMembers.filter((x) => !x.user.bot).length < 1
 			) {
-				member
+				await member
 					.edit({
 						channelID: pr.id
 					})
 					.catch(() => undefined);
 			} else {
-				this.createRoom(member, guild, newChannel).catch(() => undefined);
+				await this.createRoom(member, guild, newChannel).catch(() => undefined);
 			}
 
 			return;
@@ -70,7 +69,7 @@ export class PrivateService extends BaseService {
 
 		if (!sets.privateManager || channel.id !== sets.privateManager) return;
 
-		this.createRoom(member, guild, channel).catch(() => undefined);
+		await this.createRoom(member, guild, channel).catch(() => undefined);
 	}
 
 	private async onLeave(member: Member, channel: VoiceChannel) {
@@ -89,7 +88,33 @@ export class PrivateService extends BaseService {
 
 		const house = await guild.createChannel(`🏡 Домик ${member.username}`, ChannelType.GUILD_VOICE, {
 			parentID: channel.parentID,
-			userLimit: 2
+			userLimit: 2,
+			permissionOverwrites: [
+				{
+					id: guild.id,
+					type: 'role',
+					allow: 0,
+					deny: PermissionResolver(Permissions.MANAGE_ROLES)
+				},
+				{
+					id: member.id,
+					type: 'member',
+					allow: PermissionResolver(
+						Permissions.CONNECT,
+						Permissions.SPEAK,
+						Permissions.VIEW_CHANNEL,
+						Permissions.MANAGE_CHANNELS,
+						Permissions.PRIORITY_SPEAKER
+					),
+					deny: 0
+				},
+				{
+					id: this.client.user.id,
+					type: 'member',
+					allow: PermissionResolver(Permissions.MANAGE_CHANNELS, Permissions.MANAGE_ROLES),
+					deny: 0
+				}
+			]
 		});
 
 		try {
@@ -104,5 +129,25 @@ export class PrivateService extends BaseService {
 		} catch (err) {
 			house.delete().catch(() => undefined);
 		}
+	}
+
+	public async getRoomByVoice(t: TranslateFunc, voice: string) {
+		if (typeof voice === 'undefined') throw new ExecuteError(t('voice.error.notFound'));
+
+		const room = await this.cache.get(voice);
+
+		if (!room) throw new ExecuteError(t('voice.error.notFound'));
+
+		return room;
+	}
+
+	public async editRoom(t: TranslateFunc, room: BasePrivate, { guild, id }: Member, options: ChannelOptions) {
+		if (!guild.channels.has(room.id)) throw new ExecuteError(t('voice.error.notFound'));
+
+		if (!room.isAdmin(id)) throw new ExecuteError(t('voice.error.notAdmin'));
+
+		const channel = guild.channels.get(room.id) as VoiceChannel;
+
+		await channel.edit(options);
 	}
 }

@@ -6,7 +6,7 @@ import { BaseMember } from '../../../../Entity/Member';
 import { Color } from '../../../../Misc/Enums/Colors';
 import { ColorResolve } from '../../../../Misc/Utils/ColorResolver';
 import { MemberResolver, StringResolver } from '../../../../Framework/Resolvers';
-import { GuildPermission } from '../../../../Misc/Enums/GuildPermissions';
+import { GuildPermission } from '../../../../Misc/Models/GuildPermissions';
 import { Punishment, BasePunishment } from '../../../../Entity/Punishment';
 
 export default class extends Command {

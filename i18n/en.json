@@ -504,7 +504,11 @@
 				"automod ignore": "info.help.cmdDesc.automod ignore",
 				"voice limit": "info.help.cmdDesc.voice limit",
 				"voice name": "info.help.cmdDesc.voice name",
-				"voice admin": "info.help.cmdDesc.voice admin"
+				"voice admin": "info.help.cmdDesc.voice admin",
+				"voice lock": "info.help.cmdDesc.voice lock",
+				"voice hide": "info.help.cmdDesc.voice hide",
+				"voice unhide": "info.help.cmdDesc.voice unhide",
+				"voice unlock": "info.help.cmdDesc.voice unlock"
 			}
 		},
 		"warns": {
@@ -546,7 +550,11 @@
 	"voice": {
 		"title": "voice.title",
 		"error": {
-			"notFound": "voice.error.notFound"
+			"notFound": "voice.error.notFound",
+			"locked": "voice.error.locked",
+			"hidden": "voice.error.hidden",
+			"unhidden": "voice.error.unhidden",
+			"unlocked": "voice.error.unlocked"
 		},
 		"limit": "voice.limit",
 		"name": "voice.name",
@@ -556,6 +564,10 @@
 		"admin": {
 			"setted": "voice.admin.setted",
 			"deleted": "voice.admin.deleted"
-		}
+		},
+		"locked": "voice.locked",
+		"hidden": "voice.hidden",
+		"unhidden": "voice.unhidden",
+		"unlocked": "voice.unlocked"
 	}
 }

@@ -94,24 +94,24 @@ export class PrivateService extends BaseService {
 					id: guild.id,
 					type: 'role',
 					allow: 0,
-					deny: PermissionResolver(Permissions.MANAGE_ROLES)
+					deny: PermissionResolver(GuildPermission.MANAGE_ROLES)
 				},
 				{
 					id: member.id,
 					type: 'member',
 					allow: PermissionResolver(
-						Permissions.CONNECT,
-						Permissions.SPEAK,
-						Permissions.VIEW_CHANNEL,
-						Permissions.MANAGE_CHANNELS,
-						Permissions.PRIORITY_SPEAKER
+						GuildPermission.CONNECT,
+						GuildPermission.SPEAK,
+						GuildPermission.VIEW_CHANNEL,
+						GuildPermission.MANAGE_CHANNELS,
+						GuildPermission.USE_PRIORITY_SPEAKER
 					),
 					deny: 0
 				},
 				{
 					id: this.client.user.id,
 					type: 'member',
-					allow: PermissionResolver(Permissions.MANAGE_CHANNELS, Permissions.MANAGE_ROLES),
+					allow: PermissionResolver(GuildPermission.MANAGE_CHANNELS, GuildPermission.MANAGE_ROLES),
 					deny: 0
 				}
 			]

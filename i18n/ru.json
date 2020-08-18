@@ -133,7 +133,10 @@
 				"voice lock": "info.help.cmdDesc.voice lock",
 				"voice hide": "info.help.cmdDesc.voice hide",
 				"voice unhide": "info.help.cmdDesc.voice unhide",
-				"voice unlock": "info.help.cmdDesc.voice unlock"
+				"voice unlock": "info.help.cmdDesc.voice unlock",
+				"voice show": "info.help.cmdDesc.voice show",
+				"voice kick": "info.help.cmdDesc.voice kick",
+				"voice owner": "info.help.cmdDesc.voice owner"
 			}
 		},
 		"warns": {
@@ -424,12 +427,14 @@
 		"error": {
 			"notFound": "Вы не находитесь в приватной комнате!",
 			"notAdmin": "Вы не администратор команты!",
-			"notOwner": "Вы не владелец команты!",
+			"notOwner": "Вы не владелец комнаты!",
 			"similar": "Вы не можете взаимодействовать с самим собой!",
 			"locked": "Приватная комната уже закрыта!",
 			"hidden": "Приватная комната уже скрыта!",
 			"unhidden": "Приватная комната уже открыта!",
-			"unlocked": "Приватная комната уже открыта!"
+			"unlocked": "Приватная комната уже открыта!",
+			"notInRoom": "{{{ member }}} не находится в голосовом канале!",
+			"invalid": "Не удалось кикнуть пользователя из голосового канала!"
 		},
 		"limit": "Вы успешно изменили лимит комнаты!",
 		"name": "Вы успешно изменили название комнаты!",
@@ -441,6 +446,8 @@
 		"hidden": "Вы спрятали приватную комнату для {{{ target }}}!",
 		"unhidden": "Вы открыли приватную комнату для {{{ target }}}!",
 		"unlocked": "Вы разблокировали вход в приватную комнату для {{{ target }}}!",
+		"kick": "{{{ member }}} выгнал {{{ target }}} из приватного канала!",
+		"owner": "{{{ member }}} передал(-а) {{{ target }}} права на приватный канал!",
 		"all": "всех"
 	}
 }

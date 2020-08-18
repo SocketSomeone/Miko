@@ -390,7 +390,6 @@ export class ModerationService extends BaseService {
 
 		if (guild.ownerID === authorMember.id) {
 			return (
-				targetMember.id !== guild.ownerID &&
 				targetMember.id !== me.user.id &&
 				targetMember.id !== authorMember.id &&
 				highestBotRole.position > highestMemberRole.position

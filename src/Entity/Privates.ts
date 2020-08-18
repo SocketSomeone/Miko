@@ -23,22 +23,12 @@ export class BasePrivate extends BaseEntity {
 	@Column({ type: 'varchar', default: {}, array: true, transformer: SetTransformer })
 	private admins: Set<string> = new Set();
 
-	@Column({ type: 'boolean', default: false })
-	public isLocked: boolean = false;
-
-	@Column({ type: 'boolean', default: false })
-	public isHidden: boolean = false;
-
 	@CreateDateColumn()
 	private createdAt: Date;
 
-	private isOwner(user: string) {
-		return this.owner === user;
-	}
+	private isOwner = (user: string) => this.owner === user;
 
-	public isAdmin(user: string) {
-		return this.isOwner(user) || this.admins.has(user);
-	}
+	public isAdmin = (user: string) => this.isOwner(user) || this.admins.has(user);
 
 	public async actionRoom(
 		t: TranslateFunc,
@@ -99,5 +89,40 @@ export class BasePrivate extends BaseEntity {
 		await this.save();
 
 		return this.isAdmin(target.id);
+	}
+
+	public async kickUser(t: TranslateFunc, user: Member, target: Member) {
+		if (!this.isAdmin(user.id)) throw new ExecuteError(t('voice.error.notAdmin'));
+
+		if (user.id === target.id) throw new ExecuteError(t('voice.error.similar'));
+
+		if (target.voiceState.channelID !== this.id)
+			throw new ExecuteError(
+				t('voice.error.notInRoom', {
+					member: target.mention
+				})
+			);
+
+		await target
+			.edit({
+				channelID: null
+			})
+			.catch((err) => {
+				throw new ExecuteError(t('voice.error.invalid'));
+			});
+	}
+
+	public async setOwner(t: TranslateFunc, user: Member, target: Member) {
+		if (!this.isOwner(user.id)) throw new ExecuteError(t('voice.error.notOwner'));
+
+		if (user.id === target.id) throw new ExecuteError(t('voice.error.similar'));
+
+		const channel = user.guild.channels.get(this.id) as VoiceChannel;
+
+		await channel.deletePermission(user.id);
+		await channel.editPermission(target.id, 3147024, 0, 'member');
+
+		this.owner = target.id;
+		await this.save();
 	}
 }

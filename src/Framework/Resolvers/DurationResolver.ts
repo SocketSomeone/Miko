@@ -15,7 +15,7 @@ const MONTHS_POSTPREFIX = ['month', 'months', 'mo', 'месяцев', 'меся�
 const YEARS_POSTPREFIX = ['year', 'years', 'y', 'г', 'год', 'годов'];
 
 export class DurationResolver extends Resolver {
-	public async resolve(value: string, { funcs: { t } }: Context): Promise<Duration> {
+	public async resolve(value: string, { funcs: { t }, settings: { locale } }: Context): Promise<Duration> {
 		if (typeof value === typeof undefined || value.length === 0) {
 			return;
 		}

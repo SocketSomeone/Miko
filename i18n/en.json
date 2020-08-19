@@ -10,7 +10,11 @@
 		},
 		"daily": {
 			"title": "economy.daily.title",
-			"desc": "economy.daily.desc"
+			"desc": "economy.daily.desc",
+			"wait": {
+				"title": "economy.daily.wait.title",
+				"desc": "economy.daily.wait.desc"
+			}
 		},
 		"shop": {
 			"empty": "economy.shop.empty",

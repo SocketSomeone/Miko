@@ -222,6 +222,8 @@ export class CommandService extends BaseService {
 			}
 		}
 
+		moment.locale(sets.locale);
+
 		const rawArgs: string[] = this.rawArgs(splits);
 
 		const args: any[] = [];

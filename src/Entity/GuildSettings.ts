@@ -6,6 +6,7 @@ import { BaseGuild } from './Guild';
 import { WelcomeChannelType, WelcomeMessage } from '../Misc/Enums/WelcomeTypes';
 import { EmbedOptions } from 'eris';
 import { TranslateFunc } from '../Framework/Commands/Command';
+import { LogType } from '../Modules/Log/Services/Handle';
 
 interface GuildPrices {
 	timely: string;
@@ -56,15 +57,7 @@ export class BaseSettings extends BaseEntity {
 
 	@Column({
 		type: 'json',
-		default: {
-			[Violation.invites]: false,
-			[Violation.allCaps]: false,
-			[Violation.duplicateText]: false,
-			[Violation.zalgo]: false,
-			[Violation.emojis]: false,
-			[Violation.externalLinks]: false,
-			[Violation.mentions]: false
-		}
+		default: {}
 	})
 	public autoMod: {
 		[key in Violation]: boolean;
@@ -104,4 +97,21 @@ export class BaseSettings extends BaseEntity {
 
 	@Column({ type: 'varchar', default: null, nullable: true })
 	public welcomeMessage: string = null;
+
+	@Column({ type: 'json', default: {} })
+	public logger: { [key in LogType]: string } = {
+		[LogType.BAN]: null,
+		[LogType.UNBAN]: null,
+
+		[LogType.CHANNEL_CREATE]: null,
+		[LogType.CHANNEL_DELETE]: null,
+
+		[LogType.EMOJI_CREATE]: null,
+		[LogType.EMOJI_UPDATE]: null,
+		[LogType.EMOJI_DELETE]: null,
+
+		[LogType.ROLE_CREATE]: null,
+		[LogType.ROLE_DELETE]: null,
+		[LogType.ROLE_UPDATE]: null
+	};
 }

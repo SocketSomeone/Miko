@@ -5,7 +5,9 @@ import { Resolver } from './Resolver';
 export class EmbedResolver extends Resolver {
 	public async resolve(value: string, { guild, funcs: { t } }: Context): Promise<EmbedOptions | string> {
 		try {
-			let embed = JSON.parse(value);
+			let json = JSON.parse(value);
+
+			let embed = (json && json.embed) || json;
 
 			if (typeof embed.thumbnail === 'string') {
 				embed.thumbnail = {
@@ -23,7 +25,9 @@ export class EmbedResolver extends Resolver {
 				text: null
 			};
 
-			return embed;
+			return {
+				...embed
+			};
 		} catch (err) {
 			return value;
 		}

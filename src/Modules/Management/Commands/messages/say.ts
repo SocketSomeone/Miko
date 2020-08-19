@@ -38,7 +38,10 @@ export default class extends Command {
 				const embed = this.createEmbed(m, false);
 
 				nm = await message.channel.createMessage({
-					embed
+					embed: {
+						...embed,
+						timestamp: null
+					}
 				});
 			} catch (error) {
 				throw new ExecuteError(

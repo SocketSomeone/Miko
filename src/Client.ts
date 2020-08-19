@@ -18,6 +18,7 @@ import { ModerationService } from './Modules/Moderation/Services/Moderation';
 import { SchedulerService } from './Framework/Services/Manager/Scheduler';
 import { BaseGuild } from './Entity/Guild';
 import { PrivateService } from './Modules/Voice/Services/PrivateSystem';
+import { LoggingService } from './Modules/Log/Services/Handle';
 
 moment.tz.setDefault('Europe/Moscow');
 
@@ -57,6 +58,7 @@ export interface BaseClient {
 	moderation: ModerationService;
 	scheduler: SchedulerService;
 	privates: PrivateService;
+	logger: LoggingService;
 }
 
 interface ClientOptions {
@@ -134,7 +136,8 @@ export class BaseClient extends Client {
 			messages: new MessageService(this),
 			moderation: new ModerationService(this),
 			scheduler: new SchedulerService(this),
-			privates: new PrivateService(this)
+			privates: new PrivateService(this),
+			logger: new LoggingService(this)
 		};
 
 		Object.entries(this.service).map(([key, service]) => {

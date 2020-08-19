@@ -10,13 +10,10 @@ interface Precondtion {
 
 export class Precondition {
 	public static checkPermissions(context: Precondtion, permissions: Permission[]) {
-		let i = permissions.length;
-
 		for (const permission of permissions) {
 			const bResult = this.checkPermission(permission, context);
-			console.log(bResult);
+
 			if (bResult === null) {
-				i--;
 				continue;
 			}
 

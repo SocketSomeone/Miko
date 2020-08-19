@@ -1,5 +1,4 @@
 export enum CommandGroup {
-	AUTOMOD = '🕶 Auto-moderation',
 	ECONOMY = '💰 Economy',
 	// WAIFU = '🎀 Waifu',
 	GAMBLING = '🎮 Gambling',

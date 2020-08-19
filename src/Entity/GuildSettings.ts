@@ -5,6 +5,7 @@ import { SetTransformer } from './Transformers/SetTransformer';
 import { BaseGuild } from './Guild';
 import { WelcomeChannelType, WelcomeMessage } from '../Misc/Enums/WelcomeTypes';
 import { EmbedOptions } from 'eris';
+import { TranslateFunc } from '../Framework/Commands/Command';
 
 interface GuildPrices {
 	timely: string;

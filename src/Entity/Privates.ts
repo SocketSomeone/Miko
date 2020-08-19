@@ -6,6 +6,7 @@ import { Member, VoiceChannel, Permission, Role, Guild, Collection, PermissionOv
 import { GuildPermission } from '../Misc/Models/GuildPermissions';
 import { Permissions } from '../Misc/Utils/PermissionResolver';
 import { reverse } from 'dns';
+import { ChannelOptions } from '../Types';
 
 export enum ActionRoom {
 	LOCK = 'locked',
@@ -124,5 +125,13 @@ export class BasePrivate extends BaseEntity {
 
 		this.owner = target.id;
 		await this.save();
+	}
+
+	public async edit(t: TranslateFunc, { guild, id }: Member, options: ChannelOptions) {
+		if (!this.isAdmin(id)) throw new ExecuteError(t('voice.error.notAdmin'));
+
+		const channel = guild.channels.get(this.id) as VoiceChannel;
+
+		await channel.edit(options);
 	}
 }

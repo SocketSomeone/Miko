@@ -15,8 +15,6 @@ import { BaseScheduledAction } from './ScheduledAction';
 import { Guild } from 'eris';
 import { BasePunishment } from './Punishment';
 import { PunishmentConfig } from '../Misc/Enums/Violation';
-import JsonConverter from './Metadata/JsonConverter';
-import { BaseSettings } from './GuildSettings';
 
 @Entity()
 export class BaseGuild extends BaseEntity {

@@ -14,7 +14,13 @@ export default class extends Command {
 			name: 'voice kick',
 			aliases: ['v kick'],
 			group: CommandGroup.VOICE,
-			args: [],
+			args: [
+				{
+					name: 'member',
+					resolver: MemberResolver,
+					required: false
+				}
+			],
 			guildOnly: true,
 			premiumOnly: false,
 			botPermissions: [GuildPermission.MOVE_MEMBERS]

@@ -1,5 +1,5 @@
 import { BaseService } from '../Service';
-import { Command, Context } from '../../Commands/Command';
+import { Command, Context, TranslateFunc } from '../../Commands/Command';
 import { resolve, relative } from 'path';
 import { Precondition } from '../../../Misc/Classes/Precondition';
 import { Message, GuildChannel, PrivateChannel, Member } from 'eris';
@@ -8,7 +8,7 @@ import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import glob from 'glob';
 import moment from 'moment';
 import i18n from 'i18n';
-import { Emoji } from '../../../Misc/Utils/EmojiResolver';
+import EmojiResolver from '../../../Misc/Utils/EmojiResolver';
 import { withScope, captureException } from '@sentry/node';
 import { ExecuteError } from '../../Errors/ExecuteError';
 import { Color } from '../../../Misc/Enums/Colors';
@@ -76,9 +76,7 @@ export class CommandService extends BaseService {
 	}
 
 	public async onMessage(message: Message) {
-		if (message.author.id === this.client.user.id || message.author.bot || !message.content.length) {
-			return;
-		}
+		if (message.author.id === this.client.user.id || message.author.bot || !message.content.length) return;
 
 		const start = moment();
 
@@ -92,7 +90,7 @@ export class CommandService extends BaseService {
 		const t = (key: string, replacements?: { [key: string]: string }) =>
 			i18n.__({ locale: sets.locale, phrase: key }, replacements);
 
-		const e = (emoji: string) => Emoji.resolve(emoji, guild);
+		const e = (emoji: string) => EmojiResolver(emoji, guild);
 
 		if (sets.ignoreChannels && sets.ignoreChannels.length) {
 			if (sets.ignoreChannels.includes(channel.id)) {
@@ -136,69 +134,29 @@ export class CommandService extends BaseService {
 			return;
 		}
 
-		if (!(message as any).__sudo) {
-			const now = moment().valueOf();
+		const ratelimit = await this.isRatelimited(message, t);
 
-			let lastCall = this.commandCalls.get(message.author.id);
-
-			if (!lastCall) {
-				lastCall = {
-					last: moment().valueOf(),
-					warned: false
-				};
-
-				this.commandCalls.set(message.author.id, lastCall);
-			} else if (now - lastCall.last < (1 / RATE_LIMIT) * 1000) {
-				if (!lastCall.warned) {
-					lastCall.warned = true;
-					lastCall.last = now + COOLDOWN;
-
-					await this.client.messages.sendReply(message, t, {
-						color: ColorResolve(Color.RED),
-						title: t('error.ratelimit.title'),
-						description: t('error.ratelimit.desc')
-					});
-				}
-
-				return;
-			} else if (lastCall.warned) {
-				lastCall.warned = false;
-			}
-
-			lastCall.last = now;
+		if (ratelimit) {
+			return;
 		}
-
-		const isPremium = false;
 
 		let me: Member = undefined;
 
 		let context: Context = {
 			guild,
 			me,
+			settings: sets,
+			isPremium: false,
 			funcs: {
 				t,
 				e
-			},
-			settings: sets,
-			isPremium
+			}
 		};
 
 		if (guild) {
 			let member = message.member;
 
 			if (!member) {
-				member = guild.members.get(message.author.id);
-			}
-
-			if (!member) {
-				member = await guild.getRESTMember(message.author.id);
-			}
-
-			if (!member) {
-				console.error(`Could not get member ${message.author.id} for ${guild.id}`);
-
-				// TODO: make member not found error message;
-
 				return;
 			}
 
@@ -207,23 +165,19 @@ export class CommandService extends BaseService {
 
 				const { answer, permission } = Precondition.checkPermissions(
 					{ context, command: cmd, message },
-					(permissions && permissions.sort((a, b) => b.index - a.index)) || []
+					permissions.sort((a, b) => b.index - a.index)
 				);
 
 				if (!answer) {
 					// ErrorEmbed.send(this.message, `Доступ запрещён правилом #${ permission.index + 1 }`);
 
 					return;
-				} else if (answer && permission === null && !member.permission.has(GuildPermission.ADMINISTRATOR)) {
+				} else if (permission === null && !member.permission.has(GuildPermission.ADMINISTRATOR)) {
 					const missingPerms = cmd.userPermissions.filter(
 						(p) => !(channel as GuildChannel).permissionsOf(member.id).has(p)
 					);
 
 					if (missingPerms.length > 0) {
-						// TODO: verbose configure
-						// if (sets.verbose) {
-						// }
-
 						await this.client.messages.sendReply(message, t, {
 							color: ColorResolve(Color.RED),
 							title: t('error.missed.userpermissions.title'),
@@ -268,32 +222,7 @@ export class CommandService extends BaseService {
 			}
 		}
 
-		const rawArgs: string[] = [];
-
-		let quote = false;
-
-		for (let j = 0; j < splits.length; j++) {
-			const split = splits[j];
-			if (split.length === 0) {
-				continue;
-			}
-
-			if (!quote && split.startsWith(`"`)) {
-				quote = true;
-			}
-
-			if (split.endsWith(`"`)) {
-				quote = false;
-				rawArgs[rawArgs.length - 1] += `${split.substring(0, split.length - 1)}`;
-				continue;
-			}
-
-			if (quote) {
-				rawArgs[rawArgs.length - 1] += ` ${split}`;
-			} else {
-				rawArgs.push(split);
-			}
-		}
+		const rawArgs: string[] = this.rawArgs(splits);
 
 		const args: any[] = [];
 		let i = 0;
@@ -349,7 +278,6 @@ export class CommandService extends BaseService {
 		let error: any = null;
 
 		try {
-			//moment.locale(sets.locale);
 			await cmd.execute(message, args, context);
 		} catch (err) {
 			if (err instanceof ExecuteError) {
@@ -422,5 +350,69 @@ export class CommandService extends BaseService {
 		}
 
 		return null;
+	}
+
+	rawArgs(splits: string[]): string[] {
+		let rawArgs: string[] = [];
+		let quote = false;
+
+		for (let j = 0; j < splits.length; j++) {
+			const split = splits[j];
+			if (split.length === 0) {
+				continue;
+			}
+
+			if (!quote && split.startsWith(`"`)) {
+				quote = true;
+			}
+
+			if (split.endsWith(`"`)) {
+				quote = false;
+				rawArgs[rawArgs.length - 1] += `${split.substring(0, split.length - 1)}`;
+				continue;
+			}
+
+			if (quote) {
+				rawArgs[rawArgs.length - 1] += ` ${split}`;
+			} else {
+				rawArgs.push(split);
+			}
+		}
+
+		return rawArgs;
+	}
+
+	async isRatelimited(message: Message, t: TranslateFunc) {
+		const now = moment().valueOf();
+
+		let lastCall = this.commandCalls.get(message.author.id);
+
+		if (!lastCall) {
+			lastCall = {
+				last: moment().valueOf(),
+				warned: false
+			};
+
+			this.commandCalls.set(message.author.id, lastCall);
+		} else if (now - lastCall.last < (1 / RATE_LIMIT) * 1000) {
+			if (!lastCall.warned) {
+				lastCall.warned = true;
+				lastCall.last = now + COOLDOWN;
+
+				await this.client.messages.sendReply(message, t, {
+					color: ColorResolve(Color.RED),
+					title: t('error.ratelimit.title'),
+					description: t('error.ratelimit.desc')
+				});
+			}
+
+			return true;
+		} else if (lastCall.warned) {
+			lastCall.warned = false;
+		}
+
+		lastCall.last = now;
+
+		return false;
 	}
 }

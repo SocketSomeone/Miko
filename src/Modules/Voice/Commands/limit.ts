@@ -34,7 +34,7 @@ export default class extends Command {
 
 		const p = await system.getRoomByVoice(t, member.voiceState.channelID);
 
-		await system.editRoom(t, p, member, {
+		await p.edit(t, member, {
 			userLimit: limit
 		});
 

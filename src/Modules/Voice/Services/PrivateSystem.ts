@@ -86,7 +86,7 @@ export class PrivateService extends BaseService {
 	protected async createRoom(member: Member, guild: Guild, channel: VoiceChannel) {
 		this.ratelimit.set(member.id, moment().add(5, 'seconds'));
 
-		const house = await guild.createChannel(`🏡 Домик ${member.username}`, ChannelType.GUILD_VOICE, {
+		const house = await guild.createChannel(`🏡 ${member.username}`, ChannelType.GUILD_VOICE, {
 			parentID: channel.parentID,
 			userLimit: 2,
 			permissionOverwrites: [
@@ -139,15 +139,5 @@ export class PrivateService extends BaseService {
 		if (!room) throw new ExecuteError(t('voice.error.notFound'));
 
 		return room;
-	}
-
-	public async editRoom(t: TranslateFunc, room: BasePrivate, { guild, id }: Member, options: ChannelOptions) {
-		if (!guild.channels.has(room.id)) throw new ExecuteError(t('voice.error.notFound'));
-
-		if (!room.isAdmin(id)) throw new ExecuteError(t('voice.error.notAdmin'));
-
-		const channel = guild.channels.get(room.id) as VoiceChannel;
-
-		await channel.edit(options);
 	}
 }

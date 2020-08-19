@@ -1,18 +1,7 @@
-import {
-	BaseEntity,
-	Entity,
-	PrimaryGeneratedColumn,
-	Column,
-	ManyToOne,
-	JoinColumn,
-	CreateDateColumn,
-	PrimaryColumn,
-	BeforeInsert
-} from 'typeorm';
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, CreateDateColumn } from 'typeorm';
 import { BaseGuild } from './Guild';
 import { Moment } from 'moment';
 import { DateTransformer } from './Transformers';
-import { snowFlakeID } from './Snowflakes/SnowflakeID';
 
 export enum ScheduledAction {
 	UNMUTE = 'unmute',

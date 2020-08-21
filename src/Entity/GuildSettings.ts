@@ -2,10 +2,7 @@ import { BaseEntity, Entity, Column, PrimaryColumn, OneToOne, JoinColumn } from 
 import { EmojisDefault } from '../Misc/Enums/EmojisDefaults';
 import { Violation } from '../Misc/Enums/Violation';
 import { SetTransformer } from './Transformers/SetTransformer';
-import { BaseGuild } from './Guild';
 import { WelcomeChannelType, WelcomeMessage } from '../Misc/Enums/WelcomeTypes';
-import { EmbedOptions } from 'eris';
-import { TranslateFunc } from '../Framework/Commands/Command';
 import { LogType } from '../Modules/Log/Services/Handle';
 
 interface GuildPrices {
@@ -112,6 +109,17 @@ export class BaseSettings extends BaseEntity {
 
 		[LogType.ROLE_CREATE]: null,
 		[LogType.ROLE_DELETE]: null,
-		[LogType.ROLE_UPDATE]: null
+		[LogType.ROLE_UPDATE]: null,
+
+		[LogType.VOICE_JOIN]: null,
+		[LogType.VOICE_LEAVE]: null,
+		[LogType.VOICE_SWITCH]: null,
+
+		[LogType.MEMBER_JOIN]: null,
+		[LogType.MEMBER_LEAVE]: null,
+		[LogType.MEMBER_UPDATE_ROLES]: null,
+
+		[LogType.MESSAGE_EDITED]: null,
+		[LogType.MESSAGE_DELETED]: null
 	};
 }

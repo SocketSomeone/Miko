@@ -86,7 +86,7 @@ export class BasePunishment extends BaseEntity {
 
 		if (!sets.modlog) return;
 
-		const modLogChannel = (await member.guild.channels.get(sets.modlog)) as TextChannel;
+		const modLogChannel = member.guild.channels.get(sets.modlog) as TextChannel;
 
 		if (!modLogChannel) return;
 

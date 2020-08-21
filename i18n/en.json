@@ -222,7 +222,50 @@
 			"reason": "logs.mod.reason",
 			"moderator": "logs.mod.moderator",
 			"duration": "logs.mod.duration"
-		}
+		},
+		"unban": {
+			"title": "logs.unban.title"
+		},
+		"member": "logs.member",
+		"ban": {
+			"title": "logs.ban.title"
+		},
+		"total": "logs.total",
+		"reason": "logs.reason",
+		"chanCreate": {
+			"title": "logs.chanCreate.title"
+		},
+		"channel": "logs.channel",
+		"chanDelete": {
+			"title": "logs.chanDelete.title"
+		},
+		"by": "logs.by",
+		"emojiCreate": "logs.emojiCreate",
+		"emoji": "logs.emoji",
+		"emojiDelete": "logs.emojiDelete",
+		"emojiUpdate": "logs.emojiUpdate",
+		"edited": "logs.edited",
+		"roleCreate": "logs.roleCreate",
+		"role": "logs.role",
+		"roleUpdate": "logs.roleUpdate",
+		"voiceConnected": "logs.voiceConnected",
+		"voiceLeaved": "logs.voiceLeaved",
+		"voiceSwitch": "logs.voiceSwitch",
+		"moved": "logs.moved",
+		"permissions": "logs.permissions",
+		"permissionsAdded": "logs.permissionsAdded",
+		"permissionsDeleted": "logs.permissionsDeleted",
+		"color": "logs.color",
+		"name": "logs.name",
+		"roleDelete": "logs.roleDelete",
+		"memberRolesUpdate": "logs.memberRolesUpdate",
+		"deletedRoles": "logs.deletedRoles",
+		"addedRoles": "logs.addedRoles",
+		"messageUpdate": "logs.messageUpdate",
+		"messageBefore": "logs.messageBefore",
+		"messageAfter": "logs.messageAfter",
+		"messageBy": "logs.messageBy",
+		"messageDeleted": "logs.messageDeleted"
 	},
 	"moderation": {
 		"purge": {

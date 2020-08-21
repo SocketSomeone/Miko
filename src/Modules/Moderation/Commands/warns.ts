@@ -14,7 +14,7 @@ export default class extends Command {
 		super(client, {
 			name: 'warns',
 			aliases: ['преды'],
-			group: CommandGroup.INFO,
+			group: CommandGroup.MODERATION,
 			args: [
 				{
 					name: 'user',

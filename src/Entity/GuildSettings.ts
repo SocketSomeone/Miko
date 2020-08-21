@@ -3,7 +3,7 @@ import { EmojisDefault } from '../Misc/Enums/EmojisDefaults';
 import { Violation } from '../Misc/Enums/Violation';
 import { SetTransformer } from './Transformers/SetTransformer';
 import { WelcomeChannelType, WelcomeMessage } from '../Misc/Enums/WelcomeTypes';
-import { LogType } from '../Modules/Log/Services/Handle';
+import { LogType } from '../Modules/Log/Misc/LogType';
 
 interface GuildPrices {
 	timely: string;
@@ -94,6 +94,9 @@ export class BaseSettings extends BaseEntity {
 
 	@Column({ type: 'varchar', default: null, nullable: true })
 	public welcomeMessage: string = null;
+
+	@Column({ type: 'boolean', default: false })
+	public loggerEnabled: boolean = false;
 
 	@Column({ type: 'json', default: {} })
 	public logger: { [key in LogType]: string } = {

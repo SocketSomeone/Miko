@@ -1,5 +1,4 @@
 import { BaseClient } from '../../../Client';
-import { LogType } from './Handle';
 import {
 	TextChannel,
 	Member,
@@ -17,8 +16,7 @@ import {
 } from 'eris';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { TranslateFunc } from '../../../Framework/Commands/Command';
-import name from '../../Voice/Commands/name';
-
+import { LogType } from '../Misc/LogType';
 export type ProcessFuncs = { [key in LogType]: (t: TranslateFunc, guild: Guild, ...args: any[]) => Promise<Embed> };
 
 type GuildChannel = TextChannel | VoiceChannel | NewsChannel;

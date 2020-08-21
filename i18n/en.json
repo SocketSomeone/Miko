@@ -175,7 +175,10 @@
 			"title": "error.ratelimit.title",
 			"desc": "error.ratelimit.desc"
 		},
-		"no": "error.no"
+		"no": "error.no",
+		"changes": {
+			"not": "error.changes.not"
+		}
 	},
 	"others": {
 		"page": "others.page"
@@ -203,7 +206,8 @@
 			"everyone": "resolvers.role.everyone"
 		},
 		"command": {
-			"notFound": "resolvers.command.notFound"
+			"notFound": "resolvers.command.notFound",
+			"multiple": "resolvers.command.multiple"
 		},
 		"channel": {
 			"notFound": "resolvers.channel.notFound"
@@ -265,7 +269,12 @@
 		"messageBefore": "logs.messageBefore",
 		"messageAfter": "logs.messageAfter",
 		"messageBy": "logs.messageBy",
-		"messageDeleted": "logs.messageDeleted"
+		"messageDeleted": "logs.messageDeleted",
+		"title": "logs.title",
+		"enable": "logs.enable",
+		"disable": "logs.disable",
+		"set": "logs.set",
+		"unset": "logs.unset"
 	},
 	"moderation": {
 		"purge": {
@@ -558,7 +567,12 @@
 				"voice unlock": "info.help.cmdDesc.voice unlock",
 				"voice show": "info.help.cmdDesc.voice show",
 				"voice kick": "info.help.cmdDesc.voice kick",
-				"voice owner": "info.help.cmdDesc.voice owner"
+				"voice owner": "info.help.cmdDesc.voice owner",
+				"log": "info.help.cmdDesc.log",
+				"log set": "info.help.cmdDesc.log set",
+				"log disable": "info.help.cmdDesc.log disable",
+				"log enable": "info.help.cmdDesc.log enable",
+				"log unset": "info.help.cmdDesc.log unset"
 			}
 		},
 		"warns": {

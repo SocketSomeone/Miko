@@ -136,7 +136,14 @@
 				"voice unlock": "info.help.cmdDesc.voice unlock",
 				"voice show": "info.help.cmdDesc.voice show",
 				"voice kick": "info.help.cmdDesc.voice kick",
-				"voice owner": "info.help.cmdDesc.voice owner"
+				"voice owner": "info.help.cmdDesc.voice owner",
+				"log": "info.help.cmdDesc.log",
+				"log set": "info.help.cmdDesc.log set",
+				"log disable": "info.help.cmdDesc.log disable",
+				"log enable": "info.help.cmdDesc.log enable",
+				"automod disable": "info.help.cmdDesc.automod disable",
+				"automod enable": "info.help.cmdDesc.automod enable",
+				"log unset": "info.help.cmdDesc.log unset"
 			}
 		},
 		"warns": {
@@ -306,6 +313,9 @@
 		},
 		"arguments": {
 			"title": "Мне кажется или что-то тут не так?"
+		},
+		"changes": {
+			"not": "Изменения не требуются"
 		}
 	},
 	"others": {
@@ -330,7 +340,8 @@
 			"everyone": "Не удалось найти роль!"
 		},
 		"command": {
-			"notFound": "Не удалось найти команду!"
+			"notFound": "Не удалось найти команду!",
+			"multiple": "resolvers.command.multiple"
 		},
 		"channel": {
 			"notFound": "resolvers.channel.notFound"
@@ -346,6 +357,11 @@
 			"channel": "Канал:",
 			"duration": "Длительность:"
 		},
+		"title": "Журнал аудита",
+		"enable": "Модуль `Логи` включен!",
+		"disable": "Модуль `Логи` отключен!",
+		"set": "В данный канал теперь будет присылаться логи:\n{{{ type }}}",
+		"unset": "Вы прекратили отправление данных логов:\n{{{ type }}}",
 		"unban": "Разблокировка пользователя",
 		"member": "Пользователь",
 		"ban": "Блокировка пользователя",

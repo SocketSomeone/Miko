@@ -5,8 +5,9 @@ import { Resolver, ResolverConstructor } from './Resolver';
 
 export class ArrayResolver extends Resolver {
 	private resolver: Resolver;
+	private def: any[];
 
-	public constructor(client: BaseClient, resolver: Resolver | ResolverConstructor) {
+	public constructor(client: BaseClient, resolver: Resolver | ResolverConstructor, def?: any[]) {
 		super(client);
 
 		if (resolver instanceof Resolver) {
@@ -14,11 +15,13 @@ export class ArrayResolver extends Resolver {
 		} else {
 			this.resolver = new resolver(client);
 		}
+
+		this.def = def;
 	}
 
 	public async resolve(value: string, context: Context, previous: any[]): Promise<any[]> {
 		if (!value) {
-			return;
+			return this.def;
 		}
 
 		const rawSplits = value.split(/[,\s]/);

@@ -53,7 +53,7 @@ export class CommandService extends BaseService {
 
 				for (const alias of inst.aliases) {
 					if (this.commandMap.has(alias.toLowerCase())) {
-						console.error(`Duplicate command alias ${alias}`);
+						console.error(`Duplicate command alias ${alias} in ${inst.name}`);
 						process.exit(1);
 					}
 

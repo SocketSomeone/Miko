@@ -10,42 +10,14 @@ import {
 	Member,
 	VoiceChannel,
 	Embed,
-	EmbedOptions,
 	Message,
 	PrivateChannel,
 	GroupChannel
 } from 'eris';
 import { captureException, withScope } from '@sentry/node';
-
-import i18n from 'i18n';
 import { TranslateFunc } from '../../../Framework/Commands/Command';
-
-export enum LogType {
-	BAN,
-	UNBAN,
-
-	CHANNEL_CREATE,
-	CHANNEL_DELETE,
-
-	EMOJI_CREATE,
-	EMOJI_UPDATE,
-	EMOJI_DELETE,
-
-	ROLE_CREATE,
-	ROLE_UPDATE,
-	ROLE_DELETE,
-
-	VOICE_JOIN,
-	VOICE_SWITCH,
-	VOICE_LEAVE,
-
-	MEMBER_JOIN,
-	MEMBER_LEAVE,
-	MEMBER_UPDATE_ROLES,
-
-	MESSAGE_EDITED,
-	MESSAGE_DELETED
-}
+import { LogType } from '../Misc/LogType';
+import i18n from 'i18n';
 
 export class LoggingService extends BaseService {
 	private processing: ProcessFuncs;
@@ -88,11 +60,15 @@ export class LoggingService extends BaseService {
 
 		const sets = await this.client.cache.guilds.get(guild.id);
 
-		// if (sets.logger[type] === null) {
-		// 	return;
-		// };
+		if (sets.loggerEnabled !== true) {
+			return;
+		}
 
-		const channel = guild.channels.get('746183455347572756') as TextChannel;
+		if (sets.logger[type] === null) {
+			return;
+		}
+
+		const channel = guild.channels.get(sets.logger[type]) as TextChannel;
 		const process = this.processing[type];
 
 		if (!channel || process === null) {
@@ -177,7 +153,7 @@ export class LoggingService extends BaseService {
 	protected handleByMemberUpdate(guild: Guild, member: Member, oldMember: { roles: string[]; nickname?: string }) {
 		if (!oldMember) return;
 
-		if (member.roles !== oldMember.roles) {
+		if (member.roles.length !== oldMember.roles.length) {
 			this.handle(LogType.MEMBER_UPDATE_ROLES, guild, member, oldMember.roles);
 		}
 

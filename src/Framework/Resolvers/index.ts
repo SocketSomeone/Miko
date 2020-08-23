@@ -5,7 +5,6 @@ export * from './CommandResolver';
 export * from './DateResolver';
 export * from './DurationResolver';
 export * from './EnumResolver';
-export * from './InviteCodeResolver';
 export * from './MemberResolver';
 export * from './NumberResolver';
 export * from './Resolver';

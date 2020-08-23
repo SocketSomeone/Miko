@@ -155,7 +155,7 @@ export default class extends Command {
 					fields: [
 						{
 							name,
-							value: t('info.help.moduleDesc.' + key.toLowerCase())
+							value: t(`info.help.moduleDesc.${key.toLowerCase()}`)
 						},
 						...pages
 					],

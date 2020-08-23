@@ -32,10 +32,4 @@ export class CommandResolver extends Resolver {
 			return cmd;
 		}
 	}
-
-	public getHelp({ funcs: { t } }: Context) {
-		return t(`resolvers.command.validValues`, {
-			values: this.client.commands.commands.map((c) => '`' + c.name + '`').join(', ')
-		});
-	}
 }

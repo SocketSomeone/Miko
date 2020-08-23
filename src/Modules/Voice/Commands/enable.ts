@@ -34,7 +34,7 @@ export default class extends Command {
 		await this.replyAsync(message, t, {
 			color: ColorResolve(Color.MAGENTA),
 			title: t('voice.title'),
-			description: t(`configure.privates.enable}`, {
+			description: t(`voice.enable`, {
 				channel: `<#${settings.privateManager}>`
 			}),
 			footer: {

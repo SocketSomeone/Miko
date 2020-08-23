@@ -28,7 +28,7 @@ export default class extends Command {
 		await this.replyAsync(message, t, {
 			color: ColorResolve(Color.MAGENTA),
 			title: t('voice.title'),
-			description: t(`voice.privates.disable`),
+			description: t(`voice.disable`),
 			footer: {
 				text: ''
 			}

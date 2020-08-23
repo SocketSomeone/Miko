@@ -67,7 +67,7 @@ export default class extends Command {
 						settings.welcomeMessage = JSON.stringify(embed);
 					} catch (error) {
 						throw new ExecuteError(
-							t('error.embed.error', {
+							t('error.embed.send', {
 								error: error.message
 									.split(/[\r?\n]/)
 									.slice(1, 2)

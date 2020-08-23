@@ -7,6 +7,7 @@ import { BaseMember } from '../../../Entity/Member';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
+import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -23,6 +24,8 @@ export default class extends Command {
 	}
 
 	public async execute(message: Message, []: [], { funcs: { t, e }, guild, settings }: Context) {
+		if (settings.welcomeEnabled !== true) throw new ExecuteError(t('error.module.disabled'));
+
 		settings.welcomeSaveRoles = !settings.welcomeSaveRoles;
 		await settings.save();
 

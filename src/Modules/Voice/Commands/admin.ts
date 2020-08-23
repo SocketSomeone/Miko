@@ -8,6 +8,7 @@ import { Color } from '../../../Misc/Enums/Colors';
 
 import moment from 'moment';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
+import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -27,7 +28,7 @@ export default class extends Command {
 		});
 	}
 
-	public async execute(message: Message, [user]: [Member], { funcs: { t }, guild, settings: { prefix } }: Context) {
+	public async execute(message: Message, [user]: [Member], { funcs: { t }, guild, settings }: Context) {
 		const system = this.client.privates;
 		const member = message.member;
 

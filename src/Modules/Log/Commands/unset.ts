@@ -31,6 +31,8 @@ export default class extends Command {
 	}
 
 	public async execute(message: Message, [types]: [LogType[]], { funcs: { t, e }, guild, settings }: Context) {
+		if (settings.loggerEnabled !== true) throw new ExecuteError(t('error.module.disabled'));
+
 		const needToChange = types.filter((x) => settings.logger[x] !== null);
 
 		if (needToChange.length < 1) throw new ExecuteError(t('error.changes.not'));

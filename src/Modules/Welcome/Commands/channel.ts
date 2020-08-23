@@ -45,6 +45,8 @@ export default class extends Command {
 		[action, channel]: [Action, TextChannel | string],
 		{ funcs: { t, e }, guild, settings }: Context
 	) {
+		if (settings.welcomeEnabled !== true) throw new ExecuteError(t('error.module.disabled'));
+
 		const embed = this.createEmbed(
 			{
 				color: ColorResolve(Color.MAGENTA),

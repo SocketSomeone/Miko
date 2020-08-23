@@ -143,7 +143,12 @@
 				"log enable": "info.help.cmdDesc.log enable",
 				"automod disable": "info.help.cmdDesc.automod disable",
 				"automod enable": "info.help.cmdDesc.automod enable",
-				"log unset": "info.help.cmdDesc.log unset"
+				"log unset": "info.help.cmdDesc.log unset",
+				"permission add": "info.help.cmdDesc.permission add",
+				"permission remove": "info.help.cmdDesc.permission remove",
+				"permissions clear": "info.help.cmdDesc.permissions clear",
+				"permissions list": "info.help.cmdDesc.permissions list",
+				"welcome disable": "info.help.cmdDesc.welcome disable"
 			}
 		},
 		"warns": {
@@ -345,6 +350,9 @@
 		},
 		"channel": {
 			"notFound": "resolvers.channel.notFound"
+		},
+		"boolean": {
+			"invalid": "resolvers.boolean.invalid"
 		}
 	},
 	"logs": {
@@ -394,7 +402,9 @@
 		"messageUpdate": "Сообщение изменено",
 		"messageBy": "Отправитель",
 		"messageBefore": "До:",
-		"messageAfter": "После:"
+		"messageAfter": "После:",
+		"guildJoin": "Пользователь зашёл на сервер",
+		"guildLeave": "Пользователь покинул сервер"
 	},
 	"automod": {
 		"title": "Полковник Miko на страже порядка!",
@@ -498,5 +508,21 @@
 		"kick": "{{{ member }}} выгнал {{{ target }}} из приватного канала!",
 		"owner": "{{{ member }}} передал(-а) {{{ target }}} права на приватный канал!",
 		"all": "всех"
+	},
+	"perms": {
+		"title": "Правила сервера",
+		"add": "Вы добавили новое правило #{{{ index }}}:\n",
+		"changed": "Вы изменили правило #{{{ index }}}",
+		"remove": "Вы удалили правило #{{{ index }}}",
+		"notFound": "Не удалось найти правило!",
+		"clear": "Вы успешно очистили список правил!",
+		"cleared": "Список правил пуст.",
+		"item": "**{{{ index }}}.** {{{ allow }}} {{{ target }}} для {{{ activator }}}",
+		"true": "Разрешено исп.",
+		"false": "Запрещено исп.",
+		"module": "модуля **{{{ module }}}**",
+		"command": "команды **{{{ cmd }}}**",
+		"channel": "в канале {{{ channel }}}",
+		"allModules": "**всех модулей**"
 	}
 }

@@ -211,6 +211,9 @@
 		},
 		"channel": {
 			"notFound": "resolvers.channel.notFound"
+		},
+		"boolean": {
+			"invalid": "resolvers.boolean.invalid"
 		}
 	},
 	"key": {
@@ -274,7 +277,8 @@
 		"enable": "logs.enable",
 		"disable": "logs.disable",
 		"set": "logs.set",
-		"unset": "logs.unset"
+		"unset": "logs.unset",
+		"guildJoin": "logs.guildJoin"
 	},
 	"moderation": {
 		"purge": {
@@ -572,7 +576,11 @@
 				"log set": "info.help.cmdDesc.log set",
 				"log disable": "info.help.cmdDesc.log disable",
 				"log enable": "info.help.cmdDesc.log enable",
-				"log unset": "info.help.cmdDesc.log unset"
+				"log unset": "info.help.cmdDesc.log unset",
+				"permission add": "info.help.cmdDesc.permission add",
+				"permission remove": "info.help.cmdDesc.permission remove",
+				"permissions clear": "info.help.cmdDesc.permissions clear",
+				"permissions list": "info.help.cmdDesc.permissions list"
 			}
 		},
 		"warns": {
@@ -609,7 +617,8 @@
 		},
 		"arr": {
 			"added": "welcome.arr.added"
-		}
+		},
+		"disable": "welcome.disable"
 	},
 	"voice": {
 		"title": "voice.title",
@@ -638,5 +647,18 @@
 		"unlocked": "voice.unlocked",
 		"all": "voice.all",
 		"owner": "voice.owner"
+	},
+	"perms": {
+		"title": "perms.title",
+		"add": "perms.add",
+		"changed": "perms.changed",
+		"remove": "perms.remove",
+		"notFound": "perms.notFound",
+		"clear": "perms.clear",
+		"cleared": "perms.cleared",
+		"module": "perms.module",
+		"true": "perms.true",
+		"item": "perms.item",
+		"list": "perms.list"
 	}
 }

@@ -1,7 +1,7 @@
 import { BaseService } from '../Service';
 import { Command, Context, TranslateFunc } from '../../Commands/Command';
 import { resolve, relative } from 'path';
-import { Precondition } from '../../../Misc/Classes/Precondition';
+import { Precondition } from '../../../Modules/Permissions/Misc/Precondition';
 import { Message, GuildChannel, PrivateChannel, Member } from 'eris';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 
@@ -163,10 +163,7 @@ export class CommandService extends BaseService {
 			if (guild.ownerID !== member.id) {
 				const permissions = await this.client.cache.permissions.get(guild.id);
 
-				const { answer, permission } = Precondition.checkPermissions(
-					{ context, command: cmd, message },
-					permissions.sort((a, b) => b.index - a.index)
-				);
+				const { answer, permission } = Precondition.checkPermissions({ context, command: cmd, message }, permissions);
 
 				if (!answer) {
 					// ErrorEmbed.send(this.message, `Доступ запрещён правилом #${ permission.index + 1 }`);
@@ -233,17 +230,6 @@ export class CommandService extends BaseService {
 			const resolver = cmd.resolvers[i];
 
 			let rawVal = rawArgs[i];
-
-			if (arg.rest) {
-				rawVal = rawArgs
-					.slice(i)
-					.map((a) => (a.indexOf(' ') > 0 ? `"${a}"` : a))
-					.join(' ');
-
-				if (rawVal.length === 0) {
-					rawVal = undefined;
-				}
-			}
 
 			if (arg.full) {
 				rawVal = rawArgs.slice(i, rawArgs.length).join(' ');
@@ -357,6 +343,7 @@ export class CommandService extends BaseService {
 	rawArgs(splits: string[]): string[] {
 		let rawArgs: string[] = [];
 		let quote = false;
+		let acc = '';
 
 		for (let j = 0; j < splits.length; j++) {
 			const split = splits[j];
@@ -366,16 +353,18 @@ export class CommandService extends BaseService {
 
 			if (!quote && split.startsWith(`"`)) {
 				quote = true;
+				acc = '';
 			}
 
 			if (split.endsWith(`"`)) {
 				quote = false;
-				rawArgs[rawArgs.length - 1] += `${split.substring(0, split.length - 1)}`;
+				acc += ' ' + split.substring(0, split.length - 1);
+				rawArgs.push(acc.substring(2));
 				continue;
 			}
 
 			if (quote) {
-				rawArgs[rawArgs.length - 1] += ` ${split}`;
+				acc += ' ' + split;
 			} else {
 				rawArgs.push(split);
 			}

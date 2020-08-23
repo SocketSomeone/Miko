@@ -252,18 +252,6 @@ export class ProcessingLogs {
 			thumbnail: { url: member.avatarURL }
 		});
 
-		const entry = await this.getAuditLog(guild, member, Constants.AuditLogActions.MESSAGE_DELETE);
-
-		if (entry && entry.user.id !== member.id) {
-			embed.fields.push({
-				name: t('logs.by'),
-				value: entry.user.mention,
-				inline: true
-			});
-
-			embed.thumbnail = { url: entry.user.avatarURL };
-		}
-
 		return embed;
 	}
 
@@ -435,7 +423,7 @@ export class ProcessingLogs {
 		if (deletedRole) {
 			embed.fields.push({
 				name: t('logs.deletedRoles'),
-				value: `<&${deletedRole}>`,
+				value: `<@&${deletedRole}>`,
 				inline: true
 			});
 		}

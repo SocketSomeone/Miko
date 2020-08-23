@@ -1,7 +1,4 @@
 import { BaseCache } from './Cache';
-import { BaseGuild } from '../../Entity/Guild';
-import { createQueryBuilder } from 'typeorm';
-import { Guild } from 'eris';
 import { BaseSettings } from '../../Entity/GuildSettings';
 
 export class GuildSettingsCache extends BaseCache<BaseSettings> {

@@ -17,7 +17,7 @@ export default class extends Command {
 
 	public constructor(client: BaseClient) {
 		super(client, {
-			name: 'welcome enable',
+			name: 'welcome disable',
 			aliases: [],
 			args: [],
 			group: CommandGroup.WELCOME,
@@ -29,13 +29,8 @@ export default class extends Command {
 		this.messageService = new MessageService(client);
 	}
 
-	public async onLoaded() {
-		await this.roleService.init();
-		await this.messageService.init();
-	}
-
 	public async execute(message: Message, [], { funcs: { t, e }, guild, settings }: Context) {
-		settings.welcomeEnabled = true;
+		settings.welcomeEnabled = false;
 		await settings.save();
 
 		await this.replyAsync(message, t, {
@@ -43,7 +38,7 @@ export default class extends Command {
 			title: t('welcome.title', {
 				guild: guild.name
 			}),
-			description: t(`welcome.enable`),
+			description: t('welcome.disable'),
 			footer: {
 				text: ''
 			}

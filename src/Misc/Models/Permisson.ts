@@ -11,12 +11,21 @@ export enum PermissionsExecute {
 	AllModules = '*'
 }
 
+export interface PermissionsActivator {
+	id: string;
+	type: PermissionsFrom;
+}
+
+export interface PermissionsTarget {
+	id: string;
+	type: PermissionsExecute;
+}
+
 export interface Permission {
-	addedAt: Date;
 	index: number;
-	activator: PermissionsFrom;
-	activatorId: string;
-	target: PermissionsExecute;
-	targetId: string;
-	value: boolean;
+
+	activator: PermissionsActivator;
+	target: PermissionsTarget;
+
+	allow: boolean;
 }

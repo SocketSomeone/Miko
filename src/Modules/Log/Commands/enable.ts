@@ -15,7 +15,7 @@ export default class extends Command {
 		super(client, {
 			name: 'log enable',
 			aliases: [],
-			group: CommandGroup.LOG,
+			group: CommandGroup.LOGS,
 			args: [],
 			guildOnly: true,
 			premiumOnly: false,

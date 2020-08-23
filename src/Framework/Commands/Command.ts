@@ -11,7 +11,6 @@ interface Arg {
 	name: string;
 	resolver: Resolver | ResolverConstructor;
 	required?: boolean;
-	rest?: boolean;
 	full?: boolean;
 }
 

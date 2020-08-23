@@ -22,7 +22,7 @@ export default class extends Command {
 					required: false
 				}
 			],
-			group: CommandGroup.LOG,
+			group: CommandGroup.LOGS,
 			guildOnly: true,
 			premiumOnly: false,
 			botPermissions: [GuildPermission.VIEW_AUDIT_LOGS],

@@ -1,13 +1,13 @@
-import { BaseClient } from '../../../../Client';
-import { Context, Command } from '../../../../Framework/Commands/Command';
+import { BaseClient } from '../../../Client';
+import { Context, Command } from '../../../Framework/Commands/Command';
 import { Message, Role } from 'eris';
-import { StringResolver, RoleResolver } from '../../../../Framework/Resolvers';
-import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
-import { GuildPermission } from '../../../../Misc/Models/GuildPermissions';
-import { BaseMessage } from '../../../../Entity/Message';
-import { ReactionRoleService } from '../../Services/ReactionRoles';
-import { BaseReactionRole } from '../../../../Entity/ReactionRole';
-import { ExecuteError } from '../../../../Framework/Errors/ExecuteError';
+import { StringResolver, RoleResolver } from '../../../Framework/Resolvers';
+import { CommandGroup } from '../../../Misc/Models/CommandGroup';
+import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
+import { BaseMessage } from '../../../Entity/Message';
+import { ReactionRoleService } from '../Services/ReactionRoles';
+import { BaseReactionRole } from '../../../Entity/ReactionRole';
+import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 
 const CUSTOM_EMOJI_REGEX = /<(?:.*)?:(\w+):(\d+)>/;
 
@@ -18,7 +18,7 @@ export default class extends Command {
 		super(client, {
 			name: 'reactionrole',
 			aliases: ['rr'],
-			group: CommandGroup.MANAGEMENT,
+			group: CommandGroup.CONFIGURE,
 			args: [
 				{
 					name: 'messageId',

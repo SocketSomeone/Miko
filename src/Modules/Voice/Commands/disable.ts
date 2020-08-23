@@ -1,13 +1,10 @@
 import { Command, Context, TranslateFunc } from '../../../Framework/Commands/Command';
 import { BaseClient } from '../../../Client';
-import { StringResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
-import { Message, Member, Guild, VoiceChannel } from 'eris';
-import { BaseMember } from '../../../Entity/Member';
+import { Message, Guild } from 'eris';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
-import { ChannelType } from '../../../Types';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 
 export default class extends Command {
@@ -16,7 +13,7 @@ export default class extends Command {
 			name: 'voice disable',
 			aliases: ['v disable'],
 			args: [],
-			group: CommandGroup.MANAGEMENT,
+			group: CommandGroup.VOICE,
 			guildOnly: true,
 			premiumOnly: false,
 			botPermissions: [GuildPermission.MANAGE_CHANNELS],

@@ -1,13 +1,13 @@
-import { Command, Context } from '../../../../Framework/Commands/Command';
-import { BaseClient } from '../../../../Client';
-import { StringResolver, ChannelResolver, RoleResolver, BigIntResolver } from '../../../../Framework/Resolvers';
-import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
+import { Command, Context } from '../../../Framework/Commands/Command';
+import { BaseClient } from '../../../Client';
+import { StringResolver, ChannelResolver, RoleResolver, BigIntResolver } from '../../../Framework/Resolvers';
+import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message, Member, Channel, Role } from 'eris';
-import { BaseMember } from '../../../../Entity/Member';
-import { ColorResolve } from '../../../../Misc/Utils/ColorResolver';
-import { Color } from '../../../../Misc/Enums/Colors';
-import { GuildPermission } from '../../../../Misc/Models/GuildPermissions';
-import { BaseShopRole } from '../../../../Entity/ShopRole';
+import { BaseMember } from '../../../Entity/Member';
+import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
+import { Color } from '../../../Misc/Enums/Colors';
+import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
+import { BaseShopRole } from '../../../Entity/ShopRole';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -26,7 +26,7 @@ export default class extends Command {
 					required: true
 				}
 			],
-			group: CommandGroup.MANAGEMENT,
+			group: CommandGroup.CONFIGURE,
 			guildOnly: true,
 			premiumOnly: false,
 			botPermissions: [GuildPermission.MANAGE_ROLES],

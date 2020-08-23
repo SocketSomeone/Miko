@@ -155,8 +155,7 @@ export default class extends Command {
 					fields: [
 						{
 							name,
-							value:
-								'Здесь должно было быть описание самого клёвого модуля в данном боте, но видимо создатель немножко поленился и ещё не успел добавить его, подождите ещё немного! <3'
+							value: t('info.help.moduleDesc.' + key.toLowerCase())
 						},
 						...pages
 					],

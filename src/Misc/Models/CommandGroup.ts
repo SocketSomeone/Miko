@@ -7,6 +7,5 @@ export enum CommandGroup {
 	VOICE = '🔈 Voice',
 	LOGS = '🕞 Logs',
 	PERMISSIONS = '📃 Permissions',
-	MANAGEMENT = '⚒ Management',
 	WELCOME = '👋🏼 Welcome'
 }

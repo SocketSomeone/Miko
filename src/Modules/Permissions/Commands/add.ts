@@ -1,6 +1,6 @@
 import { BaseClient } from '../../../Client';
 import { Context, Command } from '../../../Framework/Commands/Command';
-import { Message, Member, Role, GuildChannel } from 'eris';
+import { Message, Member, Role, GuildChannel, TextChannel } from 'eris';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import {
 	AnyResolver,
@@ -14,6 +14,7 @@ import { PermissionsTarget, PermissionsFrom, Permission } from '../../../Misc/Mo
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
+import PermissionsOutput from '../Misc/PermissionsOutput';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -28,7 +29,7 @@ export default class extends Command {
 					required: true
 				},
 				{
-					name: 'role/member',
+					name: 'role/member/channel',
 					resolver: new AnyResolver(
 						client,
 						new MemberResolver(client),
@@ -83,7 +84,7 @@ export default class extends Command {
 					perm.activator.type = from.id === guild.id ? PermissionsFrom.Server : PermissionsFrom.Role;
 					break;
 
-				case GuildChannel:
+				case TextChannel:
 					perm.activator.type = PermissionsFrom.Channel;
 					break;
 			}
@@ -99,7 +100,8 @@ export default class extends Command {
 			color: ColorResolve(Color.MAGENTA),
 			title: t('perms.title'),
 			description: t(isExist ? 'perms.changed' : 'perms.add', {
-				index: perm.index
+				index: perm.index,
+				output: PermissionsOutput(t, perm, perm.index)
 			})
 		});
 	}

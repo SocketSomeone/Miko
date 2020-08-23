@@ -17,12 +17,12 @@ export class ReactionRoleService extends BaseService {
 		this.client.on('messageReactionRemove', this.onMessageReactionRemove.bind(this));
 	}
 
-	public async onMessageReactionAdd(message: PossiblyUncachedMessage, emoji: Emoji, userId: string) {
-		if (message.channel instanceof TextChannel) {
-			const reactionRoles = await this.cache.get(message.channel.guild.id);
+	public async onMessageReactionAdd({ channel, id }: PossiblyUncachedMessage, emoji: Emoji, userId: string) {
+		if (channel instanceof TextChannel) {
+			const reactionRoles = await this.cache.get(channel.guild.id);
 
 			const reactionRole = reactionRoles.find((role) => {
-				if (role.channelId !== message.channel.id || role.messageId !== message.id) {
+				if (role.channelId !== channel.id || role.messageId !== id) {
 					return false;
 				}
 
@@ -36,17 +36,17 @@ export class ReactionRoleService extends BaseService {
 			});
 
 			if (reactionRole) {
-				await this.client.addGuildMemberRole(message.channel.guild.id, userId, reactionRole.roleId);
+				await this.client.addGuildMemberRole(channel.guild.id, userId, reactionRole.roleId);
 			}
 		}
 	}
 
-	public async onMessageReactionRemove(message: PossiblyUncachedMessage, emoji: Emoji, userId: string) {
-		if (message.channel instanceof TextChannel) {
-			const reactionRoles = await this.cache.get(message.channel.guild.id);
+	public async onMessageReactionRemove({ channel, id }: PossiblyUncachedMessage, emoji: Emoji, userId: string) {
+		if (channel instanceof TextChannel) {
+			const reactionRoles = await this.cache.get(channel.guild.id);
 
 			const reactionRole = reactionRoles.find((role) => {
-				if (role.channelId !== message.channel.id || role.messageId !== message.id) {
+				if (role.channelId !== channel.id || role.messageId !== id) {
 					return false;
 				}
 
@@ -59,7 +59,7 @@ export class ReactionRoleService extends BaseService {
 			});
 
 			if (reactionRole) {
-				await this.client.removeGuildMemberRole(message.channel.guild.id, userId, reactionRole.roleId);
+				await this.client.removeGuildMemberRole(channel.guild.id, userId, reactionRole.roleId);
 			}
 		}
 	}

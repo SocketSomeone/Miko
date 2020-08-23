@@ -583,7 +583,18 @@
 				"permissions list": "info.help.cmdDesc.permissions list",
 				"permission move": "info.help.cmdDesc.permission move",
 				"say": "info.help.cmdDesc.say",
-				"voice disable": "info.help.cmdDesc.voice disable"
+				"voice disable": "info.help.cmdDesc.voice disable",
+				"voice enable": "info.help.cmdDesc.voice enable"
+			},
+			"moduleDesc": {
+				"configure": "info.help.moduleDesc.configure",
+				"economy": "info.help.moduleDesc.economy",
+				"gambling": "info.help.moduleDesc.gambling",
+				"logs": "info.help.moduleDesc.logs",
+				"moderation": "info.help.moduleDesc.moderation",
+				"permissions": "info.help.moduleDesc.permissions",
+				"voice": "info.help.moduleDesc.voice",
+				"welcome": "info.help.moduleDesc.welcome"
 			}
 		},
 		"warns": {
@@ -665,6 +676,8 @@
 		"item": "perms.item",
 		"list": "perms.list",
 		"sourceNotFound": "perms.sourceNotFound",
-		"move": "perms.move"
+		"move": "perms.move",
+		"allModules": "perms.allModules",
+		"false": "perms.false"
 	}
 }

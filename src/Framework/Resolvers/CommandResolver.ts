@@ -12,7 +12,7 @@ export class CommandResolver extends Resolver {
 		const cmds = this.client.commands.commands.filter(
 			(c) => (c.name.toLowerCase().includes(name) || c.aliases.indexOf(name) >= 0) && c.group !== null
 		);
-		console.log(value);
+
 		if (cmds.length === 0) {
 			throw Error(t(`resolvers.command.notFound`));
 		} else if (cmds.length === 1) {

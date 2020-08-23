@@ -1,18 +1,18 @@
-import { BaseClient } from '../../../../Client';
-import { Context, Command } from '../../../../Framework/Commands/Command';
+import { BaseClient } from '../../../Client';
+import { Context, Command } from '../../../Framework/Commands/Command';
 import { Message, EmbedOptions } from 'eris';
-import { EmbedResolver } from '../../../../Framework/Resolvers';
-import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
-import { ExecuteError } from '../../../../Framework/Errors/ExecuteError';
-import { GuildPermission } from '../../../../Misc/Models/GuildPermissions';
-import { BaseMessage } from '../../../../Entity/Message';
+import { EmbedResolver } from '../../../Framework/Resolvers';
+import { CommandGroup } from '../../../Misc/Models/CommandGroup';
+import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
+import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
+import { BaseMessage } from '../../../Entity/Message';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
 		super(client, {
 			name: 'say',
 			aliases: ['embed', 'ph', 'placeholder'],
-			group: CommandGroup.MANAGEMENT,
+			group: CommandGroup.CONFIGURE,
 			args: [
 				{
 					name: 'message',

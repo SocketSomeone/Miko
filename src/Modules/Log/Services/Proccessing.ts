@@ -248,7 +248,7 @@ export class ProcessingLogs {
 			color: ColorResolve(Color.ORANGE),
 			fields: [
 				{
-					name: t('logs.messageBefore'),
+					name: t('logs.msgDeleted'),
 					value: content.markdown(''),
 					inline: false
 				},

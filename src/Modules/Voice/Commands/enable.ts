@@ -13,10 +13,10 @@ import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 export default class extends Command {
 	public constructor(client: BaseClient) {
 		super(client, {
-			name: 'privatevoices',
-			aliases: ['pv', 'приватки'],
+			name: 'voice enable',
+			aliases: ['v enable'],
 			args: [],
-			group: CommandGroup.MANAGEMENT,
+			group: CommandGroup.VOICE,
 			guildOnly: true,
 			premiumOnly: false,
 			botPermissions: [GuildPermission.MANAGE_CHANNELS],

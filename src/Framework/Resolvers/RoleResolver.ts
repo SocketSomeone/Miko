@@ -25,7 +25,7 @@ export class RoleResolver extends Resolver {
 		if (idRegex.test(value)) {
 			const id = value.match(idRegex)[1];
 			role = guild.roles.get(id);
-			if (!role) {
+			if (!role || role.managed) {
 				throw Error(t(`resolvers.role.notFound`));
 			}
 		} else {

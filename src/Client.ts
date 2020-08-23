@@ -204,7 +204,14 @@ export class BaseClient extends Client {
 	}
 
 	private async setActivity() {
-		this.editStatus('online', { name: `за ${this.guilds.size} серверами`, type: 3 });
+		this.editStatus('online', {
+			name: [
+				`за ${this.guilds.size} серверами`,
+				`!help - Invite Miko`,
+				`за ${this.guilds.reduce((acc, x) => (acc += x.memberCount), 0)}`
+			].random(),
+			type: 3
+		});
 	}
 
 	public serviceStartupDone(service: BaseService) {

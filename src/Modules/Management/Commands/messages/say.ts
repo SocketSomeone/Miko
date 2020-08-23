@@ -10,8 +10,8 @@ import { BaseMessage } from '../../../../Entity/Message';
 export default class extends Command {
 	public constructor(client: BaseClient) {
 		super(client, {
-			name: 'embed',
-			aliases: ['say', 'ph', 'placeholder'],
+			name: 'say',
+			aliases: ['embed', 'ph', 'placeholder'],
 			group: CommandGroup.MANAGEMENT,
 			args: [
 				{
@@ -45,7 +45,7 @@ export default class extends Command {
 				});
 			} catch (error) {
 				throw new ExecuteError(
-					t('manage.embed.error', {
+					t('error.embed.send', {
 						error: error.message
 							.split(/[\r?\n]/)
 							.slice(1, 2)

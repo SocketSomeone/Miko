@@ -581,7 +581,9 @@
 				"permission remove": "info.help.cmdDesc.permission remove",
 				"permissions clear": "info.help.cmdDesc.permissions clear",
 				"permissions list": "info.help.cmdDesc.permissions list",
-				"permission move": "info.help.cmdDesc.permission move"
+				"permission move": "info.help.cmdDesc.permission move",
+				"say": "info.help.cmdDesc.say",
+				"voice disable": "info.help.cmdDesc.voice disable"
 			}
 		},
 		"warns": {

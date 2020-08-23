@@ -18,10 +18,6 @@
 			"enable": "**Автосохранение ролей** было **включено**",
 			"disable": "**Автосохранение ролей** было **отключено**"
 		},
-		"privates": {
-			"enabled": "**Приватные комнаты** были **включены**\nКомната - {{{ channel }}}",
-			"disabled": "**Приватные комнаты** были **выключены**"
-		},
 		"modlog": {
 			"new": "Теперь модераторские логи будут отправляться в {{{ channel }}}",
 			"info": "Сейчас модераторские логи отправляются в {{{ channel }}}",
@@ -74,7 +70,7 @@
 		"help": {
 			"title": "Помощь по командам Miko",
 			"desc": "Мой префикс на сервере **{{{ guild }}}** - `{{{ prefix }}}`",
-			"footer": "Используйте {{{ prefix }}}help `command` для полной информации о команде!",
+			"footer": "Для подробной информации о команде, введите {{{ prefix }}}help и команду!",
 			"first": {
 				"title": "Информация о боте Miko",
 				"fields": {
@@ -90,66 +86,61 @@
 				"aliases": "Алиасы:"
 			},
 			"cmdDesc": {
-				"automodignorechannel": "info.help.cmdDesc.automodignorechannel",
-				"automodignorerole": "info.help.cmdDesc.automodignorerole",
-				"automod": "info.help.cmdDesc.automod",
-				"config": "info.help.cmdDesc.config",
-				"modlog": "info.help.cmdDesc.modlog",
-				"mute role": "info.help.cmdDesc.mute role",
-				"prefix": "info.help.cmdDesc.prefix",
-				"standart-money": "info.help.cmdDesc.standart-money",
-				"bal": "info.help.cmdDesc.bal",
-				"buyshop": "info.help.cmdDesc.buyshop",
-				"daily": "info.help.cmdDesc.daily",
-				"give": "info.help.cmdDesc.give",
-				"shop": "info.help.cmdDesc.shop",
-				"br": "info.help.cmdDesc.br",
-				"fortune": "info.help.cmdDesc.fortune",
-				"slotmachine": "info.help.cmdDesc.slotmachine",
-				"whereischicken": "info.help.cmdDesc.whereischicken",
-				"help": "info.help.cmdDesc.help",
-				"warns": "info.help.cmdDesc.warns",
-				"embed": "info.help.cmdDesc.embed",
-				"addshop": "info.help.cmdDesc.addshop",
-				"removeshop": "info.help.cmdDesc.removeshop",
-				"ban": "info.help.cmdDesc.ban",
-				"kick": "info.help.cmdDesc.kick",
-				"mute": "info.help.cmdDesc.mute",
-				"tempban": "info.help.cmdDesc.tempban",
-				"tempmute": "info.help.cmdDesc.tempmute",
-				"unmute": "info.help.cmdDesc.unmute",
-				"clear": "info.help.cmdDesc.clear",
-				"welcome roles": "info.help.cmdDesc.welcome roles",
-				"welcome saveroles": "info.help.cmdDesc.welcome saveroles",
-				"welcome channel": "info.help.cmdDesc.welcome channel",
-				"welcome content": "info.help.cmdDesc.welcome content",
-				"reactionrole": "info.help.cmdDesc.reactionrole",
-				"privatevoices": "info.help.cmdDesc.privatevoices",
-				"welcome": "info.help.cmdDesc.welcome",
-				"automod ignore": "info.help.cmdDesc.automod ignore",
-				"voice limit": "info.help.cmdDesc.voice limit",
-				"voice name": "info.help.cmdDesc.voice name",
-				"voice admin": "info.help.cmdDesc.voice admin",
-				"voice lock": "info.help.cmdDesc.voice lock",
-				"voice hide": "info.help.cmdDesc.voice hide",
-				"voice unhide": "info.help.cmdDesc.voice unhide",
-				"voice unlock": "info.help.cmdDesc.voice unlock",
-				"voice show": "info.help.cmdDesc.voice show",
-				"voice kick": "info.help.cmdDesc.voice kick",
-				"voice owner": "info.help.cmdDesc.voice owner",
-				"log": "info.help.cmdDesc.log",
-				"log set": "info.help.cmdDesc.log set",
-				"log disable": "info.help.cmdDesc.log disable",
-				"log enable": "info.help.cmdDesc.log enable",
-				"automod disable": "info.help.cmdDesc.automod disable",
-				"automod enable": "info.help.cmdDesc.automod enable",
-				"log unset": "info.help.cmdDesc.log unset",
-				"permission add": "info.help.cmdDesc.permission add",
-				"permission remove": "info.help.cmdDesc.permission remove",
-				"permissions clear": "info.help.cmdDesc.permissions clear",
-				"permissions list": "info.help.cmdDesc.permissions list",
-				"welcome disable": "info.help.cmdDesc.welcome disable",
-				"permission move": "info.help.cmdDesc.permission move"
+				"config": "Посмотреть конфигурацию вашего сервера.",
+				"modlog": "Установить или отобразить канал для модераторских логов.",
+				"mute role": "Установить или отобразить роль для мута.",
+				"prefix": "Установить или отобразить префикс бота на сервере.",
+				"standart-money": "Установить или отобразить количество денег при заходе.",
+				"bal": "Посмотреть баланс пользователя.",
+				"buyshop": "Купить роль из магазина.",
+				"daily": "Забрать награду за опр. промежуток времени.",
+				"give": "Передать валюту пользователю.",
+				"shop": "Посмотреть магазин ролей на сервере.",
+				"br": "Подкинуть кубики со ставкой.",
+				"fortune": "Сыграть в колесо фортуны.",
+				"slotmachine": "Сыграть в слот-машину.",
+				"whereischicken": "Сыграть в игру \"Где же курочка?\"",
+				"help": "Посмотреть помощь по командам",
+				"log disable": "Выключить модуль логирования",
+				"log enable": "Включить модуль логирования",
+				"log set": "Установить или отобразить логи, которые отправляются в данный канал.",
+				"log unset": "Очистить логи, которые отправляются в данный канал.",
+				"say": "Отправить сообщение с текстом или embed'ом.",
+				"addshop": "Добавить роль в магазин.",
+				"removeshop": "Удалить роль из магазина.",
+				"automod ignore": "Добавить или очистить канал или пользователя для игнорирования авто-модерацией.",
+				"automod": "Включить или выключить авто-модерацию категории.",
+				"ban": "Забанить пользователя на сервере.",
+				"kick": "Выгнать пользователя с сервера.",
+				"mute": "Выдать затычку пользователю.",
+				"tempban": "Временная блокировка пользователя на сервере.",
+				"tempmute": "Временная затычка пользователя на сервере.",
+				"unmute": "Убрать затычку у пользователя.",
+				"clear": "Очистить определённое кол-во сообщений.",
+				"warns": "Посмотреть предупреждения пользователя.",
+				"permission add": "Добавить правило для использования команд бота.",
+				"permissions clear": "Очистить список правил для использования команд бота.",
+				"permissions list": "Посмотреть список правил.",
+				"permission move": "Поменять местами правила из списка.",
+				"permission remove": "Удалить правило из списка.",
+				"voice enable": "Включить модуль приватных комнат.",
+				"voice disable": "Выключить модуль приватных комнат.",
+				"voice admin": "Выдать права администратора в вашей приватной комнате.",
+				"voice hide": "Скрыть приватную комнату.",
+				"voice kick": "Выгнать пользователя из приватной комнаты.",
+				"voice limit": "Установить лимит на вход в приватную комнату.",
+				"voice lock": "Закрыть доступ входа в приватную комнату.",
+				"voice name": "Изменить наименование приватной комнаты.",
+				"voice owner": "Передать права владельца приватной комнаты.",
+				"voice show": "Сделать видимой приватную комнату.",
+				"voice unlock": "Открыть доступ входа в приватную комнату.",
+				"welcome roles": "Установить или отобразить роли, которые выдают при входе на сервер.",
+				"welcome saveroles": "Включить или выключить сохранение ролей при выходе с сервера.",
+				"welcome channel": "Установить канал или лс, как чат для сообщения при входе на сервер.",
+				"welcome content": "Установить сообщение при входе на сервер.",
+				"welcome disable": "Выключить модуль приветствия.",
+				"welcome enable": "Включить модуль приветствия.",
+				"reactionrole": "Добавить реакция-роль на сообщение бота."
 			}
 		},
 		"warns": {
@@ -322,6 +313,16 @@
 		},
 		"changes": {
 			"not": "Изменения не требуются"
+		},
+		"embed": {
+			"send": "Во время отправки embed'а произошла ошибка:\n{{{ error }}}"
+		},
+		"reactionrole": {
+			"notFound": {
+				"title": "Сообщение не найдено!",
+				"desc": "**Сообщение** на которое вы хотите добавить **Reaction Role** должно быть от **Miko**!\n**Ознакомьтесь** с командами с помощью `help`."
+			},
+			"unknownEmoji": "Не удалось найти эмозди!"
 		}
 	},
 	"others": {
@@ -450,18 +451,6 @@
 		},
 		"footer": "Не нарушайте больше, пожалуйста!"
 	},
-	"manage": {
-		"embed": {
-			"error": "Во время отправки embed'а произошла ошибка:\n{{{ error }}}"
-		},
-		"reactionrole": {
-			"notFound": {
-				"title": "Сообщение не найдено!",
-				"desc": "**Сообщение** на которое вы хотите добавить **Reaction Role** должно быть от **Miko**!\n**Ознакомьтесь** с командами с помощью `help`."
-			},
-			"unknownEmoji": "Не удалось найти эмозди!"
-		}
-	},
 	"welcome": {
 		"title": "Приветствие",
 		"enable": "Модуль `Приветствие` был **включен**",
@@ -496,6 +485,10 @@
 			"notInRoom": "{{{ member }}} не находится в голосовом канале!",
 			"invalid": "Не удалось кикнуть пользователя из голосового канала!"
 		},
+		"enable": "**Приватные комнаты** были **включены**\nКомната - {{{ channel }}}",
+		"disable": "**Приватные комнаты** были **выключены**",
+		"enabled": "Модуль **Приватные комнаты** уже включен!",
+		"disabled": "Модуль **Приватные комнаты** отключен!",
 		"limit": "Вы успешно изменили лимит комнаты!",
 		"name": "Вы успешно изменили название комнаты!",
 		"admin": {

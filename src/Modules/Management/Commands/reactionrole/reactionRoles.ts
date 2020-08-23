@@ -65,8 +65,8 @@ export default class extends Command {
 
 		if (!dbMessage) {
 			throw new ExecuteError({
-				title: t('manage.reactionrole.notFound.title'),
-				description: t('manage.reactionrole.notFound.desc')
+				title: t('error.reactionrole.notFound.title'),
+				description: t('error.reactionrole.notFound.desc')
 			});
 		}
 
@@ -86,7 +86,7 @@ export default class extends Command {
 			);
 		} catch (error) {
 			if (error.code === 10014) {
-				throw new ExecuteError(t('manage.reactionrole.unknownEmoji'));
+				throw new ExecuteError(t('error.reactionrole.unknownEmoji'));
 			} else {
 				throw error;
 			}

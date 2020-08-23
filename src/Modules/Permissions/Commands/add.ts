@@ -62,7 +62,11 @@ export default class extends Command {
 		if (!perm) {
 			perm = {
 				allow,
-				index: permissions.length + 1,
+				index:
+					Math.max.apply(
+						null,
+						permissions.map((p) => p.index)
+					) + 1,
 				target,
 				activator: {
 					id: from.id,

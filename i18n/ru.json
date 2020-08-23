@@ -148,7 +148,8 @@
 				"permission remove": "info.help.cmdDesc.permission remove",
 				"permissions clear": "info.help.cmdDesc.permissions clear",
 				"permissions list": "info.help.cmdDesc.permissions list",
-				"welcome disable": "info.help.cmdDesc.welcome disable"
+				"welcome disable": "info.help.cmdDesc.welcome disable",
+				"permission move": "info.help.cmdDesc.permission move"
 			}
 		},
 		"warns": {
@@ -515,6 +516,7 @@
 		"changed": "Вы изменили правило #{{{ index }}}",
 		"remove": "Вы удалили правило #{{{ index }}}",
 		"notFound": "Не удалось найти правило!",
+		"sourceNotFound": "Не удалось найти правило с которым вы хотите поменяться!",
 		"clear": "Вы успешно очистили список правил!",
 		"cleared": "Список правил пуст.",
 		"item": "**{{{ index }}}.** {{{ allow }}} {{{ target }}} для {{{ activator }}}",
@@ -523,6 +525,7 @@
 		"module": "модуля **{{{ module }}}**",
 		"command": "команды **{{{ cmd }}}**",
 		"channel": "в канале {{{ channel }}}",
-		"allModules": "**всех модулей**"
+		"allModules": "**всех модулей**",
+		"move": "Вы успешно поменяли местами правила **#{{{ target }}}** и **#{{{ source }}}**"
 	}
 }

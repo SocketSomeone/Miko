@@ -580,7 +580,8 @@
 				"permission add": "info.help.cmdDesc.permission add",
 				"permission remove": "info.help.cmdDesc.permission remove",
 				"permissions clear": "info.help.cmdDesc.permissions clear",
-				"permissions list": "info.help.cmdDesc.permissions list"
+				"permissions list": "info.help.cmdDesc.permissions list",
+				"permission move": "info.help.cmdDesc.permission move"
 			}
 		},
 		"warns": {
@@ -613,7 +614,8 @@
 		},
 		"aar": {
 			"list": "welcome.aar.list",
-			"added": "welcome.aar.added"
+			"added": "welcome.aar.added",
+			"deleted": "welcome.aar.deleted"
 		},
 		"arr": {
 			"added": "welcome.arr.added"
@@ -659,6 +661,8 @@
 		"module": "perms.module",
 		"true": "perms.true",
 		"item": "perms.item",
-		"list": "perms.list"
+		"list": "perms.list",
+		"sourceNotFound": "perms.sourceNotFound",
+		"move": "perms.move"
 	}
 }

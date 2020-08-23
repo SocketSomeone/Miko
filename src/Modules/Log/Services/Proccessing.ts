@@ -17,6 +17,8 @@ import {
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { TranslateFunc } from '../../../Framework/Commands/Command';
 import { LogType } from '../Misc/LogType';
+import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
+import { Color } from '../../../Misc/Enums/Colors';
 export type ProcessFuncs = { [key in LogType]: (t: TranslateFunc, guild: Guild, ...args: any[]) => Promise<Embed> };
 
 type GuildChannel = TextChannel | VoiceChannel | NewsChannel;
@@ -57,7 +59,8 @@ export class ProcessingLogs {
 
 	private async banManage(reverse: boolean, t: TranslateFunc, guild: Guild, user: User) {
 		const embed = this.client.messages.createEmbed({
-			title: t(reverse ? 'logs.unban' : 'logs.ban'),
+			author: { name: t(reverse ? 'logs.unban' : 'logs.ban') },
+			color: ColorResolve(reverse ? Color.GREEN : Color.RED),
 			fields: [
 				{
 					name: t('logs.member'),
@@ -99,7 +102,8 @@ export class ProcessingLogs {
 
 	private async channelManage(reverse: boolean, t: TranslateFunc, guild: Guild, created: GuildChannel) {
 		const embed = this.client.messages.createEmbed({
-			title: t(reverse ? 'logs.chanDelete' : 'logs.chanCreate'),
+			author: { name: t(reverse ? 'logs.chanDelete' : 'logs.chanCreate') },
+			color: ColorResolve(reverse ? Color.RED : Color.GREEN),
 			fields: [
 				{
 					name: t('logs.channel'),
@@ -131,7 +135,8 @@ export class ProcessingLogs {
 
 	private async emojiManage(reverse: boolean, t: TranslateFunc, guild: Guild, emoji: Emoji) {
 		const embed = this.client.messages.createEmbed({
-			title: t(reverse ? 'logs.emojiDelete' : 'logs.emojiCreate'),
+			author: { name: t(reverse ? 'logs.emojiDelete' : 'logs.emojiCreate') },
+			color: ColorResolve(reverse ? Color.RED : Color.GREEN),
 			fields: [
 				{
 					name: t('logs.emoji'),
@@ -162,7 +167,8 @@ export class ProcessingLogs {
 
 	private async roleManage(reverse: boolean, t: TranslateFunc, guild: Guild, role: Role) {
 		const embed = this.client.messages.createEmbed({
-			title: t(reverse ? 'logs.roleDelete' : 'logs.roleCreate'),
+			author: { name: t(reverse ? 'logs.roleDelete' : 'logs.roleCreate') },
+			color: ColorResolve(reverse ? Color.RED : Color.GREEN),
 			fields: [
 				{
 					name: t('logs.role'),
@@ -199,7 +205,8 @@ export class ProcessingLogs {
 		channel: VoiceChannel
 	) {
 		const embed = this.client.messages.createEmbed({
-			title: t(reverse ? 'logs.voiceLeaved' : 'logs.voiceConnected'),
+			author: { name: t(reverse ? 'logs.voiceLeaved' : 'logs.voiceConnected') },
+			color: ColorResolve(reverse ? Color.RED : Color.GREEN),
 			fields: [
 				{
 					name: t('logs.channel'),
@@ -220,7 +227,8 @@ export class ProcessingLogs {
 
 	private async memberManage(reverse: boolean, t: TranslateFunc, guild: Guild, member: Member) {
 		const embed = this.client.messages.createEmbed({
-			title: t(reverse ? 'logs.guildLeave' : 'logs.guildJoin'),
+			author: { name: t(reverse ? 'logs.guildLeave' : 'logs.guildJoin') },
+			color: ColorResolve(reverse ? Color.RED : Color.GREEN),
 			fields: [
 				{
 					name: t('logs.member'),
@@ -234,9 +242,10 @@ export class ProcessingLogs {
 		return embed;
 	}
 
-	private async messageDeleted(t: TranslateFunc, guild: Guild, { content, member }: Message) {
+	private async messageDeleted(t: TranslateFunc, guild: Guild, { content, member, channel }: Message) {
 		const embed = this.client.messages.createEmbed({
-			title: t('logs.messageDeleted'),
+			author: { name: t('logs.messageDeleted') },
+			color: ColorResolve(Color.ORANGE),
 			fields: [
 				{
 					name: t('logs.messageBefore'),
@@ -246,6 +255,11 @@ export class ProcessingLogs {
 				{
 					name: t('logs.messageBy'),
 					value: member.mention,
+					inline: true
+				},
+				{
+					name: t('logs.channel'),
+					value: channel.mention,
 					inline: true
 				}
 			],
@@ -263,7 +277,8 @@ export class ProcessingLogs {
 		}
 
 		const embed = this.client.messages.createEmbed({
-			title: t('logs.roleUpdate'),
+			author: { name: t('logs.roleUpdate') },
+			color: ColorResolve(Color.YELLOW),
 			fields: [
 				{
 					name: t('logs.role'),
@@ -327,7 +342,8 @@ export class ProcessingLogs {
 		const compare = this.compare(newEmoji, oldEmoji);
 
 		const embed = this.client.messages.createEmbed({
-			title: t('logs.emojiUpdate'),
+			author: { name: t('logs.emojiUpdate') },
+			color: ColorResolve(Color.YELLOW),
 			fields: [
 				{
 					name: t('logs.emoji'),
@@ -365,7 +381,8 @@ export class ProcessingLogs {
 		oldChannel: VoiceChannel
 	) {
 		const embed = this.client.messages.createEmbed({
-			title: t('logs.voiceSwitch'),
+			author: { name: t('logs.voiceSwitch') },
+			color: ColorResolve(Color.YELLOW),
 			fields: [
 				{
 					name: t('logs.channel'),
@@ -386,7 +403,8 @@ export class ProcessingLogs {
 
 	private async memberRolesUpdate(t: TranslateFunc, guild: Guild, member: Member, oldRoles: string[]) {
 		const embed = this.client.messages.createEmbed({
-			title: t('logs.memberRolesUpdate'),
+			author: { name: t('logs.memberRolesUpdate') },
+			color: ColorResolve(Color.YELLOW),
 			fields: [
 				{
 					name: t('logs.member'),
@@ -431,9 +449,15 @@ export class ProcessingLogs {
 		return embed;
 	}
 
-	private async messageUpdate(t: TranslateFunc, guild: Guild, { member, content }: Message, oldMessage: Message) {
+	private async messageUpdate(
+		t: TranslateFunc,
+		guild: Guild,
+		{ member, content, channel }: Message,
+		oldMessage: Message
+	) {
 		const embed = this.client.messages.createEmbed({
-			title: t('logs.messageUpdate'),
+			author: { name: t('logs.messageUpdate') },
+			color: ColorResolve(Color.YELLOW),
 			fields: [
 				{
 					name: t('logs.messageBefore'),
@@ -448,6 +472,11 @@ export class ProcessingLogs {
 				{
 					name: t('logs.messageBy'),
 					value: member.mention,
+					inline: true
+				},
+				{
+					name: t('logs.channel'),
+					value: channel.mention,
 					inline: true
 				}
 			],

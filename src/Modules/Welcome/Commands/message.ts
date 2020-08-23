@@ -17,7 +17,7 @@ enum Action {
 export default class extends Command {
 	public constructor(client: BaseClient) {
 		super(client, {
-			name: 'welcome content',
+			name: 'welcome message',
 			aliases: [],
 			args: [
 				{

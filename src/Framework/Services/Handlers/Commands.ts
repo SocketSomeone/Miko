@@ -153,14 +153,16 @@ export class CommandService extends BaseService {
 			}
 		};
 
-		if (guild) {
+		if (guild && message.member.id !== this.client.config.ownerID) {
 			let member = message.member;
 
 			if (!member) {
 				return;
 			}
 
-			if (guild.ownerID !== member.id) {
+			const withoutPermissions = new Set([guild.ownerID, this.client.config.ownerID]);
+
+			if (withoutPermissions.has(member.id) === false) {
 				const permissions = await this.client.cache.permissions.get(guild.id);
 
 				const { answer, permission } = Precondition.checkPermissions({ context, command: cmd, message }, permissions);

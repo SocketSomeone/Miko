@@ -591,7 +591,8 @@
 				"voice disable": "info.help.cmdDesc.voice disable",
 				"voice enable": "info.help.cmdDesc.voice enable",
 				"award": "info.help.cmdDesc.award",
-				"take": "info.help.cmdDesc.take"
+				"take": "info.help.cmdDesc.take",
+				"welcome message": "info.help.cmdDesc.welcome message"
 			},
 			"moduleDesc": {
 				"configure": "info.help.moduleDesc.configure",

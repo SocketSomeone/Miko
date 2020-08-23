@@ -6,6 +6,7 @@ import { Color } from '../../../Misc/Enums/Colors';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { AnyResolver, RoleResolver, MemberResolver } from '../../../Framework/Resolvers';
 import { ActionRoom } from '../../../Entity/Privates';
+import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -21,7 +22,8 @@ export default class extends Command {
 				}
 			],
 			guildOnly: true,
-			premiumOnly: false
+			premiumOnly: false,
+			botPermissions: [GuildPermission.MANAGE_CHANNELS]
 		});
 	}
 

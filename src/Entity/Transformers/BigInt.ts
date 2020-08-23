@@ -1,8 +1,6 @@
 import { ValueTransformer } from 'typeorm';
 
-import { duration, Duration } from 'moment';
-
 export const BigIntTransformer: ValueTransformer = {
 	from: (databaseValue: string): bigint => BigInt(databaseValue),
-	to: (entityValue: bigint) => String(entityValue)
+	to: (entityValue: bigint) => String(entityValue > 9223372036854775807n ? 9223372036854775807n : entityValue)
 };

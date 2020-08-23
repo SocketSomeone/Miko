@@ -22,7 +22,7 @@ export default class extends Command {
 			],
 			guildOnly: true,
 			premiumOnly: false,
-			botPermissions: [GuildPermission.MOVE_MEMBERS]
+			botPermissions: [GuildPermission.MANAGE_CHANNELS]
 		});
 	}
 

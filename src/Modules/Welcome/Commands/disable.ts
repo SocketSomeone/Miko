@@ -10,6 +10,7 @@ import { chance } from '../../../Misc/Utils/Chance';
 import { BigIntResolver, BooleanResolver } from '../../../Framework/Resolvers';
 import { RolesService } from '../Services/RolesService';
 import { MessageService } from '../Services/MessageService';
+import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 
 export default class extends Command {
 	protected roleService: RolesService;
@@ -22,7 +23,9 @@ export default class extends Command {
 			args: [],
 			group: CommandGroup.WELCOME,
 			guildOnly: true,
-			premiumOnly: false
+			premiumOnly: false,
+			botPermissions: [GuildPermission.SEND_MESSAGES],
+			userPermissions: [GuildPermission.MANAGE_CHANNELS, GuildPermission.MANAGE_GUILD]
 		});
 
 		this.roleService = new RolesService(client);

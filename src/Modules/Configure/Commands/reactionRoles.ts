@@ -37,8 +37,8 @@ export default class extends Command {
 				}
 			],
 			guildOnly: true,
-			botPermissions: [GuildPermission.MANAGE_MESSAGES],
-			userPermissions: [GuildPermission.MANAGE_MESSAGES],
+			botPermissions: [GuildPermission.MANAGE_MESSAGES, GuildPermission.ADD_REACTIONS],
+			userPermissions: [GuildPermission.ADMINISTRATOR],
 			premiumOnly: false
 		});
 

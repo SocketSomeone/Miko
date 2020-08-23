@@ -1,7 +1,7 @@
 const { prod, maxShard, instance } = require('./config.json');
 
 const config = {
-	script: 'bin/root.js',
+	script: 'bin/Root.js',
 	watch_delay: 500,
 	watch_options: {
 		followSymlinks: false

@@ -1,12 +1,12 @@
 {
 	"instance": "Miko",
 	"prod": {
-		"TOKEN": "NzE4NzU4MDI4NjM5MjA3NTI0.XxYd1A.xYooIdcJw48raGZdgQ-U2FY4We8"
+		"TOKEN": "NzQ3MDM4NjQwNTcxNDE2NjY2.X0JD8w.MZw9rvgYF-sNI8H38F0Y1QYXkgk"
 	},
 	"dev": {
 		"TOKEN": "NzE4NzU4MDI4NjM5MjA3NTI0.XxYd1A.xYooIdcJw48raGZdgQ-U2FY4We8"
 	},
-	"maxShard": 2,
+	"maxShard": 1,
 	"sentryDsn": "https://0fa69e5b9d7a4b45bfddd8681d80a4ee@o423458.ingest.sentry.io/5353727",
 	"rabbitmq": {
 		"hostname": "localhost",

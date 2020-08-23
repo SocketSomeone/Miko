@@ -3,7 +3,7 @@
 	"host": "localhost",
 	"port": 5432,
 	"username": "postgres",
-	"password": "3EQ6VtAdCQ",
+	"password": "ZtMeMjHtBE5VHBmuLE",
 	"database": "Miko",
 	"synchronize": true,
 	"bigNumberStrings": true,

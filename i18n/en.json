@@ -30,6 +30,10 @@
 			"title": "economy.buyshop.title",
 			"ok": "economy.buyshop.ok",
 			"notFound": "economy.buyshop.notFound"
+		},
+		"award": {
+			"title": "economy.award.title",
+			"desc": "economy.award.desc"
 		}
 	},
 	"embed": {
@@ -585,7 +589,9 @@
 				"permission move": "info.help.cmdDesc.permission move",
 				"say": "info.help.cmdDesc.say",
 				"voice disable": "info.help.cmdDesc.voice disable",
-				"voice enable": "info.help.cmdDesc.voice enable"
+				"voice enable": "info.help.cmdDesc.voice enable",
+				"award": "info.help.cmdDesc.award",
+				"take": "info.help.cmdDesc.take"
 			},
 			"moduleDesc": {
 				"configure": "info.help.moduleDesc.configure",

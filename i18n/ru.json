@@ -135,7 +135,9 @@
 				"welcome disable": "Выключить модуль приветствия.",
 				"welcome enable": "Включить модуль приветствия.",
 				"reactionrole": "Добавить реакция-роль на сообщение бота.",
-				"muterole": "info.help.cmdDesc.muterole"
+				"muterole": "info.help.cmdDesc.muterole",
+				"award": "info.help.cmdDesc.award",
+				"take": "info.help.cmdDesc.take"
 			},
 			"moduleDesc": {
 				"configure": "Команды для гибкой настройки вашего миленько-брутального сервера и создания собственного неповторимого шарма и индивидуальности, чтобы на вашем сервере было также уютно как и дома.",
@@ -204,6 +206,14 @@
 		"give": {
 			"title": "Перевод валюты!",
 			"desc": "Пользователь {{{ target }}} **получает перевод** на {{{ amount }}} от {{{ member }}}"
+		},
+		"award": {
+			"title": "Выдача серверной валюты!",
+			"desc": "{{{ member }}} выдает {{{ target }}} валюту - {{{ amount }}}"
+		},
+		"take": {
+			"title": "Изъятие серверной валюты!",
+			"desc": "{{{ member }}} забирает у {{{ target }}} валюту - {{{ amount }}}"
 		},
 		"daily": {
 			"wait": {

@@ -3,17 +3,18 @@ import { Context } from '../commands/Command';
 
 import { Resolver } from './Resolver';
 
+const MAX_VALUE = Number.MAX_SAFE_INTEGER;
+const MIN_VALUE = Number.MIN_SAFE_INTEGER;
+
 export class BigIntResolver extends Resolver {
 	private min?: bigint;
 	private max?: bigint;
-	private canInfinity: boolean = false;
 
-	public constructor(client: BaseClient, min?: bigint, max?: bigint, canInfinity: boolean = false) {
+	public constructor(client: BaseClient, min?: bigint, max?: bigint) {
 		super(client);
 
 		this.min = min;
 		this.max = max;
-		this.canInfinity = canInfinity;
 	}
 
 	public async resolve(value: string, { funcs: { t } }: Context): Promise<bigint> {
@@ -23,6 +24,13 @@ export class BigIntResolver extends Resolver {
 
 		try {
 			const val = BigInt(value);
+
+			if (val < MIN_VALUE) {
+				throw Error(t(`resolvers.number.tooSmall`, { min: this.min || MIN_VALUE }));
+			}
+			if (val > MAX_VALUE) {
+				throw Error(t(`resolvers.number.tooLarge`, { max: this.max || MAX_VALUE }));
+			}
 
 			if (this.min) {
 				if (val < this.min) {

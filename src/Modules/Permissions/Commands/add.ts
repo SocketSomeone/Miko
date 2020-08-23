@@ -102,7 +102,7 @@ export default class extends Command {
 			title: t('perms.title'),
 			description: t(isExist ? 'perms.changed' : 'perms.add', {
 				index: perm.index,
-				output: PermissionsOutput(t, perm, perm.index)
+				output: PermissionsOutput(t, perm, perm.index - 1)
 			})
 		});
 	}

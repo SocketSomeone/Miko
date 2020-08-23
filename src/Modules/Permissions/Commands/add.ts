@@ -26,7 +26,8 @@ export default class extends Command {
 				{
 					name: 'module/command',
 					resolver: PermissionTargetResolver,
-					required: true
+					required: true,
+					rest: true
 				},
 				{
 					name: 'role/member/channel',

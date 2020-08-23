@@ -231,6 +231,10 @@ export class CommandService extends BaseService {
 
 			let rawVal = rawArgs[i];
 
+			if (arg.rest) {
+				rawVal = rawVal.startsWith('"') && rawVal.endsWith('"') ? rawVal.substring(1, rawVal.length - 1) : rawVal;
+			}
+
 			if (arg.full) {
 				rawVal = rawArgs.slice(i, rawArgs.length).join(' ');
 			}
@@ -318,6 +322,8 @@ export class CommandService extends BaseService {
 				}
 			});
 		}
+
+		//setTimeout(async () => await message.delete(), 30 * 1000);
 	}
 
 	hasPrefix(content: string, prefix?: string) {
@@ -353,12 +359,12 @@ export class CommandService extends BaseService {
 
 			if (!quote && split.startsWith(`"`)) {
 				quote = true;
-				acc = '';
+				acc = '"';
 			}
 
 			if (split.endsWith(`"`)) {
 				quote = false;
-				acc += ' ' + split.substring(0, split.length - 1);
+				acc += ' ' + split;
 				rawArgs.push(acc.substring(2));
 				continue;
 			}
@@ -368,6 +374,10 @@ export class CommandService extends BaseService {
 			} else {
 				rawArgs.push(split);
 			}
+		}
+
+		if (acc) {
+			rawArgs.push(acc.substring(2));
 		}
 
 		return rawArgs;

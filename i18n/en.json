@@ -278,7 +278,8 @@
 		"disable": "logs.disable",
 		"set": "logs.set",
 		"unset": "logs.unset",
-		"guildJoin": "logs.guildJoin"
+		"guildJoin": "logs.guildJoin",
+		"msgDeleted": "logs.msgDeleted"
 	},
 	"moderation": {
 		"purge": {
@@ -678,6 +679,7 @@
 		"sourceNotFound": "perms.sourceNotFound",
 		"move": "perms.move",
 		"allModules": "perms.allModules",
-		"false": "perms.false"
+		"false": "perms.false",
+		"command": "perms.command"
 	}
 }

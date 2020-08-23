@@ -2,16 +2,9 @@ import { Command, Context } from '../../../../Framework/Commands/Command';
 import { BaseClient } from '../../../../Client';
 import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
 import { Message, Member } from 'eris';
-import { BaseMember } from '../../../../Entity/Member';
 import { ExecuteError } from '../../../../Framework/Errors/ExecuteError';
-
-import moment from 'moment';
-import { Color } from '../../../../Misc/Enums/Colors';
-import { ColorResolve } from '../../../../Misc/Utils/ColorResolver';
-import { MemberResolver, StringResolver, NumberResolver } from '../../../../Framework/Resolvers';
+import { MemberResolver, NumberResolver } from '../../../../Framework/Resolvers';
 import { GuildPermission } from '../../../../Misc/Models/GuildPermissions';
-import { Punishment, BasePunishment } from '../../../../Entity/Punishment';
-import { UserResolver } from '../../../../Framework/Resolvers/UserResolver';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {

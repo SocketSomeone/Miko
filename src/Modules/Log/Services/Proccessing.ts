@@ -246,12 +246,9 @@ export class ProcessingLogs {
 		const embed = this.client.messages.createEmbed({
 			author: { name: t('logs.messageDeleted') },
 			color: ColorResolve(Color.ORANGE),
+			title: t('logs.msgDeleted'),
+			description: content.markdown(''),
 			fields: [
-				{
-					name: t('logs.msgDeleted'),
-					value: content.markdown(''),
-					inline: false
-				},
 				{
 					name: t('logs.messageBy'),
 					value: member.mention,

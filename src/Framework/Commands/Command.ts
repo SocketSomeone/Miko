@@ -12,6 +12,7 @@ interface Arg {
 	resolver: Resolver | ResolverConstructor;
 	required?: boolean;
 	full?: boolean;
+	rest?: boolean;
 }
 
 export type TranslateFunc = (key: string, replacements?: { [key: string]: any }) => string;

@@ -11,8 +11,8 @@ import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 export default class extends Command {
 	public constructor(client: BaseClient) {
 		super(client, {
-			name: 'mute role',
-			aliases: ['мут роль'],
+			name: 'muterole',
+			aliases: ['мутроль'],
 			args: [
 				{
 					name: 'role',

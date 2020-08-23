@@ -54,7 +54,7 @@ export default class extends Command {
 		person.money += winned - money;
 		await person.save();
 
-		const embed = await this.createEmbed({
+		const embed = this.createEmbed({
 			title: t('gambling.slots.title'),
 			description: t('gambling.slots.desc', {
 				result: result.visualize(false)

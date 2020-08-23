@@ -19,7 +19,8 @@ export default class extends Command {
 				{
 					name: 'type',
 					resolver: new ArrayResolver(client, new EnumResolver(client, Object.keys(LogType)), Object.keys(LogType)),
-					required: false
+					required: false,
+					full: true
 				}
 			],
 			group: CommandGroup.LOGS,

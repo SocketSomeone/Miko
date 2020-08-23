@@ -21,7 +21,7 @@ export default class extends Command {
 			args: [
 				{
 					name: 'money',
-					resolver: new BigIntResolver(client, 1n),
+					resolver: new BigIntResolver(client, 30n),
 					required: true
 				}
 			],

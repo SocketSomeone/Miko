@@ -21,24 +21,24 @@ export class BigIntResolver extends Resolver {
 			return;
 		}
 
-		const val = BigInt(value) || null;
+		try {
+			const val = BigInt(value);
 
-		if (!val) {
+			if (this.min) {
+				if (val < this.min) {
+					throw Error(t(`resolvers.number.tooSmall`, { min: this.min }));
+				}
+			}
+
+			if (this.max) {
+				if (val > this.max) {
+					throw Error(t(`resolvers.number.tooLarge`, { max: this.max }));
+				}
+			}
+
+			return val;
+		} catch (err) {
 			throw Error(t(`resolvers.number.invalid`));
 		}
-
-		if (this.min) {
-			if (val < this.min) {
-				throw Error(t(`resolvers.number.tooSmall`, { min: this.min }));
-			}
-		}
-
-		if (this.max) {
-			if (val > this.max) {
-				throw Error(t(`resolvers.number.tooLarge`, { max: this.max }));
-			}
-		}
-
-		return val;
 	}
 }

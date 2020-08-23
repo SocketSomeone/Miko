@@ -208,7 +208,7 @@ export class BaseClient extends Client {
 			name: [
 				`за ${this.guilds.size} серверами`,
 				`!help - Invite Miko`,
-				`за ${this.guilds.reduce((acc, x) => (acc += x.memberCount), 0)}`
+				`за ${this.guilds.reduce((acc, x) => (acc += x.memberCount), 0)} участниками`
 			].random(),
 			type: 3
 		});

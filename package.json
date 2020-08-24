@@ -12,7 +12,10 @@
 		"migrate": "yarn typeorm migration:generate -n MigrateEnitity && yarn typeorm migration:run",
 		"format": "prettier --write \"src/**/*.ts\"",
 		"nxv": "node ./scripts/npm-exact-versions.js",
-		"i18n": "node scripts/check-i18n.js"
+		"i18n": "node scripts/check-i18n.js",
+		"ssh": "ssh root@185.185.68.44",
+		"deploy": "pscp -r ./bin root@185.185.68.44:/root/Miko",
+		"deployLang": "pscp -r ./i18n root@185.185.68.44:/root/Miko"
 	},
 	"husky": {
 		"hooks": {

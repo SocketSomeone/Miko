@@ -19,7 +19,7 @@ export class MemberResolver extends Resolver {
 			member = guild.members.get(id);
 
 			if (!member) {
-				member = await guild.getRESTMember(id).then(() => undefined);
+				member = await guild.getRESTMember(id).catch(() => undefined);
 			}
 
 			if (!member) {

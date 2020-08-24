@@ -107,7 +107,7 @@ export class ProcessingLogs {
 			fields: [
 				{
 					name: t('logs.channel'),
-					value: reverse ? `\`${created.mention}\`` : created.mention,
+					value: reverse ? `\`${created.name}\`` : created.mention,
 					inline: true
 				}
 			],

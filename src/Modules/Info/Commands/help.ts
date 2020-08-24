@@ -1,17 +1,15 @@
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { BaseClient } from '../../../Client';
-import { Context, Command, TranslateFunc } from '../../../Framework/Commands/Command';
-import { Message, Guild, GuildChannel } from 'eris';
+import { Context, Command } from '../../../Framework/Commands/Command';
+import { Message } from 'eris';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { CommandResolver } from '../../../Framework/Resolvers';
-import { settings } from 'cluster';
-import { Syntax } from '../../../Misc/Models/Syntax';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
 		super(client, {
 			name: 'help',
-			aliases: ['помощь'],
+			aliases: ['помощь', 'h'],
 			group: null,
 			args: [
 				{

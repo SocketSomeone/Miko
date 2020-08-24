@@ -1,13 +1,12 @@
 import { Command, Context } from '../../../Framework/Commands/Command';
 import { BaseClient } from '../../../Client';
-import { EnumResolver, EmbedResolver } from '../../../Framework/Resolvers';
+import { EnumResolver, StringResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
-import { Message, TextChannel, EmbedOptions } from 'eris';
+import { Message } from 'eris';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
-import { WelcomeChannelType, WelcomeMessage } from '../../../Misc/Enums/WelcomeTypes';
 
 enum Action {
 	SET = 'set',
@@ -26,7 +25,7 @@ export default class extends Command {
 				},
 				{
 					name: 'message',
-					resolver: EmbedResolver,
+					resolver: StringResolver,
 					full: true
 				}
 			],
@@ -38,11 +37,7 @@ export default class extends Command {
 		});
 	}
 
-	public async execute(
-		message: Message,
-		[action, m]: [Action, EmbedOptions | string],
-		{ funcs: { t, e }, guild, settings }: Context
-	) {
+	public async execute(message: Message, [action, m]: [Action, string], { funcs: { t, e }, guild, settings }: Context) {
 		if (settings.welcomeEnabled !== true) throw new ExecuteError(t('error.module.disabled'));
 
 		const embed = this.createEmbed(
@@ -58,25 +53,17 @@ export default class extends Command {
 
 		switch (action) {
 			case Action.SET: {
-				if (typeof m === 'string') {
-					settings.welcomeMessageType = WelcomeMessage.TEXT;
-					settings.welcomeMessage = m;
-				} else {
-					try {
-						const embed = this.createEmbed(m, false);
-
-						settings.welcomeMessageType = WelcomeMessage.EMBED;
-						settings.welcomeMessage = JSON.stringify(embed);
-					} catch (error) {
-						throw new ExecuteError(
-							t('error.embed.send', {
-								error: error.message
-									.split(/[\r?\n]/)
-									.slice(1, 2)
-									.join('\n')
-							})
-						);
-					}
+				try {
+					settings.welcomeMessage = JSON.stringify(embed);
+				} catch (error) {
+					throw new ExecuteError(
+						t('error.embed.send', {
+							error: error.message
+								.split(/[\r?\n]/)
+								.slice(1, 2)
+								.join('\n')
+						})
+					);
 				}
 
 				embed.description = t('welcome.message.ok');
@@ -84,9 +71,7 @@ export default class extends Command {
 			}
 
 			case Action.DELETE: {
-				settings.welcomeMessageType = null;
 				settings.welcomeMessage = null;
-
 				embed.description = t('welcome.message.deleted');
 				break;
 			}

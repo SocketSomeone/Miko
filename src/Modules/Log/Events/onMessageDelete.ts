@@ -1,0 +1,53 @@
+import { BaseEventLog } from '../Misc/EventLog';
+import { BaseClient } from '../../../Client';
+import { LogType } from '../Misc/LogType';
+import { TranslateFunc } from '../../../Framework/Commands/Command';
+import { Guild, Message, PrivateChannel, GroupChannel, TextChannel } from 'eris';
+import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
+import { Color } from '../../../Misc/Enums/Colors';
+
+export default class onMessageDeleteEvent extends BaseEventLog {
+	public constructor(client: BaseClient) {
+		super(client, LogType.MESSAGE_DELETED);
+
+		client.on('messageDelete', this.onHandle.bind(this));
+	}
+
+	private async onHandle(message: Message) {
+		if (message.channel instanceof PrivateChannel || message.channel instanceof GroupChannel) return;
+
+		if (!message.member) return;
+
+		const guild = (message.channel as TextChannel).guild;
+
+		if (!guild || message.member.bot) {
+			return;
+		}
+
+		await super.handleEvent(guild, message);
+	}
+
+	public async execute(t: TranslateFunc, guild: Guild, { content, member, channel }: Message) {
+		const embed = this.client.messages.createEmbed({
+			author: { name: t('logs.messageDeleted') },
+			color: ColorResolve(Color.RED),
+			title: t('logs.msgDeleted'),
+			description: content.markdown(''),
+			fields: [
+				{
+					name: t('logs.messageBy'),
+					value: member.mention,
+					inline: true
+				},
+				{
+					name: t('logs.channel'),
+					value: channel.mention,
+					inline: true
+				}
+			],
+			thumbnail: { url: member.avatarURL }
+		});
+
+		return embed;
+	}
+}

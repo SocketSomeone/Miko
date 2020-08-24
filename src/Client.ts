@@ -18,7 +18,7 @@ import { ModerationService } from './Modules/Moderation/Services/Moderation';
 import { SchedulerService } from './Framework/Services/Manager/Scheduler';
 import { BaseGuild } from './Entity/Guild';
 import { PrivateService } from './Modules/Voice/Services/PrivateSystem';
-import { LoggingService } from './Modules/Log/Services/Handle';
+import { LoggingService } from './Modules/Log/Services/LoggerService';
 
 moment.tz.setDefault('Europe/Moscow');
 

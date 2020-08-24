@@ -1,11 +1,11 @@
 import { BaseClient } from '../../../Client';
 import { Context, Command } from '../../../Framework/Commands/Command';
 import { Message, EmbedOptions } from 'eris';
-import { EmbedResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { BaseMessage } from '../../../Entity/Message';
+import { StringResolver } from '../../../Framework/Resolvers';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -15,8 +15,8 @@ export default class extends Command {
 			group: CommandGroup.CONFIGURE,
 			args: [
 				{
-					name: 'message',
-					resolver: EmbedResolver,
+					name: 'placeholder',
+					resolver: StringResolver,
 					required: true,
 					full: true
 				}
@@ -28,32 +28,13 @@ export default class extends Command {
 		});
 	}
 
-	public async execute(message: Message, [m]: [EmbedOptions], { funcs: { t }, guild, settings: { prefix } }: Context) {
-		let nm: Message;
-
-		if (typeof m === 'string') {
-			nm = await message.channel.createMessage(m);
-		} else {
-			try {
-				const embed = this.createEmbed(m, false);
-
-				nm = await message.channel.createMessage({
-					embed: {
-						...embed,
-						timestamp: null
-					}
-				});
-			} catch (error) {
-				throw new ExecuteError(
-					t('error.embed.send', {
-						error: error.message
-							.split(/[\r?\n]/)
-							.slice(1, 2)
-							.join('\n')
-					})
-				);
-			}
-		}
+	public async execute(
+		message: Message,
+		[placeholder]: [string],
+		{ funcs: { t }, guild, settings: { prefix } }: Context
+	) {
+		const embed = this.client.messages.fillTemplate(placeholder);
+		const nm = await this.client.messages.sendEmbed(message.channel, t, embed);
 
 		await BaseMessage.save(
 			BaseMessage.create({

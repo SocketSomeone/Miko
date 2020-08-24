@@ -1,7 +1,10 @@
 import { BaseService } from '../../../Framework/Services/Service';
 import { Guild, Member, TextChannel, EmbedOptions } from 'eris';
-import { WelcomeChannelType, WelcomeMessage } from '../../../Misc/Enums/WelcomeTypes';
+import { WelcomeChannelType } from '../../../Misc/Enums/WelcomeTypes';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
+
+import i18n from 'i18n';
+import { TranslateFunc } from '../../../Framework/Commands/Command';
 
 export class MessageService extends BaseService {
 	public async init() {
@@ -11,35 +14,23 @@ export class MessageService extends BaseService {
 	public async onGuildMemberAdd(guild: Guild, { user, mention }: Member) {
 		const sets = await this.client.cache.guilds.get(guild.id);
 
-		if (sets.welcomeEnabled !== true) {
+		if (sets.welcomeEnabled !== true || sets.welcomeChannelType === null || sets.welcomeMessage === null) {
 			return;
 		}
 
-		if (sets.welcomeChannelType === null || sets.welcomeMessageType === null || sets.welcomeMessage === null) {
-			return;
-		}
+		const message = this.client.messages.fillTemplate(sets.welcomeMessage, {
+			members: guild.memberCount,
+			server: guild.name,
+			mention
+		});
 
-		const processed = sets.welcomeMessage
-			.replace(/\[members\]/gi, guild.memberCount.toString())
-			.replace(/\[mention\]/gi, mention)
-			.replace(/\[server\]/gi, guild.name);
-
-		const message =
-			sets.welcomeMessageType === WelcomeMessage.TEXT
-				? { content: processed }
-				: { embed: JSON.parse(processed) as EmbedOptions };
+		const t: TranslateFunc = (key, replace) => i18n.__({ locale: sets.locale, phrase: key }, replace);
 
 		switch (sets.welcomeChannelType) {
 			case WelcomeChannelType.DM: {
 				const channel = await user.getDMChannel();
 
-				try {
-					await channel.createMessage(message);
-				} catch (err) {
-					if (err.code === 50007) {
-						// NO-OP
-					}
-				}
+				await this.client.messages.sendEmbed(channel, t, message).catch(undefined);
 
 				break;
 			}
@@ -55,7 +46,7 @@ export class MessageService extends BaseService {
 
 				if (!perm.has(GuildPermission.SEND_MESSAGES) || !perm.has(GuildPermission.READ_MESSAGE_HISTORY)) return;
 
-				await channel.createMessage(message);
+				await this.client.messages.sendEmbed(channel, t, message).catch(undefined);
 
 				break;
 			}

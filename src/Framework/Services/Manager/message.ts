@@ -10,7 +10,7 @@ import { ChannelType } from '../../../Types';
 const upSymbol = 'left:736460400656384090';
 const downSymbol = 'right:736460400089890867';
 
-function convertEmbedToPlain(embed: EmbedOptions, t: TranslateFunc) {
+function convertEmbedToPlain(embed: EmbedOptions) {
 	const url = embed.url ? `(${embed.url})` : '';
 	const authorUrl = embed.author && embed.author.url ? `(${embed.author.url})` : '';
 
@@ -19,10 +19,8 @@ function convertEmbedToPlain(embed: EmbedOptions, t: TranslateFunc) {
 		fields = '\n\n' + embed.fields.map((f) => `**${f.name}**\n${f.value}`).join('\n\n') + '\n\n';
 	}
 
-	const defaultMessage = t('embed.disabled');
-
 	return (
-		defaultMessage +
+		'**Failed to send embed...\nEmbedded links disabled for this channel.**\n' +
 		(embed.author ? `_${embed.author.name}_ ${authorUrl}\n` : '') +
 		(embed.title ? `**${embed.title}** ${url}\n` : '') +
 		(embed.description ? embed.description + '\n' : '') +
@@ -32,7 +30,11 @@ function convertEmbedToPlain(embed: EmbedOptions, t: TranslateFunc) {
 }
 
 export class MessageService extends BaseService {
-	public createEmbed(options: EmbedOptions = {}, overrideFooter: boolean = true): Embed {
+	public createEmbed(
+		options: EmbedOptions = {},
+		overrideFooter: boolean = true,
+		overrideTimestamp: boolean = true
+	): Embed {
 		let color = options.color ? (options.color as number | string) : Color.PRIMARY;
 
 		// Parse colors in hashtag/hex format
@@ -50,7 +52,7 @@ export class MessageService extends BaseService {
 			color,
 			footer,
 			fields: options.fields ? options.fields : [],
-			timestamp: new Date().toISOString()
+			timestamp: overrideTimestamp ? new Date().toISOString() : null
 		};
 	}
 
@@ -71,7 +73,7 @@ export class MessageService extends BaseService {
 
 		e.fields = e.fields.filter((x) => x && x.value);
 
-		const content = convertEmbedToPlain(e, t);
+		const content = convertEmbedToPlain(e);
 
 		const handleException = (err: Error, reportIndicent = true) => {
 			withScope((scope) => {
@@ -261,6 +263,42 @@ export class MessageService extends BaseService {
 
 			timer = setTimeout(timeOut, 5 * 60 * 1000);
 		}
+	}
+
+	public fillTemplate(template: string, strings?: { [x: string]: string | number }): string | Embed {
+		let msg = template;
+
+		if (strings) {
+			Object.keys(strings).forEach((k) => (msg = msg.replace(new RegExp(`{${k}}`, 'g'), String(strings[k]))));
+		}
+
+		try {
+			const temp = JSON.parse(msg);
+
+			let embed = (temp && temp.embed) || temp;
+
+			if (typeof embed.thumbnail === 'string') {
+				embed.thumbnail = {
+					url: embed.thumbnail || null
+				};
+			}
+
+			if (typeof embed.image === 'string') {
+				embed.image = {
+					url: embed.image || null
+				};
+			}
+
+			embed.footer = embed.footer || {
+				text: null
+			};
+
+			return this.createEmbed(embed, false, false);
+		} catch (e) {
+			//
+		}
+
+		return msg;
 	}
 
 	private async getDefaultChannel(guild: Guild) {

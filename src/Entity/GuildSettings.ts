@@ -2,7 +2,7 @@ import { BaseEntity, Entity, Column, PrimaryColumn, OneToOne, JoinColumn } from 
 import { EmojisDefault } from '../Misc/Enums/EmojisDefaults';
 import { Violation } from '../Misc/Enums/Violation';
 import { SetTransformer } from './Transformers/SetTransformer';
-import { WelcomeChannelType, WelcomeMessage } from '../Misc/Enums/WelcomeTypes';
+import { WelcomeChannelType } from '../Misc/Enums/WelcomeTypes';
 import { LogType } from '../Modules/Log/Misc/LogType';
 
 interface GuildPrices {
@@ -88,9 +88,6 @@ export class BaseSettings extends BaseEntity {
 
 	@Column({ type: 'bigint', default: null, nullable: true })
 	public welcomeChannel: string = null;
-
-	@Column({ type: 'integer', default: null, nullable: true })
-	public welcomeMessageType: WelcomeMessage = null;
 
 	@Column({ type: 'varchar', default: null, nullable: true })
 	public welcomeMessage: string = null;

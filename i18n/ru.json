@@ -396,6 +396,8 @@
 		"permissionsDeleted": "Права убраны",
 		"color": "Цвет",
 		"name": "Наименование",
+		"mentionable": "Возможность упоминать",
+		"hoist": "Показывать отдельно",
 		"memberRolesUpdate": "Роли пользователя были изменены",
 		"deletedRoles": "Снята роль",
 		"addedRoles": "Добавлена роль",

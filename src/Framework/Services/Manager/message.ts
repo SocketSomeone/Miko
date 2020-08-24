@@ -234,7 +234,7 @@ export class MessageService extends BaseService {
 					return;
 				}
 
-				await prevMsg.removeReaction(emojiTest, author.id);
+				prevMsg.removeReaction(emojiTest, author.id).catch(undefined);
 
 				const isUp = emojiTest === upSymbol;
 

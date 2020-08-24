@@ -107,7 +107,7 @@ export class ProcessingLogs {
 			fields: [
 				{
 					name: t('logs.channel'),
-					value: created.mention,
+					value: reverse ? `\`${created.mention}\`` : created.mention,
 					inline: true
 				}
 			],
@@ -452,6 +452,10 @@ export class ProcessingLogs {
 		{ member, content, channel }: Message,
 		oldMessage: Message
 	) {
+		if (!oldMessage) {
+			return;
+		}
+
 		const embed = this.client.messages.createEmbed({
 			author: { name: t('logs.messageUpdate') },
 			color: ColorResolve(Color.YELLOW),

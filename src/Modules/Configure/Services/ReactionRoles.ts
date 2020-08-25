@@ -2,6 +2,7 @@ import { BaseService } from '../../../Framework/Services/Service';
 import { PossiblyUncachedMessage, Emoji, TextChannel } from 'eris';
 import { BaseClient } from '../../../Client';
 import { ReactionRoleCache } from '../Cache/ReactionRole';
+import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 
 export class ReactionRoleService extends BaseService {
 	public cache: ReactionRoleCache;
@@ -19,6 +20,12 @@ export class ReactionRoleService extends BaseService {
 
 	public async onMessageReactionAdd({ channel, id }: PossiblyUncachedMessage, emoji: Emoji, userId: string) {
 		if (channel instanceof TextChannel) {
+			const me = channel.guild.members.get(this.client.user.id);
+
+			if (!me.permission.has(GuildPermission.MANAGE_ROLES)) {
+				return;
+			}
+
 			const reactionRoles = await this.cache.get(channel.guild.id);
 
 			const reactionRole = reactionRoles.find((role) => {
@@ -43,6 +50,12 @@ export class ReactionRoleService extends BaseService {
 
 	public async onMessageReactionRemove({ channel, id }: PossiblyUncachedMessage, emoji: Emoji, userId: string) {
 		if (channel instanceof TextChannel) {
+			const me = channel.guild.members.get(this.client.user.id);
+
+			if (!me.permission.has(GuildPermission.MANAGE_ROLES)) {
+				return;
+			}
+
 			const reactionRoles = await this.cache.get(channel.guild.id);
 
 			const reactionRole = reactionRoles.find((role) => {

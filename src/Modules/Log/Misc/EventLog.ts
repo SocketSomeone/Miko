@@ -6,6 +6,8 @@ import { TranslateFunc } from '../../../Framework/Commands/Command';
 import { ExecuteIgnore } from '../../../Framework/Errors/ExecuteIgnore';
 import { withScope, captureException } from '@sentry/node';
 
+import i18n from 'i18n';
+
 export abstract class BaseEventLog {
 	public type: LogType;
 	public client: BaseClient;

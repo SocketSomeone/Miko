@@ -7,7 +7,9 @@ declare module 'eris' {
 }
 
 Object.defineProperty(User.prototype, 'tag', {
-	get: function colorEmbed(this: User) {
+	get: function tag(this: User) {
 		return `${this.username}#${this.discriminator}`;
 	}
 });
+
+console.log('1');

@@ -20,7 +20,7 @@ export default class onVoiceSwitchEvent extends BaseEventLog {
 			return;
 		}
 
-		await super.handleEvent(guild, member, channel);
+		await super.handleEvent(guild, member, channel, oldChannel);
 	}
 
 	public async execute(

@@ -11,5 +11,3 @@ Object.defineProperty(User.prototype, 'tag', {
 		return `${this.username}#${this.discriminator}`;
 	}
 });
-
-console.log('1');

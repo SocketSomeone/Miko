@@ -14,7 +14,6 @@ export default class onBanEvent extends BaseEventLog {
 	}
 
 	public async execute(t: TranslateFunc, guild: Guild, user: User) {
-		console.log(user.tag);
 		const embed = this.client.messages.createEmbed({
 			author: { name: t('logs.ban') },
 			color: ColorResolve(Color.RED),

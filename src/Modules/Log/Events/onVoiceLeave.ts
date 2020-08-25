@@ -30,7 +30,7 @@ export default class onVoiceLeaveEvent extends BaseEventLog {
 			fields: [
 				{
 					name: t('logs.channel'),
-					value: channel.name,
+					value: `\`${channel.name}\``,
 					inline: true
 				},
 				{

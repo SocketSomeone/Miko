@@ -30,7 +30,7 @@ export default class onChannelCreateEvent extends BaseEventLog {
 			fields: [
 				{
 					name: t('logs.channel'),
-					value: created.mention,
+					value: `\`${created}\``,
 					inline: true
 				}
 			],

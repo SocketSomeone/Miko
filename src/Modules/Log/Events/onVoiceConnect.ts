@@ -30,7 +30,7 @@ export default class onVoiceConnectEvent extends BaseEventLog {
 			fields: [
 				{
 					name: t('logs.channel'),
-					value: channel.mention,
+					value: `\`${channel.name}\``,
 					inline: true
 				},
 				{

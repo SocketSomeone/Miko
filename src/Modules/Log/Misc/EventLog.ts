@@ -1,8 +1,9 @@
 import { BaseClient } from '../../../Client';
 import { LogType } from './LogType';
-import { Embed, Guild, User, AnyChannel, Emoji, TextChannel } from 'eris';
+import { Embed, Guild, Emoji, TextChannel } from 'eris';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { TranslateFunc } from '../../../Framework/Commands/Command';
+import { ExecuteIgnore } from '../../../Framework/Errors/ExecuteIgnore';
 import { withScope, captureException } from '@sentry/node';
 
 export abstract class BaseEventLog {
@@ -26,7 +27,7 @@ export abstract class BaseEventLog {
 		const auditLogEntry = auditLogs.entries.find((l) => l.targetID === user.id);
 
 		if (auditLogEntry && auditLogEntry.user.id === this.client.user.id) {
-			return;
+			throw new ExecuteIgnore();
 		}
 
 		return auditLogEntry;
@@ -64,7 +65,7 @@ export abstract class BaseEventLog {
 
 			await this.client.messages.sendEmbed(channel, t, embed);
 		} catch (err) {
-			if (err.message === 'ignore') {
+			if (err instanceof ExecuteIgnore) {
 				return;
 			}
 

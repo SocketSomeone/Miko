@@ -20,7 +20,7 @@ export default class onRoleDeleteEvent extends BaseEventLog {
 			fields: [
 				{
 					name: t('logs.role'),
-					value: role.name,
+					value: `\`${role.name}\``,
 					inline: true
 				}
 			]

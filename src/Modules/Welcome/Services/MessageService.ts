@@ -12,7 +12,7 @@ export class MessageService extends BaseService {
 	}
 
 	public async onGuildMemberAdd(guild: Guild, { user, mention }: Member) {
-		const sets = await this.client.cache.guilds.get(guild.id);
+		const sets = await this.client.cache.guilds.get(guild);
 
 		if (sets.welcomeEnabled !== true || sets.welcomeChannelType === null || sets.welcomeMessage === null) {
 			return;

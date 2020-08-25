@@ -21,8 +21,11 @@ export abstract class BaseCache<T> {
 
 	public abstract async init(): Promise<void>;
 
-	public async get(key: string): Promise<T> {
+	public async get(item: { id: string }): Promise<T> {
+		const { id: key } = item;
+
 		const cached = this.cache.get(key);
+
 		if (typeof cached !== 'undefined') {
 			const meta = this.cacheMeta.get(key);
 			if (meta && meta.validUntil.isAfter(moment())) {
@@ -36,7 +39,7 @@ export abstract class BaseCache<T> {
 			return await res;
 		}
 
-		const promise = this._get(key).finally(() => this.pending.delete(key));
+		const promise = this._get(item).finally(() => this.pending.delete(key));
 		this.pending.set(key, promise);
 
 		const obj = await promise;
@@ -50,7 +53,7 @@ export abstract class BaseCache<T> {
 		return this.cacheMeta.get(key);
 	}
 
-	protected abstract async _get(key: string): Promise<T>;
+	protected abstract async _get({ id: key }: { id: string }): Promise<T>;
 
 	public async set(key: string, value: T): Promise<T> {
 		this.cache.set(key, value);

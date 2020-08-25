@@ -21,6 +21,15 @@ export class BaseGuild extends BaseEntity {
 	@PrimaryColumn({ type: 'bigint' })
 	public id: string;
 
+	@Column({ type: 'varchar', default: null, nullable: true })
+	public ownerID: string;
+
+	@Column({ type: 'varchar', default: null, nullable: true })
+	public name: string = 'Unknown Server';
+
+	@Column({ type: 'integer', default: 0, name: 'size' })
+	public size: number = 0;
+
 	@OneToMany((type) => BaseMember, (user) => user.guild)
 	@JoinColumn()
 	public members: BaseMember[];
@@ -34,25 +43,25 @@ export class BaseGuild extends BaseEntity {
 	public punishments: BasePunishment[];
 
 	@Column({ type: 'json', default: [] })
-	public permissions: Permission[];
+	public permissions: Permission[] = [];
 
 	@Column({ type: 'json', default: [] })
-	public punishmentConfig: PunishmentConfig[];
+	public punishmentConfig: PunishmentConfig[] = [];
 
 	@CreateDateColumn()
 	public joinedAt: Date;
 
-	static async get(guildId: string, select?: (keyof BaseGuild)[]) {
+	static async get(g: Guild, select?: (keyof BaseGuild)[]) {
 		const hasFounded = await this.findOne({
 			select,
 			where: {
-				id: guildId
+				id: g.id
 			}
 		});
 
 		if (hasFounded) return hasFounded;
 
-		const guild = this.getDefaultGuild(guildId);
+		const guild = this.getDefaultGuild(g);
 
 		await guild.save();
 
@@ -60,17 +69,22 @@ export class BaseGuild extends BaseEntity {
 	}
 
 	static async saveGuilds(guilds: Guild[]) {
+		const items = guilds.map((i) => this.getDefaultGuild(i));
+
 		await createQueryBuilder()
 			.insert()
 			.into(this)
-			.values(guilds.map((i) => this.getDefaultGuild(i.id)))
-			.onConflict(`("id") DO NOTHING`)
+			.values(items)
+			.onConflict(`("id") DO UPDATE SET name = excluded.name, size = excluded.size`)
 			.execute();
 	}
 
-	static getDefaultGuild(guildId: string) {
+	static getDefaultGuild(g: Guild) {
 		const guild = this.create({
-			id: guildId,
+			id: g.id,
+			name: g.name,
+			size: g.memberCount,
+			ownerID: g.ownerID,
 			permissions: [],
 			punishmentConfig: []
 		});

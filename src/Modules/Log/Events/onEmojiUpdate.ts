@@ -29,7 +29,14 @@ export default class onEmojiUpdateEvent extends BaseEventLog {
 			return true;
 		});
 
-		emojis.map(async (emoji) => await super.handleEvent(guild, emoji));
+		emojis.map(
+			async (emoji) =>
+				await super.handleEvent(
+					guild,
+					emoji,
+					oldEmojisArr.find((old) => old.id === emoji.id)
+				)
+		);
 	}
 
 	public async execute(t: TranslateFunc, guild: Guild, newEmoji: Emoji, oldEmoji: Emoji) {

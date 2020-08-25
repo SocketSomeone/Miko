@@ -674,7 +674,9 @@
 		"unhidden": "voice.unhidden",
 		"unlocked": "voice.unlocked",
 		"all": "voice.all",
-		"owner": "voice.owner"
+		"owner": "voice.owner",
+		"enable": "voice.enable",
+		"disable": "voice.disable"
 	},
 	"perms": {
 		"title": "perms.title",

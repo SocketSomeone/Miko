@@ -25,8 +25,8 @@ export class PrivateService extends BaseService {
 
 	private async onSwitch(member: Member, newChannel: VoiceChannel, oldChannel: VoiceChannel) {
 		const guild = member.guild;
-		const sets = await this.client.cache.guilds.get(guild.id);
-		const pr = await this.cache.get(oldChannel.id);
+		const sets = await this.client.cache.guilds.get(guild);
+		const pr = await this.cache.get(oldChannel);
 
 		const isRatelimited = this.ratelimit.has(member.id) && moment().isBefore(this.ratelimit.get(member.id));
 
@@ -65,7 +65,7 @@ export class PrivateService extends BaseService {
 		if (isRatelimited) return;
 
 		const guild = member.guild;
-		const sets = await this.client.cache.guilds.get(guild.id);
+		const sets = await this.client.cache.guilds.get(guild);
 
 		if (!sets.privateManager || channel.id !== sets.privateManager) return;
 
@@ -75,7 +75,7 @@ export class PrivateService extends BaseService {
 	private async onLeave(member: Member, channel: VoiceChannel) {
 		if (channel.voiceMembers.filter((x) => !x.user.bot).length > 0) return;
 
-		const pr = await this.cache.get(channel.id);
+		const pr = await this.cache.get(channel);
 
 		if (pr === null) return;
 
@@ -134,7 +134,7 @@ export class PrivateService extends BaseService {
 	public async getRoomByVoice(t: TranslateFunc, voice: string) {
 		if (typeof voice === 'undefined') throw new ExecuteError(t('voice.error.notFound'));
 
-		const room = await this.cache.get(voice);
+		const room = await this.cache.get({ id: voice });
 
 		if (!room) throw new ExecuteError(t('voice.error.notFound'));
 

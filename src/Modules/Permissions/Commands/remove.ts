@@ -28,7 +28,7 @@ export default class extends Command {
 	}
 
 	public async execute(message: Message, [index]: [number], { funcs: { t }, guild, settings }: Context) {
-		const permissions = await this.client.cache.permissions.get(guild.id);
+		const permissions = await this.client.cache.permissions.get(guild);
 
 		if (typeof permissions[index - 1] === 'undefined') throw new ExecuteError(t('perms.notFound'));
 

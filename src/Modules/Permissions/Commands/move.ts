@@ -37,7 +37,7 @@ export default class extends Command {
 		[targetId, sourceId]: [number, number],
 		{ funcs: { t }, guild, settings }: Context
 	) {
-		const permissions = await this.client.cache.permissions.get(guild.id);
+		const permissions = await this.client.cache.permissions.get(guild);
 
 		const target = permissions[targetId - 1];
 		const source = permissions[sourceId - 1];

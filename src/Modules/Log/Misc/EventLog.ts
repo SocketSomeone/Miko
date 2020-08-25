@@ -40,7 +40,7 @@ export abstract class BaseEventLog {
 			return;
 		}
 
-		const sets = await this.client.cache.guilds.get(guild.id);
+		const sets = await this.client.cache.guilds.get(guild);
 
 		if (sets.loggerEnabled !== true) {
 			return;

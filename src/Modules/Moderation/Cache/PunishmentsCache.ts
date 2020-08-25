@@ -8,16 +8,8 @@ export class PunishmentsCache extends BaseCache<PunishmentConfig[]> {
 		// NO-OP
 	}
 
-	public async _get(guildId: string): Promise<PunishmentConfig[]> {
-		const { punishmentConfig } = await BaseGuild.get(guildId, ['punishmentConfig']);
-
-		return punishmentConfig;
-	}
-
-	public async updateOne(guild: Guild) {
-		const punishmentConfig = this.cache.get(guild.id);
-
-		await BaseGuild.update(guild.id, { punishmentConfig });
+	public async _get(guild: Guild): Promise<PunishmentConfig[]> {
+		const { punishmentConfig } = await BaseGuild.get(guild, ['punishmentConfig']);
 
 		return punishmentConfig;
 	}

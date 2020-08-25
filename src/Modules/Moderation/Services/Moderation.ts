@@ -97,7 +97,7 @@ export class ModerationService extends BaseService {
 
 		if (message.member.permission.has(GuildPermission.ADMINISTRATOR)) return;
 
-		const settings = await this.client.cache.guilds.get(guild.id);
+		const settings = await this.client.cache.guilds.get(guild);
 
 		if (Object.values(settings.autoMod).every((b) => b === false)) {
 			return;
@@ -167,7 +167,7 @@ export class ModerationService extends BaseService {
 
 		const warnsAfter = warnsBefore + 1;
 
-		const punishmentConfigs = await this.client.cache.punishments.get(guild.id);
+		const punishmentConfigs = await this.client.cache.punishments.get(guild);
 		const punishmentConfig = punishmentConfigs.find((c) => c.amount > warnsBefore && c.amount <= warnsAfter);
 
 		if (punishmentConfig) {

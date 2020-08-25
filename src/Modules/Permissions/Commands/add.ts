@@ -56,7 +56,7 @@ export default class extends Command {
 		[target, from, allow]: [PermissionsTarget, Role | Member | GuildChannel, boolean],
 		{ funcs: { t }, guild, settings }: Context
 	) {
-		const permissions = await this.client.cache.permissions.get(guild.id);
+		const permissions = await this.client.cache.permissions.get(guild);
 
 		let perm = permissions.find((x) => x.target.id === target.id && x.activator.id === from.id);
 		let isExist = !!perm;

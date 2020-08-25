@@ -26,7 +26,7 @@ export class ReactionRoleService extends BaseService {
 				return;
 			}
 
-			const reactionRoles = await this.cache.get(channel.guild.id);
+			const reactionRoles = await this.cache.get(channel.guild);
 
 			const reactionRole = reactionRoles.find((role) => {
 				if (role.channelId !== channel.id || role.messageId !== id) {
@@ -56,7 +56,7 @@ export class ReactionRoleService extends BaseService {
 				return;
 			}
 
-			const reactionRoles = await this.cache.get(channel.guild.id);
+			const reactionRoles = await this.cache.get(channel.guild);
 
 			const reactionRole = reactionRoles.find((role) => {
 				if (role.channelId !== channel.id || role.messageId !== id) {

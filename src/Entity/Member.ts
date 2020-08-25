@@ -53,7 +53,7 @@ export class BaseMember extends BaseEntity {
 
 		if (hasFounded) return hasFounded;
 
-		const guild = await BaseGuild.get(user.guild.id);
+		const guild = await BaseGuild.get(user.guild);
 		const sets = await BaseSettings.findOne(user.guild.id);
 
 		const member = BaseMember.getDefaultMember(guild, sets, user.id);
@@ -76,7 +76,7 @@ export class BaseMember extends BaseEntity {
 	}
 
 	public static async saveMembers(g: Guild, users: Member[]) {
-		const guild = await BaseGuild.get(g.id);
+		const guild = await BaseGuild.get(g);
 		const sets = await BaseSettings.findOne(g.id);
 
 		await createQueryBuilder()

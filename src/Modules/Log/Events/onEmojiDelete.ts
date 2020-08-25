@@ -17,14 +17,7 @@ export default class onEmojiDeleteEvent extends BaseEventLog {
 	private onHandle(guild: Guild, newEmojisArr: Emoji[], oldEmojisArr: Emoji[]) {
 		const emojis = oldEmojisArr.filter((e) => !newEmojisArr.find((x) => x.id === e.id));
 
-		emojis.map(
-			async (emoji) =>
-				await super.handleEvent(
-					guild,
-					emoji,
-					oldEmojisArr.find((old) => old.id === emoji.id)
-				)
-		);
+		emojis.map(async (emoji) => await super.handleEvent(guild, emoji));
 	}
 
 	public async execute(t: TranslateFunc, guild: Guild, emoji: Emoji) {

@@ -6,7 +6,7 @@ export class PrivatesCache extends BaseCache<BasePrivate> {
 		// NO-OP
 	}
 
-	public async _get(channelID: string): Promise<BasePrivate> {
+	public async _get({ id: channelID }: { id: string }): Promise<BasePrivate> {
 		const pr = await BasePrivate.findOne(channelID);
 
 		return pr || null;

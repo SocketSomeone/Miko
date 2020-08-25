@@ -3,8 +3,8 @@ import { Context } from '../commands/Command';
 
 import { Resolver } from './Resolver';
 
-const MAX_VALUE = Number.MAX_SAFE_INTEGER;
-const MIN_VALUE = Number.MIN_SAFE_INTEGER;
+const MAX_VALUE = BigInt(Number.MAX_SAFE_INTEGER);
+const MIN_VALUE = BigInt(Number.MIN_SAFE_INTEGER);
 
 export class BigIntResolver extends Resolver {
 	private min?: bigint;
@@ -22,31 +22,33 @@ export class BigIntResolver extends Resolver {
 			return;
 		}
 
+		let val: bigint;
+
 		try {
-			const val = BigInt(value);
-
-			if (val < MIN_VALUE) {
-				throw Error(t(`resolvers.number.tooSmall`, { min: this.min || MIN_VALUE }));
-			}
-			if (val > MAX_VALUE) {
-				throw Error(t(`resolvers.number.tooLarge`, { max: this.max || MAX_VALUE }));
-			}
-
-			if (this.min) {
-				if (val < this.min) {
-					throw Error(t(`resolvers.number.tooSmall`, { min: this.min }));
-				}
-			}
-
-			if (this.max) {
-				if (val > this.max) {
-					throw Error(t(`resolvers.number.tooLarge`, { max: this.max }));
-				}
-			}
-
-			return val;
+			val = BigInt(value);
 		} catch (err) {
 			throw Error(t(`resolvers.number.invalid`));
 		}
+
+		if (val < MIN_VALUE) {
+			throw Error(t(`resolvers.number.tooSmall`, { min: this.min || MIN_VALUE }));
+		}
+		if (val > MAX_VALUE) {
+			throw Error(t(`resolvers.number.tooLarge`, { max: this.max || MAX_VALUE }));
+		}
+
+		if (this.min) {
+			if (val < this.min) {
+				throw Error(t(`resolvers.number.tooSmall`, { min: this.min }));
+			}
+		}
+
+		if (this.max) {
+			if (val > this.max) {
+				throw Error(t(`resolvers.number.tooLarge`, { max: this.max }));
+			}
+		}
+
+		return val;
 	}
 }

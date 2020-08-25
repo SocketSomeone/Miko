@@ -85,7 +85,7 @@ export class CommandService extends BaseService {
 		const guild = (channel as GuildChannel).guild;
 		let content = message.content.trim();
 
-		const sets = guild ? await this.client.cache.guilds.get(guild.id) : new BaseSettings();
+		const sets = guild ? await this.client.cache.guilds.get(guild) : new BaseSettings();
 
 		const t = (key: string, replacements?: { [key: string]: string }) =>
 			i18n.__({ locale: sets.locale, phrase: key }, replacements);
@@ -163,7 +163,7 @@ export class CommandService extends BaseService {
 			const withoutPermissions = new Set([guild.ownerID, this.client.config.ownerID]);
 
 			if (withoutPermissions.has(member.id) === false) {
-				const permissions = await this.client.cache.permissions.get(guild.id);
+				const permissions = await this.client.cache.permissions.get(guild);
 
 				const { answer, permission } = Precondition.checkPermissions({ context, command: cmd, message }, permissions);
 

@@ -31,7 +31,7 @@ export default class extends Command {
 	}
 
 	public async execute(message: Message, [], { funcs: { t }, guild, settings }: Context) {
-		const permissions = await this.client.cache.permissions.get(guild.id);
+		const permissions = await this.client.cache.permissions.get(guild);
 
 		if (permissions.length < 1) throw new ExecuteError(t('perms.cleared'));
 

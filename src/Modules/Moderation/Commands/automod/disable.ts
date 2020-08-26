@@ -31,7 +31,8 @@ export default class extends Command {
 	}
 
 	public async execute(message: Message, [type]: [Violation], { funcs: { t, e }, guild, settings }: Context) {
-		if (settings.autoMod[type] !== true) throw new ExecuteError(t('automod.alreadyDisabled'));
+		if (settings.autoMod[type] !== true)
+			throw new ExecuteError(t('automod.disabled.already', { type: t(`automod.types.${type}`) }));
 
 		settings.autoMod[type] = false;
 		await settings.save();
@@ -39,7 +40,7 @@ export default class extends Command {
 		await this.replyAsync(message, t, {
 			color: ColorResolve(Color.MAGENTA),
 			title: t('automod.title'),
-			description: t(`automod.disabled.${type}`),
+			description: t('automod.disabled.any', { type: t(`automod.types.${type}`) }),
 			footer: {
 				text: ''
 			}

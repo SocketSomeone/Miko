@@ -525,7 +525,16 @@
 		},
 		"enabled": {
 			"caps": "automod.enabled.caps"
-		}
+		},
+		"types": {
+			"caps": "automod.types.caps"
+		},
+		"alreadyEnabled": "automod.alreadyEnabled",
+		"disabled": {
+			"any": "automod.disabled.any",
+			"already": "automod.disabled.already"
+		},
+		"alreadyDisabled": "automod.alreadyDisabled"
 	},
 	"info": {
 		"help": {

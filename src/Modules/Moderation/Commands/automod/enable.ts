@@ -13,8 +13,8 @@ import { ExecuteError } from '../../../../Framework/Errors/ExecuteError';
 export default class extends Command {
 	public constructor(client: BaseClient) {
 		super(client, {
-			name: 'automod',
-			aliases: ['автомод'],
+			name: 'automod enable',
+			aliases: ['автомод включить'],
 			args: [
 				{
 					name: 'type',
@@ -31,7 +31,8 @@ export default class extends Command {
 	}
 
 	public async execute(message: Message, [type]: [Violation], { funcs: { t, e }, guild, settings }: Context) {
-		if (settings.autoMod[type] === true) throw new ExecuteError(t('automod.alreadyEnabled'));
+		if (settings.autoMod[type] === true)
+			throw new ExecuteError(t('automod.enabled.already', { type: t(`automod.types.${type}`) }));
 
 		settings.autoMod[type] = true;
 		await settings.save();
@@ -41,7 +42,7 @@ export default class extends Command {
 			title: t('automod.title', {
 				guild: guild.name
 			}),
-			description: t(`automod.enabled.${type}`),
+			description: t('automod.enabled.any', { type: t(`automod.types.${type}`) }),
 			footer: {
 				text: ''
 			}

@@ -373,14 +373,18 @@ export class ModerationService extends BaseService {
 			} as Role);
 	}
 
-	public isEditableRole(role: Role, highest: Role) {
-		return highest.position > role.position;
+	public isHigherRole(role: Role, highest?: Role, guild?: Guild, me?: Member) {
+		const highestRole = highest || this.getHighestRole(guild, me.roles);
+
+		if (!highestRole) return false;
+
+		return highestRole.position > role.position;
 	}
 
 	public editableRoles(guild: Guild, roles: string[], me: Member): Role[] {
 		const highestBotRole = this.getHighestRole(guild, me.roles);
 
-		return roles.map((r) => guild.roles.get(r)).filter((r) => !!r && this.isEditableRole(r, highestBotRole));
+		return roles.map((r) => guild.roles.get(r)).filter((r) => !!r && this.isHigherRole(r, highestBotRole));
 	}
 
 	public isPunishable(guild: Guild, targetMember: Member, authorMember: Member, me: Member) {

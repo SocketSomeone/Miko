@@ -5,8 +5,12 @@ import { TranslateFunc } from '../../../Framework/Commands/Command';
 import { Guild, Constants, Role } from 'eris';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
-import { Emoji } from 'eris';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
+
+const color = (dec: number) => {
+	let color = dec.toString(16);
+	return '#' + (color.length < 6 ? '0'.repeat(6 - color.length) + color : color).toUpperCase();
+};
 
 export default class onRoleUpdateEvent extends BaseEventLog {
 	public constructor(client: BaseClient) {
@@ -47,9 +51,15 @@ export default class onRoleUpdateEvent extends BaseEventLog {
 		}
 
 		for (const compare of compares.sort((a, b) => a.key.localeCompare(b.key))) {
+			let value = `\`${compare.old}\` => \`${compare.new}\``;
+
+			if (compare.key === 'color') {
+				value = `\`${color(Number(compare.old))}\` => \`${color(Number(compare.new))}\``;
+			}
+
 			embed.fields.push({
 				name: t(`logs.${compare.key}`),
-				value: `\`${compare.old}\` => \`${compare.new}\``,
+				value,
 				inline: false
 			});
 		}

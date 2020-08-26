@@ -248,6 +248,7 @@ export class BaseClient extends Client {
 		const embed = this.messages.createEmbed({
 			title: t('others.onBotAdd.title', { guild: guild.name }),
 			description: t('others.onBotAdd.desc', { modules }),
+			thumbnail: { url: this.user.dynamicAvatarURL('png', 4096) },
 			fields: [
 				{
 					name: '\u200b',

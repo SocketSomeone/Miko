@@ -47,16 +47,11 @@ export default class extends Command {
 	) {
 		if (settings.welcomeEnabled !== true) throw new ExecuteError(t('error.module.disabled'));
 
-		const embed = this.createEmbed(
-			{
-				color: ColorResolve(Color.MAGENTA),
-				title: t('welcome.title'),
-				footer: {
-					text: null
-				}
-			},
-			false
-		);
+		const embed = this.createEmbed({
+			color: ColorResolve(Color.MAGENTA),
+			title: t('welcome.title'),
+			footer: null
+		});
 
 		switch (action) {
 			case Action.SET: {

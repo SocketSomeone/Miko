@@ -40,17 +40,12 @@ export default class extends Command {
 	) {
 		reason = reason || t('moderation.noreason');
 
-		const embed = this.client.messages.createEmbed(
-			{
-				color: ColorResolve(Color.RED),
-				title: t('moderation.unmute.title'),
-				fields: [],
-				footer: {
-					text: ''
-				}
-			},
-			false
-		);
+		const embed = this.client.messages.createEmbed({
+			color: ColorResolve(Color.RED),
+			title: t('moderation.unmute.title'),
+			fields: [],
+			footer: null
+		});
 
 		const mutedRole = settings.mutedRole;
 

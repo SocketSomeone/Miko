@@ -44,15 +44,10 @@ export default class extends Command {
 			}
 		});
 
-		const embed = this.createEmbed(
-			{
-				title: t('configure.title'),
-				footer: {
-					text: null
-				}
-			},
-			false
-		);
+		const embed = this.createEmbed({
+			title: t('configure.title'),
+			footer: null
+		});
 
 		if (changeRole) {
 			changeRole.cost = price;

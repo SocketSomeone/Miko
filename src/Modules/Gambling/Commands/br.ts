@@ -46,19 +46,14 @@ export default class extends Command {
 
 		const int = chance.integer({ min: 0, max: 100 });
 
-		const embed = this.createEmbed(
-			{
-				title: t('gambling.br.title'),
-				color: ColorResolve(Color.GREEN),
-				thumbnail: {
-					url: 'https://i.imgur.com/p210WxA.png'
-				},
-				footer: {
-					text: null
-				}
+		const embed = this.createEmbed({
+			title: t('gambling.br.title'),
+			color: ColorResolve(Color.GREEN),
+			thumbnail: {
+				url: 'https://i.imgur.com/p210WxA.png'
 			},
-			false
-		);
+			footer: null
+		});
 
 		if (int.range([80, 95])) {
 			person.money += money * 2n;

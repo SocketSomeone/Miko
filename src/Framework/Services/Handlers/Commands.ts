@@ -275,17 +275,12 @@ export class CommandService extends BaseService {
 			await cmd.execute(message, args, context);
 		} catch (err) {
 			if (err instanceof ExecuteError) {
-				const embed = this.client.messages.createEmbed(
-					{
-						title: t('error.execCommand.title'),
-						color: ColorResolve(Color.ORANGE),
-						footer: {
-							text: ''
-						},
-						...err.embed
-					},
-					false
-				);
+				const embed = this.client.messages.createEmbed({
+					title: t('error.execCommand.title'),
+					color: ColorResolve(Color.ORANGE),
+					footer: null,
+					...err.embed
+				});
 
 				await this.client.messages.sendReply(message, t, embed);
 			} else {

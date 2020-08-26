@@ -33,22 +33,17 @@ export default class extends Command {
 
 		person.warns = person.warns.filter((x) => moment().isBefore(x.expireAt));
 
-		const embed = this.createEmbed(
-			{
-				color: ColorResolve(Color.MAGENTA),
-				author: {
-					name: member.username + `#` + member.discriminator,
-					icon_url: member.avatarURL
-				},
-				thumbnail: {
-					url: guild.dynamicIconURL('png', 4096)
-				},
-				footer: {
-					text: null
-				}
+		const embed = this.createEmbed({
+			color: ColorResolve(Color.MAGENTA),
+			author: {
+				name: member.username + `#` + member.discriminator,
+				icon_url: member.avatarURL
 			},
-			false
-		);
+			thumbnail: {
+				url: guild.dynamicIconURL('png', 4096)
+			},
+			footer: null
+		});
 
 		if (person.warns.length < 1) {
 			embed.description = t('info.warns.no');

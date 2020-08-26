@@ -23,25 +23,19 @@ export default class extends Command {
 
 	public async execute(message: Message, []: [], { funcs: { t, e }, guild, settings }: Context) {
 		await this.showPaginated(t, message, 0, 2, (page, maxPage) => {
-			let embed = this.createEmbed(
-				{
-					color: ColorResolve(Color.GRAY),
-					author: {
-						name: t('configure.title', {
-							guild: guild.name
-						}),
-						icon_url: message.author.dynamicAvatarURL()
-					},
-					thumbnail: {
-						url: guild.dynamicIconURL('png', 4096)
-					},
-					footer: {
-						text: null
-					},
-					timestamp: new Date().toISOString()
+			let embed = this.createEmbed({
+				color: ColorResolve(Color.GRAY),
+				author: {
+					name: t('configure.title', {
+						guild: guild.name
+					}),
+					icon_url: message.author.dynamicAvatarURL()
 				},
-				false
-			);
+				thumbnail: {
+					url: guild.dynamicIconURL('png', 4096)
+				},
+				footer: null
+			});
 
 			if (page === 0) {
 				embed.fields = [

@@ -41,16 +41,11 @@ export default class extends Command {
 	) {
 		reason = reason || t('moderation.noreason');
 
-		const embed = this.client.messages.createEmbed(
-			{
-				color: ColorResolve(Color.RED),
-				title: t('moderation.kick.title'),
-				footer: {
-					text: ''
-				}
-			},
-			false
-		);
+		const embed = this.client.messages.createEmbed({
+			color: ColorResolve(Color.RED),
+			title: t('moderation.kick.title'),
+			footer: null
+		});
 
 		if (this.client.moderation.isPunishable(guild, member, message.member, me)) {
 			const extra = [{ name: 'logs.mod.reason', value: reason }];

@@ -92,37 +92,31 @@ export class BasePunishment extends BaseEntity {
 
 		extra = extra || [];
 
-		const embed = client.messages.createEmbed(
-			{
-				color: ColorResolve(Color.DARK),
-				author: {
-					name: `[${String(type).toUpperCase()}] ` + t('logs.mod.title'),
-					icon_url: client.user.dynamicAvatarURL('png', 4096)
-				},
-				fields: [
-					{
-						name: t('logs.mod.user'),
-						value: target.user.mention,
-						inline: true
-					},
-					{
-						name: t('logs.mod.moderator'),
-						value: member.user.mention,
-						inline: true
-					},
-					...extra
-						.filter((x) => !!x.value)
-						.map((e) => {
-							return { name: t(e.name), value: e.value.substr(0, 1024), inline: true };
-						})
-				],
-				timestamp: new Date().toISOString(),
-				footer: {
-					text: null
-				}
+		const embed = client.messages.createEmbed({
+			color: ColorResolve(Color.DARK),
+			author: {
+				name: `[${String(type).toUpperCase()}] ` + t('logs.mod.title'),
+				icon_url: client.user.dynamicAvatarURL('png', 4096)
 			},
-			false
-		);
+			fields: [
+				{
+					name: t('logs.mod.user'),
+					value: target.user.mention,
+					inline: true
+				},
+				{
+					name: t('logs.mod.moderator'),
+					value: member.user.mention,
+					inline: true
+				},
+				...extra
+					.filter((x) => !!x.value)
+					.map((e) => {
+						return { name: t(e.name), value: e.value.substr(0, 1024), inline: true };
+					})
+			],
+			footer: null
+		});
 
 		await client.messages.sendEmbed(modLogChannel, t, embed);
 	}

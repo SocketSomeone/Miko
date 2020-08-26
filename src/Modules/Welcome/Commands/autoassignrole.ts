@@ -45,22 +45,19 @@ export default class extends Command {
 	) {
 		if (settings.welcomeEnabled !== true) throw new ExecuteError(t('error.module.disabled'));
 
-		const embed = this.createEmbed(
-			{
-				color: ColorResolve(Color.MAGENTA),
-				title: t('configure.title', {
-					guild: guild.name
-				}),
-				description: t('welcome.aar.list', {
-					roles: [...settings.onWelcomeRoles]
-						.filter((x) => guild.roles.has(x))
-						.map((x) => `<@&${x}>`)
-						.join(', ')
-				}),
-				footer: null
-			},
-			false
-		);
+		const embed = this.createEmbed({
+			color: ColorResolve(Color.MAGENTA),
+			title: t('configure.title', {
+				guild: guild.name
+			}),
+			description: t('welcome.aar.list', {
+				roles: [...settings.onWelcomeRoles]
+					.filter((x) => guild.roles.has(x))
+					.map((x) => `<@&${x}>`)
+					.join(', ')
+			}),
+			footer: null
+		});
 
 		if (role) {
 			switch (action) {

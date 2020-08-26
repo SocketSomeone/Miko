@@ -40,16 +40,11 @@ export default class extends Command {
 	public async execute(message: Message, [action, m]: [Action, string], { funcs: { t, e }, guild, settings }: Context) {
 		if (settings.welcomeEnabled !== true) throw new ExecuteError(t('error.module.disabled'));
 
-		const embed = this.createEmbed(
-			{
-				color: ColorResolve(Color.MAGENTA),
-				title: t('welcome.title'),
-				footer: {
-					text: null
-				}
-			},
-			false
-		);
+		const embed = this.createEmbed({
+			color: ColorResolve(Color.MAGENTA),
+			title: t('welcome.title'),
+			footer: null
+		});
 
 		switch (action) {
 			case Action.SET: {

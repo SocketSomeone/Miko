@@ -30,11 +30,7 @@ function convertEmbedToPlain(embed: EmbedOptions) {
 }
 
 export class MessageService extends BaseService {
-	public createEmbed(
-		options: EmbedOptions = {},
-		overrideFooter: boolean = true,
-		overrideTimestamp: boolean = true
-	): Embed {
+	public createEmbed(options: EmbedOptions = {}): Embed {
 		let color = options.color ? (options.color as number | string) : Color.PRIMARY;
 
 		// Parse colors in hashtag/hex format
@@ -42,7 +38,8 @@ export class MessageService extends BaseService {
 			color = ColorResolve(color);
 		}
 
-		const footer = overrideFooter ? this.defaultFooter : options.footer;
+		const footer = typeof options.footer === 'undefined' ? this.defaultFooter : options.footer;
+		const timestamp = typeof options.timestamp === 'undefined' ? new Date().toISOString() : options.timestamp;
 
 		delete options.color;
 
@@ -51,8 +48,8 @@ export class MessageService extends BaseService {
 			type: 'rich',
 			color,
 			footer,
-			fields: options.fields ? options.fields : [],
-			timestamp: overrideTimestamp ? new Date().toISOString() : null
+			timestamp,
+			fields: options.fields ? options.fields : []
 		};
 	}
 
@@ -68,10 +65,7 @@ export class MessageService extends BaseService {
 	}
 
 	public sendEmbed(target: TextableChannel, t: TranslateFunc, embed: EmbedOptions | string, fallbackUser?: User) {
-		const e =
-			typeof embed === 'string'
-				? this.createEmbed({ description: embed })
-				: this.createEmbed(embed, !embed.footer, !embed.timestamp);
+		const e = typeof embed === 'string' ? this.createEmbed({ description: embed }) : this.createEmbed(embed);
 
 		e.fields = e.fields.filter((x) => x && x.value);
 
@@ -295,7 +289,7 @@ export class MessageService extends BaseService {
 				text: null
 			};
 
-			return this.createEmbed(embed, false, false);
+			return this.createEmbed(embed);
 		} catch (e) {
 			//
 		}

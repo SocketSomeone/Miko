@@ -74,18 +74,13 @@ export default class extends Command {
 				);
 			});
 
-			return this.createEmbed(
-				{
-					title: t('economy.shop.title', {
-						guild: guild.name
-					}),
-					fields,
-					footer: {
-						text: null
-					}
-				},
-				false
-			);
+			return this.createEmbed({
+				title: t('economy.shop.title', {
+					guild: guild.name
+				}),
+				fields,
+				footer: null
+			});
 		});
 	}
 }

@@ -85,30 +85,27 @@ export default class extends Command {
 
 		this.showPaginated(t, message, 0, groups.length + 1, (page, maxPage) => {
 			if (page === 0) {
-				const embed = this.createEmbed(
-					{
-						title: t('info.help.first.title'),
-						thumbnail: {
-							url: this.client.user.dynamicAvatarURL('png', 4096)
-						},
-						description: t('others.onBotAdd.desc', {
-							modules: `${groups.map(([key]) => t(`others.modules.${key.toLowerCase()}`)).join('\n')}`
-						}),
-						fields: [
-							{
-								name: '\u200b',
-								value: t('others.onBotAdd.field'),
-								inline: false
-							}
-						],
-						footer: {
-							icon_url: this.client.user.dynamicAvatarURL('png', 4096),
-							text: t('info.help.first.footer')
-						}
+				const embed = this.createEmbed({
+					title: t('info.help.first.title'),
+					thumbnail: {
+						url: this.client.user.dynamicAvatarURL('png', 4096)
 					},
-					false,
-					false
-				);
+					description: t('others.onBotAdd.desc', {
+						modules: `${groups.map(([key]) => t(`others.modules.${key.toLowerCase()}`)).join('\n')}`
+					}),
+					fields: [
+						{
+							name: '\u200b',
+							value: t('others.onBotAdd.field'),
+							inline: false
+						}
+					],
+					footer: {
+						icon_url: this.client.user.dynamicAvatarURL('png', 4096),
+						text: t('info.help.first.footer')
+					},
+					timestamp: null
+				});
 
 				return embed;
 			}
@@ -137,27 +134,23 @@ export default class extends Command {
 					}
 				});
 
-			const embed = this.createEmbed(
-				{
-					title: t('info.help.title'),
-					fields: [
-						{
-							name: t(`others.modules.${group.toLowerCase()}`),
-							value: t(`info.help.moduleDesc.${group.toLowerCase()}`)
-						},
-						...pages
-					],
-					footer: {
-						text: t('info.help.footer'),
-						icon_url: this.client.user.dynamicAvatarURL('png', 4096)
+			const embed = this.createEmbed({
+				title: t('info.help.title'),
+				fields: [
+					{
+						name: t(`others.modules.${group.toLowerCase()}`),
+						value: t(`info.help.moduleDesc.${group.toLowerCase()}`)
 					},
-					thumbnail: {
-						url: (guild && guild.dynamicIconURL()) || message.author.dynamicAvatarURL('png', 4096)
-					},
-					timestamp: new Date().toISOString()
+					...pages
+				],
+				footer: {
+					text: t('info.help.footer'),
+					icon_url: this.client.user.dynamicAvatarURL('png', 4096)
 				},
-				false
-			);
+				thumbnail: {
+					url: (guild && guild.dynamicIconURL()) || message.author.dynamicAvatarURL('png', 4096)
+				}
+			});
 
 			return embed;
 		});

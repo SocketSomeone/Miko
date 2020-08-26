@@ -188,7 +188,31 @@
 		}
 	},
 	"others": {
-		"page": "others.page"
+		"page": "others.page",
+		"modules": {
+			"0": "others.modules.0",
+			"1": "others.modules.1",
+			"2": "others.modules.2",
+			"3": "others.modules.3",
+			"4": "others.modules.4",
+			"5": "others.modules.5",
+			"6": "others.modules.6",
+			"7": "others.modules.7",
+			"configure": "others.modules.configure",
+			"economy": "others.modules.economy",
+			"gambling": "others.modules.gambling",
+			"logs": "others.modules.logs",
+			"moderation": "others.modules.moderation",
+			"permissions": "others.modules.permissions",
+			"voice": "others.modules.voice",
+			"welcome": "others.modules.welcome",
+			"CONFIGURE": "others.modules.CONFIGURE",
+			"ECONOMY": "others.modules.ECONOMY"
+		},
+		"onBotAdd": {
+			"desc": "others.onBotAdd.desc",
+			"field": "others.onBotAdd.field"
+		}
 	},
 	"errors": {
 		"enough": {
@@ -513,7 +537,8 @@
 					"links": "info.help.first.fields.links",
 					"info": "info.help.first.fields.info",
 					"modules": "info.help.first.fields.modules"
-				}
+				},
+				"footer": "info.help.first.footer"
 			},
 			"cmd": {
 				"title": "info.help.cmd.title",

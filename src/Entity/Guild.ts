@@ -15,6 +15,8 @@ import { BaseScheduledAction } from './ScheduledAction';
 import { Guild } from 'eris';
 import { BasePunishment } from './Punishment';
 import { PunishmentConfig } from '../Misc/Enums/Violation';
+import { Moment } from 'moment';
+import { DateTransformer } from './Transformers';
 
 @Entity()
 export class BaseGuild extends BaseEntity {
@@ -22,13 +24,13 @@ export class BaseGuild extends BaseEntity {
 	public id: string;
 
 	@Column({ type: 'varchar', default: null, nullable: true })
-	public ownerID: string;
+	public ownerID: string = null;
 
 	@Column({ type: 'varchar', default: null, nullable: true })
-	public name: string = 'Unknown Server';
+	public name: string = null;
 
-	@Column({ type: 'integer', default: 0, name: 'size' })
-	public size: number = 0;
+	@Column({ type: 'integer', default: 0 })
+	public memberCount: number = 0;
 
 	@OneToMany((type) => BaseMember, (user) => user.guild)
 	@JoinColumn()
@@ -48,8 +50,14 @@ export class BaseGuild extends BaseEntity {
 	@Column({ type: 'json', default: [] })
 	public punishmentConfig: PunishmentConfig[] = [];
 
-	@CreateDateColumn()
-	public joinedAt: Date;
+	@Column({ nullable: true, transformer: DateTransformer, type: 'timestamp without time zone' })
+	public joinedAt: Moment = null;
+
+	@Column({ nullable: true, transformer: DateTransformer, type: 'timestamp without time zone' })
+	public deletedAt: Moment = null;
+
+	@Column({ type: 'varchar', nullable: true })
+	public banReason: string = null;
 
 	static async get(g: Guild, select?: (keyof BaseGuild)[]) {
 		const hasFounded = await this.findOne({
@@ -68,25 +76,33 @@ export class BaseGuild extends BaseEntity {
 		return guild;
 	}
 
-	static async saveGuilds(guilds: Guild[]) {
-		const items = guilds.map((i) => this.getDefaultGuild(i));
+	static async saveGuilds(guilds: Guild[], options?: Partial<BaseGuild>) {
+		const items = guilds.map((i) => this.getDefaultGuild(i, options));
+		const queryOptions = options
+			? `${Object.entries(options)
+					.map(([key, val]) => `"${key}" = EXCLUDED."${key}"`)
+					.join(', ')},`
+			: '';
 
 		await createQueryBuilder()
 			.insert()
 			.into(this)
 			.values(items)
-			.onConflict(`("id") DO UPDATE SET name = excluded.name, size = excluded.size`)
+			.onConflict(
+				`("id") DO UPDATE SET ${queryOptions} name = excluded.name, "memberCount" = excluded."memberCount", "ownerID" = excluded."ownerID"`
+			)
 			.execute();
 	}
 
-	static getDefaultGuild(g: Guild) {
+	static getDefaultGuild(g: Guild, options?: Partial<BaseGuild>) {
 		const guild = this.create({
 			id: g.id,
 			name: g.name,
-			size: g.memberCount,
+			memberCount: g.memberCount,
 			ownerID: g.ownerID,
 			permissions: [],
-			punishmentConfig: []
+			punishmentConfig: [],
+			...options
 		});
 
 		return guild;

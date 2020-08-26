@@ -24,9 +24,6 @@ export class BasePrivate extends BaseEntity {
 	@Column({ type: 'varchar', default: {}, array: true, transformer: SetTransformer })
 	private admins: Set<string> = new Set();
 
-	@CreateDateColumn()
-	private createdAt: Date;
-
 	private isOwner = (user: string) => this.owner === user;
 
 	public isAdmin = (user: string) => this.isOwner(user) || this.admins.has(user);

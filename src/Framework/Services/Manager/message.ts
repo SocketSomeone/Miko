@@ -69,7 +69,9 @@ export class MessageService extends BaseService {
 
 	public sendEmbed(target: TextableChannel, t: TranslateFunc, embed: EmbedOptions | string, fallbackUser?: User) {
 		const e =
-			typeof embed === 'string' ? this.createEmbed({ description: embed }) : this.createEmbed(embed, !embed.footer);
+			typeof embed === 'string'
+				? this.createEmbed({ description: embed })
+				: this.createEmbed(embed, !embed.footer, !embed.timestamp);
 
 		e.fields = e.fields.filter((x) => x && x.value);
 

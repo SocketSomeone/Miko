@@ -79,50 +79,42 @@ export default class extends Command {
 			return;
 		}
 
-		const groups = Object.entries(CommandGroup).sort(([a], [b]) => a.localeCompare(b));
+		const groups = Object.entries(CommandGroup)
+			.sort(([a], [b]) => a.localeCompare(b))
+			.filter(([key]) => key.length > 1);
 
 		this.showPaginated(t, message, 0, groups.length + 1, (page, maxPage) => {
 			if (page === 0) {
-				const embed = this.createEmbed({
-					title: t('info.help.first.title'),
-					thumbnail: {
-						url: this.client.user.dynamicAvatarURL('png', 4096)
-					},
-					fields: [
-						{
-							name: t('info.help.first.fields.info'),
-							value:
-								'Здесь я должна была рассказать о себе и о том какая я клёвая, но видимо мой создатель ещё не дал мне листочек с которого должна читать :c\n\u200b',
-							inline: false
+				const embed = this.createEmbed(
+					{
+						title: t('info.help.first.title'),
+						thumbnail: {
+							url: this.client.user.dynamicAvatarURL('png', 4096)
 						},
-						{
-							name: t('info.help.first.fields.modules'),
-							value: `\n${groups.map(([key, val]) => `${val.toString()}`).join('\n')}\n\u200b\n`,
-							inline: false
-						},
-						{
-							name: t('info.help.first.fields.links'),
-							value: `[SUPPORT](https://discord.gg/bRGH277)`,
-							inline: true
-						},
-						{
-							name: '\u200b',
-							value: `[INVITE](https://discord.com/oauth2/authorize?client_id=718758028639207524&permissions=8&scope=bot)`,
-							inline: true
-						},
-						{
-							name: '\u200b',
-							value: `[DEVELOPER](https://t.me/someonewillkillyou)`,
-							inline: true
+						description: t('others.onBotAdd.desc', {
+							modules: `${groups.map(([key]) => t(`others.modules.${key.toLowerCase()}`)).join('\n')}`
+						}),
+						fields: [
+							{
+								name: '\u200b',
+								value: t('others.onBotAdd.field'),
+								inline: false
+							}
+						],
+						footer: {
+							icon_url: this.client.user.dynamicAvatarURL('png', 4096),
+							text: t('info.help.first.footer')
 						}
-					]
-				});
+					},
+					false,
+					false
+				);
 
 				return embed;
 			}
 
-			const [key, val] = groups[page - 1];
-			const commands = this.client.commands.commands.filter((x) => x.group === val);
+			const [group, i] = groups[page - 1];
+			const commands = this.client.commands.commands.filter((x) => x.group === i);
 			const pages: { name: string; value: string; inline?: boolean }[] = [];
 
 			commands
@@ -130,7 +122,7 @@ export default class extends Command {
 				.map((x, i) => {
 					const name = i === 0 ? '📖 Вот и список команд:' : '\u200b';
 					const desc = `info.help.cmdDesc.${x.name.toLowerCase()}`;
-					const page = pages[~~(i / 5)];
+					const page = pages[~~(i / 15)];
 
 					if (!page) {
 						pages.push({
@@ -145,15 +137,13 @@ export default class extends Command {
 					}
 				});
 
-			const name = val.toString();
-
 			const embed = this.createEmbed(
 				{
 					title: t('info.help.title'),
 					fields: [
 						{
-							name,
-							value: t(`info.help.moduleDesc.${key.toLowerCase()}`)
+							name: t(`others.modules.${group.toLowerCase()}`),
+							value: t(`info.help.moduleDesc.${group.toLowerCase()}`)
 						},
 						...pages
 					],

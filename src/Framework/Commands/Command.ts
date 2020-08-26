@@ -61,7 +61,7 @@ export abstract class Command {
 	public userPermissions?: GuildPermission[];
 	public premiumOnly?: boolean;
 
-	protected createEmbed: (options?: EmbedOptions, overrideFooter?: boolean) => Embed;
+	protected createEmbed: (options?: EmbedOptions, overrideFooter?: boolean, overrideTimestamp?: boolean) => Embed;
 	protected replyAsync: (message: Message, t: TranslateFunc, reply: EmbedOptions | string) => Promise<Message>;
 	protected sendAsync: (
 		target: TextableChannel,

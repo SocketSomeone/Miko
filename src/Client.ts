@@ -19,6 +19,10 @@ import { SchedulerService } from './Framework/Services/Manager/Scheduler';
 import { BaseGuild } from './Entity/Guild';
 import { PrivateService } from './Modules/Voice/Services/PrivateSystem';
 import { LoggingService } from './Modules/Log/Services/LoggerService';
+import { TranslateFunc } from './Framework/Commands/Command';
+import { Color } from './Misc/Enums/Colors';
+import { ColorResolve } from './Misc/Utils/ColorResolver';
+import { CommandGroup } from './Misc/Models/CommandGroup';
 
 moment.tz.setDefault('Europe/Moscow');
 
@@ -93,6 +97,7 @@ export class BaseClient extends Client {
 		wsErrors: number;
 		cmdProcessed: number;
 		cmdErrors: number;
+		unavailableGuilds: number;
 	};
 
 	public constructor({ token, shardId, shardCount, config, flags }: ClientOptions) {
@@ -127,7 +132,8 @@ export class BaseClient extends Client {
 			wsWarnings: 0,
 			wsErrors: 0,
 			cmdProcessed: 0,
-			cmdErrors: 0
+			cmdErrors: 0,
+			unavailableGuilds: 0
 		};
 
 		this.service = {
@@ -155,8 +161,10 @@ export class BaseClient extends Client {
 		};
 
 		this.on('ready', this.onClientReady);
-		this.on('connect', this.onConnect);
+		this.on('guildCreate', this.onGuildCreate);
+		this.on('guildDelete', this.onGuildDelete);
 		this.on('guildUnavailable', this.onGuildUnavailable);
+		this.on('connect', this.onConnect);
 		this.on('shardDisconnect', this.onDisconnect);
 		this.on('warn', this.onWarn);
 		this.on('error', this.onError);
@@ -180,6 +188,15 @@ export class BaseClient extends Client {
 
 		await this.rabbitmq.waitForStartupTicket();
 		clearInterval(interval);
+	}
+
+	public serviceStartupDone(service: BaseService) {
+		this.startingServices = this.startingServices.filter((s) => s !== service);
+
+		if (this.startingServices.length === 0) {
+			console.log(chalk.green(`All services ready`));
+			this.rabbitmq.endStartup().catch((err) => console.error(err));
+		}
 	}
 
 	private async onClientReady() {
@@ -214,13 +231,43 @@ export class BaseClient extends Client {
 		});
 	}
 
-	public serviceStartupDone(service: BaseService) {
-		this.startingServices = this.startingServices.filter((s) => s !== service);
+	private async onGuildCreate(guild: Guild) {
+		await BaseGuild.saveGuilds([guild], { joinedAt: moment(), deletedAt: null });
 
-		if (this.startingServices.length === 0) {
-			console.log(chalk.green(`All services ready`));
-			this.rabbitmq.endStartup().catch((err) => console.error(err));
-		}
+		const { locale } = await this.cache.guilds.get(guild);
+		const ownerDM = await this.getDMChannel(guild.ownerID);
+
+		const t: TranslateFunc = (phrase, replacements) => i18n.__({ phrase, locale }, replacements);
+
+		const modules = Object.entries(CommandGroup)
+			.sort(([a], [b]) => a.localeCompare(b))
+			.filter(([key]) => key.length > 1)
+			.map(([key]) => t(`others.modules.${key.toLowerCase()}`))
+			.join('\n');
+
+		const embed = this.messages.createEmbed({
+			title: t('others.onBotAdd.title', { guild: guild.name }),
+			description: t('others.onBotAdd.desc', { modules }),
+			fields: [
+				{
+					name: '\u200b',
+					value: t('others.onBotAdd.field'),
+					inline: false
+				}
+			],
+			footer: {
+				icon_url: this.user.dynamicAvatarURL('png', 4096),
+				text: t('others.onBotAdd.footer')
+			}
+		});
+
+		ownerDM.createMessage({ embed }).catch(() => undefined);
+	}
+
+	private async onGuildDelete(guild: Guild) {
+		await BaseGuild.saveGuilds([guild], {
+			deletedAt: moment()
+		});
 	}
 
 	private async onConnect() {
@@ -241,6 +288,7 @@ export class BaseClient extends Client {
 
 	private async onGuildUnavailable(guild: Guild) {
 		console.error('DISCORD GUILD_UNAVAILABLE:', guild.id);
+		this.stats.unavailableGuilds++;
 	}
 
 	private async onWarn(warn: string) {

@@ -32,9 +32,8 @@ export class Precondition {
 		if (
 			!(
 				(permission.target.type === PermissionsExecute.Command &&
-					permission.target.id.toLowerCase() === name.toLowerCase()) ||
-				(permission.target.type === PermissionsExecute.Module &&
-					permission.target.id.toLowerCase() === Enum(CommandGroup, group).toString().toLowerCase()) ||
+					String(permission.target.id).toLowerCase() === name.toLowerCase()) ||
+				(permission.target.type === PermissionsExecute.Module && permission.target.id === group) ||
 				(permission.target.type === PermissionsExecute.AllModules && permission.target.id === '*')
 			)
 		)

@@ -1,3 +1,5 @@
+import { CommandGroup } from './CommandGroup';
+
 export enum PermissionsFrom {
 	User,
 	Channel,
@@ -17,7 +19,7 @@ export interface PermissionsActivator {
 }
 
 export interface PermissionsTarget {
-	id: string;
+	id: string | CommandGroup;
 	type: PermissionsExecute;
 }
 

@@ -4,9 +4,9 @@ import { Message } from 'eris';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { NumberResolver } from '../../../Framework/Resolvers';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
+import { Images } from '../../../Misc/Enums/Images';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -51,8 +51,8 @@ export default class extends Command {
 		await this.client.cache.permissions.save(guild.id, permissions);
 
 		await this.replyAsync(message, t, {
-			color: ColorResolve(Color.MAGENTA),
-			title: t('perms.title'),
+			color: Color.MAGENTA,
+			author: { name: t('perms.title'), icon_url: Images.SUCCESS },
 			description: t('perms.move', {
 				target: targetId,
 				source: sourceId

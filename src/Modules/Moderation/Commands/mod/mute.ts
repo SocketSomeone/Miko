@@ -4,14 +4,11 @@ import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
 import { Message, Member } from 'eris';
 import { BaseMember } from '../../../../Entity/Member';
 import { ExecuteError } from '../../../../Framework/Errors/ExecuteError';
-
-import moment, { Duration } from 'moment';
 import { Color } from '../../../../Misc/Enums/Colors';
-import { ColorResolve } from '../../../../Misc/Utils/ColorResolver';
-import { MemberResolver, StringResolver, DurationResolver } from '../../../../Framework/Resolvers';
+import { MemberResolver, StringResolver } from '../../../../Framework/Resolvers';
 import { GuildPermission } from '../../../../Misc/Models/GuildPermissions';
 import { Punishment, BasePunishment } from '../../../../Entity/Punishment';
-import { ScheduledAction } from '../../../../Entity/ScheduledAction';
+import { Images } from '../../../../Misc/Enums/Images';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -40,31 +37,40 @@ export default class extends Command {
 
 	public async execute(
 		message: Message,
-		[member, reason]: [Member, string],
+		[member, r]: [Member, string],
 		{ funcs: { t, e }, guild, me, settings }: Context
 	) {
-		reason = reason || t('moderation.noreason');
+		const reason = r || t('moderation.noreason');
+		const extra = [
+			{ name: 'logs.mod.reason', value: reason },
+			{ name: 'logs.mod.duration', value: `∞` }
+		];
 
 		const embed = this.client.messages.createEmbed({
-			color: ColorResolve(Color.RED),
-			title: t('moderation.mute.title'),
-			fields: [],
+			color: Color.DARK,
+			author: { name: t('moderation.mute.title'), icon_url: Images.MODERATION },
+			description: t('moderation.mute.done', {
+				user: `${message.author.username}#${message.author.discriminator}`,
+				target: `${member.user.username}#${member.user.discriminator}`
+			}),
+			fields: extra.map((x) => {
+				return {
+					name: t(x.name),
+					value: x.value,
+					inline: true
+				};
+			}),
 			footer: null
 		});
 
 		const mutedRole = settings.mutedRole;
 
 		if (!mutedRole || !guild.roles.has(mutedRole)) {
-			embed.description = t('error.missed.muterole');
+			throw new ExecuteError(t('error.missed.muterole'));
 		} else if (member.roles.includes(mutedRole)) {
-			embed.description = t('moderation.mute.already');
+			throw new ExecuteError(t('moderation.mute.already'));
 		} else if (this.client.moderation.isPunishable(guild, member, message.member, me)) {
-			const extra = [
-				{ name: 'logs.mod.reason', value: reason },
-				{ name: 'logs.mod.duration', value: `∞` }
-			];
-
-			await BasePunishment.informUser(member, Punishment.MUTE, settings, extra);
+			await BasePunishment.informUser(t, member, Punishment.MUTE, extra);
 
 			try {
 				await member.addRole(mutedRole, encodeURIComponent(reason));
@@ -84,30 +90,12 @@ export default class extends Command {
 						moderator: message.author.id
 					}
 				});
-
-				embed.color = ColorResolve(Color.DARK);
-				embed.description = t('moderation.mute.done', {
-					user: `${message.author.username}#${message.author.discriminator}`,
-					target: `${member.user.username}#${member.user.discriminator}`
-				});
-
-				embed.fields.push(
-					...extra
-						.filter((x) => !!x.value)
-						.map((x) => {
-							return {
-								name: t(x.name),
-								value: x.value.substr(0, 1024),
-								inline: true
-							};
-						})
-				);
 			} catch (err) {
 				console.log(err);
-				embed.description = t('moderation.mute.error');
+				throw new ExecuteError(t('moderation.mute.error'));
 			}
 		} else {
-			embed.description = t('moderation.mute.cannot');
+			throw new ExecuteError(t('moderation.mute.cannot'));
 		}
 
 		await this.replyAsync(message, t, embed);

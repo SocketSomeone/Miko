@@ -132,7 +132,7 @@ export class PrivateService extends BaseService {
 	}
 
 	public async getRoomByVoice(t: TranslateFunc, voice: string) {
-		if (typeof voice === 'undefined') throw new ExecuteError(t('voice.error.notFound'));
+		if (!voice) throw new ExecuteError(t('voice.error.notFound'));
 
 		const room = await this.cache.get({ id: voice });
 

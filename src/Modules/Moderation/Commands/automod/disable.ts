@@ -1,14 +1,13 @@
 import { Command, Context } from '../../../../Framework/Commands/Command';
 import { BaseClient } from '../../../../Client';
-import { StringResolver, EnumResolver } from '../../../../Framework/Resolvers';
+import { EnumResolver } from '../../../../Framework/Resolvers';
 import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
-import { Message, Member, Guild, User } from 'eris';
-import { BaseMember } from '../../../../Entity/Member';
-import { ColorResolve } from '../../../../Misc/Utils/ColorResolver';
+import { Message } from 'eris';
 import { Color } from '../../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../../Misc/Models/GuildPermissions';
 import { Violation } from '../../../../Misc/Enums/Violation';
 import { ExecuteError } from '../../../../Framework/Errors/ExecuteError';
+import { Images } from '../../../../Misc/Enums/Images';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -38,12 +37,14 @@ export default class extends Command {
 		await settings.save();
 
 		await this.replyAsync(message, t, {
-			color: ColorResolve(Color.MAGENTA),
-			title: t('automod.title'),
-			description: t('automod.disabled.any', { type: t(`automod.types.${type}`) }),
-			footer: {
-				text: ''
-			}
+			author: {
+				name: t('automod.title'),
+				icon_url: Images.SUCCESS
+			},
+			color: Color.MAGENTA,
+			footer: null,
+			timestamp: null,
+			description: t('automod.disabled.any', { type: t(`automod.types.${type}`) })
 		});
 	}
 }

@@ -4,6 +4,7 @@ import { Context, Command } from '../../../Framework/Commands/Command';
 import { Message } from 'eris';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { CommandResolver } from '../../../Framework/Resolvers';
+import { Images } from '../../../Misc/Enums/Images';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -26,55 +27,8 @@ export default class extends Command {
 
 	public async execute(message: Message, [c]: [Command], { funcs: { t }, guild, settings: { prefix } }: Context) {
 		if (c) {
-			const desc = `info.help.cmdDesc.${c.name.toLowerCase()}`;
-
-			await this.replyAsync(message, t, {
-				title: t('info.help.cmd.title', {
-					cmd: c.name
-				}),
-				fields: [
-					{
-						name: t('info.help.cmd.desc'),
-						value: `${t(desc) === desc ? t('error.no') : t(desc)}`,
-						inline: false
-					},
-					{
-						name: t('info.help.cmd.ex'),
-						inline: false,
-						value: `${c.usage
-							.replace(/{prefix}/g, prefix)
-							.split(' ')
-							.map((x, i) => {
-								if (i === 0) return x;
-
-								if (/user/g.test(x)) return message.member.mention;
-
-								if (/channel/g.test(x)) return message.channel.mention;
-
-								if (/role/g.test(x)) return `@role`;
-
-								if (/duration/g.test(x)) return '1m';
-
-								if (/reason/g.test(x)) return 'your reason';
-
-								if (/money/g.test(x)) return '1000';
-
-								if (/(page|count|index)/g.test(x)) return '1';
-
-								return x.length >= 1 ? `\`${x}\`` : null;
-							})
-							.join(' ')}${c.extraExamples.length < 1 ? '' : '\n' + c.extraExamples}`
-					},
-					{
-						name: t('info.help.cmd.aliases'),
-						value: `${c.aliases.length >= 1 ? c.aliases.map((a) => `\`${a}\``).join(', ') : 'Отсутствуют'}`,
-						inline: false
-					}
-				],
-				footer: {
-					text: null
-				}
-			});
+			const embed = c.getHelp(message, t, prefix);
+			await this.replyAsync(message, t, embed);
 
 			return;
 		}
@@ -86,7 +40,7 @@ export default class extends Command {
 		this.showPaginated(t, message, 0, groups.length + 1, (page, maxPage) => {
 			if (page === 0) {
 				const embed = this.createEmbed({
-					title: t('info.help.first.title'),
+					author: { name: t('info.help.first.title'), icon_url: Images.LIST },
 					thumbnail: {
 						url: this.client.user.dynamicAvatarURL('png', 4096)
 					},
@@ -124,18 +78,16 @@ export default class extends Command {
 					if (!page) {
 						pages.push({
 							name,
-							value: `\`${x.usage.replace(/{prefix}/g, prefix)}\` - ${t(desc) === desc ? t('error.no') : t(desc)}`,
+							value: `\`${prefix + x.usage}\` - ${t(desc) === desc ? t('error.no') : t(desc)}`,
 							inline: false
 						});
 					} else {
-						page.value += `\n\n\`${x.usage.replace(/{prefix}/g, prefix)}\` - ${
-							t(desc) === desc ? t('error.no') : t(desc)
-						}`;
+						page.value += `\n\n\`${prefix + x.usage}\` - ${t(desc) === desc ? t('error.no') : t(desc)}`;
 					}
 				});
 
 			const embed = this.createEmbed({
-				title: t('info.help.title'),
+				author: { name: t('info.help.title'), icon_url: Images.LIST },
 				fields: [
 					{
 						name: t(`others.modules.${group.toLowerCase()}`),

@@ -106,7 +106,7 @@ export class SchedulerService extends BaseService {
 		let member = guild.members.get(memberId);
 
 		if (!member) {
-			member = await guild.getRESTMember(memberId);
+			member = await guild.getRESTMember(memberId).catch(() => undefined);
 		}
 
 		if (!member) {

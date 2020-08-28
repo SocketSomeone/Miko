@@ -1,12 +1,11 @@
 import { Command, Context } from '../../../Framework/Commands/Command';
 import { BaseClient } from '../../../Client';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
-import { Message, Member } from 'eris';
-import { BaseMember } from '../../../Entity/Member';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
+import { Message } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { BigIntResolver } from '../../../Framework/Resolvers';
+import { Images } from '../../../Misc/Enums/Images';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -34,16 +33,16 @@ export default class extends Command {
 		}
 
 		await this.replyAsync(message, t, {
-			color: ColorResolve(Color.MAGENTA),
-			title: t('configure.title', {
-				guild: guild.name
-			}),
+			color: money ? Color.MAGENTA : Color.GRAY,
+			author: {
+				name: t('configure.title', { guild: guild.name }),
+				icon_url: money ? Images.SUCCESS : Images.SETTINGS
+			},
 			description: t(`configure.standart.${money ? 'new' : 'info'}`, {
 				amount: `${settings.prices.standart} ${e(settings.currency)}`
 			}),
-			footer: {
-				text: ''
-			}
+			footer: null,
+			timestamp: null
 		});
 	}
 }

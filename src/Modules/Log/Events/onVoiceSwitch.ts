@@ -2,9 +2,9 @@ import { BaseEventLog } from '../Misc/EventLog';
 import { BaseClient } from '../../../Client';
 import { LogType } from '../Misc/LogType';
 import { TranslateFunc } from '../../../Framework/Commands/Command';
-import { Guild, Constants, User, Member, VoiceChannel } from 'eris';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
+import { Guild, Member, VoiceChannel } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
+import { Images } from '../../../Misc/Enums/Images';
 
 export default class onVoiceSwitchEvent extends BaseEventLog {
 	public constructor(client: BaseClient) {
@@ -31,8 +31,8 @@ export default class onVoiceSwitchEvent extends BaseEventLog {
 		oldChannel: VoiceChannel
 	) {
 		const embed = this.client.messages.createEmbed({
-			author: { name: t('logs.voiceSwitch') },
-			color: ColorResolve(Color.YELLOW),
+			author: { name: t('logs.voiceSwitch'), icon_url: Images.VOICE_SWITCH },
+			color: Color.YELLOW,
 			fields: [
 				{
 					name: t('logs.channel'),

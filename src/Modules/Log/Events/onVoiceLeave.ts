@@ -2,9 +2,9 @@ import { BaseEventLog } from '../Misc/EventLog';
 import { BaseClient } from '../../../Client';
 import { LogType } from '../Misc/LogType';
 import { TranslateFunc } from '../../../Framework/Commands/Command';
-import { Guild, Constants, User, Member, VoiceChannel } from 'eris';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
+import { Guild, Member, VoiceChannel } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
+import { Images } from '../../../Misc/Enums/Images';
 
 export default class onVoiceLeaveEvent extends BaseEventLog {
 	public constructor(client: BaseClient) {
@@ -25,8 +25,8 @@ export default class onVoiceLeaveEvent extends BaseEventLog {
 
 	public async execute(t: TranslateFunc, guild: Guild, member: Member, channel: VoiceChannel) {
 		const embed = this.client.messages.createEmbed({
-			author: { name: t('logs.voiceLeaved') },
-			color: ColorResolve(Color.RED),
+			author: { name: t('logs.voiceLeaved'), icon_url: Images.VOICE_LEAVE },
+			color: Color.RED,
 			fields: [
 				{
 					name: t('logs.channel'),

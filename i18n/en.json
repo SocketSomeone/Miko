@@ -29,11 +29,20 @@
 		"buyshop": {
 			"title": "economy.buyshop.title",
 			"ok": "economy.buyshop.ok",
-			"notFound": "economy.buyshop.notFound"
+			"notFound": "economy.buyshop.notFound",
+			"has": "economy.buyshop.has"
 		},
 		"award": {
 			"title": "economy.award.title",
 			"desc": "economy.award.desc"
+		},
+		"give": {
+			"title": "economy.give.title",
+			"desc": "economy.give.desc"
+		},
+		"take": {
+			"title": "economy.take.title",
+			"desc": "economy.take.desc"
 		}
 	},
 	"embed": {
@@ -234,7 +243,8 @@
 		},
 		"role": {
 			"notFound": "resolvers.role.notFound",
-			"everyone": "resolvers.role.everyone"
+			"everyone": "resolvers.role.everyone",
+			"multiple": "resolvers.role.multiple"
 		},
 		"command": {
 			"notFound": "resolvers.command.notFound",
@@ -354,7 +364,8 @@
 		},
 		"modlog": {
 			"notFound": "configure.modlog.notFound",
-			"new": "configure.modlog.new"
+			"new": "configure.modlog.new",
+			"info": "configure.modlog.info"
 		},
 		"privates": {
 			"enabled": "configure.privates.enabled",
@@ -385,7 +396,9 @@
 				"id": "configure.conf.main.id",
 				"welcomeSaveRoles": "configure.conf.main.welcomeSaveRoles",
 				"welcomeChannelType": "configure.conf.main.welcomeChannelType",
-				"welcomeChannel": "configure.conf.main.welcomeChannel"
+				"welcomeChannel": "configure.conf.main.welcomeChannel",
+				"welcomeMessage": "configure.conf.main.welcomeMessage",
+				"loggerEnabled": "configure.conf.main.loggerEnabled"
 			},
 			"automod": {
 				"settings": {
@@ -464,12 +477,17 @@
 			"info": "configure.aar.info"
 		},
 		"addshop": {
-			"new": "configure.addshop.new"
+			"new": "configure.addshop.new",
+			"change": "configure.addshop.change"
 		},
 		"removeshop": {
 			"deleted": "configure.removeshop.deleted"
 		},
-		"setcurrency": "configure.setcurrency"
+		"setcurrency": "configure.setcurrency",
+		"standart": {
+			"info": "configure.standart.info",
+			"new": "configure.standart.new"
+		}
 	},
 	"gambling": {
 		"wis": {
@@ -524,10 +542,13 @@
 			"invites": "automod.reasons.invites"
 		},
 		"enabled": {
-			"caps": "automod.enabled.caps"
+			"caps": "automod.enabled.caps",
+			"any": "automod.enabled.any",
+			"already": "automod.enabled.already"
 		},
 		"types": {
-			"caps": "automod.types.caps"
+			"caps": "automod.types.caps",
+			"invites": "automod.types.invites"
 		},
 		"alreadyEnabled": "automod.alreadyEnabled",
 		"disabled": {
@@ -648,7 +669,8 @@
 			"title": "info.warns.title",
 			"has": "info.warns.has",
 			"by": "info.warns.by",
-			"no": "info.warns.no"
+			"no": "info.warns.no",
+			"list": "info.warns.list"
 		}
 	},
 	"manage": {

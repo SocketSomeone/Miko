@@ -20,9 +20,9 @@ import { BaseGuild } from './Entity/Guild';
 import { PrivateService } from './Modules/Voice/Services/PrivateSystem';
 import { LoggingService } from './Modules/Log/Services/LoggerService';
 import { TranslateFunc } from './Framework/Commands/Command';
-import { Color } from './Misc/Enums/Colors';
-import { ColorResolve } from './Misc/Utils/ColorResolver';
 import { CommandGroup } from './Misc/Models/CommandGroup';
+import { ShopRolesCache } from './Modules/Configure/Cache/ShopRole';
+import { Images } from './Misc/Enums/Images';
 
 moment.tz.setDefault('Europe/Moscow');
 
@@ -50,6 +50,7 @@ interface BaseCacheObject {
 	guilds: GuildSettingsCache;
 	permissions: PermissionsCache;
 	punishments: PunishmentsCache;
+	shop: ShopRolesCache;
 }
 
 /**
@@ -157,7 +158,8 @@ export class BaseClient extends Client {
 		this.cache = {
 			guilds: new GuildSettingsCache(this),
 			permissions: new PermissionsCache(this),
-			punishments: new PunishmentsCache(this)
+			punishments: new PunishmentsCache(this),
+			shop: new ShopRolesCache(this)
 		};
 
 		this.on('ready', this.onClientReady);
@@ -246,7 +248,7 @@ export class BaseClient extends Client {
 			.join('\n');
 
 		const embed = this.messages.createEmbed({
-			title: t('others.onBotAdd.title', { guild: guild.name }),
+			author: { name: t('others.onBotAdd.title', { guild: guild.name }), icon_url: Images.LIST },
 			description: t('others.onBotAdd.desc', { modules }),
 			thumbnail: { url: this.user.dynamicAvatarURL('png', 4096) },
 			fields: [
@@ -262,7 +264,7 @@ export class BaseClient extends Client {
 			}
 		});
 
-		ownerDM.createMessage({ embed }).catch(() => undefined);
+		await ownerDM.createMessage({ embed }).catch(() => undefined);
 	}
 
 	private async onGuildDelete(guild: Guild) {

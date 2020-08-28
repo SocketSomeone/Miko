@@ -3,11 +3,12 @@ import { Context, Command } from '../../../Framework/Commands/Command';
 import { Message, Member } from 'eris';
 import { MemberResolver } from '../../../Framework/Resolvers';
 import { BaseMember } from '../../../Entity/Member';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
+import { CommandGroup } from '../../../Misc/Models/CommandGroup';
+import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
+import { Images } from '../../../Misc/Enums/Images';
 
 import moment from 'moment';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -33,37 +34,33 @@ export default class extends Command {
 
 		person.warns = person.warns.filter((x) => moment().isBefore(x.expireAt));
 
+		if (person.warns.length < 1) throw new ExecuteError(t('info.warns.no'));
+
 		const embed = this.createEmbed({
-			color: ColorResolve(Color.MAGENTA),
-			author: {
-				name: member.username + `#` + member.discriminator,
-				icon_url: member.avatarURL
-			},
+			color: Color.MAGENTA,
+			description: member.mention,
+			footer: null,
 			thumbnail: {
-				url: guild.dynamicIconURL('png', 4096)
+				url: member.avatarURL
 			},
-			footer: null
-		});
-
-		if (person.warns.length < 1) {
-			embed.description = t('info.warns.no');
-		} else {
-			const title = t('info.warns.has');
-			const side = '⠀'.repeat(~~((44 - title.length) / 2));
-
-			embed.fields = [
+			author: {
+				name: t('info.warns.list'),
+				icon_url: Images.LIST
+			},
+			fields: [
 				{
-					name: `${side}${title}${side}`,
-					value: `\n${person.warns
+					name: t('info.warns.has'),
+					value: person.warns
+						.sort((a, b) => moment(b.expireAt).valueOf() - moment(a.expireAt).valueOf())
 						.slice(0, 10)
 						.map(
 							(x) =>
 								`${moment(x.createdAt).format('DD.MM.YYYY')} | **${x.reason}** ${t('info.warns.by')} <@!${x.moderator}>`
 						)
-						.join('\n')}`
+						.join('\n')
 				}
-			];
-		}
+			]
+		});
 
 		await this.replyAsync(message, t, embed);
 	}

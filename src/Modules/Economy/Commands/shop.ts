@@ -2,11 +2,9 @@ import { Command, Context } from '../../../Framework/Commands/Command';
 import { BaseClient } from '../../../Client';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message } from 'eris';
-import { Color } from '../../../Misc/Enums/Colors';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
-import { BaseShopRole } from '../../../Entity/ShopRole';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { NumberResolver } from '../../../Framework/Resolvers';
+import { Images } from '../../../Misc/Enums/Images';
 
 const ROLE_PER_PAGE = 8;
 
@@ -29,17 +27,7 @@ export default class extends Command {
 	}
 
 	public async execute(message: Message, [offset]: [number], { funcs: { t, e }, guild, settings }: Context) {
-		const items = await BaseShopRole.find({
-			where: {
-				guild: {
-					id: guild.id
-				}
-			},
-			order: {
-				cost: 'ASC',
-				createdAt: 'ASC'
-			}
-		});
+		const items = await this.client.cache.shop.get(guild);
 
 		if (items.length < 1) {
 			throw new ExecuteError(t('economy.shop.empty'));
@@ -75,9 +63,7 @@ export default class extends Command {
 			});
 
 			return this.createEmbed({
-				title: t('economy.shop.title', {
-					guild: guild.name
-				}),
+				author: { name: t('economy.shop.title', { guild: guild.name }), icon_url: Images.SHOP },
 				fields,
 				footer: null
 			});

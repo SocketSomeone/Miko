@@ -3,8 +3,8 @@ import { BaseClient } from '../../../Client';
 import { LogType } from '../Misc/LogType';
 import { TranslateFunc } from '../../../Framework/Commands/Command';
 import { Guild, Constants, User } from 'eris';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
+import { Images } from '../../../Misc/Enums/Images';
 
 export default class onUnbanEvent extends BaseEventLog {
 	public constructor(client: BaseClient) {
@@ -15,8 +15,8 @@ export default class onUnbanEvent extends BaseEventLog {
 
 	public async execute(t: TranslateFunc, guild: Guild, user: User) {
 		const embed = this.client.messages.createEmbed({
-			author: { name: t('logs.unban') },
-			color: ColorResolve(Color.GREEN),
+			author: { name: t('logs.unban'), icon_url: Images.UNBAN },
+			color: Color.LIME,
 			fields: [
 				{
 					name: t('logs.member'),

@@ -34,13 +34,7 @@ export default class extends Command {
 	) {
 		const person = await BaseMember.get(message.member);
 
-		if (person.money < money)
-			throw new ExecuteError(
-				t('error.enough.money', {
-					emoji: e(currency),
-					amount: money - person.money
-				})
-			);
+		if (person.money < money) throw new ExecuteError(t('error.enough.money'));
 
 		person.money -= money;
 		await person.save();
@@ -48,7 +42,7 @@ export default class extends Command {
 		let doors = ['🚪', '🚪', '🚪'],
 			timer: NodeJS.Timeout;
 
-		const embed = await this.createEmbed({
+		const embed = this.createEmbed({
 			title: t('gambling.wis.title'),
 			description: t('gambling.wis.desc', {
 				doors: doors.join(' ')

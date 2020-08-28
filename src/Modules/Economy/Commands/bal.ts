@@ -4,6 +4,7 @@ import { MemberResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message, Member } from 'eris';
 import { BaseMember } from '../../../Entity/Member';
+import { Images } from '../../../Misc/Enums/Images';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -28,13 +29,18 @@ export default class extends Command {
 		const person = await BaseMember.get(target);
 
 		await this.sendAsync(message.channel, t, {
-			title: t('economy.bal.title', {
-				member: `${target.user.username}#${target.user.discriminator}`
-			}),
+			author: {
+				name: t('economy.bal.title', {
+					member: `${target.user.username}#${target.user.discriminator}`
+				}),
+				icon_url: Images.ECONOMY
+			},
 			description: t('economy.bal.desc', {
-				member: target.user.mention,
+				member: target,
 				amount: `${person.money} ${e(settings.currency)}`
-			})
+			}),
+			timestamp: null,
+			footer: null
 		});
 	}
 }

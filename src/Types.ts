@@ -1,3 +1,6 @@
+import { EmbedOptions } from 'eris';
+import { Color } from './Misc/Enums/Colors';
+
 export enum ChannelType {
 	GUILD_TEXT = 0,
 	DM = 1,
@@ -15,3 +18,7 @@ export interface ChannelOptions {
 	nsfw?: boolean;
 	parentID?: string;
 }
+
+export type Modify<T, R> = Omit<T, keyof R> & R;
+
+export type BaseEmbedOptions = Modify<EmbedOptions, { color?: number | Color }>;

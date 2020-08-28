@@ -50,7 +50,7 @@ export class BaseGuild extends BaseEntity {
 	@Column({ type: 'json', default: [] })
 	public punishmentConfig: PunishmentConfig[] = [];
 
-	@CreateDateColumn({ transformer: DateTransformer })
+	@CreateDateColumn({ nullable: true, transformer: DateTransformer })
 	public joinedAt: Moment;
 
 	@Column({ nullable: true, transformer: DateTransformer, type: 'timestamp without time zone' })

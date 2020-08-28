@@ -1,7 +1,3 @@
-import { BaseClient } from '../../../Client';
-import { Context, Command } from '../../../Framework/Commands/Command';
-import { Message, Member, Role, GuildChannel, TextChannel } from 'eris';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import {
 	AnyResolver,
 	RoleResolver,
@@ -9,11 +5,15 @@ import {
 	BooleanResolver,
 	ChannelResolver
 } from '../../../Framework/Resolvers';
+import { BaseClient } from '../../../Client';
+import { Context, Command } from '../../../Framework/Commands/Command';
+import { Message, Member, Role, GuildChannel, TextChannel } from 'eris';
+import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { PermissionTargetResolver } from '../Resolvers/PermissionResolver';
 import { PermissionsTarget, PermissionsFrom, Permission } from '../../../Misc/Models/Permisson';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
+import { Images } from '../../../Misc/Enums/Images';
 import PermissionsOutput from '../Misc/PermissionsOutput';
 
 export default class extends Command {
@@ -61,7 +61,7 @@ export default class extends Command {
 		let perm = permissions.find((x) => x.target.id === target.id && x.activator.id === from.id);
 		let isExist = !!perm;
 
-		if (!perm) {
+		if (!isExist) {
 			perm = {
 				allow,
 				index:
@@ -98,8 +98,8 @@ export default class extends Command {
 		await this.client.cache.permissions.save(guild.id, permissions);
 
 		await this.replyAsync(message, t, {
-			color: ColorResolve(Color.MAGENTA),
-			title: t('perms.title'),
+			color: Color.MAGENTA,
+			author: { name: t('perms.title'), icon_url: Images.SUCCESS },
 			description: t(isExist ? 'perms.changed' : 'perms.add', {
 				index: perm.index,
 				output: PermissionsOutput(t, perm, perm.index - 1)

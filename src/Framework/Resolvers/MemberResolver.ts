@@ -36,18 +36,7 @@ export class MemberResolver extends Resolver {
 			if (members.length === 1) {
 				member = members[0];
 			} else {
-				if (members.length === 0) {
-					throw Error(t(`resolvers.member.notFound`));
-				} else {
-					throw Error(
-						t(`resolvers.member.multiple`, {
-							members: members
-								.slice(0, 10)
-								.map((m) => `\`${m.username}#${m.discriminator}\``)
-								.join(', ')
-						})
-					);
-				}
+				throw Error(t(`resolvers.member.notFound`));
 			}
 		}
 

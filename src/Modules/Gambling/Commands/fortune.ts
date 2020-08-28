@@ -5,7 +5,6 @@ import { Message, Member, Emoji } from 'eris';
 import { BaseMember } from '../../../Entity/Member';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { Color } from '../../../Misc/Enums/Colors';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { chance } from '../../../Misc/Utils/Chance';
 import { Syntax } from '../../../Misc/Models/Syntax';
 import { BigIntResolver } from '../../../Framework/Resolvers';
@@ -34,13 +33,7 @@ export default class extends Command {
 	public async execute(message: Message, [bet]: [bigint], { funcs: { t, e }, guild, settings: { currency } }: Context) {
 		const person = await BaseMember.get(message.member);
 
-		if (person.money < bet)
-			throw new ExecuteError(
-				t('error.enough.money', {
-					emoji: e(currency),
-					amount: bet - person.money
-				})
-			);
+		if (person.money < bet) throw new ExecuteError(t('error.enough.money'));
 
 		const multiplier = chance.pickone(multipliers);
 		const result = (bet * BigInt(multiplier * 100)) / 100n;
@@ -62,7 +55,7 @@ export default class extends Command {
 		text += space.repeat(12) + `${multipliers[4].toFixed(1)}\n`;
 
 		let em = this.createEmbed({
-			color: ColorResolve(multiplier >= 1 ? Color.GREEN : Color.RED),
+			color: multiplier >= 1 ? Color.GREEN : Color.RED,
 			title: t('gambling.fortune.title'),
 			description: t('gambling.fortune.desc', {
 				circle: text.markdown(Syntax.AHK)

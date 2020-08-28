@@ -3,9 +3,9 @@ import { BaseClient } from '../../../Client';
 import { LogType } from '../Misc/LogType';
 import { TranslateFunc } from '../../../Framework/Commands/Command';
 import { Guild, Constants } from 'eris';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
 import { Emoji } from 'eris';
+import { Images } from '../../../Misc/Enums/Images';
 
 export default class onEmojiUpdateEvent extends BaseEventLog {
 	public constructor(client: BaseClient) {
@@ -43,8 +43,8 @@ export default class onEmojiUpdateEvent extends BaseEventLog {
 		const compare = this.compare(newEmoji, oldEmoji);
 
 		const embed = this.client.messages.createEmbed({
-			author: { name: t('logs.emojiUpdate') },
-			color: ColorResolve(Color.YELLOW),
+			author: { name: t('logs.emojiUpdate'), icon_url: Images.EMOJI_UPDATE },
+			color: Color.YELLOW,
 			fields: [
 				{
 					name: t('logs.emoji'),

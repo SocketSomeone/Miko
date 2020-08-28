@@ -6,6 +6,8 @@ import { CommandGroup } from '../../Misc/Models/CommandGroup';
 
 import i18n from 'i18n';
 import { BaseSettings } from '../../Entity/GuildSettings';
+import { BaseEmbedOptions } from '../../Types';
+import { Images } from '../../Misc/Enums/Images';
 
 interface Arg {
 	name: string;
@@ -31,12 +33,11 @@ export type Context = {
 
 interface CommandOptions {
 	name: string;
+	group: CommandGroup;
 	aliases: string[];
+	examples?: string[];
 	args?: Arg[];
 	desc?: string;
-	group: CommandGroup;
-	extraExamples?: string;
-
 	guildOnly: boolean;
 	premiumOnly?: boolean;
 
@@ -53,16 +54,15 @@ export abstract class Command {
 	public args: Arg[];
 	public group: CommandGroup;
 	public usage: string;
-	public desc: string;
-	public extraExamples: string;
+	public examples: string[];
 
 	public guildOnly: boolean;
 	public botPermissions?: GuildPermission[];
 	public userPermissions?: GuildPermission[];
 	public premiumOnly?: boolean;
 
-	protected createEmbed: (options?: EmbedOptions) => Embed;
-	protected replyAsync: (message: Message, t: TranslateFunc, reply: EmbedOptions | string) => Promise<Message>;
+	protected createEmbed: (options?: BaseEmbedOptions) => Embed;
+	protected replyAsync: (message: Message, t: TranslateFunc, reply: BaseEmbedOptions | string) => Promise<Message>;
 	protected sendAsync: (
 		target: TextableChannel,
 		t: TranslateFunc,
@@ -81,12 +81,11 @@ export abstract class Command {
 		this.client = client;
 
 		this.name = props.name;
+		this.usage = `${this.name} `;
 		this.aliases = props.aliases.map((x) => x.toLowerCase());
-		this.args = (props && props.args) || [];
 		this.group = props.group;
-		this.usage = `{prefix}${this.name} `;
-		this.desc = (props && props.desc) || '';
-		this.extraExamples = (props && props.extraExamples) || '';
+		this.args = (props && props.args) || [];
+		this.examples = (props && props.examples) || [];
 
 		this.botPermissions = (props && props.botPermissions) || [];
 		this.userPermissions = (props && props.userPermissions) || [];
@@ -122,6 +121,35 @@ export abstract class Command {
 		if (this.client.config.runEnv === 'dev') {
 			i18n.__({ locale: 'ru', phrase: `info.help.cmdDesc.${this.name.toLowerCase()}` });
 		}
+	}
+
+	protected getDescription(t: TranslateFunc) {
+		const desc = `info.help.cmdDesc.${this.name.toLowerCase()}`;
+
+		return t(desc) === desc ? t('error.no') : t(desc);
+	}
+
+	public getHelp(message: Message, t: TranslateFunc, prefix: string): Embed {
+		const description = this.getDescription(t);
+
+		return this.createEmbed({
+			author: { name: prefix + this.usage, icon_url: Images.LIST },
+			description,
+			fields: [
+				{
+					name: t('info.help.cmd.ex'),
+					inline: false,
+					value: this.args.length < 1 ? prefix + this.usage : this.examples.map((ex) => prefix + ex).join('\n')
+				},
+				{
+					name: t('info.help.cmd.aliases'),
+					value: this.aliases.length >= 1 ? this.aliases.map((a) => `\`${a}\``).join(', ') : null,
+					inline: false
+				}
+			],
+			footer: null,
+			timestamp: null
+		});
 	}
 
 	public abstract execute(message: Message, args: any[], context: Context): any;

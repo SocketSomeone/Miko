@@ -2,11 +2,10 @@ import { Command, Context } from '../../../Framework/Commands/Command';
 import { BaseClient } from '../../../Client';
 import { StringResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
-import { Message, Member } from 'eris';
-import { BaseMember } from '../../../Entity/Member';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
+import { Message } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
+import { Images } from '../../../Misc/Enums/Images';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -28,22 +27,20 @@ export default class extends Command {
 	}
 
 	public async execute(message: Message, [prefix]: [string], { funcs: { t, e }, guild, settings }: Context) {
-		if (prefix && prefix.length) {
+		if (prefix) {
 			settings.prefix = prefix;
 			await settings.save();
 		}
 
 		await this.replyAsync(message, t, {
-			color: ColorResolve(Color.MAGENTA),
-			title: t('configure.title', {
-				guild: guild.name
-			}),
-			description: t(`configure.prefix.${prefix && prefix.length ? 'new' : 'info'}`, {
-				prefix: settings.prefix
-			}),
-			footer: {
-				text: ''
-			}
+			color: prefix ? Color.MAGENTA : Color.GRAY,
+			author: {
+				name: t('configure.title', { guild: guild.name }),
+				icon_url: prefix ? Images.SUCCESS : Images.SETTINGS
+			},
+			description: t(`configure.prefix.${prefix ? 'new' : 'info'}`, { prefix: settings.prefix }),
+			footer: null,
+			timestamp: null
 		});
 	}
 }

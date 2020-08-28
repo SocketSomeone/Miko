@@ -1,14 +1,10 @@
 import { BaseClient } from '../../../Client';
 import { Context, Command } from '../../../Framework/Commands/Command';
-import { Message, Member, TextChannel } from 'eris';
-import { MemberResolver, ChannelResolver } from '../../../Framework/Resolvers';
-import { BaseMember } from '../../../Entity/Member';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
+import { Message } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
-
-import moment from 'moment';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
+import { Images } from '../../../Misc/Enums/Images';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -29,12 +25,11 @@ export default class extends Command {
 		await settings.save();
 
 		await this.replyAsync(message, t, {
-			color: ColorResolve(Color.MAGENTA),
-			title: t('logs.title'),
 			description: t(`logs.enable`),
-			footer: {
-				text: ''
-			}
+			author: { name: t('logs.title'), icon_url: Images.SUCCESS },
+			color: Color.MAGENTA,
+			footer: null,
+			timestamp: null
 		});
 	}
 }

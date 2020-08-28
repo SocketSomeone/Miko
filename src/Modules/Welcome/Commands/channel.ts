@@ -2,14 +2,13 @@ import { Command, Context } from '../../../Framework/Commands/Command';
 import { BaseClient } from '../../../Client';
 import { StringResolver, EnumResolver, ChannelResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
-import { Message, Member, Guild, User, Channel, TextChannel } from 'eris';
-import { BaseMember } from '../../../Entity/Member';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
+import { Message, TextChannel } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { AnyResolver } from '../../../Framework/Resolvers/AnyResolver';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { WelcomeChannelType } from '../../../Misc/Enums/WelcomeTypes';
+import { Images } from '../../../Misc/Enums/Images';
 
 enum Action {
 	SET = 'set',
@@ -24,11 +23,13 @@ export default class extends Command {
 			args: [
 				{
 					name: 'set/delete',
-					resolver: new EnumResolver(client, Object.values(Action))
+					resolver: new EnumResolver(client, Object.values(Action)),
+					required: true
 				},
 				{
 					name: 'channel',
 					resolver: new AnyResolver(client, ChannelResolver, StringResolver),
+					required: true,
 					full: true
 				}
 			],
@@ -48,8 +49,8 @@ export default class extends Command {
 		if (settings.welcomeEnabled !== true) throw new ExecuteError(t('error.module.disabled'));
 
 		const embed = this.createEmbed({
-			color: ColorResolve(Color.MAGENTA),
-			title: t('welcome.title'),
+			color: Color.MAGENTA,
+			author: { name: t('welcome.title'), icon_url: Images.SUCCESS },
 			footer: null
 		});
 

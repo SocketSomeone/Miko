@@ -1,14 +1,13 @@
 import { Command, Context } from '../../../Framework/Commands/Command';
 import { BaseClient } from '../../../Client';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
-import { Message, Member } from 'eris';
-import { BaseMember } from '../../../Entity/Member';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
+import { Message } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
-import { BigIntResolver, StringResolver } from '../../../Framework/Resolvers';
+import { StringResolver } from '../../../Framework/Resolvers';
 import { EmojisDefault } from '../../../Misc/Enums/EmojisDefaults';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
+import { Images } from '../../../Misc/Enums/Images';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -30,30 +29,22 @@ export default class extends Command {
 	}
 
 	public async execute(message: Message, [emoji]: [string], { funcs: { t, e }, guild, settings }: Context) {
-		console.log(emoji);
-		if (emoji) {
-			const checked = e(emoji);
+		const checked = e(emoji);
 
-			if (checked === EmojisDefault.UNKNOWN_EMOJI) throw new ExecuteError(t('error.emoji.notFound'));
+		if (emoji && checked === EmojisDefault.UNKNOWN_EMOJI) throw new ExecuteError(t('error.emoji.notFound'));
 
-			settings.currency = emoji;
-		} else {
-			settings.currency = EmojisDefault.WALLET;
-		}
-
+		settings.currency = emoji || EmojisDefault.WALLET;
 		await settings.save();
 
 		await this.replyAsync(message, t, {
-			color: ColorResolve(Color.MAGENTA),
-			title: t('configure.title', {
-				guild: guild.name
-			}),
-			description: t(`configure.setcurrency`, {
-				currency: settings.currency
-			}),
-			footer: {
-				text: ''
-			}
+			color: Color.MAGENTA,
+			author: {
+				name: t('configure.title', { guild: guild.name }),
+				icon_url: Images.SUCCESS
+			},
+			description: t(`configure.setcurrency`, { currency: settings.currency }),
+			footer: null,
+			timestamp: null
 		});
 	}
 }

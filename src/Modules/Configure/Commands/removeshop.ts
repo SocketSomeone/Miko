@@ -6,6 +6,7 @@ import { Message } from 'eris';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { BaseShopRole } from '../../../Entity/ShopRole';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
+import { Color } from '../../../Misc/Enums/Colors';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -28,18 +29,7 @@ export default class extends Command {
 	}
 
 	public async execute(message: Message, [index]: [number], { funcs: { t, e }, guild, settings }: Context) {
-		const roles = await BaseShopRole.find({
-			where: {
-				guild: {
-					id: guild.id
-				}
-			},
-			order: {
-				cost: 'ASC',
-				createdAt: 'ASC'
-			}
-		});
-
+		const roles = await this.client.cache.shop.get(guild);
 		const role = roles[index - 1];
 
 		if (roles.length < 1 || !role) {
@@ -49,13 +39,11 @@ export default class extends Command {
 		role.remove().catch(() => undefined);
 
 		await this.replyAsync(message, t, {
+			color: Color.MAGENTA,
 			title: t('configure.title'),
-			description: t('configure.removeshop.deleted', {
-				role: `<@&${role.id}>`
-			}),
-			footer: {
-				text: null
-			}
+			description: t('configure.removeshop.deleted', { role: `<@&${role.id}>` }),
+			footer: null,
+			timestamp: null
 		});
 	}
 }

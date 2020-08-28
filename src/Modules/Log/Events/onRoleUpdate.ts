@@ -3,9 +3,9 @@ import { BaseClient } from '../../../Client';
 import { LogType } from '../Misc/LogType';
 import { TranslateFunc } from '../../../Framework/Commands/Command';
 import { Guild, Constants, Role } from 'eris';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
+import { Images } from '../../../Misc/Enums/Images';
 
 const color = (dec: number) => {
 	let color = dec.toString(16);
@@ -27,8 +27,8 @@ export default class onRoleUpdateEvent extends BaseEventLog {
 		}
 
 		const embed = this.client.messages.createEmbed({
-			author: { name: t('logs.roleUpdate') },
-			color: ColorResolve(Color.YELLOW),
+			author: { name: t('logs.roleUpdate'), icon_url: Images.ROLE_UPDATE },
+			color: Color.YELLOW,
 			fields: [
 				{
 					name: t('logs.role'),

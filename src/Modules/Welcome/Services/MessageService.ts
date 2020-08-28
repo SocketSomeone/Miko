@@ -24,7 +24,7 @@ export class MessageService extends BaseService {
 			mention
 		});
 
-		const t: TranslateFunc = (key, replace) => i18n.__({ locale: sets.locale, phrase: key }, replace);
+		const t: TranslateFunc = (phrase, replace) => i18n.__({ locale: sets.locale, phrase }, replace);
 
 		switch (sets.welcomeChannelType) {
 			case WelcomeChannelType.DM: {

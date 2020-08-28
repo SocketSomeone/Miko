@@ -30,18 +30,7 @@ export class ChannelResolver extends Resolver {
 			if (channels.length === 1) {
 				channel = channels[0];
 			} else {
-				if (channels.length === 0) {
-					throw Error(t(`resolvers.channel.notFound`));
-				} else {
-					throw Error(
-						t(`resolvers.channel.multiple`, {
-							channels: channels
-								.slice(0, 10)
-								.map((c) => `\`${c.name}\``)
-								.join(', ')
-						})
-					);
-				}
+				throw Error(t(`resolvers.channel.notFound`));
 			}
 		}
 

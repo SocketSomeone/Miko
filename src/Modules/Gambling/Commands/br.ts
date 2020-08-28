@@ -34,13 +34,7 @@ export default class extends Command {
 	) {
 		const person = await BaseMember.get(message.member);
 
-		if (person.money < money)
-			throw new ExecuteError(
-				t('error.enough.money', {
-					emoji: e(currency),
-					amount: money - person.money
-				})
-			);
+		if (person.money < money) throw new ExecuteError(t('error.enough.money'));
 
 		person.money -= money;
 
@@ -48,7 +42,7 @@ export default class extends Command {
 
 		const embed = this.createEmbed({
 			title: t('gambling.br.title'),
-			color: ColorResolve(Color.GREEN),
+			color: int < 80 ? Color.RED : Color.GREEN,
 			thumbnail: {
 				url: 'https://i.imgur.com/p210WxA.png'
 			},
@@ -75,7 +69,6 @@ export default class extends Command {
 			embed.description = t('gambling.br.lose', {
 				int
 			});
-			embed.color = ColorResolve(Color.RED);
 		}
 
 		await person.save();

@@ -2,10 +2,10 @@ import { Command, Context } from '../../../Framework/Commands/Command';
 import { BaseClient } from '../../../Client';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message } from 'eris';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { Syntax } from '../../../Misc/Models/Syntax';
+import { Images } from '../../../Misc/Enums/Images';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -24,12 +24,10 @@ export default class extends Command {
 	public async execute(message: Message, []: [], { funcs: { t, e }, guild, settings }: Context) {
 		await this.showPaginated(t, message, 0, 2, (page, maxPage) => {
 			let embed = this.createEmbed({
-				color: ColorResolve(Color.GRAY),
+				color: Color.GRAY,
 				author: {
-					name: t('configure.title', {
-						guild: guild.name
-					}),
-					icon_url: message.author.dynamicAvatarURL()
+					name: t('configure.title', { guild: guild.name }),
+					icon_url: Images.SETTINGS
 				},
 				thumbnail: {
 					url: guild.dynamicIconURL('png', 4096)

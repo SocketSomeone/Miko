@@ -3,10 +3,10 @@ import { BaseClient } from '../../../Client';
 import { EnumResolver, StringResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message } from 'eris';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
+import { Images } from '../../../Misc/Enums/Images';
 
 enum Action {
 	SET = 'set',
@@ -21,11 +21,13 @@ export default class extends Command {
 			args: [
 				{
 					name: 'set/delete',
-					resolver: new EnumResolver(client, Object.values(Action))
+					resolver: new EnumResolver(client, Object.values(Action)),
+					required: true
 				},
 				{
 					name: 'message',
 					resolver: StringResolver,
+					required: true,
 					full: true
 				}
 			],
@@ -41,26 +43,14 @@ export default class extends Command {
 		if (settings.welcomeEnabled !== true) throw new ExecuteError(t('error.module.disabled'));
 
 		const embed = this.createEmbed({
-			color: ColorResolve(Color.MAGENTA),
-			title: t('welcome.title'),
+			color: Color.MAGENTA,
+			author: { name: t('welcome.title'), icon_url: Images.SUCCESS },
 			footer: null
 		});
 
 		switch (action) {
 			case Action.SET: {
-				try {
-					settings.welcomeMessage = JSON.stringify(embed);
-				} catch (error) {
-					throw new ExecuteError(
-						t('error.embed.send', {
-							error: error.message
-								.split(/[\r?\n]/)
-								.slice(1, 2)
-								.join('\n')
-						})
-					);
-				}
-
+				settings.welcomeMessage = m.length < 1 ? null : m;
 				embed.description = t('welcome.message.ok');
 				break;
 			}

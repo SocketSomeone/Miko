@@ -8,6 +8,7 @@ import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
+import { Images } from '../../../Misc/Enums/Images';
 
 enum Action {
 	ADD = 'add',
@@ -46,10 +47,8 @@ export default class extends Command {
 		if (settings.welcomeEnabled !== true) throw new ExecuteError(t('error.module.disabled'));
 
 		const embed = this.createEmbed({
-			color: ColorResolve(Color.MAGENTA),
-			title: t('configure.title', {
-				guild: guild.name
-			}),
+			color: Color.MAGENTA,
+			author: { name: t('welcome.title'), icon_url: Images.SUCCESS },
 			description: t('welcome.aar.list', {
 				roles: [...settings.onWelcomeRoles]
 					.filter((x) => guild.roles.has(x))

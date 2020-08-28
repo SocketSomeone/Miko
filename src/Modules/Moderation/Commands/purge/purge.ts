@@ -5,6 +5,8 @@ import { Message, Member } from 'eris';
 import { ExecuteError } from '../../../../Framework/Errors/ExecuteError';
 import { MemberResolver, NumberResolver } from '../../../../Framework/Resolvers';
 import { GuildPermission } from '../../../../Misc/Models/GuildPermissions';
+import { Color } from '../../../../Misc/Enums/Colors';
+import { Images } from '../../../../Misc/Enums/Images';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -35,14 +37,7 @@ export default class extends Command {
 		[quantity, member]: [number, Member],
 		{ funcs: { t, e }, guild, me, settings }: Context
 	) {
-		const embed = this.createEmbed({
-			title: t('moderation.purge.title')
-		});
-
-		if (quantity < 1)
-			throw new ExecuteError({
-				description: t('moderation.purge.invalidQuantity')
-			});
+		if (quantity < 1) throw new ExecuteError(t('moderation.purge.invalidQuantity'));
 
 		let messages = await message.channel.getMessages(Math.min(quantity, 100), message.id);
 
@@ -50,20 +45,25 @@ export default class extends Command {
 
 		messages.push(message);
 
+		const embed = this.createEmbed({
+			color: Color.MAGENTA,
+			author: { name: t('moderation.purge.title'), icon_url: Images.SUCCESS },
+			description: t('moderation.purge.text', {
+				member: message.member,
+				amount: messages.length
+			}),
+			footer: null,
+			timestamp: null
+		});
+
 		try {
 			await this.client.deleteMessages(
 				message.channel.id,
 				messages.map((m) => m.id),
 				'purge command'
 			);
-
-			embed.description = t('moderation.purge.text', {
-				member: message.member.mention,
-				amount: messages.length
-			});
 		} catch (err) {
-			embed.title = t('moderation.purge.error');
-			embed.description = err.message;
+			throw new ExecuteError(t('moderation.purge.error'));
 		}
 
 		await this.replyAsync(message, t, embed);

@@ -1,13 +1,12 @@
 import { Command, Context } from '../../../Framework/Commands/Command';
 import { BaseClient } from '../../../Client';
-import { StringResolver, ChannelResolver, RoleResolver, BigIntResolver } from '../../../Framework/Resolvers';
+import { RoleResolver, BigIntResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
-import { Message, Member, Channel, Role } from 'eris';
-import { BaseMember } from '../../../Entity/Member';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
+import { Message, Role } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { BaseShopRole } from '../../../Entity/ShopRole';
+import { Images } from '../../../Misc/Enums/Images';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -30,33 +29,33 @@ export default class extends Command {
 			guildOnly: true,
 			premiumOnly: false,
 			botPermissions: [GuildPermission.MANAGE_ROLES],
-			userPermissions: [GuildPermission.MANAGE_GUILD, GuildPermission.MANAGE_ROLES]
+			userPermissions: [GuildPermission.MANAGE_GUILD, GuildPermission.MANAGE_ROLES],
+			examples: ['addshop @role 100', 'addshop 741329695185960960 100']
 		});
 	}
 
-	public async execute(message: Message, [role, price]: [Role, bigint], { funcs: { t, e }, guild, settings }: Context) {
-		const changeRole = await BaseShopRole.findOne({
-			where: {
-				guild: {
-					id: guild.id
-				},
-				id: role.id
-			}
-		});
+	public async execute(
+		message: Message,
+		[role, price]: [Role, bigint],
+		{ funcs: { t, e }, guild, settings: { currency } }: Context
+	) {
+		const roles = await this.client.cache.shop.get(guild);
+		const changeRole = roles.find((x) => x.id === role.id);
 
 		const embed = this.createEmbed({
-			title: t('configure.title'),
-			footer: null
+			author: { name: t('configure.title', { guild: guild.name }), icon_url: Images.SUCCESS },
+			color: Color.MAGENTA,
+			description: t(`configure.addshop.${changeRole ? 'change' : 'new'}`, {
+				role: role.mention,
+				price: `${price} ${e(currency)}`
+			}),
+			footer: null,
+			timestamp: null
 		});
 
 		if (changeRole) {
 			changeRole.cost = price;
 			await changeRole.save();
-
-			embed.description = t('configure.addshop.change', {
-				role: role.mention
-			});
-			return;
 		} else {
 			await BaseShopRole.save(
 				BaseShopRole.create({
@@ -67,10 +66,6 @@ export default class extends Command {
 					}
 				})
 			);
-
-			embed.description = t('configure.addshop.new', {
-				role: role.mention
-			});
 		}
 
 		await this.replyAsync(message, t, embed);

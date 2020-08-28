@@ -4,10 +4,11 @@ import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
 import { Message, Member } from 'eris';
 import { BaseMember } from '../../../../Entity/Member';
 import { Color } from '../../../../Misc/Enums/Colors';
-import { ColorResolve } from '../../../../Misc/Utils/ColorResolver';
 import { MemberResolver, StringResolver } from '../../../../Framework/Resolvers';
 import { GuildPermission } from '../../../../Misc/Models/GuildPermissions';
 import { Punishment, BasePunishment } from '../../../../Entity/Punishment';
+import { ExecuteError } from '../../../../Framework/Errors/ExecuteError';
+import { Images } from '../../../../Misc/Enums/Images';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -36,21 +37,31 @@ export default class extends Command {
 
 	public async execute(
 		message: Message,
-		[member, reason]: [Member, string],
+		[member, r]: [Member, string],
 		{ funcs: { t, e }, guild, me, settings }: Context
 	) {
-		reason = reason || t('moderation.noreason');
+		const reason = r || t('moderation.noreason');
+		const extra = [{ name: 'logs.mod.reason', value: reason }];
 
 		const embed = this.client.messages.createEmbed({
-			color: ColorResolve(Color.RED),
-			title: t('moderation.kick.title'),
-			footer: null
+			color: Color.DARK,
+			author: { name: t('moderation.kick.title'), icon_url: Images.MODERATION },
+			footer: null,
+			description: t('moderation.kick.done', {
+				user: `${message.author.username}#${message.author.discriminator}`,
+				target: `${member.user.username}#${member.user.discriminator}`
+			}),
+			fields: extra.map((x) => {
+				return {
+					name: t(x.name),
+					value: x.value,
+					inline: true
+				};
+			})
 		});
 
 		if (this.client.moderation.isPunishable(guild, member, message.member, me)) {
-			const extra = [{ name: 'logs.mod.reason', value: reason }];
-
-			await BasePunishment.informUser(member, Punishment.KICK, settings, extra);
+			await BasePunishment.informUser(t, member, Punishment.MUTE, extra);
 
 			try {
 				await guild.kickMember(member.id, encodeURIComponent(reason));
@@ -70,28 +81,11 @@ export default class extends Command {
 						moderator: message.author.id
 					}
 				});
-
-				embed.color = ColorResolve(Color.DARK);
-				embed.description = t('moderation.kick.done', {
-					user: `${message.author.username}#${message.author.discriminator}`,
-					target: `${member.user.username}#${member.user.discriminator}`
-				});
-
-				//#region
-				embed.fields.push(
-					...extra
-						.filter((x) => !!x.value)
-						.map((x) => {
-							return { name: t(x.name), value: x.value.substr(0, 1024), inline: true };
-						})
-				);
-				//#endregion
 			} catch (err) {
-				console.log(err);
-				embed.description = t('moderation.kick.error');
+				throw new ExecuteError(t('moderation.kick.error'));
 			}
 		} else {
-			embed.description = t('moderation.kick.cannot');
+			throw new ExecuteError(t('moderation.kick.cannot'));
 		}
 
 		await this.replyAsync(message, t, embed);

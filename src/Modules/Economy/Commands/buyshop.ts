@@ -1,12 +1,12 @@
 import { Command, Context } from '../../../Framework/Commands/Command';
 import { BaseClient } from '../../../Client';
-import { NumberResolver } from '../../../Framework/Resolvers';
+import { NumberResolver, AnyResolver, RoleResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
-import { Message } from 'eris';
+import { Message, Role } from 'eris';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
-import { BaseShopRole } from '../../../Entity/ShopRole';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { BaseMember } from '../../../Entity/Member';
+import { Images } from '../../../Misc/Enums/Images';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -15,8 +15,8 @@ export default class extends Command {
 			aliases: ['buy', 'купить'],
 			args: [
 				{
-					name: 'index',
-					resolver: NumberResolver,
+					name: 'role/index',
+					resolver: new AnyResolver(client, RoleResolver, NumberResolver),
 					required: true
 				}
 			],
@@ -27,20 +27,10 @@ export default class extends Command {
 		});
 	}
 
-	public async execute(message: Message, [index]: [number], { funcs: { t, e }, guild, settings }: Context) {
-		const roles = await BaseShopRole.find({
-			where: {
-				guild: {
-					id: guild.id
-				}
-			},
-			order: {
-				cost: 'ASC',
-				createdAt: 'ASC'
-			}
-		});
+	public async execute(message: Message, [identify]: [number | Role], { funcs: { t, e }, guild, settings }: Context) {
+		const roles = await this.client.cache.shop.get(guild);
 
-		const role = roles[index - 1];
+		const role = typeof identify === 'number' ? roles[identify - 1] : roles.find((r) => r.id === identify.id);
 
 		if (roles.length < 1 || !role) {
 			throw new ExecuteError(t('economy.buyshop.notFound'));
@@ -53,11 +43,7 @@ export default class extends Command {
 		const person = await BaseMember.get(message.member);
 
 		if (person.money < role.cost) {
-			throw new ExecuteError(
-				t('error.enough.money', {
-					emoji: e(settings.currency)
-				})
-			);
+			throw new ExecuteError(t('error.enough.money'));
 		}
 
 		person.money -= role.cost;
@@ -66,13 +52,12 @@ export default class extends Command {
 		message.member.addRole(role.id).catch(() => undefined);
 
 		await this.replyAsync(message, t, {
-			title: t('economy.buyshop.title'),
+			author: { name: t('economy.buyshop.title'), icon_url: Images.SHOP },
 			description: t('economy.buyshop.ok', {
 				role: `<@&${role.id}>`
 			}),
-			footer: {
-				text: null
-			}
+			footer: null,
+			timestamp: null
 		});
 	}
 }

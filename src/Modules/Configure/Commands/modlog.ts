@@ -1,12 +1,12 @@
 import { Command, Context } from '../../../Framework/Commands/Command';
 import { BaseClient } from '../../../Client';
-import { StringResolver, ChannelResolver } from '../../../Framework/Resolvers';
+import { ChannelResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
-import { Message, Member, Channel } from 'eris';
-import { BaseMember } from '../../../Entity/Member';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
+import { Message, Channel } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
+import { Images } from '../../../Misc/Enums/Images';
+import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -28,25 +28,25 @@ export default class extends Command {
 	}
 
 	public async execute(message: Message, [channel]: [Channel], { funcs: { t, e }, guild, settings }: Context) {
-		if (channel) {
+		if (channel && channel.id !== settings.modlog) {
 			settings.modlog = channel.id;
 			await settings.save();
 		}
 
+		if (!settings.modlog || !guild.channels.has(settings.modlog))
+			throw new ExecuteError(t('configure.modlog.notFound'));
+
 		await this.replyAsync(message, t, {
-			color: ColorResolve(Color.MAGENTA),
-			title: t('configure.title', {
-				guild: guild.name
+			color: channel ? Color.MAGENTA : Color.GRAY,
+			author: {
+				name: t('configure.title', { guild: guild.name }),
+				icon_url: channel ? Images.SUCCESS : Images.SETTINGS
+			},
+			description: t(`configure.modlog.${channel ? 'new' : 'info'}`, {
+				channel: `<#${settings.modlog}>`
 			}),
-			description:
-				!settings.modlog || !guild.channels.has(settings.modlog)
-					? t('configure.modlog.notFound')
-					: t(`configure.modlog.${channel ? 'new' : 'info'}`, {
-							channel: `<#${settings.modlog}>`
-					  }),
-			footer: {
-				text: ''
-			}
+			footer: null,
+			timestamp: null
 		});
 	}
 }

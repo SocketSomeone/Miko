@@ -3,9 +3,9 @@ import { BaseClient } from '../../../Client';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message, Member } from 'eris';
 import { BaseMember } from '../../../Entity/Member';
-import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { BigIntResolver, MemberResolver } from '../../../Framework/Resolvers';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
+import { Images } from '../../../Misc/Enums/Images';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -42,12 +42,14 @@ export default class extends Command {
 		await target.save();
 
 		await this.sendAsync(message.channel, t, {
-			title: t('economy.award.title'),
+			author: { name: t('economy.award.title'), icon_url: Images.ECONOMY },
 			description: t('economy.award.desc', {
-				member: message.member.mention,
-				target: user.mention,
+				member: message.member,
+				target: user,
 				amount: `${money} ${e(settings.currency)}`
-			})
+			}),
+			timestamp: null,
+			footer: null
 		});
 	}
 }

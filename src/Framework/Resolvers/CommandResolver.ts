@@ -19,16 +19,11 @@ export class CommandResolver extends Resolver {
 			return cmds[0];
 		} else {
 			const cmd = cmds.find((c) => c.name.length - name.length === 0);
+
 			if (!cmd) {
-				throw Error(
-					t(`resolvers.command.multiple`, {
-						commands: cmds
-							.slice(0, 10)
-							.map((c) => `\`${c.name}\``)
-							.join(', ')
-					})
-				);
+				throw Error(t(`resolvers.command.notFound`));
 			}
+
 			return cmd;
 		}
 	}

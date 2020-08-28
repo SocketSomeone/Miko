@@ -2,16 +2,10 @@ import { Command, Context } from '../../../../Framework/Commands/Command';
 import { BaseClient } from '../../../../Client';
 import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
 import { Message, Member } from 'eris';
-import { BaseMember } from '../../../../Entity/Member';
 import { ExecuteError } from '../../../../Framework/Errors/ExecuteError';
-
-import moment, { Duration } from 'moment';
 import { Color } from '../../../../Misc/Enums/Colors';
-import { ColorResolve } from '../../../../Misc/Utils/ColorResolver';
-import { MemberResolver, StringResolver, DurationResolver } from '../../../../Framework/Resolvers';
+import { MemberResolver } from '../../../../Framework/Resolvers';
 import { GuildPermission } from '../../../../Misc/Models/GuildPermissions';
-import { Punishment, BasePunishment } from '../../../../Entity/Punishment';
-import { ScheduledAction } from '../../../../Entity/ScheduledAction';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -35,46 +29,43 @@ export default class extends Command {
 
 	public async execute(
 		message: Message,
-		[member, reason]: [Member, string],
+		[target, reason]: [Member, string],
 		{ funcs: { t, e }, guild, me, settings }: Context
 	) {
 		reason = reason || t('moderation.noreason');
 
 		const embed = this.client.messages.createEmbed({
-			color: ColorResolve(Color.RED),
+			color: Color.DARK,
 			title: t('moderation.unmute.title'),
-			fields: [],
+			description: t('moderation.unmute.done', {
+				user: `${message.author.username}#${message.author.discriminator}`,
+				target: `${target.user.username}#${target.user.discriminator}`
+			}),
 			footer: null
 		});
 
 		const mutedRole = settings.mutedRole;
 
 		if (!mutedRole || !guild.roles.has(mutedRole)) {
-			embed.description = t('error.missed.muterole');
-		} else if (!member.roles.includes(mutedRole)) {
-			embed.description = t('moderation.unmute.notmuted');
-		} else if (this.client.moderation.isPunishable(guild, member, message.member, me)) {
+			throw new ExecuteError(t('error.missed.muterole'));
+		} else if (!target.roles.includes(mutedRole)) {
+			throw new ExecuteError(t('moderation.unmute.notmuted'));
+		} else if (this.client.moderation.isPunishable(guild, target, message.member, me)) {
 			try {
-				await member.removeRole(mutedRole, `Unmuted by ${message.author.username}#${message.author.discriminator}`);
+				await target.removeRole(mutedRole, `Unmuted by ${message.author.username}#${message.author.discriminator}`);
 
-				await BasePunishment.logModAction({
-					client: this.client,
-					settings,
+				await this.client.logger.logModAction({
+					sets: settings,
 					member: message.member,
-					target: member,
-					type: 'UNMUTE'
-				});
-
-				embed.color = ColorResolve(Color.DARK);
-				embed.description = t('moderation.unmute.done', {
-					user: `${message.author.username}#${message.author.discriminator}`,
-					target: `${member.user.username}#${member.user.discriminator}`
+					type: 'UNMUTE',
+					target,
+					t
 				});
 			} catch (err) {
-				embed.description = t('moderation.unmute.error');
+				throw new ExecuteError(t('moderation.unmute.error'));
 			}
 		} else {
-			embed.description = t('moderation.unmute.cannot');
+			throw new ExecuteError(t('moderation.unmute.cannot'));
 		}
 
 		await this.replyAsync(message, t, embed);

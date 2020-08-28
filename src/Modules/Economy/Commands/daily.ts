@@ -4,10 +4,9 @@ import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message, Member } from 'eris';
 import { BaseMember } from '../../../Entity/Member';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
+import { Images } from '../../../Misc/Enums/Images';
 
 import moment from 'moment';
-import { Color } from '../../../Misc/Enums/Colors';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -20,28 +19,30 @@ export default class extends Command {
 		});
 	}
 
-	public async execute(message: Message, [], { funcs: { t, e }, guild, settings }: Context) {
-		const person = await BaseMember.get(message.member);
+	public async execute({ member, channel }: Message, [], { funcs: { t, e }, guild, settings }: Context) {
+		const person = await BaseMember.get(member);
 
 		if (moment().isBefore(person.timelyAt))
-			throw new ExecuteError({
-				title: t('economy.daily.wait.title'),
-				description: t('economy.daily.wait.desc', {
+			throw new ExecuteError(
+				t('economy.daily.wait', {
 					timeout: moment.duration(person.timelyAt.diff(moment())).humanize(false)
 				})
-			});
+			);
 
 		person.money += BigInt(settings.prices.timely);
 		person.timelyAt = moment().add(24, 'h');
 		await person.save();
 
-		await this.sendAsync(message.channel, t, {
-			color: ColorResolve(Color.PRIMARY),
-			title: t('economy.daily.title'),
+		await this.sendAsync(channel, t, {
+			author: { name: t('economy.daily.title'), icon_url: Images.TIME },
+			thumbnail: { url: member.avatarURL },
 			description: t('economy.daily.desc', {
-				member: message.member.mention,
-				amount: `${settings.prices.timely} ${e(settings.currency)}`
-			})
+				member: member,
+				amount: `${settings.prices.timely} ${e(settings.currency)}`,
+				timeout: moment.duration(person.timelyAt.diff(moment())).humanize(false)
+			}),
+			timestamp: null,
+			footer: null
 		});
 	}
 }

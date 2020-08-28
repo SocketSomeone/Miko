@@ -4,7 +4,7 @@ import { Guild } from 'eris';
 
 export class ReactionRoleCache extends BaseCache<BaseReactionRole[]> {
 	public async init() {
-		// TODO
+		// NO-OP
 	}
 
 	protected async _get(guild: Guild): Promise<BaseReactionRole[]> {

@@ -64,10 +64,7 @@ export default class extends Command {
 		});
 
 		if (!dbMessage) {
-			throw new ExecuteError({
-				title: t('error.reactionrole.notFound.title'),
-				description: t('error.reactionrole.notFound.desc')
-			});
+			throw new ExecuteError(t('error.reactionrole.notFound'));
 		}
 
 		const matches = emoji.match(CUSTOM_EMOJI_REGEX);

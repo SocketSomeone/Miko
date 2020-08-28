@@ -3,8 +3,8 @@ import { BaseClient } from '../../../Client';
 import { LogType } from '../Misc/LogType';
 import { TranslateFunc } from '../../../Framework/Commands/Command';
 import { Guild, Constants, Role, Member } from 'eris';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
+import { Images } from '../../../Misc/Enums/Images';
 
 export default class onMemberRolesUpdateEvent extends BaseEventLog {
 	public constructor(client: BaseClient) {
@@ -25,8 +25,8 @@ export default class onMemberRolesUpdateEvent extends BaseEventLog {
 
 	public async execute(t: TranslateFunc, guild: Guild, member: Member, oldRoles: string[]) {
 		const embed = this.client.messages.createEmbed({
-			author: { name: t('logs.memberRolesUpdate') },
-			color: ColorResolve(Color.YELLOW),
+			author: { name: t('logs.memberRolesUpdate'), icon_url: Images.MEMBER_UPDATE },
+			color: Color.YELLOW,
 			fields: [
 				{
 					name: t('logs.member'),

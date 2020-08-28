@@ -1,14 +1,12 @@
 import { Command, Context } from '../../../Framework/Commands/Command';
 import { BaseClient } from '../../../Client';
-import { StringResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
-import { Message, Member, Guild, VoiceChannel } from 'eris';
-import { BaseMember } from '../../../Entity/Member';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
+import { Message, Guild } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { ChannelType } from '../../../Types';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
+import { Images } from '../../../Misc/Enums/Images';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -32,14 +30,12 @@ export default class extends Command {
 		await settings.save();
 
 		await this.replyAsync(message, t, {
-			color: ColorResolve(Color.MAGENTA),
-			title: t('voice.title'),
+			color: Color.MAGENTA,
+			author: { name: t('voice.title'), icon_url: Images.SUCCESS },
 			description: t(`voice.enable`, {
 				channel: `<#${settings.privateManager}>`
 			}),
-			footer: {
-				text: ''
-			}
+			footer: null
 		});
 	}
 

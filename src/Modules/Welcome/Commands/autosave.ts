@@ -8,6 +8,7 @@ import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
+import { Images } from '../../../Misc/Enums/Images';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -30,14 +31,10 @@ export default class extends Command {
 		await settings.save();
 
 		await this.replyAsync(message, t, {
-			color: ColorResolve(Color.MAGENTA),
-			title: t('configure.title', {
-				guild: guild.name
-			}),
-			description: t(`configure.autosave.${settings.welcomeSaveRoles ? 'enable' : 'disable'}`),
-			footer: {
-				text: ''
-			}
+			color: Color.MAGENTA,
+			author: { name: t('welcome.title'), icon_url: Images.SUCCESS },
+			description: t(`welcome.autosave.${settings.welcomeSaveRoles ? 'enable' : 'disable'}`),
+			footer: null
 		});
 	}
 }

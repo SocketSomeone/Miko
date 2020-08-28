@@ -2,9 +2,9 @@ import { BaseEventLog } from '../Misc/EventLog';
 import { BaseClient } from '../../../Client';
 import { LogType } from '../Misc/LogType';
 import { TranslateFunc } from '../../../Framework/Commands/Command';
-import { Guild, Constants, User, GuildChannel } from 'eris';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
+import { Guild, Constants, GuildChannel } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
+import { Images } from '../../../Misc/Enums/Images';
 
 export default class onChannelCreateEvent extends BaseEventLog {
 	public constructor(client: BaseClient) {
@@ -25,12 +25,12 @@ export default class onChannelCreateEvent extends BaseEventLog {
 
 	public async execute(t: TranslateFunc, guild: Guild, created: GuildChannel) {
 		const embed = this.client.messages.createEmbed({
-			author: { name: t('logs.chanCreate') },
-			color: ColorResolve(Color.GREEN),
+			author: { name: t('logs.chanCreate'), icon_url: Images.CHANNEL_CREATE },
+			color: Color.LIME,
 			fields: [
 				{
 					name: t('logs.channel'),
-					value: `\`${created}\``,
+					value: created.mention,
 					inline: true
 				}
 			],

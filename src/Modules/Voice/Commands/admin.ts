@@ -1,14 +1,9 @@
 import { BaseClient } from '../../../Client';
 import { Context, Command } from '../../../Framework/Commands/Command';
 import { Message, Member } from 'eris';
-import { MemberResolver, NumberResolver } from '../../../Framework/Resolvers';
-import { BaseMember } from '../../../Entity/Member';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
-import { Color } from '../../../Misc/Enums/Colors';
-
-import moment from 'moment';
+import { MemberResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
-import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
+import { Images } from '../../../Misc/Enums/Images';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -37,9 +32,12 @@ export default class extends Command {
 		const newAdmin = await p.actionAdmin(t, member, user);
 
 		await this.replyAsync(message, t, {
-			color: ColorResolve(Color.PRIMARY),
-			title: t('voice.title'),
-			description: t(`voice.admin.${newAdmin ? 'setted' : 'deleted'}`)
+			author: {
+				name: t(`voice.admin.${newAdmin ? 'setted' : 'deleted'}`),
+				icon_url: Images.VOICE
+			},
+			footer: null,
+			timestamp: null
 		});
 	}
 }

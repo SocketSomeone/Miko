@@ -3,8 +3,8 @@ import { BaseClient } from '../../../Client';
 import { LogType } from '../Misc/LogType';
 import { TranslateFunc } from '../../../Framework/Commands/Command';
 import { Guild, Constants, Role } from 'eris';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
+import { Images } from '../../../Misc/Enums/Images';
 
 export default class onRoleCreateEvent extends BaseEventLog {
 	public constructor(client: BaseClient) {
@@ -15,8 +15,8 @@ export default class onRoleCreateEvent extends BaseEventLog {
 
 	public async execute(t: TranslateFunc, guild: Guild, role: Role) {
 		const embed = this.client.messages.createEmbed({
-			author: { name: t('logs.roleCreate') },
-			color: ColorResolve(Color.GREEN),
+			author: { name: t('logs.roleCreate'), icon_url: Images.ROLE_CREATE },
+			color: Color.LIME,
 			fields: [
 				{
 					name: t('logs.role'),

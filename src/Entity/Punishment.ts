@@ -17,9 +17,8 @@ import { TranslateFunc, Command } from '../Framework/Commands/Command';
 import { ColorResolve } from '../Misc/Utils/ColorResolver';
 import { Color } from '../Misc/Enums/Colors';
 import { BaseClient } from '../Client';
-
-import i18n from 'i18n';
 import { BaseSettings } from './GuildSettings';
+import i18n from 'i18n';
 
 export enum Punishment {
 	BAN = 'ban',
@@ -34,8 +33,8 @@ interface ContextLog {
 	settings: BaseSettings;
 	member: Member;
 	target: Member;
-	type?: Punishment | string;
 	opts?: Partial<BasePunishment>;
+	type?: Punishment | string;
 	extra?: { name: string; value: string }[];
 }
 
@@ -69,88 +68,56 @@ export class BasePunishment extends BaseEntity {
 	@CreateDateColumn()
 	public createdAt: Date;
 
-	public static async new(ctx: ContextLog) {
+	public static async new({ opts, member, target, client, settings, extra }: ContextLog) {
+		const t: TranslateFunc = (key, replacements) => i18n.__({ locale: settings.locale, phrase: key }, replacements);
+
 		const punishment = this.create({
-			...ctx.opts,
-			guild: BaseGuild.create({ id: ctx.member.guild.id }),
-			member: ctx.target.id
+			...opts,
+			guild: BaseGuild.create({ id: member.guild.id }),
+			member: target.id
 		});
 
 		await punishment.save();
 
-		await this.logModAction(ctx);
-	}
-
-	public static async logModAction({ client, settings: sets, member, target, type, extra }: ContextLog) {
-		const t: TranslateFunc = (k, r) => i18n.__({ locale: sets.locale, phrase: k }, r);
-
-		if (!sets.modlog) return;
-
-		const modLogChannel = member.guild.channels.get(sets.modlog) as TextChannel;
-
-		if (!modLogChannel) return;
-
-		extra = extra || [];
-
-		const embed = client.messages.createEmbed({
-			color: ColorResolve(Color.DARK),
-			author: {
-				name: `[${String(type).toUpperCase()}] ` + t('logs.mod.title'),
-				icon_url: client.user.dynamicAvatarURL('png', 4096)
-			},
-			fields: [
-				{
-					name: t('logs.mod.user'),
-					value: target.user.mention,
-					inline: true
-				},
-				{
-					name: t('logs.mod.moderator'),
-					value: member.user.mention,
-					inline: true
-				},
-				...extra
-					.filter((x) => !!x.value)
-					.map((e) => {
-						return { name: t(e.name), value: e.value.substr(0, 1024), inline: true };
-					})
-			],
-			footer: null
+		await client.logger.logModAction({
+			sets: settings,
+			type: opts.type,
+			member,
+			target,
+			extra,
+			t
 		});
-
-		await client.messages.sendEmbed(modLogChannel, t, embed);
 	}
 
 	public static async informUser(
+		t: TranslateFunc,
 		member: Member,
 		type: Punishment,
-		settings: BaseSettings,
 		extra?: { name: string; value: string }[]
 	) {
 		const dmChannel = await member.user.getDMChannel();
 
-		const t: TranslateFunc = (key, replacements) => i18n.__({ locale: settings.locale, phrase: key }, replacements);
-
-		const fields = [
-			...extra
-				.filter((x) => !!x.value)
-				.map((e) => {
-					return { name: t(e.name), value: e.value.substr(0, 1024), inline: true };
-				})
-		];
+		const fields = extra
+			.filter((x) => !!x.value)
+			.map((e) => {
+				return { name: t(e.name), value: e.value.substr(0, 1024), inline: true };
+			});
 
 		return dmChannel
 			.createMessage({
 				embed: {
 					color: ColorResolve(Color.DARK),
-					title: t(`moderation.dm.${type}`, {
-						guild: member.guild.name
-					}),
-					fields,
+					author: {
+						name: t(`moderation.dm.${type}`, {
+							guild: member.guild.name
+						}),
+						icon_url: member.guild.iconURL
+					},
 					footer: {
 						text: member.guild.name,
 						icon_url: member.guild.dynamicIconURL('png', 4096)
 					},
+					fields,
 					timestamp: new Date().toISOString()
 				}
 			})

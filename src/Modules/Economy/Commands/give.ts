@@ -5,6 +5,7 @@ import { Message, Member } from 'eris';
 import { BaseMember } from '../../../Entity/Member';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { BigIntResolver, MemberResolver } from '../../../Framework/Resolvers';
+import { Images } from '../../../Misc/Enums/Images';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -39,13 +40,7 @@ export default class extends Command {
 		const target = await BaseMember.get(user);
 		const person = await BaseMember.get(message.member);
 
-		if (person.money < money)
-			throw new ExecuteError({
-				description: t('error.enough.money', {
-					emoji: e(settings.currency),
-					amount: money - person.money
-				})
-			});
+		if (person.money < money) throw new ExecuteError(t('error.enough.money'));
 
 		target.money += money;
 		person.money -= money;
@@ -54,12 +49,14 @@ export default class extends Command {
 		await target.save();
 
 		await this.sendAsync(message.channel, t, {
-			title: t('economy.give.title'),
+			author: { name: t('economy.give.title'), icon_url: Images.ECONOMY },
 			description: t('economy.give.desc', {
-				member: message.member.mention,
-				target: user.mention,
+				member: message.member,
+				target: user,
 				amount: `${money} ${e(settings.currency)}`
-			})
+			}),
+			footer: null,
+			timestamp: null
 		});
 	}
 }

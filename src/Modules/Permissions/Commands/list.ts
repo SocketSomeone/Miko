@@ -5,6 +5,8 @@ import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import PermissionsOutput from '../Misc/PermissionsOutput';
+import { Color } from '../../../Misc/Enums/Colors';
+import { Images } from '../../../Misc/Enums/Images';
 
 const PERMS_PER_PAGE = 10;
 
@@ -33,7 +35,8 @@ export default class extends Command {
 			const perms = permissions.slice(page * PERMS_PER_PAGE, (page + 1) * PERMS_PER_PAGE);
 
 			return this.createEmbed({
-				title: t('perms.title'),
+				color: Color.MAGENTA,
+				author: { name: t('perms.title'), icon_url: Images.LIST },
 				description: perms.map((v, i) => PermissionsOutput(t, v, i)).join('\n')
 			});
 		});

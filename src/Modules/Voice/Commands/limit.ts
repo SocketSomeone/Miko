@@ -1,14 +1,12 @@
 import { BaseClient } from '../../../Client';
 import { Context, Command } from '../../../Framework/Commands/Command';
-import { Message, Member } from 'eris';
-import { MemberResolver, NumberResolver } from '../../../Framework/Resolvers';
-import { BaseMember } from '../../../Entity/Member';
+import { Message } from 'eris';
+import { NumberResolver } from '../../../Framework/Resolvers';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
-
-import moment from 'moment';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
+import { Images } from '../../../Misc/Enums/Images';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -41,9 +39,12 @@ export default class extends Command {
 		});
 
 		await this.replyAsync(message, t, {
-			color: ColorResolve(Color.PRIMARY),
-			title: t('voice.title'),
-			description: t('voice.limit')
+			author: {
+				name: t(`voice.limit`),
+				icon_url: Images.VOICE
+			},
+			footer: null,
+			timestamp: null
 		});
 	}
 }

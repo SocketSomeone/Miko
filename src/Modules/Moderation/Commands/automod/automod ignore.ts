@@ -1,12 +1,12 @@
 import { Command, Context } from '../../../../Framework/Commands/Command';
 import { BaseClient } from '../../../../Client';
-import { StringResolver, EnumResolver, RoleResolver, ChannelResolver } from '../../../../Framework/Resolvers';
+import { RoleResolver, ChannelResolver } from '../../../../Framework/Resolvers';
 import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
-import { Message, Member, Guild, User, Role, Channel } from 'eris';
-import { ColorResolve } from '../../../../Misc/Utils/ColorResolver';
+import { Message, Role, Channel } from 'eris';
 import { Color } from '../../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../../Misc/Models/GuildPermissions';
 import { AnyResolver } from '../../../../Framework/Resolvers/AnyResolver';
+import { Images } from '../../../../Misc/Enums/Images';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -30,10 +30,13 @@ export default class extends Command {
 
 	public async execute(message: Message, [target]: [Role | Channel], { funcs: { t, e }, guild, settings }: Context) {
 		const embed = this.createEmbed({
-			color: ColorResolve(Color.MAGENTA),
-			title: t('automod.title', {
-				guild: guild.name
-			})
+			author: {
+				name: t('automod.title'),
+				icon_url: Images.SUCCESS
+			},
+			color: Color.MAGENTA,
+			footer: null,
+			timestamp: null
 		});
 
 		if (target instanceof Role) {

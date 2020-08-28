@@ -48,18 +48,7 @@ export class RoleResolver extends Resolver {
 			if (roles.length === 1) {
 				role = roles[0];
 			} else {
-				if (roles.length === 0) {
-					throw Error(t(`resolvers.role.notFound`));
-				} else {
-					throw Error(
-						t(`resolvers.role.multiple`, {
-							roles: roles
-								.slice(0, 10)
-								.map((r) => `\`${r.name}\``)
-								.join(', ')
-						})
-					);
-				}
+				throw Error(t(`resolvers.command.notFound`));
 			}
 		}
 

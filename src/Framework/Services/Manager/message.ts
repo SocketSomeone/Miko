@@ -5,7 +5,7 @@ import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { TranslateFunc } from '../../Commands/Command';
 import { Color } from '../../../Misc/Enums/Colors';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
-import { ChannelType } from '../../../Types';
+import { ChannelType, Modify, BaseEmbedOptions } from '../../../Types';
 
 const upSymbol = 'left:736460400656384090';
 const downSymbol = 'right:736460400089890867';
@@ -30,7 +30,7 @@ function convertEmbedToPlain(embed: EmbedOptions) {
 }
 
 export class MessageService extends BaseService {
-	public createEmbed(options: EmbedOptions = {}): Embed {
+	public createEmbed(options: BaseEmbedOptions = {}): Embed {
 		let color = options.color ? (options.color as number | string) : Color.PRIMARY;
 
 		// Parse colors in hashtag/hex format
@@ -60,14 +60,19 @@ export class MessageService extends BaseService {
 		};
 	}
 
-	public sendReply(message: Message, t: TranslateFunc, reply: EmbedOptions | string) {
+	public sendReply(message: Message, t: TranslateFunc, reply: BaseEmbedOptions | string) {
 		return this.sendEmbed(message.channel, t, reply, message.author);
 	}
 
-	public sendEmbed(target: TextableChannel, t: TranslateFunc, embed: EmbedOptions | string, fallbackUser?: User) {
+	public sendEmbed(target: TextableChannel, t: TranslateFunc, embed: BaseEmbedOptions | string, fallbackUser?: User) {
 		const e = typeof embed === 'string' ? this.createEmbed({ description: embed }) : this.createEmbed(embed);
 
-		e.fields = e.fields.filter((x) => x && x.value);
+		e.fields = e.fields
+			.filter((x) => x && x.value)
+			.map((x) => {
+				x.value = x.value.substring(0, 1024);
+				return x;
+			});
 
 		const content = convertEmbedToPlain(e);
 
@@ -261,9 +266,7 @@ export class MessageService extends BaseService {
 		}
 	}
 
-	public fillTemplate(template: string, strings?: { [x: string]: string | number }): string | Embed {
-		let msg = template;
-
+	public fillTemplate(msg: string, strings?: { [x: string]: string | number }): string | Embed {
 		if (strings) {
 			Object.keys(strings).forEach((k) => (msg = msg.replace(new RegExp(`{${k}}`, 'g'), String(strings[k]))));
 		}
@@ -285,9 +288,8 @@ export class MessageService extends BaseService {
 				};
 			}
 
-			embed.footer = embed.footer || {
-				text: null
-			};
+			embed.footer = embed.footer || null;
+			embed.timestamp = embed.timestamp || null;
 
 			return this.createEmbed(embed);
 		} catch (e) {

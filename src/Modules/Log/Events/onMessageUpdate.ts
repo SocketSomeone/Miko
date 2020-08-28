@@ -2,9 +2,9 @@ import { BaseEventLog } from '../Misc/EventLog';
 import { BaseClient } from '../../../Client';
 import { LogType } from '../Misc/LogType';
 import { TranslateFunc } from '../../../Framework/Commands/Command';
-import { Guild, Constants, Role, Member, Message, PrivateChannel, GroupChannel, TextChannel } from 'eris';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
+import { Guild, Message, PrivateChannel, GroupChannel, TextChannel } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
+import { Images } from '../../../Misc/Enums/Images';
 
 export default class onMessageUpdateEvent extends BaseEventLog {
 	public constructor(client: BaseClient) {
@@ -35,8 +35,8 @@ export default class onMessageUpdateEvent extends BaseEventLog {
 		}
 
 		const embed = this.client.messages.createEmbed({
-			author: { name: t('logs.messageUpdate') },
-			color: ColorResolve(Color.YELLOW),
+			author: { name: t('logs.messageUpdate'), icon_url: Images.MESSAGE_UPDATE },
+			color: Color.YELLOW,
 			fields: [
 				{
 					name: t('logs.messageBefore'),

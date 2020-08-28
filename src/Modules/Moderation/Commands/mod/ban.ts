@@ -4,13 +4,11 @@ import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
 import { Message, Member } from 'eris';
 import { BaseMember } from '../../../../Entity/Member';
 import { ExecuteError } from '../../../../Framework/Errors/ExecuteError';
-
-import moment from 'moment';
 import { Color } from '../../../../Misc/Enums/Colors';
-import { ColorResolve } from '../../../../Misc/Utils/ColorResolver';
 import { MemberResolver, StringResolver } from '../../../../Framework/Resolvers';
 import { GuildPermission } from '../../../../Misc/Models/GuildPermissions';
 import { Punishment, BasePunishment } from '../../../../Entity/Punishment';
+import { Images } from '../../../../Misc/Enums/Images';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -39,24 +37,34 @@ export default class extends Command {
 
 	public async execute(
 		message: Message,
-		[member, reason]: [Member, string],
+		[member, r]: [Member, string],
 		{ funcs: { t, e }, guild, me, settings }: Context
 	) {
-		reason = reason || t('moderation.noreason');
+		const reason = r || t('moderation.noreason');
+		const extra = [
+			{ name: 'logs.mod.reason', value: reason },
+			{ name: 'logs.mod.duration', value: `∞` }
+		];
 
 		const embed = this.client.messages.createEmbed({
-			color: ColorResolve(Color.RED),
-			title: t('moderation.ban.title'),
+			color: Color.DARK,
+			author: { name: t('moderation.ban.title'), icon_url: Images.MODERATION },
+			description: t('moderation.ban.done', {
+				user: `${message.author.username}#${message.author.discriminator}`,
+				target: `${member.user.username}#${member.user.discriminator}`
+			}),
+			fields: extra.map((x) => {
+				return {
+					name: t(x.name),
+					value: x.value,
+					inline: true
+				};
+			}),
 			footer: null
 		});
 
 		if (this.client.moderation.isPunishable(guild, member, message.member, me)) {
-			const extra = [
-				{ name: 'logs.mod.reason', value: reason },
-				{ name: 'logs.mod.duration', value: `∞` }
-			];
-
-			await BasePunishment.informUser(member, Punishment.BAN, settings, extra);
+			await BasePunishment.informUser(t, member, Punishment.MUTE, extra);
 
 			try {
 				await guild.banMember(member.id, 7, encodeURIComponent(reason));
@@ -76,25 +84,11 @@ export default class extends Command {
 						moderator: message.author.id
 					}
 				});
-
-				embed.color = ColorResolve(Color.DARK);
-				embed.description = t('moderation.ban.done', {
-					user: `${message.author.username}#${message.author.discriminator}`,
-					target: `${member.user.username}#${member.user.discriminator}`
-				});
-
-				embed.fields.push(
-					...extra
-						.filter((x) => !!x.value)
-						.map((x) => {
-							return { name: t(x.name), value: x.value.substr(0, 1024), inline: true };
-						})
-				);
 			} catch (err) {
-				embed.description = t('moderation.ban.error');
+				throw new ExecuteError(t('moderation.ban.error'));
 			}
 		} else {
-			embed.description = t('moderation.ban.cannot');
+			throw new ExecuteError(t('moderation.ban.cannot'));
 		}
 
 		await this.replyAsync(message, t, embed);

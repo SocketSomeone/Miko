@@ -3,9 +3,9 @@ import { BaseClient } from '../../../Client';
 import { LogType } from '../Misc/LogType';
 import { TranslateFunc } from '../../../Framework/Commands/Command';
 import { Guild, Constants } from 'eris';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
 import { Emoji } from 'eris';
+import { Images } from '../../../Misc/Enums/Images';
 
 export default class onEmojiCreateEvent extends BaseEventLog {
 	public constructor(client: BaseClient) {
@@ -22,8 +22,8 @@ export default class onEmojiCreateEvent extends BaseEventLog {
 
 	public async execute(t: TranslateFunc, guild: Guild, emoji: Emoji) {
 		const embed = this.client.messages.createEmbed({
-			author: { name: t('logs.emojiCreate') },
-			color: ColorResolve(Color.GREEN),
+			author: { name: t('logs.emojiCreate'), icon_url: Images.EMOJI_CREATE },
+			color: Color.LIME,
 			fields: [
 				{
 					name: t('logs.emoji'),

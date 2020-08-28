@@ -3,8 +3,8 @@ import { BaseClient } from '../../../Client';
 import { LogType } from '../Misc/LogType';
 import { TranslateFunc } from '../../../Framework/Commands/Command';
 import { Guild, Message, PrivateChannel, GroupChannel, TextChannel } from 'eris';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
+import { Images } from '../../../Misc/Enums/Images';
 
 export default class onMessageDeleteEvent extends BaseEventLog {
 	public constructor(client: BaseClient) {
@@ -29,8 +29,8 @@ export default class onMessageDeleteEvent extends BaseEventLog {
 
 	public async execute(t: TranslateFunc, guild: Guild, { content, member, channel }: Message) {
 		const embed = this.client.messages.createEmbed({
-			author: { name: t('logs.messageDeleted') },
-			color: ColorResolve(Color.RED),
+			author: { name: t('logs.messageDeleted'), icon_url: Images.MESSAGE_DELETE },
+			color: Color.RED,
 			title: t('logs.msgDeleted'),
 			description: content.markdown(''),
 			fields: [

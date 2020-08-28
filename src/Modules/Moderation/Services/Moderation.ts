@@ -1,16 +1,16 @@
-import moment from 'moment';
-import i18n from 'i18n';
-
 import { BaseService } from '../../../Framework/Services/Service';
-import { Guild, Role, Member, Message, TextChannel, EmbedOptions } from 'eris';
+import { Guild, Role, Member, Message, TextChannel } from 'eris';
 import { Punishment, BasePunishment } from '../../../Entity/Punishment';
 import { Violation } from '../../../Misc/Enums/Violation';
 import { BaseMember } from '../../../Entity/Member';
 import { TranslateFunc } from '../../../Framework/Commands/Command';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { BaseSettings } from '../../../Entity/GuildSettings';
+import { Images } from '../../../Misc/Enums/Images';
+
+import moment from 'moment';
+import i18n from 'i18n';
 
 interface Arguments {
 	guild: Guild;
@@ -190,7 +190,7 @@ export class ModerationService extends BaseService {
 				{ name: 'logs.mod.message', value: message.content.trim() }
 			];
 
-			await BasePunishment.informUser(member, punishmentConfig.type, settings, extra);
+			await BasePunishment.informUser(t, member, punishmentConfig.type, extra);
 
 			const punishmentResult = await func(member, punishmentConfig.amount, { guild, settings });
 
@@ -253,6 +253,8 @@ export class ModerationService extends BaseService {
 		if (cached.length === 1) {
 			return false;
 		}
+
+		new Map().keys;
 
 		cached = cached.filter(
 			(m) =>
@@ -412,16 +414,13 @@ export class ModerationService extends BaseService {
 		const t: TranslateFunc = (phrase, replace) => i18n.__({ locale: settings.locale, phrase }, replace);
 
 		const reply = await this.client.messages.sendReply(message, t, {
-			color: ColorResolve(Color.DARK),
-			title: t('automod.title'),
-			description: t('automod.desc', {
-				type: t(`automod.violations.${type.toString()}`)
-			}),
-			footer: {
-				text: t('automod.footer'),
-				icon_url: this.client.user.dynamicAvatarURL('png', 4096)
-			},
-			timestamp: new Date().toISOString()
+			color: Color.YELLOW,
+			timestamp: new Date().toISOString(),
+			footer: { text: t('automod.footer'), icon_url: this.client.user.dynamicAvatarURL('png', 4096) },
+			author: {
+				name: t('automod.desc', { type: t(`automod.violations.${type.toString()}`) }),
+				icon_url: Images.WARN
+			}
 		});
 
 		if (reply) {

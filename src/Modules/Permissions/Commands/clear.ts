@@ -1,21 +1,11 @@
 import { BaseClient } from '../../../Client';
 import { Context, Command } from '../../../Framework/Commands/Command';
-import { Message, Member, Role, GuildChannel } from 'eris';
+import { Message } from 'eris';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
-import {
-	AnyResolver,
-	RoleResolver,
-	MemberResolver,
-	BooleanResolver,
-	ChannelResolver,
-	NumberResolver
-} from '../../../Framework/Resolvers';
-import { PermissionTargetResolver } from '../Resolvers/PermissionResolver';
-import { PermissionsTarget, PermissionsFrom, Permission } from '../../../Misc/Models/Permisson';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
+import { Images } from '../../../Misc/Enums/Images';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -38,8 +28,8 @@ export default class extends Command {
 		await this.client.cache.permissions.save(guild.id, []);
 
 		await this.replyAsync(message, t, {
-			color: ColorResolve(Color.MAGENTA),
-			title: t('perms.title'),
+			color: Color.MAGENTA,
+			author: { name: t('perms.title'), icon_url: Images.SUCCESS },
 			description: t('perms.clear')
 		});
 	}

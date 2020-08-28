@@ -1,12 +1,10 @@
 import { BaseClient } from '../../../Client';
 import { Context, Command } from '../../../Framework/Commands/Command';
-import { Message, Member, Role } from 'eris';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
-import { Color } from '../../../Misc/Enums/Colors';
+import { Message, Member } from 'eris';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
-import { AnyResolver, RoleResolver, MemberResolver } from '../../../Framework/Resolvers';
-import { ActionRoom } from '../../../Entity/Privates';
+import { MemberResolver } from '../../../Framework/Resolvers';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
+import { Images } from '../../../Misc/Enums/Images';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -36,12 +34,15 @@ export default class extends Command {
 		await p.kickUser(t, member, target);
 
 		await this.replyAsync(message, t, {
-			color: ColorResolve(Color.PRIMARY),
-			title: t('voice.title'),
-			description: t(`voice.kick`, {
-				member: member.mention,
-				target: target.mention
-			})
+			author: {
+				name: t(`voice.kick`, {
+					member: member.tag,
+					target: target.tag
+				}),
+				icon_url: Images.VOICE
+			},
+			footer: null,
+			timestamp: null
 		});
 	}
 }

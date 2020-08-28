@@ -38,13 +38,7 @@ export default class extends Command {
 	) {
 		const person = await BaseMember.get(message.member);
 
-		if (person.money < money)
-			throw new ExecuteError(
-				t('error.enough.money', {
-					emoji: e(currency),
-					amount: money - person.money
-				})
-			);
+		if (person.money < money) throw new ExecuteError(t('error.enough.money'));
 
 		const times = 3n * money;
 		const result = machine.play();
@@ -59,7 +53,7 @@ export default class extends Command {
 			description: t('gambling.slots.desc', {
 				result: result.visualize(false)
 			}),
-			color: ColorResolve(isWon ? Color.GREEN : Color.RED),
+			color: isWon ? Color.GREEN : Color.RED,
 			fields: [
 				{
 					name: t('gambling.slots.fields.bet'),

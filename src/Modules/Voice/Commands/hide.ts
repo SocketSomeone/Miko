@@ -1,12 +1,12 @@
 import { BaseClient } from '../../../Client';
 import { Context, Command } from '../../../Framework/Commands/Command';
 import { Message, Member, Role } from 'eris';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { AnyResolver, RoleResolver, MemberResolver } from '../../../Framework/Resolvers';
 import { ActionRoom } from '../../../Entity/Privates';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
+import { Images } from '../../../Misc/Enums/Images';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -40,11 +40,14 @@ export default class extends Command {
 		await p.actionRoom(t, member, target || guild, ActionRoom.HIDE, false);
 
 		await this.replyAsync(message, t, {
-			color: ColorResolve(Color.PRIMARY),
-			title: t('voice.title'),
-			description: t(`voice.hidden`, {
-				target: (target && target.mention) || t('voice.all')
-			})
+			author: {
+				name: t(`voice.hidden`, {
+					target: (target && target.name.substring(0, 40)) || t('voice.all')
+				}),
+				icon_url: Images.VOICE
+			},
+			footer: null,
+			timestamp: null
 		});
 	}
 }

@@ -37,7 +37,8 @@ export default class extends Command {
 			guildOnly: true,
 			premiumOnly: false,
 			botPermissions: [GuildPermission.MANAGE_CHANNELS],
-			userPermissions: [GuildPermission.MANAGE_GUILD]
+			userPermissions: [GuildPermission.MANAGE_GUILD],
+			examples: ['set #text', 'delete']
 		});
 	}
 

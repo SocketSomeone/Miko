@@ -24,7 +24,8 @@ export default class extends Command {
 			guildOnly: true,
 			botPermissions: [GuildPermission.MANAGE_MESSAGES],
 			userPermissions: [GuildPermission.MANAGE_MESSAGES],
-			premiumOnly: false
+			premiumOnly: false,
+			examples: ['Miko - your way to high quality!', '`{ "description": "You are the best!" }`']
 		});
 	}
 

@@ -24,16 +24,17 @@ export default class extends Command {
 			group: CommandGroup.CONFIGURE,
 			guildOnly: true,
 			premiumOnly: false,
-			userPermissions: [GuildPermission.MANAGE_GUILD]
+			userPermissions: [GuildPermission.MANAGE_GUILD],
+			examples: [EmojisDefault.WALLET]
 		});
 	}
 
-	public async execute(message: Message, [emoji]: [string], { funcs: { t, e }, guild, settings }: Context) {
-		const checked = e(emoji);
+	public async execute(message: Message, [select]: [string], { funcs: { t, e }, guild, settings }: Context) {
+		const emoji = e(select || EmojisDefault.WALLET);
 
-		if (emoji && checked === EmojisDefault.UNKNOWN_EMOJI) throw new ExecuteError(t('error.emoji.notFound'));
+		if (emoji === EmojisDefault.UNKNOWN_EMOJI) throw new ExecuteError(t('error.emoji.notFound'));
 
-		settings.currency = emoji || EmojisDefault.WALLET;
+		settings.currency = emoji;
 		await settings.save();
 
 		await this.replyAsync(message, t, {

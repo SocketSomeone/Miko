@@ -322,33 +322,6 @@ export class RabbitMqService extends BaseService {
 				}
 				break;
 
-			// case ShardCommand.USER_DM:
-			// 	const dmChannel = guild.channels.get(content.channelId) as TextChannel;
-			// 	const sender = content.user;
-
-			// 	const embed = this.client.msg.createEmbed({
-			// 		author: {
-			// 			name: `${sender.username}#${sender.discriminator}`,
-			// 			url: sender.avatarURL
-			// 		},
-			// 		description: content.message
-			// 	});
-			// 	embed.fields.push({
-			// 		name: 'User ID',
-			// 		value: sender.id,
-			// 		inline: true
-			// 	});
-			// 	embed.fields.push({
-			// 		name: 'Initial message',
-			// 		value: content.isInitial,
-			// 		inline: true
-			// 	});
-
-			// 	await dmChannel.createMessage({
-			// 		embed
-			// 	});
-			// 	break;
-
 			default:
 				console.error(`UNKNOWN COMMAND: ${cmd}`);
 		}
@@ -369,8 +342,8 @@ export class RabbitMqService extends BaseService {
 			channels: channelCount,
 			roles: roleCount,
 			settings: this.client.cache.guilds.size,
-			//premium: this.client.cache.premium.getSize(),
-			permissions: this.client.cache.permissions.size
+			permissions: this.client.cache.permissions.size,
+			shops: this.client.cache.shop.size
 		};
 	}
 
@@ -380,6 +353,7 @@ export class RabbitMqService extends BaseService {
 			wsWarnings: this.client.stats.wsWarnings,
 			wsErrors: this.client.stats.wsErrors,
 			cmdProcessed: this.client.stats.cmdProcessed,
+			cmdFinished: this.client.stats.cmdFinished,
 			cmdErrors: this.client.stats.cmdErrors
 		};
 	}

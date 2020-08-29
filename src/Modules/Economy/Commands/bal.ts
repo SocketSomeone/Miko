@@ -20,7 +20,8 @@ export default class extends Command {
 			],
 			group: CommandGroup.ECONOMY,
 			guildOnly: true,
-			premiumOnly: false
+			premiumOnly: false,
+			examples: ['@user']
 		});
 	}
 

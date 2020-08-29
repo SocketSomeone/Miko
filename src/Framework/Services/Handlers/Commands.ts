@@ -53,7 +53,7 @@ export class CommandService extends BaseService {
 
 				for (const alias of inst.aliases) {
 					if (this.commandMap.has(alias.toLowerCase())) {
-						console.error(`Duplicate command alias ${alias} in ${inst.name}`);
+						console.error(`Duplicate command alias ${alias} in ${relative(process.cwd(), file)}`);
 						process.exit(1);
 					}
 
@@ -140,11 +140,9 @@ export class CommandService extends BaseService {
 			return;
 		}
 
-		let me: Member = undefined;
-
 		let context: Context = {
 			guild,
-			me,
+			me: undefined,
 			settings: sets,
 			isPremium: false,
 			funcs: {
@@ -155,8 +153,11 @@ export class CommandService extends BaseService {
 
 		if (guild) {
 			let member = message.member;
+			context.me =
+				guild.members.get(this.client.user.id) ||
+				(await guild.getRESTMember(this.client.user.id).catch(() => undefined));
 
-			if (!member) {
+			if (!member || !context.me) {
 				return;
 			}
 
@@ -170,11 +171,13 @@ export class CommandService extends BaseService {
 				if (!answer) {
 					await this.client.messages
 						.sendReply(message, t, {
-							color: Color.RED,
 							author: {
 								name: t('error.missed.permissions', { index: String(permission.index) }),
 								icon_url: Images.CRITICAL
-							}
+							},
+							color: Color.RED,
+							footer: null,
+							timestamp: null
 						})
 						.then((m) => setTimeout(async () => await m.delete(), 15000));
 
@@ -193,20 +196,14 @@ export class CommandService extends BaseService {
 						await this.client.messages.sendReply(message, t, {
 							color: Color.RED,
 							author: { name: t('error.missed.userpermissions.title'), icon_url: Images.CRITICAL },
-							description: t('error.missed.userpermissions.desc', { missed })
+							description: t('error.missed.userpermissions.desc', { missed }),
+							footer: null,
+							timestamp: null
 						});
 
 						return;
 					}
 				}
-			}
-
-			context.me =
-				guild.members.get(this.client.user.id) ||
-				(await guild.getRESTMember(this.client.user.id).catch(() => undefined));
-
-			if (!context.me) {
-				return;
 			}
 
 			const missingPerms = cmd.botPermissions.filter(
@@ -222,7 +219,9 @@ export class CommandService extends BaseService {
 				await this.client.messages.sendReply(message, t, {
 					color: Color.RED,
 					author: { name: t('error.missed.botpermissions.title'), icon_url: Images.CRITICAL },
-					description: t('error.missed.botpermissions.desc', { missed })
+					description: t('error.missed.botpermissions.desc', { missed }),
+					footer: null,
+					timestamp: null
 				});
 
 				return;
@@ -232,13 +231,12 @@ export class CommandService extends BaseService {
 		moment.locale(sets.locale);
 
 		const rawArgs: string[] = this.rawArgs(splits);
-
 		const args: any[] = [];
+
 		let i = 0;
 
 		for (const arg of cmd.args) {
-			const resolver = cmd.resolvers[i];
-
+			let resolver = cmd.resolvers[i];
 			let rawVal = rawArgs[i];
 
 			if (arg.rest) {
@@ -275,10 +273,10 @@ export class CommandService extends BaseService {
 
 		this.client.stats.cmdProcessed++;
 
-		let error: any = null;
-
 		try {
 			await cmd.execute(message, args, context);
+
+			this.client.stats.cmdFinished++;
 		} catch (err) {
 			if (err instanceof ExecuteError) {
 				const embed = this.client.messages.createEmbed({
@@ -289,17 +287,13 @@ export class CommandService extends BaseService {
 				});
 
 				await this.client.messages.sendReply(message, t, embed);
-			} else {
-				error = err;
+
+				return;
 			}
-		}
 
-		const execTime = moment().unix() - start.unix();
-
-		if (error) {
 			this.client.stats.cmdErrors++;
 
-			console.error(error);
+			console.error(err);
 
 			withScope((scope) => {
 				if (guild) {
@@ -309,15 +303,15 @@ export class CommandService extends BaseService {
 				scope.setTag('command', cmd.name);
 				scope.setExtra('channel', channel.id);
 				scope.setExtra('message', message.content);
-				scope.setExtra('Execute Time', execTime);
+				scope.setExtra('Execute Time', moment().unix() - start.unix());
 
-				captureException(error);
+				captureException(err);
 			});
 
 			await this.client.messages.sendReply(message, t, {
 				author: { name: t('error.execCommand.title'), icon_url: Images.CRITICAL },
 				description: t('error.execCommand.desc', {
-					error: error.message
+					error: err.message
 				}),
 				color: Color.RED,
 				footer: {
@@ -325,8 +319,6 @@ export class CommandService extends BaseService {
 				}
 			});
 		}
-
-		//setTimeout(async () => await message.delete(), 30 * 1000);
 	}
 
 	hasPrefix(content: string, prefix?: string) {
@@ -356,19 +348,24 @@ export class CommandService extends BaseService {
 
 		for (let j = 0; j < splits.length; j++) {
 			const split = splits[j];
+
 			if (split.length === 0) {
 				continue;
 			}
 
 			if (!quote && split.startsWith(`"`)) {
 				quote = true;
-				acc = '"';
+				acc = split;
+
+				continue;
 			}
 
 			if (split.endsWith(`"`)) {
 				quote = false;
 				acc += ' ' + split;
-				rawArgs.push(acc.substring(2));
+
+				rawArgs.push(acc);
+
 				continue;
 			}
 
@@ -377,10 +374,6 @@ export class CommandService extends BaseService {
 			} else {
 				rawArgs.push(split);
 			}
-		}
-
-		if (acc) {
-			rawArgs.push(acc.substring(2));
 		}
 
 		return rawArgs;
@@ -404,8 +397,8 @@ export class CommandService extends BaseService {
 				lastCall.last = now + COOLDOWN;
 
 				await this.client.messages.sendReply(message, t, {
-					color: Color.YELLOW,
-					author: { name: t('error.ratelimit.title'), icon_url: Images.WARN },
+					color: Color.RED,
+					author: { name: t('error.ratelimit.title'), icon_url: Images.CRITICAL },
 					description: t('error.ratelimit.desc')
 				});
 			}

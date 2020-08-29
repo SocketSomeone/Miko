@@ -39,7 +39,8 @@ export default class extends Command {
 			guildOnly: true,
 			botPermissions: [GuildPermission.BAN_MEMBERS],
 			userPermissions: [GuildPermission.BAN_MEMBERS],
-			premiumOnly: false
+			premiumOnly: false,
+			examples: ['@user 1m', '@user 1m 4.1']
 		});
 	}
 

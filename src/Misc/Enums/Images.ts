@@ -26,5 +26,6 @@ export enum Images {
 	MODERATION = 'https://i.imgur.com/nsJtPII.png',
 	VOICE = 'https://i.imgur.com/npogl49.png',
 	SHOP = 'https://i.imgur.com/HSIqjBI.png',
-	TIME = 'https://i.imgur.com/tbmm9GY.png'
+	TIME = 'https://i.imgur.com/tbmm9GY.png',
+	HELP = 'https://i.imgur.com/JpATjyV.png'
 }

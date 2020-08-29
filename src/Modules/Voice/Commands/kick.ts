@@ -21,7 +21,8 @@ export default class extends Command {
 			],
 			guildOnly: true,
 			premiumOnly: false,
-			botPermissions: [GuildPermission.MOVE_MEMBERS]
+			botPermissions: [GuildPermission.MOVE_MEMBERS],
+			examples: ['@user']
 		});
 	}
 

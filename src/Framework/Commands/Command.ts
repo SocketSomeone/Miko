@@ -8,6 +8,8 @@ import i18n from 'i18n';
 import { BaseSettings } from '../../Entity/GuildSettings';
 import { BaseEmbedOptions } from '../../Types';
 import { Images } from '../../Misc/Enums/Images';
+import { Color } from '../../Misc/Enums/Colors';
+import { relative } from 'path';
 
 interface Arg {
 	name: string;
@@ -107,6 +109,15 @@ export abstract class Command {
 			this.usage += arg.required ? `<${arg.name}> ` : `[${arg.name}] `;
 		});
 
+		if (this.args.filter((x) => x.required).length >= 1 && this.examples.length < 1) {
+			console.error(`Missed examples for arguments in command "${this.name}"`);
+			process.exit(1);
+		}
+
+		if (this.client.config.runEnv === 'dev') {
+			i18n.__({ locale: 'ru', phrase: `info.help.cmdDesc.${this.name.toLowerCase()}` });
+		}
+
 		this.createEmbed = client.messages.createEmbed.bind(client.messages);
 		this.replyAsync = client.messages.sendReply.bind(client.messages);
 		this.sendAsync = client.messages.sendEmbed.bind(client.messages);
@@ -114,13 +125,7 @@ export abstract class Command {
 	}
 
 	public async onLoaded() {
-		this.startupDone();
-	}
-
-	protected startupDone() {
-		if (this.client.config.runEnv === 'dev') {
-			i18n.__({ locale: 'ru', phrase: `info.help.cmdDesc.${this.name.toLowerCase()}` });
-		}
+		// NO-OP
 	}
 
 	protected getDescription(t: TranslateFunc) {
@@ -129,26 +134,27 @@ export abstract class Command {
 		return t(desc) === desc ? t('error.no') : t(desc);
 	}
 
-	public getHelp(message: Message, t: TranslateFunc, prefix: string): Embed {
+	public getHelp(t: TranslateFunc, prefix: string): Embed {
 		const description = this.getDescription(t);
+		const field = this.args.filter((x) => x.required).length < 1 ? prefix + this.name + '\n' : '';
 
 		return this.createEmbed({
-			author: { name: prefix + this.usage, icon_url: Images.LIST },
+			color: Color.GRAY,
+			author: { name: prefix + this.usage, icon_url: Images.SETTINGS },
 			description,
 			fields: [
 				{
 					name: t('info.help.cmd.ex'),
 					inline: false,
-					value: this.args.length < 1 ? prefix + this.usage : this.examples.map((ex) => prefix + ex).join('\n')
+					value: '>>> ' + field + this.examples.map((ex) => prefix + this.name + ' ' + ex).join('\n')
 				},
 				{
 					name: t('info.help.cmd.aliases'),
-					value: this.aliases.length >= 1 ? this.aliases.map((a) => `\`${a}\``).join(', ') : null,
+					value: this.aliases.length >= 1 ? this.aliases.map((x) => `\`${x}\``).join(', ') : null,
 					inline: false
 				}
 			],
-			footer: null,
-			timestamp: null
+			footer: null
 		});
 	}
 

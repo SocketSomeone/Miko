@@ -28,7 +28,8 @@ export default class extends Command {
 			guildOnly: true,
 			botPermissions: [GuildPermission.READ_MESSAGE_HISTORY, GuildPermission.MANAGE_MESSAGES],
 			userPermissions: [GuildPermission.READ_MESSAGE_HISTORY, GuildPermission.MANAGE_MESSAGES],
-			premiumOnly: false
+			premiumOnly: false,
+			examples: ['100', '100 @user']
 		});
 	}
 

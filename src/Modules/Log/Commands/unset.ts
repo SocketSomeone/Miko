@@ -26,7 +26,8 @@ export default class extends Command {
 			guildOnly: true,
 			premiumOnly: false,
 			botPermissions: [GuildPermission.VIEW_AUDIT_LOGS],
-			userPermissions: [GuildPermission.MANAGE_CHANNELS, GuildPermission.MANAGE_GUILD]
+			userPermissions: [GuildPermission.MANAGE_CHANNELS, GuildPermission.MANAGE_GUILD],
+			examples: ['BAN', 'MESSAGE_DELETE, MESSAGE_EDITED']
 		});
 	}
 

@@ -24,8 +24,9 @@ export default class extends Command {
 			group: CommandGroup.MODERATION,
 			guildOnly: true,
 			premiumOnly: false,
-			botPermissions: [GuildPermission.ADMINISTRATOR],
-			userPermissions: [GuildPermission.ADMINISTRATOR]
+			botPermissions: [GuildPermission.MANAGE_MESSAGES],
+			userPermissions: [GuildPermission.ADMINISTRATOR],
+			examples: ['invites']
 		});
 	}
 

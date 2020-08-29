@@ -20,7 +20,7 @@ export default (emoji: string, guild: Guild) => {
 	}
 
 	if (!EMOJIS_REGEX.test(emoji)) {
-		EmojisDefault.UNKNOWN_EMOJI;
+		return EmojisDefault.UNKNOWN_EMOJI;
 	}
 
 	return emoji;

@@ -209,7 +209,7 @@ export class MessageService extends BaseService {
 			author = prevMsg.author;
 			prevMsg = await this.sendEmbed(prevMsg.channel, t, embed, prevMsg.author);
 
-			if (maxPage !== 1) {
+			if (maxPage !== 1 && doPaginate) {
 				await prevMsg.addReaction(upSymbol);
 				await prevMsg.addReaction(downSymbol);
 			}
@@ -288,12 +288,13 @@ export class MessageService extends BaseService {
 				};
 			}
 
-			embed.footer = embed.footer || null;
-			embed.timestamp = embed.timestamp || null;
-
-			return this.createEmbed(embed);
+			return this.createEmbed({
+				footer: null,
+				timestamp: null,
+				...embed
+			});
 		} catch (e) {
-			//
+			// NO-OP
 		}
 
 		return msg;

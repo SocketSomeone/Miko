@@ -22,7 +22,8 @@ export default class extends Command {
 			group: CommandGroup.CONFIGURE,
 			guildOnly: true,
 			premiumOnly: false,
-			userPermissions: [GuildPermission.MANAGE_GUILD]
+			userPermissions: [GuildPermission.ADMINISTRATOR],
+			examples: ['1000']
 		});
 	}
 

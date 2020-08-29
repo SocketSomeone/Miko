@@ -30,7 +30,7 @@ export default class extends Command {
 			premiumOnly: false,
 			botPermissions: [GuildPermission.MANAGE_ROLES],
 			userPermissions: [GuildPermission.MANAGE_GUILD, GuildPermission.MANAGE_ROLES],
-			examples: ['addshop @role 100', 'addshop 741329695185960960 100']
+			examples: ['@role 100', '741329695185960960 100']
 		});
 	}
 

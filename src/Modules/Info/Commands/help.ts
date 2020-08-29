@@ -5,6 +5,7 @@ import { Message } from 'eris';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { CommandResolver } from '../../../Framework/Resolvers';
 import { Images } from '../../../Misc/Enums/Images';
+import { Color } from '../../../Misc/Enums/Colors';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -16,7 +17,8 @@ export default class extends Command {
 				{
 					name: 'command',
 					resolver: CommandResolver,
-					required: false
+					required: false,
+					full: true
 				}
 			],
 			guildOnly: false,
@@ -27,9 +29,7 @@ export default class extends Command {
 
 	public async execute(message: Message, [c]: [Command], { funcs: { t }, guild, settings: { prefix } }: Context) {
 		if (c) {
-			const embed = c.getHelp(message, t, prefix);
-			await this.replyAsync(message, t, embed);
-
+			await this.replyAsync(message, t, c.getHelp(t, prefix));
 			return;
 		}
 
@@ -40,7 +40,7 @@ export default class extends Command {
 		this.showPaginated(t, message, 0, groups.length + 1, (page, maxPage) => {
 			if (page === 0) {
 				const embed = this.createEmbed({
-					author: { name: t('info.help.first.title'), icon_url: Images.LIST },
+					author: { name: t('info.help.first.title'), icon_url: Images.HELP },
 					thumbnail: {
 						url: this.client.user.dynamicAvatarURL('png', 4096)
 					},
@@ -87,7 +87,7 @@ export default class extends Command {
 				});
 
 			const embed = this.createEmbed({
-				author: { name: t('info.help.title'), icon_url: Images.LIST },
+				author: { name: t('info.help.title'), icon_url: Images.HELP },
 				fields: [
 					{
 						name: t(`others.modules.${group.toLowerCase()}`),

@@ -39,7 +39,8 @@ export default class extends Command {
 			guildOnly: true,
 			botPermissions: [GuildPermission.MANAGE_MESSAGES, GuildPermission.ADD_REACTIONS],
 			userPermissions: [GuildPermission.ADMINISTRATOR],
-			premiumOnly: false
+			premiumOnly: false,
+			examples: ['111 ✨ @role']
 		});
 
 		this.service = new ReactionRoleService(client);
@@ -47,8 +48,6 @@ export default class extends Command {
 
 	public async onLoaded() {
 		await this.service.init();
-
-		super.startupDone();
 	}
 
 	public async execute(

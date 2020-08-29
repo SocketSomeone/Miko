@@ -97,6 +97,7 @@ export class BaseClient extends Client {
 		wsWarnings: number;
 		wsErrors: number;
 		cmdProcessed: number;
+		cmdFinished: number;
 		cmdErrors: number;
 		unavailableGuilds: number;
 	};
@@ -133,6 +134,7 @@ export class BaseClient extends Client {
 			wsWarnings: 0,
 			wsErrors: 0,
 			cmdProcessed: 0,
+			cmdFinished: 0,
 			cmdErrors: 0,
 			unavailableGuilds: 0
 		};
@@ -248,7 +250,7 @@ export class BaseClient extends Client {
 			.join('\n');
 
 		const embed = this.messages.createEmbed({
-			author: { name: t('others.onBotAdd.title', { guild: guild.name }), icon_url: Images.LIST },
+			author: { name: t('others.onBotAdd.title', { guild: guild.name }), icon_url: Images.HELP },
 			description: t('others.onBotAdd.desc', { modules }),
 			thumbnail: { url: this.user.dynamicAvatarURL('png', 4096) },
 			fields: [

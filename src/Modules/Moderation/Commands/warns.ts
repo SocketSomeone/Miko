@@ -24,7 +24,8 @@ export default class extends Command {
 				}
 			],
 			guildOnly: true,
-			premiumOnly: false
+			premiumOnly: false,
+			examples: ['@user']
 		});
 	}
 

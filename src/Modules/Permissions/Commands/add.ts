@@ -47,7 +47,8 @@ export default class extends Command {
 			],
 			guildOnly: true,
 			premiumOnly: false,
-			userPermissions: [GuildPermission.ADMINISTRATOR]
+			userPermissions: [GuildPermission.ADMINISTRATOR],
+			examples: ['timely @role disable', 'all #text disable', 'ban @user enable']
 		});
 	}
 

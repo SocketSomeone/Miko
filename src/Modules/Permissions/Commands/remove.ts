@@ -23,7 +23,8 @@ export default class extends Command {
 			],
 			guildOnly: true,
 			premiumOnly: false,
-			userPermissions: [GuildPermission.ADMINISTRATOR]
+			userPermissions: [GuildPermission.ADMINISTRATOR],
+			examples: ['1']
 		});
 	}
 

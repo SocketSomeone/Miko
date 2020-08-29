@@ -23,7 +23,8 @@ export default class extends Command {
 			guildOnly: true,
 			premiumOnly: false,
 			botPermissions: [GuildPermission.MANAGE_ROLES],
-			userPermissions: [GuildPermission.MANAGE_ROLES]
+			userPermissions: [GuildPermission.MANAGE_ROLES],
+			examples: ['@role']
 		});
 	}
 

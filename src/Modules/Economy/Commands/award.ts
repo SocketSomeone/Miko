@@ -27,7 +27,8 @@ export default class extends Command {
 			group: CommandGroup.ECONOMY,
 			guildOnly: true,
 			premiumOnly: false,
-			userPermissions: [GuildPermission.ADMINISTRATOR]
+			userPermissions: [GuildPermission.ADMINISTRATOR],
+			examples: ['@user 1000']
 		});
 	}
 

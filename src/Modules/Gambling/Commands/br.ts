@@ -23,7 +23,8 @@ export default class extends Command {
 			],
 			group: CommandGroup.GAMBLING,
 			guildOnly: true,
-			premiumOnly: false
+			premiumOnly: false,
+			examples: ['1000']
 		});
 	}
 

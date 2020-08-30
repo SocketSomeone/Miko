@@ -33,7 +33,7 @@ export default class onMessageDeleteEvent extends BaseEventLog {
 		await super.handleEvent(guild, message);
 	}
 
-	public async execute(t: TranslateFunc, guild: Guild, { content, member, channel }: Message) {
+	public async execute(t: TranslateFunc, guild: Guild, { id, content, member, channel }: Message) {
 		const embed = this.client.messages.createEmbed({
 			author: { name: t('logs.messageDeleted'), icon_url: Images.MESSAGE_DELETE },
 			color: Color.RED,
@@ -51,7 +51,10 @@ export default class onMessageDeleteEvent extends BaseEventLog {
 					inline: true
 				}
 			],
-			thumbnail: { url: member.avatarURL }
+			thumbnail: { url: member.avatarURL },
+			footer: {
+				text: `Member: ${member.id}, Message: ${id}`
+			}
 		});
 
 		return embed;

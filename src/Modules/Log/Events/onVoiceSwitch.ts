@@ -36,7 +36,7 @@ export default class onVoiceSwitchEvent extends BaseEventLog {
 			fields: [
 				{
 					name: t('logs.channel'),
-					value: `\`${oldChannel.name}\` -> \`${newChannel.name}\``,
+					value: `\`${oldChannel.name}\` → \`${newChannel.name}\``,
 					inline: true
 				},
 				{
@@ -45,7 +45,10 @@ export default class onVoiceSwitchEvent extends BaseEventLog {
 					inline: true
 				}
 			],
-			thumbnail: { url: member.avatarURL }
+			thumbnail: { url: member.avatarURL },
+			footer: {
+				text: `From: ${oldChannel.id}, To: ${newChannel.id}`
+			}
 		});
 
 		return embed;

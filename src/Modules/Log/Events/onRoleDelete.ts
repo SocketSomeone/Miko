@@ -23,7 +23,8 @@ export default class onRoleDeleteEvent extends BaseEventLog {
 					value: `\`${role.name}\``,
 					inline: true
 				}
-			]
+			],
+			footer: this.footer(role)
 		});
 
 		const entry = await this.getAuditLog(guild, role, Constants.AuditLogActions.ROLE_DELETE);

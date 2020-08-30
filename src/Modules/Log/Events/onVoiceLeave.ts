@@ -39,7 +39,10 @@ export default class onVoiceLeaveEvent extends BaseEventLog {
 					inline: true
 				}
 			],
-			thumbnail: { url: member.avatarURL }
+			thumbnail: { url: member.avatarURL },
+			footer: {
+				text: `ID: ${channel.id}`
+			}
 		});
 
 		return embed;

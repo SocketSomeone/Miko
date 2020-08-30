@@ -53,10 +53,11 @@ export default class onEmojiUpdateEvent extends BaseEventLog {
 				},
 				{
 					name: t('logs.edited'),
-					value: compare.map((x) => `${x.key}: ${x.old} -> ${x.new}`).join('\n'),
+					value: compare.map((x) => `${x.key}: ${x.old} → ${x.new}`).join('\n'),
 					inline: true
 				}
-			]
+			],
+			footer: this.footer(newEmoji)
 		});
 
 		const entry = await this.getAuditLog(guild, newEmoji, Constants.AuditLogActions.EMOJI_UPDATE);

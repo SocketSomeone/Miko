@@ -53,7 +53,7 @@ export default class extends Command {
 			footer: null,
 			timestamp: null,
 			description: t('automod.disabled.any', {
-				types: needToChange.map((type) => t(`automod.types.${type}`)).join('\n')
+				types: needToChange.map((type) => t(`automod.types.${type}`)).join(', \n')
 			})
 		});
 	}

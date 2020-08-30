@@ -24,7 +24,8 @@ export default class onMemberJoinEvent extends BaseEventLog {
 					inline: true
 				}
 			],
-			thumbnail: { url: member.avatarURL }
+			thumbnail: { url: member.avatarURL },
+			footer: this.footer(member)
 		});
 
 		return embed;

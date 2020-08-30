@@ -30,7 +30,8 @@ export default class onEmojiDeleteEvent extends BaseEventLog {
 					value: this.emoji(emoji),
 					inline: true
 				}
-			]
+			],
+			footer: this.footer(emoji)
 		});
 
 		const entry = await this.getAuditLog(guild, emoji, Constants.AuditLogActions.EMOJI_DELETE);

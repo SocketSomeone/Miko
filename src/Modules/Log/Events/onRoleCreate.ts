@@ -23,7 +23,8 @@ export default class onRoleCreateEvent extends BaseEventLog {
 					value: role.mention,
 					inline: true
 				}
-			]
+			],
+			footer: this.footer(role)
 		});
 
 		const entry = await this.getAuditLog(guild, role, Constants.AuditLogActions.ROLE_CREATE);

@@ -39,7 +39,8 @@ export default class onVoiceConnectEvent extends BaseEventLog {
 					inline: true
 				}
 			],
-			thumbnail: { url: member.avatarURL }
+			thumbnail: { url: member.avatarURL },
+			footer: this.footer(channel)
 		});
 
 		return embed;

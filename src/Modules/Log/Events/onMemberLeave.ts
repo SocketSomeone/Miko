@@ -24,7 +24,8 @@ export default class onMemberLeaveEvent extends BaseEventLog {
 					inline: true
 				}
 			],
-			thumbnail: { url: member.avatarURL }
+			thumbnail: { url: member.avatarURL },
+			footer: this.footer(member)
 		});
 
 		return embed;

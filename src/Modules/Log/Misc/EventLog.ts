@@ -84,8 +84,7 @@ export abstract class BaseEventLog {
 
 	public footer(a: { id: string }) {
 		return {
-			text: `ID: ${a.id}`,
-			icon_url: this.client.user.dynamicAvatarURL('png', 4096)
+			text: `ID: ${a.id}`
 		};
 	}
 

@@ -34,7 +34,8 @@ export default class onMemberRolesUpdateEvent extends BaseEventLog {
 					inline: true
 				}
 			],
-			thumbnail: { url: member.avatarURL }
+			thumbnail: { url: member.avatarURL },
+			footer: this.footer(member)
 		});
 
 		const entry = await this.getAuditLog(guild, member, Constants.AuditLogActions.MEMBER_ROLE_UPDATE);

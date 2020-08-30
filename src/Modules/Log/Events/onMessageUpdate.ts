@@ -29,7 +29,7 @@ export default class onMessageUpdateEvent extends BaseEventLog {
 		await super.handleEvent(guild, message, oldMessage);
 	}
 
-	public async execute(t: TranslateFunc, guild: Guild, { member, content, channel }: Message, oldMessage: Message) {
+	public async execute(t: TranslateFunc, guild: Guild, { id, member, content, channel }: Message, oldMessage: Message) {
 		if (!oldMessage) {
 			return;
 		}
@@ -59,7 +59,10 @@ export default class onMessageUpdateEvent extends BaseEventLog {
 					inline: true
 				}
 			],
-			thumbnail: { url: member.avatarURL }
+			thumbnail: { url: member.avatarURL },
+			footer: {
+				text: `Member: ${member.id}, Message: ${id}`
+			}
 		});
 
 		return embed;

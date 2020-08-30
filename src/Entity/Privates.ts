@@ -18,7 +18,7 @@ export class BasePrivate extends BaseEntity {
 	@PrimaryColumn({ type: 'bigint' })
 	public id: string;
 
-	@Column()
+	@Column({ type: 'bigint' })
 	public owner: string;
 
 	@Column({ type: 'varchar', default: {}, array: true, transformer: SetTransformer })

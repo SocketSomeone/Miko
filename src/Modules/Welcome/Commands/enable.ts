@@ -7,6 +7,7 @@ import { RolesService } from '../Services/RolesService';
 import { MessageService } from '../Services/MessageService';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { Images } from '../../../Misc/Enums/Images';
+import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 
 export default class extends Command {
 	protected roleService: RolesService;
@@ -34,6 +35,8 @@ export default class extends Command {
 	}
 
 	public async execute(message: Message, [], { funcs: { t, e }, guild, settings }: Context) {
+		if (settings.welcomeEnabled) throw new ExecuteError('error.module.enable');
+
 		settings.welcomeEnabled = true;
 		await settings.save();
 

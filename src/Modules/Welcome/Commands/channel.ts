@@ -9,6 +9,7 @@ import { AnyResolver } from '../../../Framework/Resolvers/AnyResolver';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { WelcomeChannelType } from '../../../Misc/Enums/WelcomeTypes';
 import { Images } from '../../../Misc/Enums/Images';
+import { ChannelType } from '../../../Types';
 
 enum Action {
 	SET = 'set',
@@ -28,7 +29,11 @@ export default class extends Command {
 				},
 				{
 					name: 'channel',
-					resolver: new AnyResolver(client, ChannelResolver, StringResolver),
+					resolver: new AnyResolver(
+						client,
+						new ChannelResolver(client, ChannelType.GUILD_TEXT),
+						new StringResolver(client)
+					),
 					required: true,
 					full: true
 				}
@@ -47,7 +52,7 @@ export default class extends Command {
 		[action, channel]: [Action, TextChannel | string],
 		{ funcs: { t, e }, guild, settings }: Context
 	) {
-		if (settings.welcomeEnabled !== true) throw new ExecuteError(t('error.module.disabled'));
+		if (!settings.welcomeEnabled) throw new ExecuteError(t('error.module.disabled'));
 
 		const embed = this.createEmbed({
 			color: Color.MAGENTA,

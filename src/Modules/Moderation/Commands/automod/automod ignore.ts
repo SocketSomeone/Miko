@@ -7,6 +7,7 @@ import { Color } from '../../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../../Misc/Models/GuildPermissions';
 import { AnyResolver } from '../../../../Framework/Resolvers/AnyResolver';
 import { Images } from '../../../../Misc/Enums/Images';
+import { ChannelType } from '../../../../Types';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -16,7 +17,11 @@ export default class extends Command {
 			args: [
 				{
 					name: 'role/channel',
-					resolver: new AnyResolver(client, RoleResolver, ChannelResolver),
+					resolver: new AnyResolver(
+						client,
+						new RoleResolver(client),
+						new ChannelResolver(client, ChannelType.GUILD_TEXT)
+					),
 					required: false
 				}
 			],

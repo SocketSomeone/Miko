@@ -24,6 +24,12 @@ export default class onMessageDeleteEvent extends BaseEventLog {
 			return;
 		}
 
+		const [isCommand] = await this.client.commands.resolve(message, null, guild);
+
+		if (isCommand) {
+			return;
+		}
+
 		await super.handleEvent(guild, message);
 	}
 

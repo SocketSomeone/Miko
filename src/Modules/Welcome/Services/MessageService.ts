@@ -30,7 +30,7 @@ export class MessageService extends BaseService {
 			case WelcomeChannelType.DM: {
 				const channel = await user.getDMChannel();
 
-				await this.client.messages.sendEmbed(channel, t, message).catch(undefined);
+				await this.client.messages.sendEmbed(channel, t, message).catch(() => undefined);
 
 				break;
 			}
@@ -46,7 +46,7 @@ export class MessageService extends BaseService {
 
 				if (!perm.has(GuildPermission.SEND_MESSAGES) || !perm.has(GuildPermission.READ_MESSAGE_HISTORY)) return;
 
-				await this.client.messages.sendEmbed(channel, t, message).catch(undefined);
+				await this.client.messages.sendEmbed(channel, t, message).catch(() => undefined);
 
 				break;
 			}

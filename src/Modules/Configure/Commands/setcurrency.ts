@@ -34,6 +34,8 @@ export default class extends Command {
 
 		if (emoji === EmojisDefault.UNKNOWN_EMOJI) throw new ExecuteError(t('error.emoji.notFound'));
 
+		if (emoji === settings.currency) throw new ExecuteError(t('error.changes.not'));
+
 		settings.currency = emoji;
 		await settings.save();
 

@@ -1,15 +1,13 @@
 import { BaseService } from '../../../Framework/Services/Service';
-import { Member, VoiceChannel, Guild, PermissionOverwrite } from 'eris';
-import { ChannelType, ChannelOptions } from '../../../Types';
-
+import { Member, VoiceChannel, Guild } from 'eris';
+import { ChannelType } from '../../../Types';
 import { PrivatesCache } from '../Cache/PrivateCache';
-import { Moment } from 'moment';
-import moment from 'moment';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { TranslateFunc } from '../../../Framework/Commands/Command';
-import { BasePrivate } from '../../../Entity/Privates';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
-import PermissionResolver, { Permissions } from '../../../Misc/Utils/PermissionResolver';
+import moment, { Moment } from 'moment';
+
+import PermissionResolver from '../../../Misc/Utils/PermissionResolver';
 
 export class PrivateService extends BaseService {
 	protected ratelimit: Map<string, Moment> = new Map();
@@ -25,6 +23,7 @@ export class PrivateService extends BaseService {
 
 	private async onSwitch(member: Member, newChannel: VoiceChannel, oldChannel: VoiceChannel) {
 		const guild = member.guild;
+
 		const sets = await this.client.cache.guilds.get(guild);
 		const pr = await this.cache.get(oldChannel);
 

@@ -6,6 +6,7 @@ import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { BigIntResolver } from '../../../Framework/Resolvers';
 import { Images } from '../../../Misc/Enums/Images';
+import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -29,6 +30,8 @@ export default class extends Command {
 
 	public async execute(message: Message, [money]: [bigint], { funcs: { t, e }, guild, settings }: Context) {
 		if (money) {
+			if (String(money) === settings.prices.standart) throw new ExecuteError(t('error.changes.not'));
+
 			settings.prices.standart = String(money);
 			await settings.save();
 		}

@@ -1,15 +1,14 @@
+import i18n from 'i18n';
+
 import { BaseClient } from '../../Client';
 import { Guild, Member, Message, EmbedOptions, Embed, TextableChannel, User } from 'eris';
 import { GuildPermission } from '../../Misc/Models/GuildPermissions';
 import { Resolver, ResolverConstructor } from '../Resolvers/Resolver';
 import { CommandGroup } from '../../Misc/Models/CommandGroup';
-
-import i18n from 'i18n';
 import { BaseSettings } from '../../Entity/GuildSettings';
 import { BaseEmbedOptions } from '../../Types';
 import { Images } from '../../Misc/Enums/Images';
 import { Color } from '../../Misc/Enums/Colors';
-import { relative } from 'path';
 
 interface Arg {
 	name: string;

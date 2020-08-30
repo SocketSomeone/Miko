@@ -25,7 +25,7 @@ export default class extends Command {
 	}
 
 	public async execute(message: Message, []: [], { funcs: { t, e }, guild, settings }: Context) {
-		if (settings.welcomeEnabled !== true) throw new ExecuteError(t('error.module.disabled'));
+		if (!settings.welcomeEnabled) throw new ExecuteError(t('error.module.disabled'));
 
 		settings.welcomeSaveRoles = !settings.welcomeSaveRoles;
 		await settings.save();

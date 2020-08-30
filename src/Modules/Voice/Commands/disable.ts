@@ -34,7 +34,7 @@ export default class extends Command {
 	}
 
 	protected async deleteManager(t: TranslateFunc, guild: Guild, c: string): Promise<null> {
-		if (!guild.channels.get(c)) throw new ExecuteError(t('voice.disabled'));
+		if (!c || !guild.channels.get(c)) throw new ExecuteError('error.module.disable');
 
 		const channel = guild.channels.get(c);
 		channel.delete().catch(() => undefined);

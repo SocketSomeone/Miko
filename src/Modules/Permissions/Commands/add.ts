@@ -15,6 +15,7 @@ import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { Color } from '../../../Misc/Enums/Colors';
 import { Images } from '../../../Misc/Enums/Images';
 import PermissionsOutput from '../Misc/PermissionsOutput';
+import { ChannelType } from '../../../Types';
 
 export default class extends Command {
 	public constructor(client: BaseClient) {
@@ -35,7 +36,7 @@ export default class extends Command {
 						client,
 						new MemberResolver(client),
 						new RoleResolver(client, true),
-						new ChannelResolver(client)
+						new ChannelResolver(client, ChannelType.GUILD_TEXT)
 					),
 					required: true
 				},

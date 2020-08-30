@@ -30,6 +30,8 @@ export default class extends Command {
 
 	public async execute(message: Message, [role]: [Role], { funcs: { t, e }, guild, settings }: Context) {
 		if (role) {
+			if (role.id === settings.mutedRole) throw new ExecuteError(t('error.changes.not'));
+
 			settings.mutedRole = role.id;
 			await settings.save();
 		}

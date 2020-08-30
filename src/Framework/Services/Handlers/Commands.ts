@@ -2,7 +2,7 @@ import { BaseService } from '../Service';
 import { Command, Context, TranslateFunc } from '../../Commands/Command';
 import { resolve, relative } from 'path';
 import { Precondition } from '../../../Modules/Permissions/Misc/Precondition';
-import { Message, GuildChannel, PrivateChannel, Member } from 'eris';
+import { Message, GuildChannel, PrivateChannel, Member, Guild } from 'eris';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 
 import glob from 'glob';
@@ -80,59 +80,17 @@ export class CommandService extends BaseService {
 
 		const start = moment();
 
-		const channel = message.channel;
+		const channel = message.channel,
+			guild = (channel as GuildChannel).guild,
+			sets = guild ? await this.client.cache.guilds.get(guild) : new BaseSettings();
 
-		const guild = (channel as GuildChannel).guild;
-		let content = message.content.trim();
+		const [cmd, splits] = await this.resolve(message, sets.prefix);
 
-		const sets = guild ? await this.client.cache.guilds.get(guild) : new BaseSettings();
-
-		const t = (key: string, replacements?: { [key: string]: string }) =>
-			i18n.__({ locale: sets.locale, phrase: key }, replacements);
-
-		const e = (emoji: string) => EmojiResolver(emoji, guild);
-
-		if (sets.ignoreChannels && sets.ignoreChannels.length) {
-			if (sets.ignoreChannels.includes(channel.id)) {
-				return;
-			}
-		}
-
-		content = this.hasPrefix(content, sets.prefix);
-
-		if (!content) {
+		if (!cmd || (cmd.guildOnly && !guild)) {
 			return;
 		}
 
-		let splits = content.split(' ');
-
-		let cmd = this.commandMap.get(splits[0].toLowerCase());
-
-		if (!cmd && splits.length >= 2) {
-			cmd = this.commandMap.get(splits.slice(0, 2).join(' ').toLowerCase());
-			splits = splits.slice(2, splits.length);
-		} else if (cmd) {
-			splits = splits.slice(1, splits.length);
-		}
-
-		if (!cmd) {
-			if (channel instanceof PrivateChannel) {
-				const user = message.author;
-
-				const oldMessages = await message.channel.getMessages(2);
-				const isInitialMessage = oldMessages.length <= 1;
-
-				if (isInitialMessage) {
-					/* TODO: Make message when dm and not founded command */
-				}
-			}
-
-			return;
-		}
-
-		if (cmd.guildOnly && !guild) {
-			return;
-		}
+		const t: TranslateFunc = (phrase, replacements) => i18n.__({ locale: sets.locale, phrase }, replacements);
 
 		const ratelimit = await this.isRatelimited(message, t);
 
@@ -147,7 +105,7 @@ export class CommandService extends BaseService {
 			isPremium: false,
 			funcs: {
 				t,
-				e
+				e: (emoji: string) => EmojiResolver(emoji, guild)
 			}
 		};
 
@@ -321,7 +279,7 @@ export class CommandService extends BaseService {
 		}
 	}
 
-	hasPrefix(content: string, prefix?: string) {
+	private hasPrefix(content: string, prefix?: string) {
 		if (prefix && content.startsWith(prefix)) {
 			return content.substring(prefix.length).trim();
 		}
@@ -341,7 +299,7 @@ export class CommandService extends BaseService {
 		return null;
 	}
 
-	rawArgs(splits: string[]): string[] {
+	private rawArgs(splits: string[]): string[] {
 		let rawArgs: string[] = [];
 		let quote = false;
 		let acc = '';
@@ -379,7 +337,37 @@ export class CommandService extends BaseService {
 		return rawArgs;
 	}
 
-	async isRatelimited(message: Message, t: TranslateFunc) {
+	public async resolve(message: Message, prefix?: string, guild?: Guild): Promise<[Command, string[]]> {
+		if (!prefix) {
+			if (!guild) {
+				return [null, null];
+			}
+
+			let { prefix: GuildPrefix } = await this.client.cache.guilds.get(guild);
+
+			prefix = GuildPrefix;
+		}
+
+		let content = this.hasPrefix(message.content.trim(), prefix);
+
+		if (!content) {
+			return [null, null];
+		}
+
+		let splits = content.split(' '),
+			cmd = this.commandMap.get(splits[0].toLowerCase());
+
+		if (cmd) {
+			splits = splits.slice(1, splits.length);
+		} else if (splits.length >= 2) {
+			cmd = this.commandMap.get(splits.slice(0, 2).join(' ').toLowerCase());
+			splits = splits.slice(2, splits.length);
+		}
+
+		return [cmd, splits];
+	}
+
+	private async isRatelimited(message: Message, t: TranslateFunc) {
 		const now = moment().valueOf();
 
 		let lastCall = this.commandCalls.get(message.author.id);
@@ -399,7 +387,9 @@ export class CommandService extends BaseService {
 				await this.client.messages.sendReply(message, t, {
 					color: Color.RED,
 					author: { name: t('error.ratelimit.title'), icon_url: Images.CRITICAL },
-					description: t('error.ratelimit.desc')
+					description: t('error.ratelimit.desc'),
+					footer: null,
+					timestamp: null
 				});
 			}
 

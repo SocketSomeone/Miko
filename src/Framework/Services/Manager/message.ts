@@ -237,7 +237,9 @@ export class MessageService extends BaseService {
 					return;
 				}
 
-				prevMsg.removeReaction(emojiTest, author.id).catch(undefined);
+				if (prevMsg.channel instanceof GuildChannel) {
+					prevMsg.removeReaction(emojiTest, author.id).catch(() => undefined);
+				}
 
 				const isUp = emojiTest === upSymbol;
 

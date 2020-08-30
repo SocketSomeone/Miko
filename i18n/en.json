@@ -251,7 +251,8 @@
 			"multiple": "resolvers.command.multiple"
 		},
 		"channel": {
-			"notFound": "resolvers.channel.notFound"
+			"notFound": "resolvers.channel.notFound",
+			"type": "resolvers.channel.type"
 		},
 		"boolean": {
 			"invalid": "resolvers.boolean.invalid"
@@ -555,7 +556,16 @@
 			"any": "automod.disabled.any",
 			"already": "automod.disabled.already"
 		},
-		"alreadyDisabled": "automod.alreadyDisabled"
+		"alreadyDisabled": "automod.alreadyDisabled",
+		"info": {
+			"invites": "automod.info.invites",
+			"caps": "automod.info.caps",
+			"duplicate": "automod.info.duplicate",
+			"zalgo": "automod.info.zalgo",
+			"emojis": "automod.info.emojis",
+			"exlinks": "automod.info.exlinks",
+			"mentions": "automod.info.mentions"
+		}
 	},
 	"info": {
 		"help": {
@@ -652,7 +662,8 @@
 				"award": "info.help.cmdDesc.award",
 				"take": "info.help.cmdDesc.take",
 				"welcome message": "info.help.cmdDesc.welcome message",
-				"setcurrency": "info.help.cmdDesc.setcurrency"
+				"setcurrency": "info.help.cmdDesc.setcurrency",
+				"automod info": "info.help.cmdDesc.automod info"
 			},
 			"moduleDesc": {
 				"configure": "info.help.moduleDesc.configure",

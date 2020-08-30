@@ -33,9 +33,7 @@ export default class extends Command {
 		const roles = await this.client.cache.shop.get(guild);
 		const role = roles[index - 1];
 
-		if (roles.length < 1 || !role) {
-			throw new ExecuteError(t('configure.removeshop.notFound'));
-		}
+		if (roles.length < 1 || !role) throw new ExecuteError(t('configure.removeshop.notFound'));
 
 		role.remove().catch(() => undefined);
 

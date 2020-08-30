@@ -1,6 +1,6 @@
 import { Command, Context } from '../../../../Framework/Commands/Command';
 import { BaseClient } from '../../../../Client';
-import { EnumResolver } from '../../../../Framework/Resolvers';
+import { EnumResolver, ArrayResolver } from '../../../../Framework/Resolvers';
 import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
 import { Message } from 'eris';
 import { Color } from '../../../../Misc/Enums/Colors';
@@ -17,8 +17,13 @@ export default class extends Command {
 			args: [
 				{
 					name: 'type',
-					resolver: new EnumResolver(client, Object.values(Violation)),
-					required: true
+					resolver: new ArrayResolver(
+						client,
+						new EnumResolver(client, Object.values(Violation)),
+						Object.values(Violation)
+					),
+					required: false,
+					full: true
 				}
 			],
 			group: CommandGroup.MODERATION,
@@ -29,12 +34,15 @@ export default class extends Command {
 		});
 	}
 
-	public async execute(message: Message, [type]: [Violation], { funcs: { t, e }, guild, settings }: Context) {
-		if (settings.autoMod[type] !== true)
-			throw new ExecuteError(t('automod.disabled.already', { type: t(`automod.types.${type}`) }));
+	public async execute(message: Message, [types]: [Violation[]], { funcs: { t, e }, guild, settings }: Context) {
+		const needToChange = types.filter((x) => settings.autoMod[x] !== false);
 
-		settings.autoMod[type] = false;
-		await settings.save();
+		if (needToChange.length < 1) throw new ExecuteError(t('error.changes.not'));
+
+		for (const type of needToChange) {
+			settings.autoMod[type] = false;
+			await settings.save();
+		}
 
 		await this.replyAsync(message, t, {
 			author: {
@@ -44,7 +52,9 @@ export default class extends Command {
 			color: Color.MAGENTA,
 			footer: null,
 			timestamp: null,
-			description: t('automod.disabled.any', { type: t(`automod.types.${type}`) })
+			description: t('automod.disabled.any', {
+				types: needToChange.map((type) => t(`automod.types.${type}`)).join('\n')
+			})
 		});
 	}
 }

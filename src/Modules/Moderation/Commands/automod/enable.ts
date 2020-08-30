@@ -1,6 +1,6 @@
 import { Command, Context } from '../../../../Framework/Commands/Command';
 import { BaseClient } from '../../../../Client';
-import { EnumResolver } from '../../../../Framework/Resolvers';
+import { EnumResolver, ArrayResolver } from '../../../../Framework/Resolvers';
 import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
 import { Message } from 'eris';
 import { Color } from '../../../../Misc/Enums/Colors';
@@ -17,8 +17,13 @@ export default class extends Command {
 			args: [
 				{
 					name: 'type',
-					resolver: new EnumResolver(client, Object.values(Violation)),
-					required: true
+					resolver: new ArrayResolver(
+						client,
+						new EnumResolver(client, Object.values(Violation)),
+						Object.values(Violation)
+					),
+					required: false,
+					full: true
 				}
 			],
 			group: CommandGroup.MODERATION,
@@ -26,16 +31,19 @@ export default class extends Command {
 			premiumOnly: false,
 			botPermissions: [GuildPermission.MANAGE_MESSAGES],
 			userPermissions: [GuildPermission.ADMINISTRATOR],
-			examples: ['invites']
+			examples: ['invites', 'caps, mentions']
 		});
 	}
 
-	public async execute(message: Message, [type]: [Violation], { funcs: { t, e }, guild, settings }: Context) {
-		if (settings.autoMod[type] === true)
-			throw new ExecuteError(t('automod.enabled.already', { type: t(`automod.types.${type}`) }));
+	public async execute(message: Message, [types]: [Violation[]], { funcs: { t, e }, guild, settings }: Context) {
+		const needToChange = types.filter((x) => settings.autoMod[x] !== true);
 
-		settings.autoMod[type] = true;
-		await settings.save();
+		if (needToChange.length < 1) throw new ExecuteError(t('error.changes.not'));
+
+		for (const type of needToChange) {
+			settings.autoMod[type] = true;
+			await settings.save();
+		}
 
 		await this.replyAsync(message, t, {
 			author: {
@@ -45,7 +53,9 @@ export default class extends Command {
 			color: Color.MAGENTA,
 			footer: null,
 			timestamp: null,
-			description: t('automod.enabled.any', { type: t(`automod.types.${type}`) })
+			description: t('automod.enabled.any', {
+				types: needToChange.map((type) => t(`automod.types.${type}`)).join('\n')
+			})
 		});
 	}
 }

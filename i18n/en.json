@@ -549,7 +549,15 @@
 		},
 		"types": {
 			"caps": "automod.types.caps",
-			"invites": "automod.types.invites"
+			"invites": "automod.types.invites",
+			"allCaps": "automod.types.allCaps",
+			"duplicateText": "automod.types.duplicateText",
+			"zalgo": "automod.types.zalgo",
+			"emojis": "automod.types.emojis",
+			"externalLinks": "automod.types.externalLinks",
+			"mentions": "automod.types.mentions",
+			"duplicate": "automod.types.duplicate",
+			"exlinks": "automod.types.exlinks"
 		},
 		"alreadyEnabled": "automod.alreadyEnabled",
 		"disabled": {
@@ -564,7 +572,10 @@
 			"zalgo": "automod.info.zalgo",
 			"emojis": "automod.info.emojis",
 			"exlinks": "automod.info.exlinks",
-			"mentions": "automod.info.mentions"
+			"mentions": "automod.info.mentions",
+			"allCaps": "automod.info.allCaps",
+			"duplicateText": "automod.info.duplicateText",
+			"externalLinks": "automod.info.externalLinks"
 		}
 	},
 	"info": {

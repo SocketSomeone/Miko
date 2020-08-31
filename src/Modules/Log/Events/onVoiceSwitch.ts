@@ -13,12 +13,16 @@ export default class onVoiceSwitchEvent extends BaseEventLog {
 		client.on('voiceChannelSwitch', this.onHandle.bind(this));
 	}
 
-	private async onHandle(member: Member, channel: VoiceChannel, oldChannel: VoiceChannel) {
+	private async onHandle(member: Member, channel: VoiceChannel, oldChannel: VoiceChannel, isCreated: boolean) {
 		const guild = channel.guild;
 
 		if (!guild) {
 			return;
 		}
+
+		const sets = await this.client.cache.guilds.get(guild);
+
+		if (sets.privateManager === channel.id && isCreated !== true) return;
 
 		await super.handleEvent(guild, member, channel, oldChannel);
 	}

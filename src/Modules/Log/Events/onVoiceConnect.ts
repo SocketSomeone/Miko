@@ -20,16 +20,14 @@ export default class onVoiceConnectEvent extends BaseEventLog {
 			return;
 		}
 
-		// const sets = await this.client.cache.guilds.get(guild);
+		const sets = await this.client.cache.guilds.get(guild);
 
-		// if (sets.privateManager === channel.id) return;
-
-		await super.handleEvent(guild, member, channel);
+		await super.handleEvent(guild, member, channel, sets.privateManager === channel.id);
 	}
 
-	public async execute(t: TranslateFunc, guild: Guild, member: Member, channel: VoiceChannel) {
+	public async execute(t: TranslateFunc, guild: Guild, member: Member, channel: VoiceChannel, room: boolean) {
 		const embed = this.client.messages.createEmbed({
-			author: { name: t('logs.voiceConnected'), icon_url: Images.VOICE_JOIN },
+			author: { name: room ? t('roomCreated') : t('logs.voiceConnected'), icon_url: Images.VOICE_JOIN },
 			color: Color.LIME,
 			fields: [
 				{

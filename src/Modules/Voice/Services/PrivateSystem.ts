@@ -40,6 +40,8 @@ export class PrivateService extends BaseService {
 				await this.lockManager(member, newChannel).catch(() => undefined);
 			} else {
 				await this.createRoom(member, guild, newChannel).catch(() => undefined);
+
+				this.client.emit('voiceChannelSwitch', member, newChannel, oldChannel, true);
 			}
 
 			return;

@@ -12,17 +12,17 @@ export class RolesService extends BaseService {
 	public async returnRoles(guild: Guild, member: Member) {
 		if (member.user.bot) return;
 
-		const me = guild.members.get(this.client.user.id);
-
-		if (!me.permission.has(GuildPermission.MANAGE_ROLES)) {
-			console.log(`TRYING TO SET JOIN ROLES IN ${guild.id} WITHOUT MANAGE_ROLES PERMISSION`);
-			return;
-		}
-
 		const settings = await this.client.cache.guilds.get(guild);
 		const roles: string[] = [];
 
 		if (!settings.welcomeEnabled) {
+			return;
+		}
+
+		const me = guild.members.get(this.client.user.id);
+
+		if (!me.permission.has(GuildPermission.MANAGE_ROLES)) {
+			console.log(`TRYING TO SET JOIN ROLES IN ${guild.id} WITHOUT MANAGE_ROLES PERMISSION`);
 			return;
 		}
 

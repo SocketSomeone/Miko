@@ -28,7 +28,7 @@ export default class extends Command {
 		const system = this.client.privates;
 		const member = message.member;
 
-		const p = await system.getRoomByVoice(t, member.voiceState.channelID);
+		const p = await system.getRoomByVoice(t, guild, member.voiceState.channelID);
 
 		const newAdmin = await p.actionAdmin(t, member, user);
 

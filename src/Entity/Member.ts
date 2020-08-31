@@ -28,7 +28,7 @@ export class BaseMember extends BaseEntity {
 	public timelyAt: Moment;
 
 	@Column({ type: 'varchar', default: {}, array: true })
-	public savedRoles: string[];
+	public savedRoles: string[] = [];
 
 	@Column({ type: 'varchar', transformer: DurationTransformer })
 	public voiceOnline: Duration;

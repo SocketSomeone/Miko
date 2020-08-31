@@ -35,16 +35,16 @@ export default class extends Command {
 	}
 
 	public async execute(message: Message, [], { funcs: { t, e }, guild, settings }: Context) {
-		if (settings.welcomeEnabled) throw new ExecuteError('error.module.enable');
+		if (settings.welcomeEnabled) throw new ExecuteError(t('error.module.enable'));
 
 		settings.welcomeEnabled = true;
 		await settings.save();
 
 		await this.replyAsync(message, t, {
 			color: Color.MAGENTA,
-			author: { name: t('welcome.title'), icon_url: Images.SUCCESS },
-			description: t(`welcome.enable`),
-			footer: null
+			author: { name: t(`others.module.enable`), icon_url: Images.SUCCESS },
+			footer: null,
+			timestamp: null
 		});
 	}
 }

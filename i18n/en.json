@@ -194,6 +194,10 @@
 		},
 		"emoji": {
 			"notFound": "error.emoji.notFound"
+		},
+		"module": {
+			"enable": "error.module.enable",
+			"disable": "error.module.disable"
 		}
 	},
 	"others": {
@@ -221,6 +225,10 @@
 		"onBotAdd": {
 			"desc": "others.onBotAdd.desc",
 			"field": "others.onBotAdd.field"
+		},
+		"module": {
+			"disable": "others.module.disable",
+			"enable": "others.module.enable"
 		}
 	},
 	"errors": {
@@ -321,7 +329,8 @@
 		"set": "logs.set",
 		"unset": "logs.unset",
 		"guildJoin": "logs.guildJoin",
-		"msgDeleted": "logs.msgDeleted"
+		"msgDeleted": "logs.msgDeleted",
+		"guildLeave": "logs.guildLeave"
 	},
 	"moderation": {
 		"purge": {

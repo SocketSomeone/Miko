@@ -8,9 +8,10 @@ import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import moment, { Moment } from 'moment';
 
 import PermissionResolver from '../../../Misc/Utils/PermissionResolver';
+import { isNullOrUndefined } from 'util';
+import { BasePrivate } from '../../../Entity/Privates';
 
 export class PrivateService extends BaseService {
-	protected ratelimit: Map<string, Moment> = new Map();
 	protected cache: PrivatesCache;
 
 	public async init() {
@@ -25,24 +26,17 @@ export class PrivateService extends BaseService {
 		const guild = member.guild;
 
 		const sets = await this.client.cache.guilds.get(guild);
-		const pr = await this.cache.get(oldChannel);
 
-		const isRatelimited = this.ratelimit.has(member.id) && moment().isBefore(this.ratelimit.get(member.id));
+		const rooms = await this.cache.get(guild);
+		const room = rooms.get(oldChannel.id);
 
-		if (sets.privateManager && newChannel.id === sets.privateManager && !isRatelimited) {
-			this.ratelimit.set(member.id, moment().add(5, 'seconds'));
-
+		if (newChannel.id === sets.privateManager) {
 			if (
-				pr !== undefined &&
-				pr !== null &&
-				pr.owner === member.id &&
+				!isNullOrUndefined(room) &&
+				room.owner === member.id &&
 				oldChannel.voiceMembers.filter((x) => !x.user.bot).length < 1
 			) {
-				await member
-					.edit({
-						channelID: pr.id
-					})
-					.catch(() => undefined);
+				await this.moveMember(member, oldChannel, room);
 			} else {
 				await this.createRoom(member, guild, newChannel).catch(() => undefined);
 			}
@@ -52,39 +46,34 @@ export class PrivateService extends BaseService {
 
 		if (oldChannel.voiceMembers.filter((x) => !x.user.bot).length > 0) return;
 
-		if (pr === null) return;
+		if (isNullOrUndefined(room)) return;
 
-		oldChannel.delete('Empty private room').catch(() => undefined);
-		await this.cache.delete(pr);
+		await oldChannel.delete('Empty private room').catch(() => undefined);
+		await this.cache.delete(room);
 	}
 
 	private async onJoin(member: Member, channel: VoiceChannel) {
-		const isRatelimited = this.ratelimit.has(member.id) && moment().isBefore(this.ratelimit.get(member.id));
-
-		if (isRatelimited) return;
-
 		const guild = member.guild;
 		const sets = await this.client.cache.guilds.get(guild);
 
-		if (!sets.privateManager || channel.id !== sets.privateManager) return;
+		if (channel.id !== sets.privateManager) return;
 
 		await this.createRoom(member, guild, channel).catch(() => undefined);
 	}
 
-	private async onLeave(member: Member, channel: VoiceChannel) {
+	private async onLeave({ guild }: Member, channel: VoiceChannel) {
 		if (channel.voiceMembers.filter((x) => !x.user.bot).length > 0) return;
 
-		const pr = await this.cache.get(channel);
+		const rooms = await this.cache.get(guild);
+		const room = rooms.get(channel.id);
 
-		if (pr === null) return;
+		if (isNullOrUndefined(room)) return;
 
-		channel.delete('Empty private room').catch(() => undefined);
-		await this.cache.delete(pr);
+		await channel.delete('Empty private room').catch(() => undefined);
+		await this.cache.delete(room);
 	}
 
-	protected async createRoom(member: Member, guild: Guild, channel: VoiceChannel) {
-		this.ratelimit.set(member.id, moment().add(5, 'seconds'));
-
+	private async createRoom(member: Member, guild: Guild, channel: VoiceChannel) {
 		const house = await guild.createChannel(`🏡 ${member.username}`, ChannelType.GUILD_VOICE, {
 			parentID: channel.parentID,
 			userLimit: 2,
@@ -116,26 +105,46 @@ export class PrivateService extends BaseService {
 			]
 		});
 
+		const room = await this.cache.add({
+			id: house.id,
+			guild: guild.id,
+			owner: member.id
+		});
+
+		await this.moveMember(member, house, room);
+		await this.lockManager(member, channel).catch(() => undefined);
+	}
+
+	private async moveMember(member: Member, house: VoiceChannel, room: BasePrivate) {
 		try {
 			await member.edit({
-				channelID: house.id
-			});
-
-			await this.cache.add({
-				id: house.id,
-				owner: member.id
+				channelID: room.id
 			});
 		} catch (err) {
-			house.delete().catch(() => undefined);
+			await house.delete().catch(() => undefined);
+			await this.cache.delete(room);
 		}
 	}
 
-	public async getRoomByVoice(t: TranslateFunc, voice: string) {
+	private async lockManager(member: Member, manager: VoiceChannel) {
+		await this.client.editChannelPermission(
+			manager.id,
+			member.id,
+			0,
+			PermissionResolver(GuildPermission.CONNECT),
+			'member'
+		);
+		await sleep(5000);
+		await this.client.deleteChannelPermission(manager.id, member.id);
+	}
+
+	public async getRoomByVoice(t: TranslateFunc, guild: Guild, voice: string) {
 		if (!voice) throw new ExecuteError(t('voice.error.notFound'));
 
-		const room = await this.cache.get({ id: voice });
+		const rooms = await this.cache.get(guild);
+		const room = rooms.get(voice);
 
-		if (!room) throw new ExecuteError(t('voice.error.notFound'));
+		if (isNullOrUndefined(room)) throw new ExecuteError(t('voice.error.notFound'));
 
 		return room;
 	}

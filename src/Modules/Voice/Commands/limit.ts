@@ -33,7 +33,7 @@ export default class extends Command {
 		const member = message.member;
 		const limit = Math.max(0, Math.min(99, n));
 
-		const p = await system.getRoomByVoice(t, member.voiceState.channelID);
+		const p = await system.getRoomByVoice(t, guild, member.voiceState.channelID);
 
 		await p.edit(t, member, {
 			userLimit: limit

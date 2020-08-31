@@ -24,7 +24,7 @@ export default class extends Command {
 
 	public async execute(message: Message, [], { funcs: { t, e }, guild, settings }: Context) {
 		if (settings.privateManager && guild.channels.has(settings.privateManager))
-			throw new ExecuteError('error.module.enable');
+			throw new ExecuteError(t('error.module.enable'));
 
 		settings.privateManager = await this.createManager(guild);
 		await settings.save();

@@ -31,7 +31,7 @@ export default class extends Command {
 		const system = this.client.privates;
 		const member = message.member;
 
-		const p = await system.getRoomByVoice(t, member.voiceState.channelID);
+		const p = await system.getRoomByVoice(t, guild, member.voiceState.channelID);
 
 		await p.edit(t, member, {
 			name: name.substr(0, 24)

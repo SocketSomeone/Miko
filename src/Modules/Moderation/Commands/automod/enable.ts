@@ -47,15 +47,13 @@ export default class extends Command {
 
 		await this.replyAsync(message, t, {
 			author: {
-				name: t('automod.title'),
+				name: t('automod.enabled.any'),
 				icon_url: Images.SUCCESS
 			},
 			color: Color.MAGENTA,
 			footer: null,
 			timestamp: null,
-			description: t('automod.enabled.any', {
-				types: needToChange.map((type) => t(`automod.types.${type}`)).join(', \n')
-			})
+			description: `>>> ${needToChange.map((type) => t(`automod.types.${type}`)).join(', \n')}`
 		});
 	}
 }

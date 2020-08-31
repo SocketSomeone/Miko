@@ -2,9 +2,7 @@ import { Command, Context } from '../../../Framework/Commands/Command';
 import { BaseClient } from '../../../Client';
 import { StringResolver, RoleResolver, EnumResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
-import { Message, Member, Guild, User, Role } from 'eris';
-import { BaseMember } from '../../../Entity/Member';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
+import { Message, Role } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
@@ -27,8 +25,7 @@ export default class extends Command {
 				},
 				{
 					name: 'role',
-					resolver: RoleResolver,
-					required: false
+					resolver: RoleResolver
 				}
 			],
 			group: CommandGroup.WELCOME,
@@ -56,7 +53,8 @@ export default class extends Command {
 					.map((x) => `<@&${x}>`)
 					.join(', ')
 			}),
-			footer: null
+			footer: null,
+			timestamp: null
 		});
 
 		if (role) {

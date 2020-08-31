@@ -32,9 +32,12 @@ export default class extends Command {
 
 		await this.replyAsync(message, t, {
 			color: Color.MAGENTA,
-			author: { name: t('welcome.title'), icon_url: Images.SUCCESS },
-			description: t(`welcome.autosave.${settings.welcomeSaveRoles ? 'enable' : 'disable'}`),
-			footer: null
+			author: {
+				name: t(`welcome.autosave.${settings.welcomeSaveRoles ? 'enable' : 'disable'}`),
+				icon_url: Images.SUCCESS
+			},
+			footer: null,
+			timestamp: null
 		});
 	}
 }

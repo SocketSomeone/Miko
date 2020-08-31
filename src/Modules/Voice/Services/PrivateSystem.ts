@@ -37,6 +37,7 @@ export class PrivateService extends BaseService {
 				oldChannel.voiceMembers.filter((x) => !x.user.bot).length < 1
 			) {
 				await this.moveMember(member, oldChannel, room);
+				await this.lockManager(member, newChannel).catch(() => undefined);
 			} else {
 				await this.createRoom(member, guild, newChannel).catch(() => undefined);
 			}

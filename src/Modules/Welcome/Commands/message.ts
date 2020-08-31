@@ -46,7 +46,8 @@ export default class extends Command {
 		const embed = this.createEmbed({
 			color: Color.MAGENTA,
 			author: { name: t('welcome.title'), icon_url: Images.SUCCESS },
-			footer: null
+			footer: null,
+			timestamp: null
 		});
 
 		switch (action) {

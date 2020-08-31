@@ -20,6 +20,10 @@ export default class onVoiceConnectEvent extends BaseEventLog {
 			return;
 		}
 
+		// const sets = await this.client.cache.guilds.get(guild);
+
+		// if (sets.privateManager === channel.id) return;
+
 		await super.handleEvent(guild, member, channel);
 	}
 

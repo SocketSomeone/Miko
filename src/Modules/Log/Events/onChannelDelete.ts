@@ -14,14 +14,13 @@ export default class onChannelDeleteEvent extends BaseEventLog {
 	}
 
 	public async onHandle(c: GuildChannel) {
-		const guild = (c as GuildChannel).guild;
+		const rooms = await this.client.cache.rooms.get(c.guild);
 
-		if (!guild) {
-			return;
-		}
+		if (rooms.has(c.id)) return;
 
-		await super.handleEvent(guild, c);
+		await super.handleEvent(c.guild, c);
 	}
+
 	public async execute(t: TranslateFunc, guild: Guild, created: GuildChannel) {
 		const embed = this.client.messages.createEmbed({
 			author: { name: t('logs.chanDelete'), icon_url: Images.CHANNEL_DELETE },

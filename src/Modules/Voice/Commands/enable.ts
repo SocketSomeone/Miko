@@ -32,7 +32,8 @@ export default class extends Command {
 		await this.replyAsync(message, t, {
 			color: Color.MAGENTA,
 			author: { name: t(`others.module.enable`), icon_url: Images.SUCCESS },
-			footer: null
+			footer: null,
+			timestamp: null
 		});
 	}
 

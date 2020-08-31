@@ -5,8 +5,6 @@ import { PrivatesCache } from '../Cache/PrivateCache';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { TranslateFunc } from '../../../Framework/Commands/Command';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
-import moment, { Moment } from 'moment';
-
 import PermissionResolver from '../../../Misc/Utils/PermissionResolver';
 import { isNullOrUndefined } from 'util';
 import { BasePrivate } from '../../../Entity/Privates';
@@ -15,7 +13,7 @@ export class PrivateService extends BaseService {
 	protected cache: PrivatesCache;
 
 	public async init() {
-		this.cache = new PrivatesCache(this.client);
+		this.cache = this.client.cache.rooms;
 
 		this.client.on('voiceChannelSwitch', this.onSwitch.bind(this));
 		this.client.on('voiceChannelLeave', this.onLeave.bind(this));
@@ -23,6 +21,8 @@ export class PrivateService extends BaseService {
 	}
 
 	private async onSwitch(member: Member, newChannel: VoiceChannel, oldChannel: VoiceChannel) {
+		if (!newChannel || !oldChannel) return;
+
 		const guild = member.guild;
 
 		const sets = await this.client.cache.guilds.get(guild);
@@ -40,19 +40,12 @@ export class PrivateService extends BaseService {
 				await this.lockManager(member, newChannel).catch(() => undefined);
 			} else {
 				await this.createRoom(member, guild, newChannel).catch(() => undefined);
-
-				this.client.emit('voiceChannelSwitch', member, newChannel, oldChannel, true);
 			}
 
 			return;
 		}
 
-		if (oldChannel.voiceMembers.filter((x) => !x.user.bot).length > 0) return;
-
-		if (isNullOrUndefined(room)) return;
-
-		await oldChannel.delete('Empty private room').catch(() => undefined);
-		await this.cache.delete(room);
+		await this.onLeave(member, oldChannel);
 	}
 
 	private async onJoin(member: Member, channel: VoiceChannel) {
@@ -64,13 +57,15 @@ export class PrivateService extends BaseService {
 		await this.createRoom(member, guild, channel).catch(() => undefined);
 	}
 
-	private async onLeave({ guild }: Member, channel: VoiceChannel) {
+	private async onLeave(member: Member, channel: VoiceChannel) {
 		if (channel.voiceMembers.filter((x) => !x.user.bot).length > 0) return;
 
-		const rooms = await this.cache.get(guild);
+		const rooms = await this.cache.get(member.guild);
 		const room = rooms.get(channel.id);
 
 		if (isNullOrUndefined(room)) return;
+
+		this.client.emit('roomDelete', member, channel);
 
 		await channel.delete('Empty private room').catch(() => undefined);
 		await this.cache.delete(room);
@@ -113,6 +108,8 @@ export class PrivateService extends BaseService {
 			guild: guild.id,
 			owner: member.id
 		});
+
+		this.client.emit('roomCreate', member, house, true);
 
 		await this.moveMember(member, house, room);
 		await this.lockManager(member, channel).catch(() => undefined);

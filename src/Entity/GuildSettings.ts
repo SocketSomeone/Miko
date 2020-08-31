@@ -111,6 +111,9 @@ export class BaseSettings extends BaseEntity {
 		[LogType.ROLE_DELETE]: null,
 		[LogType.ROLE_UPDATE]: null,
 
+		[LogType.ROOM_CREATE]: null,
+		[LogType.ROOM_DELETE]: null,
+
 		[LogType.VOICE_JOIN]: null,
 		[LogType.VOICE_LEAVE]: null,
 		[LogType.VOICE_SWITCH]: null,

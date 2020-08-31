@@ -10,22 +10,21 @@ export default class onVoiceLeaveEvent extends BaseEventLog {
 	public constructor(client: BaseClient) {
 		super(client, LogType.VOICE_LEAVE);
 
-		client.on('voiceChannelLeave', this.onHandle.bind(this));
+		client.on('voiceChannelLeave', this.onChannelLeave.bind(this));
 	}
 
-	private async onHandle(member: Member, channel: VoiceChannel) {
-		const guild = channel.guild;
+	private async onChannelLeave(member: Member, channel: VoiceChannel) {
+		const guild = member.guild;
+		const rooms = await this.client.cache.rooms.get(guild);
 
-		if (!guild) {
-			return;
-		}
+		if (rooms.has(channel.id)) return;
 
 		await super.handleEvent(guild, member, channel);
 	}
 
-	public async execute(t: TranslateFunc, guild: Guild, member: Member, channel: VoiceChannel) {
+	public async execute(t: TranslateFunc, guild: Guild, member: Member, channel: VoiceChannel, isRoom: boolean) {
 		const embed = this.client.messages.createEmbed({
-			author: { name: t('logs.voiceLeaved'), icon_url: Images.VOICE_LEAVE },
+			author: { name: isRoom ? t('logs.roomDeleted') : t('logs.voiceLeaved'), icon_url: Images.VOICE_LEAVE },
 			color: Color.RED,
 			fields: [
 				{

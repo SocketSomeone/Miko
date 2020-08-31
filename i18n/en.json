@@ -330,7 +330,10 @@
 		"unset": "logs.unset",
 		"guildJoin": "logs.guildJoin",
 		"msgDeleted": "logs.msgDeleted",
-		"guildLeave": "logs.guildLeave"
+		"guildLeave": "logs.guildLeave",
+		"roomCreate": "logs.roomCreate",
+		"roomCreated": "logs.roomCreated",
+		"roomDeleted": "logs.roomDeleted"
 	},
 	"moderation": {
 		"purge": {

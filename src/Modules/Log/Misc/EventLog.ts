@@ -7,6 +7,7 @@ import { ExecuteIgnore } from '../../../Framework/Errors/ExecuteIgnore';
 import { withScope, captureException } from '@sentry/node';
 
 import i18n from 'i18n';
+import { isNullOrUndefined } from 'util';
 
 export abstract class BaseEventLog {
 	public type: LogType;
@@ -46,7 +47,7 @@ export abstract class BaseEventLog {
 			return;
 		}
 
-		if (sets.logger[this.type] === null) {
+		if (isNullOrUndefined(sets.logger[this.type])) {
 			return;
 		}
 

@@ -6,25 +6,20 @@ import { Guild, Member, VoiceChannel } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
 import { Images } from '../../../Misc/Enums/Images';
 
-export default class onVoiceConnectEvent extends BaseEventLog {
+export default class onRoomCreate extends BaseEventLog {
 	public constructor(client: BaseClient) {
-		super(client, LogType.VOICE_JOIN);
+		super(client, LogType.ROOM_CREATE);
 
-		client.on('voiceChannelJoin', this.onVoiceChannelJoin.bind(this));
+		client.on('roomCreate', this.onRoomCreate.bind(this));
 	}
 
-	private async onVoiceChannelJoin(member: Member, channel: VoiceChannel) {
-		const guild = channel.guild;
-		const sets = await this.client.cache.guilds.get(guild);
-
-		if (sets.privateManager === channel.id) return;
-
-		await super.handleEvent(guild, member, channel);
+	private async onRoomCreate(member: Member, channel: VoiceChannel) {
+		await super.handleEvent(member.guild, member, channel, true);
 	}
 
 	public async execute(t: TranslateFunc, guild: Guild, member: Member, channel: VoiceChannel, isRoom: boolean) {
 		const embed = this.client.messages.createEmbed({
-			author: { name: isRoom ? t('logs.roomCreated') : t('logs.voiceConnected'), icon_url: Images.VOICE_JOIN },
+			author: { name: t('logs.roomCreated'), icon_url: Images.VOICE_JOIN },
 			color: Color.LIME,
 			fields: [
 				{

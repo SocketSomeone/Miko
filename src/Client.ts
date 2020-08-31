@@ -23,6 +23,7 @@ import { TranslateFunc } from './Framework/Commands/Command';
 import { CommandGroup } from './Misc/Models/CommandGroup';
 import { ShopRolesCache } from './Modules/Configure/Cache/ShopRole';
 import { Images } from './Misc/Enums/Images';
+import { PrivatesCache } from './Modules/Voice/Cache/PrivateCache';
 
 moment.tz.setDefault('Europe/Moscow');
 
@@ -51,6 +52,7 @@ interface BaseCacheObject {
 	permissions: PermissionsCache;
 	punishments: PunishmentsCache;
 	shop: ShopRolesCache;
+	rooms: PrivatesCache;
 }
 
 /**
@@ -161,7 +163,8 @@ export class BaseClient extends Client {
 			guilds: new GuildSettingsCache(this),
 			permissions: new PermissionsCache(this),
 			punishments: new PunishmentsCache(this),
-			shop: new ShopRolesCache(this)
+			shop: new ShopRolesCache(this),
+			rooms: new PrivatesCache(this)
 		};
 
 		this.on('ready', this.onClientReady);

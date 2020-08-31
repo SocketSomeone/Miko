@@ -27,8 +27,7 @@ export default class extends Command {
 
 		await this.replyAsync(message, t, {
 			color: Color.MAGENTA,
-			author: { name: t('voice.title'), icon_url: Images.SUCCESS },
-			description: t(`voice.disable`),
+			author: { name: t(`others.module.disable`), icon_url: Images.SUCCESS },
 			footer: null
 		});
 	}

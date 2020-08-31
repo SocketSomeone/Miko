@@ -22,9 +22,9 @@ export default class onVoiceLeaveEvent extends BaseEventLog {
 		await super.handleEvent(guild, member, channel);
 	}
 
-	public async execute(t: TranslateFunc, guild: Guild, member: Member, channel: VoiceChannel, isRoom: boolean) {
+	public async execute(t: TranslateFunc, guild: Guild, member: Member, channel: VoiceChannel) {
 		const embed = this.client.messages.createEmbed({
-			author: { name: isRoom ? t('logs.roomDeleted') : t('logs.voiceLeaved'), icon_url: Images.VOICE_LEAVE },
+			author: { name: t('logs.voiceLeaved'), icon_url: Images.VOICE_LEAVE },
 			color: Color.RED,
 			fields: [
 				{

@@ -17,7 +17,7 @@ export default class onRoomCreate extends BaseEventLog {
 		await super.handleEvent(member.guild, member, channel, true);
 	}
 
-	public async execute(t: TranslateFunc, guild: Guild, member: Member, channel: VoiceChannel, isRoom: boolean) {
+	public async execute(t: TranslateFunc, guild: Guild, member: Member, channel: VoiceChannel) {
 		const embed = this.client.messages.createEmbed({
 			author: { name: t('logs.roomCreated'), icon_url: Images.VOICE_JOIN },
 			color: Color.LIME,

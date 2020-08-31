@@ -22,9 +22,9 @@ export default class onVoiceConnectEvent extends BaseEventLog {
 		await super.handleEvent(guild, member, channel);
 	}
 
-	public async execute(t: TranslateFunc, guild: Guild, member: Member, channel: VoiceChannel, isRoom: boolean) {
+	public async execute(t: TranslateFunc, guild: Guild, member: Member, channel: VoiceChannel) {
 		const embed = this.client.messages.createEmbed({
-			author: { name: isRoom ? t('logs.roomCreated') : t('logs.voiceConnected'), icon_url: Images.VOICE_JOIN },
+			author: { name: t('logs.voiceConnected'), icon_url: Images.VOICE_JOIN },
 			color: Color.LIME,
 			fields: [
 				{

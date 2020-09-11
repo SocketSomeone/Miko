@@ -64,6 +64,6 @@ export default class extends Command {
 
 		await settings.save();
 
-		await this.replyAsync(message, t, embed);
+		await this.replyAsync(message, embed);
 	}
 }

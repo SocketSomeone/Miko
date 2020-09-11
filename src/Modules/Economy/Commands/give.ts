@@ -49,7 +49,7 @@ export default class extends Command {
 		await person.save();
 		await target.save();
 
-		await this.sendAsync(message.channel, t, {
+		await this.sendAsync(message.channel, {
 			author: { name: t('economy.give.title'), icon_url: Images.ECONOMY },
 			description: t('economy.give.desc', {
 				member: message.member,

@@ -5,7 +5,8 @@ import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { TranslateFunc } from '../../Commands/Command';
 import { Color } from '../../../Misc/Enums/Colors';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
-import { ChannelType, Modify, BaseEmbedOptions } from '../../../Types';
+import { BaseEmbedOptions } from '../../../Types';
+import { BaseSettings } from '../../../Entity/GuildSettings';
 
 const upSymbol = 'left:736460400656384090';
 const downSymbol = 'right:736460400089890867';
@@ -15,6 +16,7 @@ function convertEmbedToPlain(embed: EmbedOptions) {
 	const authorUrl = embed.author && embed.author.url ? `(${embed.author.url})` : '';
 
 	let fields = '';
+
 	if (embed.fields && embed.fields.length) {
 		fields = '\n\n' + embed.fields.map((f) => `**${f.name}**\n${f.value}`).join('\n\n') + '\n\n';
 	}
@@ -60,11 +62,23 @@ export class MessageService extends BaseService {
 		};
 	}
 
-	public sendReply(message: Message, t: TranslateFunc, reply: BaseEmbedOptions | string) {
-		return this.sendEmbed(message.channel, t, reply, message.author);
+	public sendReply(message: Message, reply: BaseEmbedOptions | string, ttl: number = null) {
+		return new Promise<Message>(async (resolve, reject) => {
+			const m = await this.sendEmbed(message.channel, reply, message.author);
+
+			if (!ttl) {
+				return resolve(m);
+			}
+
+			setTimeout(() => {
+				m.delete().catch(undefined);
+
+				resolve(null);
+			}, ttl);
+		});
 	}
 
-	public sendEmbed(target: TextableChannel, t: TranslateFunc, embed: BaseEmbedOptions | string, fallbackUser?: User) {
+	public sendEmbed(target: TextableChannel, embed: BaseEmbedOptions | string, fallbackUser?: User) {
 		const e = typeof embed === 'string' ? this.createEmbed({ description: embed }) : this.createEmbed(embed);
 
 		e.fields = e.fields
@@ -96,6 +110,8 @@ export class MessageService extends BaseService {
 		};
 
 		return new Promise<Message>((resolve, reject) => {
+			const t: TranslateFunc = (phrase, replacements) => i18n.__({ locale: 'ru', phrase }, replacements);
+
 			const sendDM = async (error?: any): Promise<Message> => {
 				if (!fallbackUser) {
 					return undefined;
@@ -172,8 +188,41 @@ export class MessageService extends BaseService {
 		});
 	}
 
+	public fillTemplate(msg: string, strings?: { [x: string]: string | number }): string | Embed {
+		if (strings) {
+			Object.keys(strings).forEach((k) => (msg = msg.replace(new RegExp(`{${k}}`, 'g'), String(strings[k]))));
+		}
+
+		try {
+			const temp = JSON.parse(msg);
+
+			let embed = (temp && temp.embed) || temp;
+
+			if (typeof embed.thumbnail === 'string') {
+				embed.thumbnail = {
+					url: embed.thumbnail || null
+				};
+			}
+
+			if (typeof embed.image === 'string') {
+				embed.image = {
+					url: embed.image || null
+				};
+			}
+
+			return this.createEmbed({
+				footer: null,
+				timestamp: null,
+				...embed
+			});
+		} catch (e) {
+			// NO-OP
+		}
+
+		return msg;
+	}
+
 	public async showPaginated(
-		t: TranslateFunc,
 		prevMsg: Message,
 		page: number,
 		maxPage: number,
@@ -183,6 +232,7 @@ export class MessageService extends BaseService {
 		const embed = render(page, maxPage);
 
 		let doPaginate = true;
+
 		if (prevMsg.channel instanceof GuildChannel) {
 			const perm = prevMsg.channel.permissionsOf(this.client.user.id);
 			if (
@@ -197,7 +247,7 @@ export class MessageService extends BaseService {
 		if ((page > 0 || page < maxPage - 1) && !embed.footer) {
 			embed.footer = {
 				...embed.footer,
-				text: `${t('others.page')}: ${page + 1}/${maxPage}`
+				text: `${page + 1}/${maxPage}`
 			};
 		}
 
@@ -207,7 +257,7 @@ export class MessageService extends BaseService {
 			await prevMsg.edit({ embed });
 		} else {
 			author = prevMsg.author;
-			prevMsg = await this.sendEmbed(prevMsg.channel, t, embed, prevMsg.author);
+			prevMsg = await this.sendEmbed(prevMsg.channel, embed, prevMsg.author);
 
 			if (maxPage !== 1 && doPaginate) {
 				await prevMsg.addReaction(upSymbol);
@@ -250,10 +300,10 @@ export class MessageService extends BaseService {
 
 				if (isUp && page > 0) {
 					clear();
-					await this.showPaginated(t, prevMsg, page - 1, maxPage, render, author);
+					await this.showPaginated(prevMsg, page - 1, maxPage, render, author);
 				} else if (!isUp && page < maxPage - 1) {
 					clear();
-					await this.showPaginated(t, prevMsg, page + 1, maxPage, render, author);
+					await this.showPaginated(prevMsg, page + 1, maxPage, render, author);
 				}
 			};
 
@@ -266,55 +316,5 @@ export class MessageService extends BaseService {
 
 			timer = setTimeout(timeOut, 5 * 60 * 1000);
 		}
-	}
-
-	public fillTemplate(msg: string, strings?: { [x: string]: string | number }): string | Embed {
-		if (strings) {
-			Object.keys(strings).forEach((k) => (msg = msg.replace(new RegExp(`{${k}}`, 'g'), String(strings[k]))));
-		}
-
-		try {
-			const temp = JSON.parse(msg);
-
-			let embed = (temp && temp.embed) || temp;
-
-			if (typeof embed.thumbnail === 'string') {
-				embed.thumbnail = {
-					url: embed.thumbnail || null
-				};
-			}
-
-			if (typeof embed.image === 'string') {
-				embed.image = {
-					url: embed.image || null
-				};
-			}
-
-			return this.createEmbed({
-				footer: null,
-				timestamp: null,
-				...embed
-			});
-		} catch (e) {
-			// NO-OP
-		}
-
-		return msg;
-	}
-
-	private async getDefaultChannel(guild: Guild) {
-		if (guild.channels.has(guild.id)) {
-			return guild.channels.get(guild.id);
-		}
-
-		const gen = guild.channels.find((c) => c.name === 'general' && c.type === ChannelType.GUILD_TEXT);
-
-		if (gen) {
-			return gen;
-		}
-
-		return guild.channels
-			.filter((c) => c.type === ChannelType.GUILD_TEXT && c.permissionsOf(this.client.user.id).has('SEND_MESSAGES'))
-			.sort((a, b) => a.position - b.position || a.id.localeCompare(b.id))[0];
 	}
 }

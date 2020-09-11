@@ -44,7 +44,7 @@ export default class extends Command {
 
 		await settings.save();
 
-		await this.replyAsync(message, t, {
+		await this.replyAsync(message, {
 			author: { name: t('logs.title'), icon_url: Images.SUCCESS },
 			description: t(`logs.unset`, {
 				type: types.map((X) => `\`${X}\``).join(', ')

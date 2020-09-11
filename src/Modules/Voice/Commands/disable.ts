@@ -25,7 +25,7 @@ export default class extends Command {
 		settings.privateManager = await this.deleteManager(t, guild, settings.privateManager);
 		await settings.save();
 
-		await this.replyAsync(message, t, {
+		await this.replyAsync(message, {
 			color: Color.MAGENTA,
 			author: { name: t(`others.module.disable`), icon_url: Images.SUCCESS },
 			footer: null,

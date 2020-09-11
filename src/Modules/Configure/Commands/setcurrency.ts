@@ -25,7 +25,7 @@ export default class extends Command {
 			guildOnly: true,
 			premiumOnly: false,
 			userPermissions: [GuildPermission.MANAGE_GUILD],
-			examples: [EmojisDefault.WALLET]
+			examples: ['💸']
 		});
 	}
 
@@ -39,7 +39,7 @@ export default class extends Command {
 		settings.currency = emoji;
 		await settings.save();
 
-		await this.replyAsync(message, t, {
+		await this.replyAsync(message, {
 			color: Color.MAGENTA,
 			author: {
 				name: t('configure.title', { guild: guild.name }),

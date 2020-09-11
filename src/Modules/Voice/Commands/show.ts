@@ -39,7 +39,7 @@ export default class extends Command {
 
 		await p.actionRoom(t, member, target || guild, ActionRoom.HIDE, true);
 
-		await this.replyAsync(message, t, {
+		await this.replyAsync(message, {
 			author: {
 				name: t(`voice.unhidden`, {
 					target: (target && target.name.substring(0, 40)) || t('voice.all')

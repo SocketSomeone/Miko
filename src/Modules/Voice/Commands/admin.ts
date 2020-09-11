@@ -32,7 +32,7 @@ export default class extends Command {
 
 		const newAdmin = await p.actionAdmin(t, member, user);
 
-		await this.replyAsync(message, t, {
+		await this.replyAsync(message, {
 			author: {
 				name: t(`voice.admin.${newAdmin ? 'setted' : 'deleted'}`),
 				icon_url: Images.VOICE

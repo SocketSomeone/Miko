@@ -110,6 +110,6 @@ export default class extends Command {
 			throw new ExecuteError(t('moderation.ban.cannot'));
 		}
 
-		await this.replyAsync(message, t, embed);
+		await this.replyAsync(message, embed);
 	}
 }

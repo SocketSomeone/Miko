@@ -40,7 +40,7 @@ export default class extends Command {
 		if (!settings.modlog || !guild.channels.has(settings.modlog))
 			throw new ExecuteError(t('configure.modlog.notFound'));
 
-		await this.replyAsync(message, t, {
+		await this.replyAsync(message, {
 			color: channel ? Color.MAGENTA : Color.GRAY,
 			author: {
 				name: t('configure.title', { guild: guild.name }),

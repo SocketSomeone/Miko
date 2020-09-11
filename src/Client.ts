@@ -80,6 +80,7 @@ export class BaseClient extends Client {
 	public hasStarted: boolean = false;
 	public startedAt: Moment = moment();
 
+	public isDev: boolean;
 	public config: any;
 	public flags: string[];
 	public shardId: number;
@@ -126,6 +127,7 @@ export class BaseClient extends Client {
 			guildCreateTimeout: 60000
 		});
 
+		this.isDev = config.runEnv === 'dev';
 		this.config = config;
 		this.flags = flags;
 		this.shardId = shardId;
@@ -229,11 +231,7 @@ export class BaseClient extends Client {
 
 	private async setActivity() {
 		this.editStatus('online', {
-			name: [
-				`за ${this.guilds.size} серверами`,
-				`!help - Invite Miko`,
-				`за ${this.guilds.reduce((acc, x) => (acc += x.memberCount), 0)} участниками`
-			].random(),
+			name: [`за ${this.guilds.size} серверами`, `!help - Invite Miko`, `за ${this.users.size} участниками`].random(),
 			type: 3
 		});
 	}

@@ -73,6 +73,6 @@ export default class extends Command {
 		}
 
 		await person.save();
-		await this.replyAsync(message, t, embed);
+		await this.replyAsync(message, embed);
 	}
 }

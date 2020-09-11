@@ -182,7 +182,8 @@
 			"userpermissions": {
 				"title": "error.missed.userpermissions.title",
 				"desc": "error.missed.userpermissions.desc"
-			}
+			},
+			"permissions": "error.missed.permissions"
 		},
 		"ratelimit": {
 			"title": "error.ratelimit.title",

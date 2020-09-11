@@ -39,7 +39,7 @@ export default class extends Command {
 			userLimit: limit
 		});
 
-		await this.replyAsync(message, t, {
+		await this.replyAsync(message, {
 			author: {
 				name: t(`voice.limit`),
 				icon_url: Images.VOICE

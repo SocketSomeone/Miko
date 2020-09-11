@@ -36,7 +36,7 @@ export default class extends Command {
 			premiumOnly: false,
 			botPermissions: [GuildPermission.MANAGE_CHANNELS],
 			userPermissions: [GuildPermission.MANAGE_GUILD],
-			examples: ['add @role', 'delete @role']
+			examples: ['set {mention} joined to our server! ✨', 'delete']
 		});
 	}
 
@@ -70,6 +70,6 @@ export default class extends Command {
 
 		await settings.save();
 
-		await this.replyAsync(message, t, embed);
+		await this.replyAsync(message, embed);
 	}
 }

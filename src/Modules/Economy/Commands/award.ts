@@ -42,7 +42,7 @@ export default class extends Command {
 		target.money += money;
 		await target.save();
 
-		await this.sendAsync(message.channel, t, {
+		await this.sendAsync(message.channel, {
 			author: { name: t('economy.award.title'), icon_url: Images.ECONOMY },
 			description: t('economy.award.desc', {
 				member: message.member,

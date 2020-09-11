@@ -43,7 +43,7 @@ export default class extends Command {
 		target.money = target.money < money ? 0n : target.money - money;
 		await target.save();
 
-		await this.sendAsync(message.channel, t, {
+		await this.sendAsync(message.channel, {
 			author: { name: t('economy.take.title'), icon_url: Images.ECONOMY },
 			description: t('economy.take.desc', {
 				member: message.member,

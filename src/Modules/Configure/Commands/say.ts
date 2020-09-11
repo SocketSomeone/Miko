@@ -35,7 +35,7 @@ export default class extends Command {
 		{ funcs: { t }, guild, settings: { prefix } }: Context
 	) {
 		const embed = this.client.messages.fillTemplate(placeholder);
-		const nm = await this.client.messages.sendEmbed(message.channel, t, embed);
+		const nm = await this.client.messages.sendEmbed(message.channel, embed);
 
 		await BaseMessage.save(
 			BaseMessage.create({

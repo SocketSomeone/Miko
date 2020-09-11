@@ -29,7 +29,7 @@ export default class extends Command {
 		const target = user || message.member;
 		const person = await BaseMember.get(target);
 
-		await this.sendAsync(message.channel, t, {
+		await this.sendAsync(message.channel, {
 			author: {
 				name: t('economy.bal.title', {
 					member: `${target.user.username}#${target.user.discriminator}`

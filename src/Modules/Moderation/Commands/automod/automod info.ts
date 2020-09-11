@@ -67,6 +67,6 @@ export default class extends Command {
 			footer: null
 		});
 
-		await this.replyAsync(message, t, embed);
+		await this.replyAsync(message, embed);
 	}
 }

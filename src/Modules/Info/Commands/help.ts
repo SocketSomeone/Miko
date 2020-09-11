@@ -29,7 +29,7 @@ export default class extends Command {
 
 	public async execute(message: Message, [c]: [Command], { funcs: { t }, guild, settings: { prefix } }: Context) {
 		if (c) {
-			await this.replyAsync(message, t, c.getHelp(t, prefix));
+			await this.replyAsync(message, c.getHelp(t, prefix));
 			return;
 		}
 
@@ -37,7 +37,7 @@ export default class extends Command {
 			.sort(([a], [b]) => a.localeCompare(b))
 			.filter(([key]) => key.length > 1);
 
-		this.showPaginated(t, message, 0, groups.length + 1, (page, maxPage) => {
+		this.showPaginated(message, 0, groups.length + 1, (page, maxPage) => {
 			if (page === 0) {
 				const embed = this.createEmbed({
 					author: { name: t('info.help.first.title'), icon_url: Images.HELP },

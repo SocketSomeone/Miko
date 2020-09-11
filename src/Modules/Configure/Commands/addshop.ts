@@ -68,6 +68,6 @@ export default class extends Command {
 			);
 		}
 
-		await this.replyAsync(message, t, embed);
+		await this.replyAsync(message, embed);
 	}
 }

@@ -1,13 +1,14 @@
+import glob from 'glob';
+import moment from 'moment';
+import i18n from 'i18n';
+
+import { writeFileSync } from 'fs';
 import { BaseService } from '../Service';
 import { Command, Context, TranslateFunc } from '../../Commands/Command';
 import { resolve, relative } from 'path';
 import { Precondition } from '../../../Modules/Permissions/Misc/Precondition';
-import { Message, GuildChannel, PrivateChannel, Member, Guild } from 'eris';
+import { Message, GuildChannel, Guild } from 'eris';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
-
-import glob from 'glob';
-import moment from 'moment';
-import i18n from 'i18n';
 import EmojiResolver from '../../../Misc/Utils/EmojiResolver';
 import { withScope, captureException } from '@sentry/node';
 import { ExecuteError } from '../../Errors/ExecuteError';
@@ -127,8 +128,9 @@ export class CommandService extends BaseService {
 				const { answer, permission } = Precondition.checkPermissions({ context, command: cmd, message }, permissions);
 
 				if (!answer) {
-					await this.client.messages
-						.sendReply(message, t, {
+					this.client.messages.sendReply(
+						message,
+						{
 							author: {
 								name: t('error.missed.permissions', { index: String(permission.index) }),
 								icon_url: Images.CRITICAL
@@ -136,8 +138,9 @@ export class CommandService extends BaseService {
 							color: Color.RED,
 							footer: null,
 							timestamp: null
-						})
-						.then((m) => setTimeout(async () => await m.delete(), 15000));
+						},
+						15000
+					);
 
 					return;
 				} else if (permission === null && !member.permission.has(GuildPermission.ADMINISTRATOR)) {
@@ -151,7 +154,7 @@ export class CommandService extends BaseService {
 							.map(([s]) => `\`${s}\``)
 							.join(', ');
 
-						await this.client.messages.sendReply(message, t, {
+						await this.client.messages.sendReply(message, {
 							color: Color.RED,
 							author: { name: t('error.missed.userpermissions.title'), icon_url: Images.CRITICAL },
 							description: t('error.missed.userpermissions.desc', { missed }),
@@ -174,7 +177,7 @@ export class CommandService extends BaseService {
 					.map(([s]) => `\`${s}\``)
 					.join(', ');
 
-				await this.client.messages.sendReply(message, t, {
+				await this.client.messages.sendReply(message, {
 					color: Color.RED,
 					author: { name: t('error.missed.botpermissions.title'), icon_url: Images.CRITICAL },
 					description: t('error.missed.botpermissions.desc', { missed }),
@@ -216,7 +219,7 @@ export class CommandService extends BaseService {
 
 				args.push(val);
 			} catch (err) {
-				await this.client.messages.sendReply(message, t, {
+				await this.client.messages.sendReply(message, {
 					color: Color.RED,
 					author: { name: err.message, icon_url: Images.CRITICAL },
 					footer: null,
@@ -244,7 +247,7 @@ export class CommandService extends BaseService {
 					timestamp: null
 				});
 
-				await this.client.messages.sendReply(message, t, embed);
+				await this.client.messages.sendReply(message, embed);
 
 				return;
 			}
@@ -266,7 +269,7 @@ export class CommandService extends BaseService {
 				captureException(err);
 			});
 
-			await this.client.messages.sendReply(message, t, {
+			await this.client.messages.sendReply(message, {
 				author: { name: t('error.execCommand.title'), icon_url: Images.CRITICAL },
 				description: t('error.execCommand.desc', {
 					error: err.message
@@ -384,7 +387,7 @@ export class CommandService extends BaseService {
 				lastCall.warned = true;
 				lastCall.last = now + COOLDOWN;
 
-				await this.client.messages.sendReply(message, t, {
+				await this.client.messages.sendReply(message, {
 					color: Color.RED,
 					author: { name: t('error.ratelimit.title'), icon_url: Images.CRITICAL },
 					description: t('error.ratelimit.desc'),

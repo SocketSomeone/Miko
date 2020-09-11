@@ -66,7 +66,7 @@ export abstract class BaseEventLog {
 				return;
 			}
 
-			await this.client.messages.sendEmbed(channel, t, embed);
+			await this.client.messages.sendEmbed(channel, embed);
 		} catch (err) {
 			if (err instanceof ExecuteIgnore) {
 				return;

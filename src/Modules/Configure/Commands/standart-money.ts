@@ -36,7 +36,7 @@ export default class extends Command {
 			await settings.save();
 		}
 
-		await this.replyAsync(message, t, {
+		await this.replyAsync(message, {
 			color: money ? Color.MAGENTA : Color.GRAY,
 			author: {
 				name: t('configure.title', { guild: guild.name }),

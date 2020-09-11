@@ -50,7 +50,7 @@ export default class extends Command {
 			})
 		});
 
-		const m = await this.sendAsync(message.channel, t, embed);
+		const m = await this.sendAsync(message.channel, embed);
 
 		const emojis = ['1️⃣', '2️⃣', '3️⃣'];
 

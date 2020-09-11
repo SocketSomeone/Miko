@@ -67,6 +67,6 @@ export default class extends Command {
 			throw new ExecuteError(t('moderation.purge.error'));
 		}
 
-		await this.replyAsync(message, t, embed);
+		await this.replyAsync(message, embed);
 	}
 }

@@ -45,7 +45,7 @@ export default class extends Command {
 			await settings.save();
 		}
 
-		await this.replyAsync(message, t, {
+		await this.replyAsync(message, {
 			author: {
 				name: t('automod.enabled.any'),
 				icon_url: Images.SUCCESS

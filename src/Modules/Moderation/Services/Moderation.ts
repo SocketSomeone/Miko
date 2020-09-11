@@ -73,7 +73,6 @@ export class ModerationService extends BaseService {
 		setInterval(scanMessageCache, 60 * 1000);
 
 		this.client.on('messageCreate', this.onMessage.bind(this));
-		// this.client.on('messageUpdate', this.onMessage.bind(this));
 	}
 
 	private getMiniMessage(message: Message): MiniMessage {
@@ -94,8 +93,6 @@ export class ModerationService extends BaseService {
 		const guild = channel.guild;
 
 		if (!guild) return;
-
-		if (message.member.permission.has(GuildPermission.ADMINISTRATOR)) return;
 
 		const settings = await this.client.cache.guilds.get(guild);
 
@@ -413,10 +410,10 @@ export class ModerationService extends BaseService {
 	private async sendReplyAndDelete(message: Message, type: Violation, settings: BaseSettings) {
 		const t: TranslateFunc = (phrase, replace) => i18n.__({ locale: settings.locale, phrase }, replace);
 
-		const reply = await this.client.messages.sendReply(message, t, {
+		const reply = await this.client.messages.sendReply(message, {
 			color: Color.YELLOW,
-			timestamp: new Date().toISOString(),
-			footer: { text: t('automod.footer'), icon_url: this.client.user.dynamicAvatarURL('png', 4096) },
+			timestamp: null,
+			footer: null,
 			author: {
 				name: t('automod.desc', { type: t(`automod.violations.${type.toString()}`) }),
 				icon_url: Images.WARN

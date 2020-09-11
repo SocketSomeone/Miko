@@ -40,7 +40,7 @@ export default class extends Command {
 		settings.welcomeEnabled = true;
 		await settings.save();
 
-		await this.replyAsync(message, t, {
+		await this.replyAsync(message, {
 			color: Color.MAGENTA,
 			author: { name: t(`others.module.enable`), icon_url: Images.SUCCESS },
 			footer: null,

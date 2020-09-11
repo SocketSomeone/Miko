@@ -33,7 +33,7 @@ export default class extends Command {
 		person.timelyAt = moment().add(24, 'h');
 		await person.save();
 
-		await this.sendAsync(channel, t, {
+		await this.sendAsync(channel, {
 			author: { name: t('economy.daily.title'), icon_url: Images.TIME },
 			thumbnail: { url: member.avatarURL },
 			description: t('economy.daily.desc', {

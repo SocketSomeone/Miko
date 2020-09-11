@@ -99,7 +99,7 @@ export default class extends Command {
 
 		await this.client.cache.permissions.save(guild.id, permissions);
 
-		await this.replyAsync(message, t, {
+		await this.replyAsync(message, {
 			color: Color.MAGENTA,
 			author: { name: t('perms.title'), icon_url: Images.SUCCESS },
 			description: t(isExist ? 'perms.changed' : 'perms.add', {

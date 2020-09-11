@@ -37,7 +37,7 @@ export default class extends Command {
 			name: name.substr(0, 24)
 		});
 
-		await this.replyAsync(message, t, {
+		await this.replyAsync(message, {
 			author: {
 				name: t('voice.name'),
 				icon_url: Images.VOICE

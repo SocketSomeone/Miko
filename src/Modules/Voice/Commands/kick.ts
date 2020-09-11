@@ -34,7 +34,7 @@ export default class extends Command {
 
 		await p.kickUser(t, member, target);
 
-		await this.replyAsync(message, t, {
+		await this.replyAsync(message, {
 			author: {
 				name: t(`voice.kick`, {
 					member: member.tag,

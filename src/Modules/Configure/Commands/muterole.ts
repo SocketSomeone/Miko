@@ -39,7 +39,7 @@ export default class extends Command {
 		if (!settings.mutedRole || !guild.roles.has(settings.mutedRole))
 			throw new ExecuteError(t('configure.muterole.notFound'));
 
-		await this.replyAsync(message, t, {
+		await this.replyAsync(message, {
 			color: role ? Color.MAGENTA : Color.GRAY,
 			author: {
 				name: t('configure.title', { guild: guild.name }),

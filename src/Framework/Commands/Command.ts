@@ -63,15 +63,9 @@ export abstract class Command {
 	public premiumOnly?: boolean;
 
 	protected createEmbed: (options?: BaseEmbedOptions) => Embed;
-	protected replyAsync: (message: Message, t: TranslateFunc, reply: BaseEmbedOptions | string) => Promise<Message>;
-	protected sendAsync: (
-		target: TextableChannel,
-		t: TranslateFunc,
-		embed: EmbedOptions | string,
-		fallbackUser?: User
-	) => Promise<Message>;
+	protected replyAsync: (message: Message, reply: BaseEmbedOptions | string) => Promise<Message>;
+	protected sendAsync: (target: TextableChannel, embed: EmbedOptions | string, fallbackUser?: User) => Promise<Message>;
 	protected showPaginated: (
-		t: TranslateFunc,
 		prevMsg: Message,
 		page: number,
 		maxPage: number,
@@ -111,10 +105,6 @@ export abstract class Command {
 		if (this.args.filter((x) => x.required).length >= 1 && this.examples.length < 1) {
 			console.error(`Missed examples for arguments in command "${this.name}"`);
 			process.exit(1);
-		}
-
-		if (this.client.config.runEnv === 'dev') {
-			i18n.__({ locale: 'ru', phrase: `info.help.cmdDesc.${this.name.toLowerCase()}` });
 		}
 
 		this.createEmbed = client.messages.createEmbed.bind(client.messages);

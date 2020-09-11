@@ -36,7 +36,7 @@ export default class extends Command {
 		const maxPage = Math.ceil(items.length / ROLE_PER_PAGE);
 		const startPage = Math.max(Math.min(offset ? offset - 1 : 0, maxPage - 1), 0);
 
-		await this.showPaginated(t, message, startPage, maxPage, (page) => {
+		await this.showPaginated(message, startPage, maxPage, (page) => {
 			const roles = items.slice(page * ROLE_PER_PAGE, (page + 1) * ROLE_PER_PAGE);
 			const fields: { name: string; value: string; inline: boolean }[] = [];
 

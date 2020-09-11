@@ -100,6 +100,6 @@ export class LoggingService extends BaseService {
 			footer: null
 		});
 
-		await this.client.messages.sendEmbed(modLogChannel, t, embed);
+		await this.client.messages.sendEmbed(modLogChannel, embed);
 	}
 }

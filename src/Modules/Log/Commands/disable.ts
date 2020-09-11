@@ -27,7 +27,7 @@ export default class extends Command {
 		settings.loggerEnabled = false;
 		await settings.save();
 
-		await this.replyAsync(message, t, {
+		await this.replyAsync(message, {
 			author: { name: t(`others.module.disable`), icon_url: Images.SUCCESS },
 			color: Color.MAGENTA,
 			footer: null,

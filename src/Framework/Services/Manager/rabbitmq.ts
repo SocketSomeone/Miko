@@ -236,7 +236,8 @@ export class RabbitMqService extends BaseService {
 			guilds: this.client.guilds.size,
 			error: err ? err.message : null,
 			cache: this.getCacheSizes(),
-			metrics: this.getMetrics()
+			metrics: this.getMetrics(),
+			pings: this.client.shards
 		});
 	}
 

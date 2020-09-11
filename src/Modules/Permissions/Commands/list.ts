@@ -31,7 +31,7 @@ export default class extends Command {
 		const maxPage = Math.ceil(permissions.length / PERMS_PER_PAGE);
 		const startPage = n || 0;
 
-		await this.showPaginated(t, message, startPage, maxPage, (page) => {
+		await this.showPaginated(message, startPage, maxPage, (page) => {
 			const perms = permissions.slice(page * PERMS_PER_PAGE, (page + 1) * PERMS_PER_PAGE);
 
 			return this.createEmbed({

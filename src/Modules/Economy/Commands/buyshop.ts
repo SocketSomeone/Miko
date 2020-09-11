@@ -52,7 +52,7 @@ export default class extends Command {
 
 		message.member.addRole(role.id).catch(() => undefined);
 
-		await this.replyAsync(message, t, {
+		await this.replyAsync(message, {
 			author: { name: t('economy.buyshop.title'), icon_url: Images.SHOP },
 			description: t('economy.buyshop.ok', {
 				role: `<@&${role.id}>`

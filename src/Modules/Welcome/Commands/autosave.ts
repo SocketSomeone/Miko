@@ -30,7 +30,7 @@ export default class extends Command {
 		settings.welcomeSaveRoles = !settings.welcomeSaveRoles;
 		await settings.save();
 
-		await this.replyAsync(message, t, {
+		await this.replyAsync(message, {
 			color: Color.MAGENTA,
 			author: {
 				name: t(`welcome.autosave.${settings.welcomeSaveRoles ? 'enable' : 'disable'}`),

@@ -37,7 +37,7 @@ export default class extends Command {
 
 		role.remove().catch(() => undefined);
 
-		await this.replyAsync(message, t, {
+		await this.replyAsync(message, {
 			color: Color.MAGENTA,
 			title: t('configure.title'),
 			description: t('configure.removeshop.deleted', { role: `<@&${role.id}>` }),

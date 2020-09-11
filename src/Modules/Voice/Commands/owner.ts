@@ -34,7 +34,7 @@ export default class extends Command {
 
 		await p.setOwner(t, member, target);
 
-		await this.replyAsync(message, t, {
+		await this.replyAsync(message, {
 			author: {
 				name: t(`voice.owner`, {
 					member: member.tag,

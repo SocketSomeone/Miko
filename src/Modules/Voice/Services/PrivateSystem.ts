@@ -32,7 +32,7 @@ export class PrivateService extends BaseService {
 
 		if (newChannel.id === sets.privateManager) {
 			if (
-				!isNullOrUndefined(room) &&
+				!(room === null || room === undefined) &&
 				room.owner === member.id &&
 				oldChannel.voiceMembers.filter((x) => !x.user.bot).length < 1
 			) {

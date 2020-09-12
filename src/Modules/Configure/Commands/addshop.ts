@@ -61,6 +61,7 @@ export default class extends Command {
 
     if (changeRole) {
       changeRole.cost = price;
+      await changeRole.save();
     } else {
       await BaseShopRole.save(
         BaseShopRole.create({
@@ -72,6 +73,8 @@ export default class extends Command {
         })
       );
     }
+
+    this.client.cache.shop.flush(guild.id);
 
     await this.replyAsync(message, embed);
   }

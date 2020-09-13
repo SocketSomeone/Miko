@@ -44,7 +44,8 @@
 		"prettier": "2.0.5",
 		"pretty-quick": "2.0.1",
 		"ts-node": "8.10.2",
-		"typescript": "3.9.5"
+		"typescript": "3.9.5",
+		"rimraf": "3.0.2"
 	},
 	"dependencies": {
 		"@sentry/cli": "1.55.0",
@@ -61,7 +62,6 @@
 		"moment": "2.27.0",
 		"moment-timezone": "0.5.31",
 		"pg": "8.2.1",
-		"rimraf": "3.0.2",
 		"slot-machine": "2.1.0",
 		"typeorm": "0.2.25"
 	},

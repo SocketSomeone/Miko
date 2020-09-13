@@ -37,7 +37,7 @@ export default class extends Command {
 			return this.createEmbed({
 				color: Color.MAGENTA,
 				author: { name: t('perms.title'), icon_url: Images.LIST },
-				description: perms.map((v, i) => PermissionsOutput(t, v, i + (page - 1) * PERMS_PER_PAGE)).join('\n')
+				description: perms.map((v, i) => PermissionsOutput(t, v, i + page * PERMS_PER_PAGE)).join('\n')
 			});
 		});
 	}

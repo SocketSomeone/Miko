@@ -1,7 +1,7 @@
 import { Command, Context } from '../../../Framework/Commands/Command';
 import { BaseClient } from '../../../Client';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
-import { Message } from 'eris';
+import { EmbedField, Message } from 'eris';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { NumberResolver } from '../../../Framework/Resolvers';
 import { Images } from '../../../Misc/Enums/Images';
@@ -38,7 +38,7 @@ export default class extends Command {
 
 		await this.showPaginated(message, startPage, maxPage, (page) => {
 			const roles = items.slice(page * ROLE_PER_PAGE, (page + 1) * ROLE_PER_PAGE);
-			const fields: { name: string; value: string; inline: boolean }[] = [];
+			const fields: EmbedField[] = [];
 
 			roles.map((role, i) => {
 				fields.push(

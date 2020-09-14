@@ -1,791 +1,801 @@
 {
-  "economy": {
-    "bal": {
-      "success": {
-        "title": "economy.bal.success.title",
-        "desc": "economy.bal.success.desc"
-      },
-      "title": "economy.bal.title",
-      "desc": "economy.bal.desc"
-    },
-    "daily": {
-      "title": "economy.daily.title",
-      "desc": "economy.daily.desc",
-      "wait": {
-        "title": "economy.daily.wait.title",
-        "desc": "economy.daily.wait.desc"
-      }
-    },
-    "shop": {
-      "empty": "economy.shop.empty",
-      "fields": {
-        "index": "economy.shop.fields.index",
-        "role": "economy.shop.fields.role",
-        "cost": "economy.shop.fields.cost"
-      },
-      "title": "economy.shop.title",
-      "bought": "economy.shop.bought"
-    },
-    "buyshop": {
-      "title": "economy.buyshop.title",
-      "ok": "economy.buyshop.ok",
-      "notFound": "economy.buyshop.notFound",
-      "has": "economy.buyshop.has"
-    },
-    "award": {
-      "title": "economy.award.title",
-      "desc": "economy.award.desc"
-    },
-    "give": {
-      "title": "economy.give.title",
-      "desc": "economy.give.desc"
-    },
-    "take": {
-      "title": "economy.take.title",
-      "desc": "economy.take.desc"
-    }
-  },
-  "embed": {
-    "disabled": "embed.disabled"
-  },
-  "modules": {
-    "economy": {
-      "bal": {
-        "success": {
-          "title": "economy.bal.success.title",
-          "desc": "economy.bal.success.desc"
-        },
-        "title": "economy.bal.title",
-        "desc": "economy.bal.desc"
-      },
-      "daily": {
-        "wait": {
-          "title": "economy.daily.wait.title",
-          "desc": "economy.daily.wait.desc"
-        },
-        "title": "economy.daily.title",
-        "desc": "economy.daily.desc"
-      },
-      "give": {
-        "title": "economy.give.title",
-        "desc": "economy.give.desc"
-      }
-    },
-    "waifu": {
-      "gifts": {
-        "title": "waifu.gifts.title",
-        "fields": {
-          "kiss": "waifu.gifts.fields.kiss",
-          "hearts": "waifu.gifts.fields.hearts",
-          "fishcake": "waifu.gifts.fields.fishcake",
-          "flower": "waifu.gifts.fields.flower",
-          "cat": "waifu.gifts.fields.cat",
-          "melon": "waifu.gifts.fields.melon",
-          "cake": "waifu.gifts.fields.cake",
-          "coffe": "waifu.gifts.fields.coffe",
-          "beer": "waifu.gifts.fields.beer",
-          "bow": "waifu.gifts.fields.bow",
-          "stars": "waifu.gifts.fields.stars",
-          "ring": "waifu.gifts.fields.ring",
-          "crown": "waifu.gifts.fields.crown"
-        }
-      }
-    },
-    "gambling": {
-      "wis": {
-        "title": "gambling.wis.title",
-        "desc": "gambling.wis.desc",
-        "result": "gambling.wis.result"
-      },
-      "fortune": {
-        "title": "gambling.fortune.title",
-        "desc": "gambling.fortune.desc",
-        "fields": {
-          "bet": "gambling.fortune.fields.bet",
-          "result": "gambling.fortune.fields.result"
-        }
-      }
-    },
-    "configure": {
-      "prefix": {
-        "title": "configure.prefix.title",
-        "info": {
-          "desc": "configure.prefix.info.desc"
-        },
-        "new": {
-          "desc": "configure.prefix.new.desc"
-        }
-      },
-      "standart": {
-        "info": {
-          "desc": "configure.standart.info.desc"
-        },
-        "title": "configure.standart.title"
-      },
-      "title": "configure.title",
-      "autosave": {
-        "title": "configure.autosave.title",
-        "enable": "configure.autosave.enable",
-        "disable": "configure.autosave.disable"
-      },
-      "modlog": {
-        "notFound": "configure.modlog.notFound",
-        "new": "configure.modlog.new"
-      }
-    },
-    "moderation": {
-      "ban": {
-        "title": "moderation.ban.title",
-        "canNotBan": "moderation.ban.canNotBan",
-        "error": "moderation.ban.error",
-        "done": "moderation.ban.done"
-      },
-      "canNotBan": "moderation.canNotBan",
-      "dm": {
-        "ban": {
-          "title": "moderation.dm.ban.title"
-        },
-        "kick": "moderation.dm.kick"
-      },
-      "noreason": "moderation.noreason",
-      "reason": "moderation.reason",
-      "kick": {
-        "canNotKick": "moderation.kick.canNotKick",
-        "title": "moderation.kick.title",
-        "cannot": "moderation.kick.cannot",
-        "done": "moderation.kick.done",
-        "error": "moderation.kick.error"
-      }
-    }
-  },
-  "error": {
-    "execCommand": {
-      "title": "error.execCommand.title",
-      "desc": "error.execCommand.desc",
-      "footer": "error.execCommand.footer"
-    },
-    "enough": {
-      "money": "error.enough.money"
-    },
-    "similar": {
-      "member": "error.similar.member"
-    },
-    "arguments": {
-      "title": "error.arguments.title"
-    },
-    "missed.userpermissions": {
-      "title": "error.missed.userpermissions.title",
-      "desc": "error.missed.userpermissions.desc"
-    },
-    "missed": {
-      "muterole": "error.missed.muterole",
-      "userpermissions": {
-        "title": "error.missed.userpermissions.title",
-        "desc": "error.missed.userpermissions.desc"
-      },
-      "permissions": "error.missed.permissions"
-    },
-    "ratelimit": {
-      "title": "error.ratelimit.title",
-      "desc": "error.ratelimit.desc"
-    },
-    "no": "error.no",
-    "changes": {
-      "not": "error.changes.not"
-    },
-    "emoji": {
-      "notFound": "error.emoji.notFound"
-    },
-    "module": {
-      "enable": "error.module.enable",
-      "disable": "error.module.disable"
-    }
-  },
-  "others": {
-    "page": "others.page",
-    "modules": {
-      "0": "others.modules.0",
-      "1": "others.modules.1",
-      "2": "others.modules.2",
-      "3": "others.modules.3",
-      "4": "others.modules.4",
-      "5": "others.modules.5",
-      "6": "others.modules.6",
-      "7": "others.modules.7",
-      "configure": "others.modules.configure",
-      "economy": "others.modules.economy",
-      "gambling": "others.modules.gambling",
-      "logs": "others.modules.logs",
-      "moderation": "others.modules.moderation",
-      "permissions": "others.modules.permissions",
-      "voice": "others.modules.voice",
-      "welcome": "others.modules.welcome",
-      "CONFIGURE": "others.modules.CONFIGURE",
-      "ECONOMY": "others.modules.ECONOMY"
-    },
-    "onBotAdd": {
-      "desc": "others.onBotAdd.desc",
-      "field": "others.onBotAdd.field"
-    },
-    "module": {
-      "disable": "others.module.disable",
-      "enable": "others.module.enable"
-    }
-  },
-  "errors": {
-    "enough": {
-      "money": "errors.enough.money"
-    }
-  },
-  "resolvers": {
-    "member": {
-      "notFound": "resolvers.member.notFound",
-      "bot": "resolvers.member.bot"
-    },
-    "number": {
-      "tooSmall": "resolvers.number.tooSmall",
-      "invalid": "resolvers.number.invalid"
-    },
-    "enum": {
-      "invalid": "resolvers.enum.invalid",
-      "validValues": "resolvers.enum.validValues"
-    },
-    "role": {
-      "notFound": "resolvers.role.notFound",
-      "everyone": "resolvers.role.everyone",
-      "multiple": "resolvers.role.multiple"
-    },
-    "command": {
-      "notFound": "resolvers.command.notFound",
-      "multiple": "resolvers.command.multiple"
-    },
-    "channel": {
-      "notFound": "resolvers.channel.notFound",
-      "type": "resolvers.channel.type"
-    },
-    "boolean": {
-      "invalid": "resolvers.boolean.invalid"
-    }
-  },
-  "key": {
-    "fields": {
-      "amount": "key.fields.amount"
-    }
-  },
-  "logs": {
-    "mod": {
-      "title": "logs.mod.title",
-      "user": "logs.mod.user",
-      "punish": "logs.mod.punish",
-      "reason": "logs.mod.reason",
-      "moderator": "logs.mod.moderator",
-      "duration": "logs.mod.duration"
-    },
-    "unban": {
-      "title": "logs.unban.title"
-    },
-    "member": "logs.member",
-    "ban": {
-      "title": "logs.ban.title"
-    },
-    "total": "logs.total",
-    "reason": "logs.reason",
-    "chanCreate": {
-      "title": "logs.chanCreate.title"
-    },
-    "channel": "logs.channel",
-    "chanDelete": {
-      "title": "logs.chanDelete.title"
-    },
-    "by": "logs.by",
-    "emojiCreate": "logs.emojiCreate",
-    "emoji": "logs.emoji",
-    "emojiDelete": "logs.emojiDelete",
-    "emojiUpdate": "logs.emojiUpdate",
-    "edited": "logs.edited",
-    "roleCreate": "logs.roleCreate",
-    "role": "logs.role",
-    "roleUpdate": "logs.roleUpdate",
-    "voiceConnected": "logs.voiceConnected",
-    "voiceLeaved": "logs.voiceLeaved",
-    "voiceSwitch": "logs.voiceSwitch",
-    "moved": "logs.moved",
-    "permissions": "logs.permissions",
-    "permissionsAdded": "logs.permissionsAdded",
-    "permissionsDeleted": "logs.permissionsDeleted",
-    "color": "logs.color",
-    "name": "logs.name",
-    "roleDelete": "logs.roleDelete",
-    "memberRolesUpdate": "logs.memberRolesUpdate",
-    "deletedRoles": "logs.deletedRoles",
-    "addedRoles": "logs.addedRoles",
-    "messageUpdate": "logs.messageUpdate",
-    "messageBefore": "logs.messageBefore",
-    "messageAfter": "logs.messageAfter",
-    "messageBy": "logs.messageBy",
-    "messageDeleted": "logs.messageDeleted",
-    "title": "logs.title",
-    "enable": "logs.enable",
-    "disable": "logs.disable",
-    "set": "logs.set",
-    "unset": "logs.unset",
-    "guildJoin": "logs.guildJoin",
-    "msgDeleted": "logs.msgDeleted",
-    "guildLeave": "logs.guildLeave",
-    "roomCreate": "logs.roomCreate",
-    "roomCreated": "logs.roomCreated",
-    "roomDeleted": "logs.roomDeleted"
-  },
-  "moderation": {
-    "purge": {
-      "title": "moderation.purge.title",
-      "text": "moderation.purge.text"
-    },
-    "ban": {
-      "title": "moderation.ban.title",
-      "error": "moderation.ban.error",
-      "done": "moderation.ban.done",
-      "until": "moderation.ban.until"
-    },
-    "reason": "moderation.reason",
-    "dm": {
-      "ban": "moderation.dm.ban",
-      "mute": "moderation.dm.mute"
-    },
-    "mute": {
-      "title": "moderation.mute.title",
-      "missedRole": "error.missed.muterole",
-      "until": "moderation.mute.until",
-      "done": "moderation.mute.done",
-      "error": "moderation.mute.error",
-      "already": "moderation.mute.already"
-    },
-    "noreason": "moderation.noreason",
-    "unmute": {
-      "title": "moderation.unmute.title",
-      "done": "moderation.unmute.done"
-    }
-  },
-  "configure": {
-    "title": "configure.title",
-    "muterole": {
-      "new": "configure.muterole.new",
-      "info": "configure.muterole.info"
-    },
-    "prefix": {
-      "new": "configure.prefix.new",
-      "info": "configure.prefix.info"
-    },
-    "modlog": {
-      "notFound": "configure.modlog.notFound",
-      "new": "configure.modlog.new",
-      "info": "configure.modlog.info"
-    },
-    "privates": {
-      "enabled": "configure.privates.enabled",
-      "disabled": "configure.privates.disabled"
-    },
-    "autosave": {
-      "enable": "configure.autosave.enable",
-      "disable": "configure.autosave.disable"
-    },
-    "conf": {
-      "main": {
-        "prefix": "configure.conf.main.prefix",
-        "locale": "configure.conf.main.locale",
-        "ignoreChannels": "configure.conf.main.ignoreChannels",
-        "verbose": "configure.conf.main.verbose",
-        "saveroles": "configure.conf.main.saveroles",
-        "modlog": "configure.conf.main.modlog",
-        "mutedRole": "configure.conf.main.mutedRole",
-        "privateManager": "configure.conf.main.privateManager",
-        "prices": "configure.conf.main.prices",
-        "emojis": "configure.conf.main.emojis",
-        "autoMod": "configure.conf.main.autoMod",
-        "privateRoom": "configure.conf.main.privateRoom",
-        "privateRooms": "configure.conf.main.privateRooms",
-        "autoassignRole": "configure.conf.main.autoassignRole",
-        "currency": "configure.conf.main.currency",
-        "welcomeEnabled": "configure.conf.main.welcomeEnabled",
-        "id": "configure.conf.main.id",
-        "welcomeSaveRoles": "configure.conf.main.welcomeSaveRoles",
-        "welcomeChannelType": "configure.conf.main.welcomeChannelType",
-        "welcomeChannel": "configure.conf.main.welcomeChannel",
-        "welcomeMessage": "configure.conf.main.welcomeMessage",
-        "loggerEnabled": "configure.conf.main.loggerEnabled"
-      },
-      "automod": {
-        "settings": {
-          "invites": "configure.conf.automod.settings.invites",
-          "allCaps": "configure.conf.automod.settings.allCaps",
-          "duplicateText": "configure.conf.automod.settings.duplicateText",
-          "zalgo": "configure.conf.automod.settings.zalgo",
-          "emojis": "configure.conf.automod.settings.emojis",
-          "exlinks": "configure.conf.automod.settings.exlinks",
-          "mentions": "configure.conf.automod.settings.mentions"
-        },
-        "invites": "configure.conf.automod.invites",
-        "allCaps": "configure.conf.automod.allCaps",
-        "duplicateText": "configure.conf.automod.duplicateText",
-        "zalgo": "configure.conf.automod.zalgo",
-        "emojis": "configure.conf.automod.emojis",
-        "exlinks": "configure.conf.automod.exlinks",
-        "mentions": "configure.conf.automod.mentions",
-        "caps": "configure.conf.automod.caps",
-        "duplicate": "configure.conf.automod.duplicate"
-      },
-      "settings": {
-        "invites": "configure.conf.settings.invites",
-        "allCaps": "configure.conf.settings.allCaps",
-        "duplicateText": "configure.conf.settings.duplicateText",
-        "zalgo": "configure.conf.settings.zalgo",
-        "emojis": "configure.conf.settings.emojis",
-        "exlinks": "configure.conf.settings.exlinks",
-        "mentions": "configure.conf.settings.mentions"
-      }
-    },
-    "automod": {
-      "invites": {
-        "enable": "configure.automod.invites.enable",
-        "disable": "configure.automod.invites.disable"
-      },
-      "mentions": {
-        "enable": "configure.automod.mentions.enable"
-      },
-      "zalgo": {
-        "disable": "configure.automod.zalgo.disable",
-        "enable": "configure.automod.zalgo.enable"
-      },
-      "exlinks": {
-        "enable": "configure.automod.exlinks.enable"
-      },
-      "allCaps": {
-        "enable": "configure.automod.allCaps.enable"
-      },
-      "duplicateText": {
-        "enable": "configure.automod.duplicateText.enable"
-      },
-      "emojis": {
-        "enable": "configure.automod.emojis.enable"
-      },
-      "duplicate": {
-        "enable": "configure.automod.duplicate.enable",
-        "disable": "configure.automod.duplicate.disable"
-      },
-      "caps": {
-        "enable": "configure.automod.caps.enable",
-        "disable": "configure.automod.caps.disable"
-      },
-      "amic": {
-        "added": "configure.automod.amic.added",
-        "deleted": "configure.automod.amic.deleted"
-      },
-      "amir": {
-        "added": "configure.automod.amir.added",
-        "deleted": "configure.automod.amir.deleted"
-      }
-    },
-    "aar": {
-      "notFound": "configure.aar.notFound",
-      "new": "configure.aar.new",
-      "info": "configure.aar.info"
-    },
-    "addshop": {
-      "new": "configure.addshop.new",
-      "change": "configure.addshop.change"
-    },
-    "removeshop": {
-      "deleted": "configure.removeshop.deleted"
-    },
-    "setcurrency": "configure.setcurrency",
-    "standart": {
-      "info": "configure.standart.info",
-      "new": "configure.standart.new"
-    }
-  },
-  "gambling": {
-    "wis": {
-      "title": "gambling.wis.title",
-      "desc": "gambling.wis.desc",
-      "result": "gambling.wis.result"
-    },
-    "fortune": {
-      "title": "gambling.fortune.title",
-      "desc": "gambling.fortune.desc",
-      "fields": {
-        "bet": "gambling.fortune.fields.bet",
-        "result": "gambling.fortune.fields.result"
-      }
-    },
-    "br": {
-      "title": "gambling.br.title",
-      "lose": "gambling.br.lose",
-      "win": "gambling.br.win"
-    },
-    "slots": {
-      "title": "gambling.slots.title",
-      "desc": "gambling.slots.desc",
-      "fields": {
-        "bet": "gambling.slots.fields.bet",
-        "result": "gambling.slots.fields.result"
-      }
-    }
-  },
-  "automod": {
-    "title": "automod.title",
-    "violations": {
-      "invites": "automod.violations.invites",
-      "exlinks": "automod.violations.exlinks",
-      "duplicateText": "automod.violations.duplicateText",
-      "duplicate": "automod.violations.duplicate",
-      "caps": "automod.violations.caps"
-    },
-    "desc": "automod.desc",
-    "footer": "automod.footer",
-    "settings": {
-      "invites": "automod.settings.invites",
-      "allCaps": "automod.settings.allCaps",
-      "duplicateText": "automod.settings.duplicateText",
-      "zalgo": "automod.settings.zalgo",
-      "emojis": "automod.settings.emojis",
-      "exlinks": "automod.settings.exlinks",
-      "mentions": "automod.settings.mentions",
-      "enabled": "automod.settings.enabled"
-    },
-    "reasons": {
-      "invites": "automod.reasons.invites",
-      "duplicate": "automod.reasons.duplicate"
-    },
-    "enabled": {
-      "caps": "automod.enabled.caps",
-      "any": "automod.enabled.any",
-      "already": "automod.enabled.already"
-    },
-    "types": {
-      "caps": "automod.types.caps",
-      "invites": "automod.types.invites",
-      "allCaps": "automod.types.allCaps",
-      "duplicateText": "automod.types.duplicateText",
-      "zalgo": "automod.types.zalgo",
-      "emojis": "automod.types.emojis",
-      "externalLinks": "automod.types.externalLinks",
-      "mentions": "automod.types.mentions",
-      "duplicate": "automod.types.duplicate",
-      "exlinks": "automod.types.exlinks"
-    },
-    "alreadyEnabled": "automod.alreadyEnabled",
-    "disabled": {
-      "any": "automod.disabled.any",
-      "already": "automod.disabled.already"
-    },
-    "alreadyDisabled": "automod.alreadyDisabled",
-    "info": {
-      "invites": "automod.info.invites",
-      "caps": "automod.info.caps",
-      "duplicate": "automod.info.duplicate",
-      "zalgo": "automod.info.zalgo",
-      "emojis": "automod.info.emojis",
-      "exlinks": "automod.info.exlinks",
-      "mentions": "automod.info.mentions",
-      "allCaps": "automod.info.allCaps",
-      "duplicateText": "automod.info.duplicateText",
-      "externalLinks": "automod.info.externalLinks"
-    }
-  },
-  "info": {
-    "help": {
-      "title": "info.help.title",
-      "footer": "info.help.footer",
-      "first": {
-        "title": "info.help.first.title",
-        "fields": {
-          "links": "info.help.first.fields.links",
-          "info": "info.help.first.fields.info",
-          "modules": "info.help.first.fields.modules"
-        },
-        "footer": "info.help.first.footer"
-      },
-      "cmd": {
-        "title": "info.help.cmd.title",
-        "ex": "info.help.cmd.ex",
-        "desc": "info.help.cmd.desc",
-        "args": "info.help.cmd.args",
-        "req": "info.help.cmd.req",
-        "aliases": "info.help.cmd.aliases",
-        "struct": "info.help.cmd.struct"
-      },
-      "cmdDesc": {
-        "autoassignrole": "info.help.cmdDesc.autoassignrole",
-        "automod": "info.help.cmdDesc.automod",
-        "automodignorechannel": "info.help.cmdDesc.automodignorechannel",
-        "automodignorerole": "info.help.cmdDesc.automodignorerole",
-        "saveroles": "info.help.cmdDesc.saveroles",
-        "config": "info.help.cmdDesc.config",
-        "modlog": "info.help.cmdDesc.modlog",
-        "muterole": "info.help.cmdDesc.muterole",
-        "prefix": "info.help.cmdDesc.prefix",
-        "standart-money": "info.help.cmdDesc.standart-money",
-        "bal": "info.help.cmdDesc.bal",
-        "buyshop": "info.help.cmdDesc.buyshop",
-        "daily": "info.help.cmdDesc.daily",
-        "give": "info.help.cmdDesc.give",
-        "shop": "info.help.cmdDesc.shop",
-        "br": "info.help.cmdDesc.br",
-        "fortune": "info.help.cmdDesc.fortune",
-        "whereischicken": "info.help.cmdDesc.whereischicken",
-        "help": "info.help.cmdDesc.help",
-        "warns": "info.help.cmdDesc.warns",
-        "privaterooms": "info.help.cmdDesc.privaterooms",
-        "embed": "info.help.cmdDesc.embed",
-        "reactionrole": "info.help.cmdDesc.reactionrole",
-        "addshop": "info.help.cmdDesc.addshop",
-        "removeshop": "info.help.cmdDesc.removeshop",
-        "ban": "info.help.cmdDesc.ban",
-        "kick": "info.help.cmdDesc.kick",
-        "mute": "info.help.cmdDesc.mute",
-        "tempban": "info.help.cmdDesc.tempban",
-        "tempmute": "info.help.cmdDesc.tempmute",
-        "unmute": "info.help.cmdDesc.unmute",
-        "clear": "info.help.cmdDesc.clear",
-        "gifts": "info.help.cmdDesc.gifts",
-        "privatevoices": "info.help.cmdDesc.privatevoices",
-        "welcome": "info.help.cmdDesc.welcome",
-        "automod enable": "info.help.cmdDesc.automod enable",
-        "automod disable": "info.help.cmdDesc.automod disable",
-        "welcome enable": "info.help.cmdDesc.welcome enable",
-        "mute role": "info.help.cmdDesc.mute role",
-        "welcome disable": "info.help.cmdDesc.welcome disable",
-        "welcome roles": "info.help.cmdDesc.welcome roles",
-        "welcome saveroles": "info.help.cmdDesc.welcome saveroles",
-        "slotmachine": "info.help.cmdDesc.slotmachine",
-        "welcome channel": "info.help.cmdDesc.welcome channel",
-        "welcome content": "info.help.cmdDesc.welcome content",
-        "automod ignore": "info.help.cmdDesc.automod ignore",
-        "voice limit": "info.help.cmdDesc.voice limit",
-        "voice name": "info.help.cmdDesc.voice name",
-        "voice admin": "info.help.cmdDesc.voice admin",
-        "voice lock": "info.help.cmdDesc.voice lock",
-        "voice hide": "info.help.cmdDesc.voice hide",
-        "voice unhide": "info.help.cmdDesc.voice unhide",
-        "voice unlock": "info.help.cmdDesc.voice unlock",
-        "voice show": "info.help.cmdDesc.voice show",
-        "voice kick": "info.help.cmdDesc.voice kick",
-        "voice owner": "info.help.cmdDesc.voice owner",
-        "log": "info.help.cmdDesc.log",
-        "log set": "info.help.cmdDesc.log set",
-        "log disable": "info.help.cmdDesc.log disable",
-        "log enable": "info.help.cmdDesc.log enable",
-        "log unset": "info.help.cmdDesc.log unset",
-        "permission add": "info.help.cmdDesc.permission add",
-        "permission remove": "info.help.cmdDesc.permission remove",
-        "permissions clear": "info.help.cmdDesc.permissions clear",
-        "permissions list": "info.help.cmdDesc.permissions list",
-        "permission move": "info.help.cmdDesc.permission move",
-        "say": "info.help.cmdDesc.say",
-        "voice disable": "info.help.cmdDesc.voice disable",
-        "voice enable": "info.help.cmdDesc.voice enable",
-        "award": "info.help.cmdDesc.award",
-        "take": "info.help.cmdDesc.take",
-        "welcome message": "info.help.cmdDesc.welcome message",
-        "setcurrency": "info.help.cmdDesc.setcurrency",
-        "automod info": "info.help.cmdDesc.automod info"
-      },
-      "moduleDesc": {
-        "configure": "info.help.moduleDesc.configure",
-        "economy": "info.help.moduleDesc.economy",
-        "gambling": "info.help.moduleDesc.gambling",
-        "logs": "info.help.moduleDesc.logs",
-        "moderation": "info.help.moduleDesc.moderation",
-        "permissions": "info.help.moduleDesc.permissions",
-        "voice": "info.help.moduleDesc.voice",
-        "welcome": "info.help.moduleDesc.welcome"
-      }
-    },
-    "warns": {
-      "title": "info.warns.title",
-      "has": "info.warns.has",
-      "by": "info.warns.by",
-      "no": "info.warns.no",
-      "list": "info.warns.list"
-    }
-  },
-  "manage": {
-    "embed": {
-      "error": "manage.embed.error"
-    },
-    "reactionrole": {
-      "notFound": {
-        "title": "manage.reactionrole.notFound.title",
-        "desc": "manage.reactionrole.notFound.desc"
-      }
-    }
-  },
-  "welcome": {
-    "title": "welcome.title",
-    "channel": {
-      "set": "welcome.channel.set",
-      "dm": "welcome.channel.dm"
-    },
-    "enable": "welcome.enable",
-    "message": {
-      "ok": "welcome.message.ok"
-    },
-    "aar": {
-      "list": "welcome.aar.list",
-      "added": "welcome.aar.added",
-      "deleted": "welcome.aar.deleted"
-    },
-    "arr": {
-      "added": "welcome.arr.added"
-    },
-    "disable": "welcome.disable"
-  },
-  "voice": {
-    "title": "voice.title",
-    "error": {
-      "notFound": "voice.error.notFound",
-      "locked": "voice.error.locked",
-      "hidden": "voice.error.hidden",
-      "unhidden": "voice.error.unhidden",
-      "unlocked": "voice.error.unlocked",
-      "notAdmin": "voice.error.notAdmin",
-      "notOwner": "voice.error.notOwner",
-      "similar": "voice.error.similar"
-    },
-    "limit": "voice.limit",
-    "name": "voice.name",
-    "add": {
-      "setted": "voice.add.setted"
-    },
-    "admin": {
-      "setted": "voice.admin.setted",
-      "deleted": "voice.admin.deleted"
-    },
-    "locked": "voice.locked",
-    "hidden": "voice.hidden",
-    "unhidden": "voice.unhidden",
-    "unlocked": "voice.unlocked",
-    "all": "voice.all",
-    "owner": "voice.owner",
-    "enable": "voice.enable",
-    "disable": "voice.disable"
-  },
-  "perms": {
-    "title": "perms.title",
-    "add": "perms.add",
-    "changed": "perms.changed",
-    "remove": "perms.remove",
-    "notFound": "perms.notFound",
-    "clear": "perms.clear",
-    "cleared": "perms.cleared",
-    "module": "perms.module",
-    "true": "perms.true",
-    "item": "perms.item",
-    "list": "perms.list",
-    "sourceNotFound": "perms.sourceNotFound",
-    "move": "perms.move",
-    "allModules": "perms.allModules",
-    "false": "perms.false",
-    "command": "perms.command"
-  }
+	"economy": {
+		"bal": {
+			"success": {
+				"title": "economy.bal.success.title",
+				"desc": "economy.bal.success.desc"
+			},
+			"title": "economy.bal.title",
+			"desc": "economy.bal.desc"
+		},
+		"daily": {
+			"title": "economy.daily.title",
+			"desc": "economy.daily.desc",
+			"wait": {
+				"title": "economy.daily.wait.title",
+				"desc": "economy.daily.wait.desc"
+			}
+		},
+		"shop": {
+			"empty": "economy.shop.empty",
+			"fields": {
+				"index": "economy.shop.fields.index",
+				"role": "economy.shop.fields.role",
+				"cost": "economy.shop.fields.cost"
+			},
+			"title": "economy.shop.title",
+			"bought": "economy.shop.bought"
+		},
+		"buyshop": {
+			"title": "economy.buyshop.title",
+			"ok": "economy.buyshop.ok",
+			"notFound": "economy.buyshop.notFound",
+			"has": "economy.buyshop.has"
+		},
+		"award": {
+			"title": "economy.award.title",
+			"desc": "economy.award.desc"
+		},
+		"give": {
+			"title": "economy.give.title",
+			"desc": "economy.give.desc"
+		},
+		"take": {
+			"title": "economy.take.title",
+			"desc": "economy.take.desc"
+		},
+		"top": {
+			"fields": {
+				"index": "economy.top.fields.index",
+				"role": "economy.top.fields.role",
+				"cost": "economy.top.fields.cost"
+			},
+			"title": "economy.top.title",
+			"error": "economy.top.error"
+		}
+	},
+	"embed": {
+		"disabled": "embed.disabled"
+	},
+	"modules": {
+		"economy": {
+			"bal": {
+				"success": {
+					"title": "economy.bal.success.title",
+					"desc": "economy.bal.success.desc"
+				},
+				"title": "economy.bal.title",
+				"desc": "economy.bal.desc"
+			},
+			"daily": {
+				"wait": {
+					"title": "economy.daily.wait.title",
+					"desc": "economy.daily.wait.desc"
+				},
+				"title": "economy.daily.title",
+				"desc": "economy.daily.desc"
+			},
+			"give": {
+				"title": "economy.give.title",
+				"desc": "economy.give.desc"
+			}
+		},
+		"waifu": {
+			"gifts": {
+				"title": "waifu.gifts.title",
+				"fields": {
+					"kiss": "waifu.gifts.fields.kiss",
+					"hearts": "waifu.gifts.fields.hearts",
+					"fishcake": "waifu.gifts.fields.fishcake",
+					"flower": "waifu.gifts.fields.flower",
+					"cat": "waifu.gifts.fields.cat",
+					"melon": "waifu.gifts.fields.melon",
+					"cake": "waifu.gifts.fields.cake",
+					"coffe": "waifu.gifts.fields.coffe",
+					"beer": "waifu.gifts.fields.beer",
+					"bow": "waifu.gifts.fields.bow",
+					"stars": "waifu.gifts.fields.stars",
+					"ring": "waifu.gifts.fields.ring",
+					"crown": "waifu.gifts.fields.crown"
+				}
+			}
+		},
+		"gambling": {
+			"wis": {
+				"title": "gambling.wis.title",
+				"desc": "gambling.wis.desc",
+				"result": "gambling.wis.result"
+			},
+			"fortune": {
+				"title": "gambling.fortune.title",
+				"desc": "gambling.fortune.desc",
+				"fields": {
+					"bet": "gambling.fortune.fields.bet",
+					"result": "gambling.fortune.fields.result"
+				}
+			}
+		},
+		"configure": {
+			"prefix": {
+				"title": "configure.prefix.title",
+				"info": {
+					"desc": "configure.prefix.info.desc"
+				},
+				"new": {
+					"desc": "configure.prefix.new.desc"
+				}
+			},
+			"standart": {
+				"info": {
+					"desc": "configure.standart.info.desc"
+				},
+				"title": "configure.standart.title"
+			},
+			"title": "configure.title",
+			"autosave": {
+				"title": "configure.autosave.title",
+				"enable": "configure.autosave.enable",
+				"disable": "configure.autosave.disable"
+			},
+			"modlog": {
+				"notFound": "configure.modlog.notFound",
+				"new": "configure.modlog.new"
+			}
+		},
+		"moderation": {
+			"ban": {
+				"title": "moderation.ban.title",
+				"canNotBan": "moderation.ban.canNotBan",
+				"error": "moderation.ban.error",
+				"done": "moderation.ban.done"
+			},
+			"canNotBan": "moderation.canNotBan",
+			"dm": {
+				"ban": {
+					"title": "moderation.dm.ban.title"
+				},
+				"kick": "moderation.dm.kick"
+			},
+			"noreason": "moderation.noreason",
+			"reason": "moderation.reason",
+			"kick": {
+				"canNotKick": "moderation.kick.canNotKick",
+				"title": "moderation.kick.title",
+				"cannot": "moderation.kick.cannot",
+				"done": "moderation.kick.done",
+				"error": "moderation.kick.error"
+			}
+		}
+	},
+	"error": {
+		"execCommand": {
+			"title": "error.execCommand.title",
+			"desc": "error.execCommand.desc",
+			"footer": "error.execCommand.footer"
+		},
+		"enough": {
+			"money": "error.enough.money"
+		},
+		"similar": {
+			"member": "error.similar.member"
+		},
+		"arguments": {
+			"title": "error.arguments.title"
+		},
+		"missed.userpermissions": {
+			"title": "error.missed.userpermissions.title",
+			"desc": "error.missed.userpermissions.desc"
+		},
+		"missed": {
+			"muterole": "error.missed.muterole",
+			"userpermissions": {
+				"title": "error.missed.userpermissions.title",
+				"desc": "error.missed.userpermissions.desc"
+			},
+			"permissions": "error.missed.permissions"
+		},
+		"ratelimit": {
+			"title": "error.ratelimit.title",
+			"desc": "error.ratelimit.desc"
+		},
+		"no": "error.no",
+		"changes": {
+			"not": "error.changes.not"
+		},
+		"emoji": {
+			"notFound": "error.emoji.notFound"
+		},
+		"module": {
+			"enable": "error.module.enable",
+			"disable": "error.module.disable"
+		}
+	},
+	"others": {
+		"page": "others.page",
+		"modules": {
+			"0": "others.modules.0",
+			"1": "others.modules.1",
+			"2": "others.modules.2",
+			"3": "others.modules.3",
+			"4": "others.modules.4",
+			"5": "others.modules.5",
+			"6": "others.modules.6",
+			"7": "others.modules.7",
+			"configure": "others.modules.configure",
+			"economy": "others.modules.economy",
+			"gambling": "others.modules.gambling",
+			"logs": "others.modules.logs",
+			"moderation": "others.modules.moderation",
+			"permissions": "others.modules.permissions",
+			"voice": "others.modules.voice",
+			"welcome": "others.modules.welcome",
+			"CONFIGURE": "others.modules.CONFIGURE",
+			"ECONOMY": "others.modules.ECONOMY"
+		},
+		"onBotAdd": {
+			"desc": "others.onBotAdd.desc",
+			"field": "others.onBotAdd.field"
+		},
+		"module": {
+			"disable": "others.module.disable",
+			"enable": "others.module.enable"
+		}
+	},
+	"errors": {
+		"enough": {
+			"money": "errors.enough.money"
+		}
+	},
+	"resolvers": {
+		"member": {
+			"notFound": "resolvers.member.notFound",
+			"bot": "resolvers.member.bot"
+		},
+		"number": {
+			"tooSmall": "resolvers.number.tooSmall",
+			"invalid": "resolvers.number.invalid"
+		},
+		"enum": {
+			"invalid": "resolvers.enum.invalid",
+			"validValues": "resolvers.enum.validValues"
+		},
+		"role": {
+			"notFound": "resolvers.role.notFound",
+			"everyone": "resolvers.role.everyone",
+			"multiple": "resolvers.role.multiple"
+		},
+		"command": {
+			"notFound": "resolvers.command.notFound",
+			"multiple": "resolvers.command.multiple"
+		},
+		"channel": {
+			"notFound": "resolvers.channel.notFound",
+			"type": "resolvers.channel.type"
+		},
+		"boolean": {
+			"invalid": "resolvers.boolean.invalid"
+		}
+	},
+	"key": {
+		"fields": {
+			"amount": "key.fields.amount"
+		}
+	},
+	"logs": {
+		"mod": {
+			"title": "logs.mod.title",
+			"user": "logs.mod.user",
+			"punish": "logs.mod.punish",
+			"reason": "logs.mod.reason",
+			"moderator": "logs.mod.moderator",
+			"duration": "logs.mod.duration"
+		},
+		"unban": {
+			"title": "logs.unban.title"
+		},
+		"member": "logs.member",
+		"ban": {
+			"title": "logs.ban.title"
+		},
+		"total": "logs.total",
+		"reason": "logs.reason",
+		"chanCreate": {
+			"title": "logs.chanCreate.title"
+		},
+		"channel": "logs.channel",
+		"chanDelete": {
+			"title": "logs.chanDelete.title"
+		},
+		"by": "logs.by",
+		"emojiCreate": "logs.emojiCreate",
+		"emoji": "logs.emoji",
+		"emojiDelete": "logs.emojiDelete",
+		"emojiUpdate": "logs.emojiUpdate",
+		"edited": "logs.edited",
+		"roleCreate": "logs.roleCreate",
+		"role": "logs.role",
+		"roleUpdate": "logs.roleUpdate",
+		"voiceConnected": "logs.voiceConnected",
+		"voiceLeaved": "logs.voiceLeaved",
+		"voiceSwitch": "logs.voiceSwitch",
+		"moved": "logs.moved",
+		"permissions": "logs.permissions",
+		"permissionsAdded": "logs.permissionsAdded",
+		"permissionsDeleted": "logs.permissionsDeleted",
+		"color": "logs.color",
+		"name": "logs.name",
+		"roleDelete": "logs.roleDelete",
+		"memberRolesUpdate": "logs.memberRolesUpdate",
+		"deletedRoles": "logs.deletedRoles",
+		"addedRoles": "logs.addedRoles",
+		"messageUpdate": "logs.messageUpdate",
+		"messageBefore": "logs.messageBefore",
+		"messageAfter": "logs.messageAfter",
+		"messageBy": "logs.messageBy",
+		"messageDeleted": "logs.messageDeleted",
+		"title": "logs.title",
+		"enable": "logs.enable",
+		"disable": "logs.disable",
+		"set": "logs.set",
+		"unset": "logs.unset",
+		"guildJoin": "logs.guildJoin",
+		"msgDeleted": "logs.msgDeleted",
+		"guildLeave": "logs.guildLeave",
+		"roomCreate": "logs.roomCreate",
+		"roomCreated": "logs.roomCreated",
+		"roomDeleted": "logs.roomDeleted"
+	},
+	"moderation": {
+		"purge": {
+			"title": "moderation.purge.title",
+			"text": "moderation.purge.text"
+		},
+		"ban": {
+			"title": "moderation.ban.title",
+			"error": "moderation.ban.error",
+			"done": "moderation.ban.done",
+			"until": "moderation.ban.until"
+		},
+		"reason": "moderation.reason",
+		"dm": {
+			"ban": "moderation.dm.ban",
+			"mute": "moderation.dm.mute"
+		},
+		"mute": {
+			"title": "moderation.mute.title",
+			"missedRole": "error.missed.muterole",
+			"until": "moderation.mute.until",
+			"done": "moderation.mute.done",
+			"error": "moderation.mute.error",
+			"already": "moderation.mute.already"
+		},
+		"noreason": "moderation.noreason",
+		"unmute": {
+			"title": "moderation.unmute.title",
+			"done": "moderation.unmute.done"
+		}
+	},
+	"configure": {
+		"title": "configure.title",
+		"muterole": {
+			"new": "configure.muterole.new",
+			"info": "configure.muterole.info"
+		},
+		"prefix": {
+			"new": "configure.prefix.new",
+			"info": "configure.prefix.info"
+		},
+		"modlog": {
+			"notFound": "configure.modlog.notFound",
+			"new": "configure.modlog.new",
+			"info": "configure.modlog.info"
+		},
+		"privates": {
+			"enabled": "configure.privates.enabled",
+			"disabled": "configure.privates.disabled"
+		},
+		"autosave": {
+			"enable": "configure.autosave.enable",
+			"disable": "configure.autosave.disable"
+		},
+		"conf": {
+			"main": {
+				"prefix": "configure.conf.main.prefix",
+				"locale": "configure.conf.main.locale",
+				"ignoreChannels": "configure.conf.main.ignoreChannels",
+				"verbose": "configure.conf.main.verbose",
+				"saveroles": "configure.conf.main.saveroles",
+				"modlog": "configure.conf.main.modlog",
+				"mutedRole": "configure.conf.main.mutedRole",
+				"privateManager": "configure.conf.main.privateManager",
+				"prices": "configure.conf.main.prices",
+				"emojis": "configure.conf.main.emojis",
+				"autoMod": "configure.conf.main.autoMod",
+				"privateRoom": "configure.conf.main.privateRoom",
+				"privateRooms": "configure.conf.main.privateRooms",
+				"autoassignRole": "configure.conf.main.autoassignRole",
+				"currency": "configure.conf.main.currency",
+				"welcomeEnabled": "configure.conf.main.welcomeEnabled",
+				"id": "configure.conf.main.id",
+				"welcomeSaveRoles": "configure.conf.main.welcomeSaveRoles",
+				"welcomeChannelType": "configure.conf.main.welcomeChannelType",
+				"welcomeChannel": "configure.conf.main.welcomeChannel",
+				"welcomeMessage": "configure.conf.main.welcomeMessage",
+				"loggerEnabled": "configure.conf.main.loggerEnabled"
+			},
+			"automod": {
+				"settings": {
+					"invites": "configure.conf.automod.settings.invites",
+					"allCaps": "configure.conf.automod.settings.allCaps",
+					"duplicateText": "configure.conf.automod.settings.duplicateText",
+					"zalgo": "configure.conf.automod.settings.zalgo",
+					"emojis": "configure.conf.automod.settings.emojis",
+					"exlinks": "configure.conf.automod.settings.exlinks",
+					"mentions": "configure.conf.automod.settings.mentions"
+				},
+				"invites": "configure.conf.automod.invites",
+				"allCaps": "configure.conf.automod.allCaps",
+				"duplicateText": "configure.conf.automod.duplicateText",
+				"zalgo": "configure.conf.automod.zalgo",
+				"emojis": "configure.conf.automod.emojis",
+				"exlinks": "configure.conf.automod.exlinks",
+				"mentions": "configure.conf.automod.mentions",
+				"caps": "configure.conf.automod.caps",
+				"duplicate": "configure.conf.automod.duplicate"
+			},
+			"settings": {
+				"invites": "configure.conf.settings.invites",
+				"allCaps": "configure.conf.settings.allCaps",
+				"duplicateText": "configure.conf.settings.duplicateText",
+				"zalgo": "configure.conf.settings.zalgo",
+				"emojis": "configure.conf.settings.emojis",
+				"exlinks": "configure.conf.settings.exlinks",
+				"mentions": "configure.conf.settings.mentions"
+			}
+		},
+		"automod": {
+			"invites": {
+				"enable": "configure.automod.invites.enable",
+				"disable": "configure.automod.invites.disable"
+			},
+			"mentions": {
+				"enable": "configure.automod.mentions.enable"
+			},
+			"zalgo": {
+				"disable": "configure.automod.zalgo.disable",
+				"enable": "configure.automod.zalgo.enable"
+			},
+			"exlinks": {
+				"enable": "configure.automod.exlinks.enable"
+			},
+			"allCaps": {
+				"enable": "configure.automod.allCaps.enable"
+			},
+			"duplicateText": {
+				"enable": "configure.automod.duplicateText.enable"
+			},
+			"emojis": {
+				"enable": "configure.automod.emojis.enable"
+			},
+			"duplicate": {
+				"enable": "configure.automod.duplicate.enable",
+				"disable": "configure.automod.duplicate.disable"
+			},
+			"caps": {
+				"enable": "configure.automod.caps.enable",
+				"disable": "configure.automod.caps.disable"
+			},
+			"amic": {
+				"added": "configure.automod.amic.added",
+				"deleted": "configure.automod.amic.deleted"
+			},
+			"amir": {
+				"added": "configure.automod.amir.added",
+				"deleted": "configure.automod.amir.deleted"
+			}
+		},
+		"aar": {
+			"notFound": "configure.aar.notFound",
+			"new": "configure.aar.new",
+			"info": "configure.aar.info"
+		},
+		"addshop": {
+			"new": "configure.addshop.new",
+			"change": "configure.addshop.change"
+		},
+		"removeshop": {
+			"deleted": "configure.removeshop.deleted"
+		},
+		"setcurrency": "configure.setcurrency",
+		"standart": {
+			"info": "configure.standart.info",
+			"new": "configure.standart.new"
+		}
+	},
+	"gambling": {
+		"wis": {
+			"title": "gambling.wis.title",
+			"desc": "gambling.wis.desc",
+			"result": "gambling.wis.result"
+		},
+		"fortune": {
+			"title": "gambling.fortune.title",
+			"desc": "gambling.fortune.desc",
+			"fields": {
+				"bet": "gambling.fortune.fields.bet",
+				"result": "gambling.fortune.fields.result"
+			}
+		},
+		"br": {
+			"title": "gambling.br.title",
+			"lose": "gambling.br.lose",
+			"win": "gambling.br.win"
+		},
+		"slots": {
+			"title": "gambling.slots.title",
+			"desc": "gambling.slots.desc",
+			"fields": {
+				"bet": "gambling.slots.fields.bet",
+				"result": "gambling.slots.fields.result"
+			}
+		}
+	},
+	"automod": {
+		"title": "automod.title",
+		"violations": {
+			"invites": "automod.violations.invites",
+			"exlinks": "automod.violations.exlinks",
+			"duplicateText": "automod.violations.duplicateText",
+			"duplicate": "automod.violations.duplicate",
+			"caps": "automod.violations.caps"
+		},
+		"desc": "automod.desc",
+		"footer": "automod.footer",
+		"settings": {
+			"invites": "automod.settings.invites",
+			"allCaps": "automod.settings.allCaps",
+			"duplicateText": "automod.settings.duplicateText",
+			"zalgo": "automod.settings.zalgo",
+			"emojis": "automod.settings.emojis",
+			"exlinks": "automod.settings.exlinks",
+			"mentions": "automod.settings.mentions",
+			"enabled": "automod.settings.enabled"
+		},
+		"reasons": {
+			"invites": "automod.reasons.invites",
+			"duplicate": "automod.reasons.duplicate"
+		},
+		"enabled": {
+			"caps": "automod.enabled.caps",
+			"any": "automod.enabled.any",
+			"already": "automod.enabled.already"
+		},
+		"types": {
+			"caps": "automod.types.caps",
+			"invites": "automod.types.invites",
+			"allCaps": "automod.types.allCaps",
+			"duplicateText": "automod.types.duplicateText",
+			"zalgo": "automod.types.zalgo",
+			"emojis": "automod.types.emojis",
+			"externalLinks": "automod.types.externalLinks",
+			"mentions": "automod.types.mentions",
+			"duplicate": "automod.types.duplicate",
+			"exlinks": "automod.types.exlinks"
+		},
+		"alreadyEnabled": "automod.alreadyEnabled",
+		"disabled": {
+			"any": "automod.disabled.any",
+			"already": "automod.disabled.already"
+		},
+		"alreadyDisabled": "automod.alreadyDisabled",
+		"info": {
+			"invites": "automod.info.invites",
+			"caps": "automod.info.caps",
+			"duplicate": "automod.info.duplicate",
+			"zalgo": "automod.info.zalgo",
+			"emojis": "automod.info.emojis",
+			"exlinks": "automod.info.exlinks",
+			"mentions": "automod.info.mentions",
+			"allCaps": "automod.info.allCaps",
+			"duplicateText": "automod.info.duplicateText",
+			"externalLinks": "automod.info.externalLinks"
+		}
+	},
+	"info": {
+		"help": {
+			"title": "info.help.title",
+			"footer": "info.help.footer",
+			"first": {
+				"title": "info.help.first.title",
+				"fields": {
+					"links": "info.help.first.fields.links",
+					"info": "info.help.first.fields.info",
+					"modules": "info.help.first.fields.modules"
+				},
+				"footer": "info.help.first.footer"
+			},
+			"cmd": {
+				"title": "info.help.cmd.title",
+				"ex": "info.help.cmd.ex",
+				"desc": "info.help.cmd.desc",
+				"args": "info.help.cmd.args",
+				"req": "info.help.cmd.req",
+				"aliases": "info.help.cmd.aliases",
+				"struct": "info.help.cmd.struct"
+			},
+			"cmdDesc": {
+				"autoassignrole": "info.help.cmdDesc.autoassignrole",
+				"automod": "info.help.cmdDesc.automod",
+				"automodignorechannel": "info.help.cmdDesc.automodignorechannel",
+				"automodignorerole": "info.help.cmdDesc.automodignorerole",
+				"saveroles": "info.help.cmdDesc.saveroles",
+				"config": "info.help.cmdDesc.config",
+				"modlog": "info.help.cmdDesc.modlog",
+				"muterole": "info.help.cmdDesc.muterole",
+				"prefix": "info.help.cmdDesc.prefix",
+				"standart-money": "info.help.cmdDesc.standart-money",
+				"bal": "info.help.cmdDesc.bal",
+				"buyshop": "info.help.cmdDesc.buyshop",
+				"daily": "info.help.cmdDesc.daily",
+				"give": "info.help.cmdDesc.give",
+				"shop": "info.help.cmdDesc.shop",
+				"br": "info.help.cmdDesc.br",
+				"fortune": "info.help.cmdDesc.fortune",
+				"whereischicken": "info.help.cmdDesc.whereischicken",
+				"help": "info.help.cmdDesc.help",
+				"warns": "info.help.cmdDesc.warns",
+				"privaterooms": "info.help.cmdDesc.privaterooms",
+				"embed": "info.help.cmdDesc.embed",
+				"reactionrole": "info.help.cmdDesc.reactionrole",
+				"addshop": "info.help.cmdDesc.addshop",
+				"removeshop": "info.help.cmdDesc.removeshop",
+				"ban": "info.help.cmdDesc.ban",
+				"kick": "info.help.cmdDesc.kick",
+				"mute": "info.help.cmdDesc.mute",
+				"tempban": "info.help.cmdDesc.tempban",
+				"tempmute": "info.help.cmdDesc.tempmute",
+				"unmute": "info.help.cmdDesc.unmute",
+				"clear": "info.help.cmdDesc.clear",
+				"gifts": "info.help.cmdDesc.gifts",
+				"privatevoices": "info.help.cmdDesc.privatevoices",
+				"welcome": "info.help.cmdDesc.welcome",
+				"automod enable": "info.help.cmdDesc.automod enable",
+				"automod disable": "info.help.cmdDesc.automod disable",
+				"welcome enable": "info.help.cmdDesc.welcome enable",
+				"mute role": "info.help.cmdDesc.mute role",
+				"welcome disable": "info.help.cmdDesc.welcome disable",
+				"welcome roles": "info.help.cmdDesc.welcome roles",
+				"welcome saveroles": "info.help.cmdDesc.welcome saveroles",
+				"slotmachine": "info.help.cmdDesc.slotmachine",
+				"welcome channel": "info.help.cmdDesc.welcome channel",
+				"welcome content": "info.help.cmdDesc.welcome content",
+				"automod ignore": "info.help.cmdDesc.automod ignore",
+				"voice limit": "info.help.cmdDesc.voice limit",
+				"voice name": "info.help.cmdDesc.voice name",
+				"voice admin": "info.help.cmdDesc.voice admin",
+				"voice lock": "info.help.cmdDesc.voice lock",
+				"voice hide": "info.help.cmdDesc.voice hide",
+				"voice unhide": "info.help.cmdDesc.voice unhide",
+				"voice unlock": "info.help.cmdDesc.voice unlock",
+				"voice show": "info.help.cmdDesc.voice show",
+				"voice kick": "info.help.cmdDesc.voice kick",
+				"voice owner": "info.help.cmdDesc.voice owner",
+				"log": "info.help.cmdDesc.log",
+				"log set": "info.help.cmdDesc.log set",
+				"log disable": "info.help.cmdDesc.log disable",
+				"log enable": "info.help.cmdDesc.log enable",
+				"log unset": "info.help.cmdDesc.log unset",
+				"permission add": "info.help.cmdDesc.permission add",
+				"permission remove": "info.help.cmdDesc.permission remove",
+				"permissions clear": "info.help.cmdDesc.permissions clear",
+				"permissions list": "info.help.cmdDesc.permissions list",
+				"permission move": "info.help.cmdDesc.permission move",
+				"say": "info.help.cmdDesc.say",
+				"voice disable": "info.help.cmdDesc.voice disable",
+				"voice enable": "info.help.cmdDesc.voice enable",
+				"award": "info.help.cmdDesc.award",
+				"take": "info.help.cmdDesc.take",
+				"welcome message": "info.help.cmdDesc.welcome message",
+				"setcurrency": "info.help.cmdDesc.setcurrency",
+				"automod info": "info.help.cmdDesc.automod info",
+				"top": "info.help.cmdDesc.top"
+			},
+			"moduleDesc": {
+				"configure": "info.help.moduleDesc.configure",
+				"economy": "info.help.moduleDesc.economy",
+				"gambling": "info.help.moduleDesc.gambling",
+				"logs": "info.help.moduleDesc.logs",
+				"moderation": "info.help.moduleDesc.moderation",
+				"permissions": "info.help.moduleDesc.permissions",
+				"voice": "info.help.moduleDesc.voice",
+				"welcome": "info.help.moduleDesc.welcome"
+			}
+		},
+		"warns": {
+			"title": "info.warns.title",
+			"has": "info.warns.has",
+			"by": "info.warns.by",
+			"no": "info.warns.no",
+			"list": "info.warns.list"
+		}
+	},
+	"manage": {
+		"embed": {
+			"error": "manage.embed.error"
+		},
+		"reactionrole": {
+			"notFound": {
+				"title": "manage.reactionrole.notFound.title",
+				"desc": "manage.reactionrole.notFound.desc"
+			}
+		}
+	},
+	"welcome": {
+		"title": "welcome.title",
+		"channel": {
+			"set": "welcome.channel.set",
+			"dm": "welcome.channel.dm"
+		},
+		"enable": "welcome.enable",
+		"message": {
+			"ok": "welcome.message.ok"
+		},
+		"aar": {
+			"list": "welcome.aar.list",
+			"added": "welcome.aar.added",
+			"deleted": "welcome.aar.deleted"
+		},
+		"arr": {
+			"added": "welcome.arr.added"
+		},
+		"disable": "welcome.disable"
+	},
+	"voice": {
+		"title": "voice.title",
+		"error": {
+			"notFound": "voice.error.notFound",
+			"locked": "voice.error.locked",
+			"hidden": "voice.error.hidden",
+			"unhidden": "voice.error.unhidden",
+			"unlocked": "voice.error.unlocked",
+			"notAdmin": "voice.error.notAdmin",
+			"notOwner": "voice.error.notOwner",
+			"similar": "voice.error.similar"
+		},
+		"limit": "voice.limit",
+		"name": "voice.name",
+		"add": {
+			"setted": "voice.add.setted"
+		},
+		"admin": {
+			"setted": "voice.admin.setted",
+			"deleted": "voice.admin.deleted"
+		},
+		"locked": "voice.locked",
+		"hidden": "voice.hidden",
+		"unhidden": "voice.unhidden",
+		"unlocked": "voice.unlocked",
+		"all": "voice.all",
+		"owner": "voice.owner",
+		"enable": "voice.enable",
+		"disable": "voice.disable"
+	},
+	"perms": {
+		"title": "perms.title",
+		"add": "perms.add",
+		"changed": "perms.changed",
+		"remove": "perms.remove",
+		"notFound": "perms.notFound",
+		"clear": "perms.clear",
+		"cleared": "perms.cleared",
+		"module": "perms.module",
+		"true": "perms.true",
+		"item": "perms.item",
+		"list": "perms.list",
+		"sourceNotFound": "perms.sourceNotFound",
+		"move": "perms.move",
+		"allModules": "perms.allModules",
+		"false": "perms.false",
+		"command": "perms.command"
+	}
 }

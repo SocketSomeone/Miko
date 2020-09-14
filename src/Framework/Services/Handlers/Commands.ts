@@ -112,9 +112,11 @@ export class CommandService extends BaseService {
 
 		if (guild) {
 			let member = message.member;
-			context.me =
-				guild.members.get(this.client.user.id) ||
-				(await guild.getRESTMember(this.client.user.id).catch(() => undefined));
+			context.me = guild.members.get(this.client.user.id);
+
+			if (!context.me) {
+				context.me = await guild.getRESTMember(this.client.user.id).catch(() => undefined);
+			}
 
 			if (!member || !context.me) {
 				return;

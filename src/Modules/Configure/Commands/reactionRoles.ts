@@ -60,7 +60,7 @@ export default class extends Command {
 				guildId: guild.id,
 				id: messageId
 			}
-		});
+		}).catch(() => undefined);
 
 		if (!dbMessage) {
 			throw new ExecuteError(t('error.reactionrole.notFound'));

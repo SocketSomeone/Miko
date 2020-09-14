@@ -23,13 +23,13 @@ export default class extends Command {
 		});
 	}
 
-	public async execute(message: Message, [n]: [number], { funcs: { t }, guild, settings }: Context) {
+	public async execute(message: Message, [], { funcs: { t }, guild, settings }: Context) {
 		const permissions = await this.client.cache.permissions.get(guild);
 
 		if (permissions.length < 1) throw new ExecuteError(t('perms.cleared'));
 
 		const maxPage = Math.ceil(permissions.length / PERMS_PER_PAGE);
-		const startPage = n || 0;
+		const startPage = 0;
 
 		await this.showPaginated(message, startPage, maxPage, (page) => {
 			const perms = permissions.slice(page * PERMS_PER_PAGE, (page + 1) * PERMS_PER_PAGE);

@@ -102,11 +102,6 @@ export abstract class Command {
 			this.usage += arg.required ? `<${arg.name}> ` : `[${arg.name}] `;
 		});
 
-		if (this.args.filter((x) => x.required).length >= 1 && this.examples.length < 1) {
-			console.error(`Missed examples for arguments in command "${this.name}"`);
-			process.exit(1);
-		}
-
 		this.createEmbed = client.messages.createEmbed.bind(client.messages);
 		this.replyAsync = client.messages.sendReply.bind(client.messages);
 		this.sendAsync = client.messages.sendEmbed.bind(client.messages);
@@ -114,13 +109,24 @@ export abstract class Command {
 	}
 
 	public async onLoaded() {
-		// NO-OP
+		if (this.args.filter((x) => x.required).length >= 1 && this.examples.length < 1) {
+			console.error(`Missed examples for arguments in command "${this.name}"`);
+			process.exit(1);
+		}
+
+		this.getDescription((phrase, rep) => i18n.__({ locale: 'ru', phrase }, rep));
 	}
 
 	protected getDescription(t: TranslateFunc) {
-		const desc = `info.help.cmdDesc.${this.name.toLowerCase()}`;
+		const key = `info.help.cmdDesc.${this.name.toLowerCase()}`;
+		const desc = t(key);
 
-		return t(desc) === desc ? t('error.no') : t(desc);
+		if (key === desc) {
+			console.error(`Command ${this.name} desc not found!`);
+			process.exit(0);
+		}
+
+		return desc;
 	}
 
 	public getHelp(t: TranslateFunc, prefix: string): Embed {

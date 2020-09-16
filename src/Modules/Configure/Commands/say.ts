@@ -37,15 +37,13 @@ export default class extends Command {
 		const embed = this.client.messages.fillTemplate(placeholder);
 		const nm = await this.client.messages.sendEmbed(message.channel, embed);
 
-		await BaseMessage.save(
-			BaseMessage.create({
-				guildId: guild.id,
-				channelId: nm.channel.id,
-				id: nm.id,
-				content: nm.content,
-				embeds: nm.embeds
-			})
-		);
+		await BaseMessage.create({
+			guildId: guild.id,
+			channelId: nm.channel.id,
+			id: nm.id,
+			content: nm.content,
+			embeds: nm.embeds
+		}).save();
 
 		await message.delete().catch(() => undefined);
 	}

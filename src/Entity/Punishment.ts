@@ -71,13 +71,11 @@ export class BasePunishment extends BaseEntity {
 	public static async new({ opts, member, target, client, settings, extra }: ContextLog) {
 		const t: TranslateFunc = (key, replacements) => i18n.__({ locale: settings.locale, phrase: key }, replacements);
 
-		const punishment = this.create({
+		await this.create({
 			...opts,
 			guild: BaseGuild.create({ id: member.guild.id }),
 			member: target.id
-		});
-
-		await punishment.save();
+		}).save();
 
 		await client.logger.logModAction({
 			sets: settings,

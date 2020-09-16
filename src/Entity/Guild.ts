@@ -79,9 +79,9 @@ export class BaseGuild extends BaseEntity {
 	static async saveGuilds(guilds: Guild[], options?: Partial<BaseGuild>) {
 		const items = guilds.map((i) => this.getDefaultGuild(i, options));
 		const queryOptions = options
-			? `${Object.entries(options)
+			? `, ${Object.entries(options)
 					.map(([key, val]) => `"${key}" = EXCLUDED."${key}"`)
-					.join(', ')},`
+					.join(', ')}`
 			: '';
 
 		await createQueryBuilder()
@@ -89,20 +89,20 @@ export class BaseGuild extends BaseEntity {
 			.into(this)
 			.values(items)
 			.onConflict(
-				`("id") DO UPDATE SET ${queryOptions} name = excluded.name, "memberCount" = excluded."memberCount", "ownerID" = excluded."ownerID"`
+				`("id") DO UPDATE SET name = excluded.name, "memberCount" = excluded."memberCount", "ownerID" = excluded."ownerID"${queryOptions}`
 			)
 			.execute();
 	}
 
 	static getDefaultGuild(g: Guild, options?: Partial<BaseGuild>) {
 		const guild = this.create({
+			...options,
 			id: g.id,
 			name: g.name,
 			memberCount: g.memberCount,
 			ownerID: g.ownerID,
 			permissions: [],
-			punishmentConfig: [],
-			...options
+			punishmentConfig: []
 		});
 
 		return guild;

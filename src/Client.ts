@@ -231,13 +231,16 @@ export class BaseClient extends Client {
 
 	private async setActivity() {
 		this.editStatus('online', {
-			name: [`за ${this.guilds.size} серверами`, `!help - Invite Miko`, `за ${this.users.size} участниками`].random(),
+			name: [`за ${this.guilds.size} серверами`, `!help - Invite Miko`].random(),
 			type: 3
 		});
 	}
 
 	private async onGuildCreate(guild: Guild) {
-		await BaseGuild.saveGuilds([guild], { joinedAt: moment(), deletedAt: null });
+		await BaseGuild.saveGuilds([guild], {
+			joinedAt: moment(),
+			deletedAt: null
+		});
 
 		const { locale } = await this.cache.guilds.get(guild);
 		const ownerDM = await this.getDMChannel(guild.ownerID);

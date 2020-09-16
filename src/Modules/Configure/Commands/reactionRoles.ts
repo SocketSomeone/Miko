@@ -71,15 +71,13 @@ export default class extends Command {
 
 		try {
 			await this.client.addMessageReaction(dbMessage.channelId, dbMessage.id, emojiId);
-			await BaseReactionRole.save(
-				BaseReactionRole.create({
-					guildId: dbMessage.guildId,
-					channelId: dbMessage.channelId,
-					messageId: dbMessage.id,
-					roleId: role.id,
-					emoji: emojiId
-				})
-			);
+			await BaseReactionRole.create({
+				guildId: dbMessage.guildId,
+				channelId: dbMessage.channelId,
+				messageId: dbMessage.id,
+				roleId: role.id,
+				emoji: emojiId
+			}).save();
 		} catch (error) {
 			if (error.code === 10014) {
 				throw new ExecuteError(t('error.reactionrole.unknownEmoji'));

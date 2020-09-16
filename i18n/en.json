@@ -234,7 +234,9 @@
 		},
 		"onBotAdd": {
 			"desc": "others.onBotAdd.desc",
-			"field": "others.onBotAdd.field"
+			"field": "others.onBotAdd.field",
+			"title": "others.onBotAdd.title",
+			"footer": "others.onBotAdd.footer"
 		},
 		"module": {
 			"disable": "others.module.disable",

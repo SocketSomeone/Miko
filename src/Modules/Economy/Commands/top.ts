@@ -31,7 +31,7 @@ export default class extends Command {
 			order: {
 				money: 'DESC'
 			},
-			take: 50
+			take: 64
 		});
 
 		if (data.length < 1) {

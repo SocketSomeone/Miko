@@ -1,6 +1,6 @@
 import { BaseCache } from '../../../Framework/Cache';
 import { BasePrivate } from '../../../Entity/Privates';
-import { Guild } from 'eris';
+import { Guild, VoiceChannel } from 'eris';
 
 export class PrivatesCache extends BaseCache<Map<string, BasePrivate>> {
 	public async init() {
@@ -18,7 +18,7 @@ export class PrivatesCache extends BaseCache<Map<string, BasePrivate>> {
 	}
 
 	public async add(object: Partial<BasePrivate>) {
-		const room = await BasePrivate.save(BasePrivate.create(object));
+		const room = await BasePrivate.create(object).save();
 		const rooms = await this.get({ id: room.guild });
 
 		rooms.set(room.id, room);
@@ -26,11 +26,13 @@ export class PrivatesCache extends BaseCache<Map<string, BasePrivate>> {
 		return room;
 	}
 
-	public async delete(room: BasePrivate) {
-		const rooms = await this.get({ id: room.guild });
+	public async delete(channel: VoiceChannel) {
+		const rooms = await this.get({ id: channel.guild.id });
+		const room = rooms.get(channel.id);
 
 		rooms.delete(room.id);
 
+		await channel.delete('Empty private room');
 		await room.remove();
 	}
 }

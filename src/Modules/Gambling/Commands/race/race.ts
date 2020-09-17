@@ -5,6 +5,7 @@ import { Command, Context } from '../../../../Framework/Commands/Command';
 import { ExecuteError } from '../../../../Framework/Errors/ExecuteError';
 import { BigIntResolver } from '../../../../Framework/Resolvers';
 import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
+import { GuildPermission } from '../../../../Misc/Models/GuildPermissions';
 import { Game } from './game';
 
 export default class extends Command {
@@ -22,7 +23,12 @@ export default class extends Command {
 			group: CommandGroup.GAMBLING,
 			guildOnly: true,
 			premiumOnly: false,
-			examples: ['1000']
+			examples: ['1000'],
+			botPermissions: [
+				GuildPermission.ADD_REACTIONS,
+				GuildPermission.READ_MESSAGE_HISTORY,
+				GuildPermission.READ_MESSAGES
+			]
 		});
 	}
 
@@ -34,6 +40,9 @@ export default class extends Command {
 		const person = await BaseMember.get(message.member);
 
 		if (person.money < money) throw new ExecuteError(t('error.enough.money'));
+
+		person.money -= money;
+		await person.save();
 
 		const game = new Game(message.member);
 

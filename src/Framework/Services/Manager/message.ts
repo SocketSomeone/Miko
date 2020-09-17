@@ -1,5 +1,16 @@
 import { BaseService } from '../Service';
-import { EmbedOptions, Embed, TextableChannel, Message, GuildChannel, User, Emoji, Guild, VoiceChannel } from 'eris';
+import {
+	EmbedOptions,
+	Embed,
+	TextableChannel,
+	Message,
+	GuildChannel,
+	User,
+	Emoji,
+	Guild,
+	VoiceChannel,
+	Member
+} from 'eris';
 import { withScope, captureException } from '@sentry/node';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { TranslateFunc } from '../../Commands/Command';
@@ -316,5 +327,38 @@ export class MessageService extends BaseService {
 
 			timer = setTimeout(timeOut, 5 * 60 * 1000);
 		}
+	}
+
+	public async awaitReactions(
+		prevMsg: Message,
+		filter: (userID: string) => Promise<boolean>,
+		{ ttl, reactions }: { ttl: number; reactions: string[] }
+	) {
+		return new Promise((resolve) => {
+			reactions.forEach((r) => prevMsg.addReaction(r).catch(() => undefined));
+
+			const func = async (msg: Message, emoji: Emoji, userId: string) => {
+				if (msg.id !== prevMsg.id) {
+					return;
+				}
+
+				if (!reactions.includes(emoji.name)) {
+					return;
+				}
+
+				await filter(userId);
+			};
+
+			this.client.on('messageReactionAdd', func);
+
+			const timeOut = async () => {
+				this.client.removeListener('messageReactionAdd', func);
+				prevMsg.removeReactions().catch(() => undefined);
+
+				resolve();
+			};
+
+			setTimeout(timeOut, ttl);
+		});
 	}
 }

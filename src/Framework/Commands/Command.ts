@@ -72,6 +72,12 @@ export abstract class Command {
 		render: (page: number, maxPage: number) => Embed
 	) => Promise<void>;
 
+	protected awaitReactions: (
+		prevMsg: Message,
+		func: (userID: string) => Promise<any>,
+		sets: { ttl: number; reactions: string[] }
+	) => Promise<any>;
+
 	public constructor(client: BaseClient, props: CommandOptions) {
 		this.client = client;
 
@@ -106,6 +112,7 @@ export abstract class Command {
 		this.replyAsync = client.messages.sendReply.bind(client.messages);
 		this.sendAsync = client.messages.sendEmbed.bind(client.messages);
 		this.showPaginated = client.messages.showPaginated.bind(client.messages);
+		this.awaitReactions = client.messages.awaitReactions.bind(client.messages);
 	}
 
 	public async onLoaded() {

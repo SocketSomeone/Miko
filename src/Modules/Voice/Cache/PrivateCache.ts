@@ -32,7 +32,7 @@ export class PrivatesCache extends BaseCache<Map<string, BasePrivate>> {
 
 		rooms.delete(room.id);
 
-		await channel.delete('Empty private room');
-		await room.remove();
+		await channel.delete('Empty private room').catch(() => undefined);
+		await room.remove().catch(() => undefined);
 	}
 }

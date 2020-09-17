@@ -6,7 +6,6 @@ import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { TranslateFunc } from '../../../Framework/Commands/Command';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import PermissionResolver from '../../../Misc/Utils/PermissionResolver';
-import { BasePrivate } from '../../../Entity/Privates';
 
 export class PrivateService extends BaseService {
 	protected cache: PrivatesCache;
@@ -25,14 +24,12 @@ export class PrivateService extends BaseService {
 		const guild = member.guild;
 
 		const sets = await this.client.cache.guilds.get(guild);
-
 		const rooms = await this.cache.get(guild);
-		const room = rooms.get(oldChannel.id);
 
 		if (newChannel.id === sets.privateManager) {
 			if (
-				!(room === null || room === undefined) &&
-				room.owner === member.id &&
+				rooms.has(oldChannel.id) &&
+				rooms.get(oldChannel.id).owner === member.id &&
 				oldChannel.voiceMembers.filter((x) => !x.user.bot).length < 1
 			) {
 				await this.moveMember(member, newChannel, oldChannel);
@@ -63,7 +60,7 @@ export class PrivateService extends BaseService {
 		if (!rooms.has(channel.id)) return;
 
 		this.client.emit('roomDelete', member, channel);
-		await this.cache.delete(channel).catch(undefined);
+		await this.cache.delete(channel);
 	}
 
 	private async createRoom(member: Member, guild: Guild, channel: VoiceChannel) {
@@ -106,8 +103,7 @@ export class PrivateService extends BaseService {
 			owner: member.id
 		});
 
-		this.client.emit('roomCreate', member, house, true);
-
+		this.client.emit('roomCreate', member, house);
 		await this.moveMember(member, channel, house);
 	}
 
@@ -119,7 +115,7 @@ export class PrivateService extends BaseService {
 
 			await this.lockManager(member, manager).catch(() => undefined);
 		} catch (err) {
-			await this.cache.delete(house).catch(() => undefined);
+			await this.cache.delete(house);
 		}
 	}
 

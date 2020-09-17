@@ -540,6 +540,15 @@
 				"bet": "gambling.slots.fields.bet",
 				"result": "gambling.slots.fields.result"
 			}
+		},
+		"race": {
+			"title": "gambling.race.title",
+			"find": "gambling.race.find",
+			"players": "gambling.race.players",
+			"map": "gambling.race.map",
+			"footer": "gambling.race.footer",
+			"bot": "gambling.race.bot",
+			"finished": "gambling.race.finished"
 		}
 	},
 	"automod": {
@@ -565,12 +574,14 @@
 		},
 		"reasons": {
 			"invites": "automod.reasons.invites",
-			"duplicate": "automod.reasons.duplicate"
+			"duplicate": "automod.reasons.duplicate",
+			"exlinks": "automod.reasons.exlinks"
 		},
 		"enabled": {
 			"caps": "automod.enabled.caps",
 			"any": "automod.enabled.any",
-			"already": "automod.enabled.already"
+			"already": "automod.enabled.already",
+			"amir": "automod.enabled.amir"
 		},
 		"types": {
 			"caps": "automod.types.caps",
@@ -700,7 +711,8 @@
 				"welcome message": "info.help.cmdDesc.welcome message",
 				"setcurrency": "info.help.cmdDesc.setcurrency",
 				"automod info": "info.help.cmdDesc.automod info",
-				"top": "info.help.cmdDesc.top"
+				"top": "info.help.cmdDesc.top",
+				"race": "info.help.cmdDesc.race"
 			},
 			"moduleDesc": {
 				"configure": "info.help.moduleDesc.configure",
@@ -799,5 +811,10 @@
 		"allModules": "perms.allModules",
 		"false": "perms.false",
 		"command": "perms.command"
+	},
+	"gamling": {
+		"race": {
+			"find": "gamling.race.find"
+		}
 	}
 }

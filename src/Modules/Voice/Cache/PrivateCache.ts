@@ -30,7 +30,7 @@ export class PrivatesCache extends BaseCache<Map<string, BasePrivate>> {
 		const rooms = await this.get({ id: channel.guild.id });
 		const room = rooms.get(channel.id);
 
-		rooms.delete(room.id);
+		if (room) rooms.delete(room.id);
 
 		await channel.delete('Empty private room').catch(() => undefined);
 		await room.remove().catch(() => undefined);

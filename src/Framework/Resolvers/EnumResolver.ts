@@ -35,7 +35,7 @@ export class EnumResolver extends Resolver {
 		return t(`resolvers.enum.validValues`, {
 			values: [...this.values.values()]
 				.sort((a, b) => a.localeCompare(b))
-				.map((v) => v)
+				.map((v) => `\`${v}\``)
 				.join(', ')
 		});
 	}

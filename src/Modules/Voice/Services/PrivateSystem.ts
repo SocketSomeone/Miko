@@ -115,7 +115,7 @@ export class PrivateService extends BaseService {
 
 			await this.lockManager(member, manager).catch(() => undefined);
 		} catch (err) {
-			await this.cache.delete(house);
+			await this.cache.delete(house).catch(() => undefined);
 		}
 	}
 
@@ -137,7 +137,7 @@ export class PrivateService extends BaseService {
 		const rooms = await this.cache.get(guild);
 		const room = rooms.get(voice);
 
-		if (!(room === null || room === undefined)) throw new ExecuteError(t('voice.error.notFound'));
+		if (room === null || room === undefined) throw new ExecuteError(t('voice.error.notFound'));
 
 		return room;
 	}

@@ -20,7 +20,7 @@ export class AnyResolver extends Resolver {
 	}
 
 	public async resolve(value: string, context: Context, previous: any[]) {
-		let lastError;
+		let lastError: Error;
 
 		for (const resolver of this.resolvers) {
 			try {
@@ -33,6 +33,6 @@ export class AnyResolver extends Resolver {
 			}
 		}
 
-		throw new lastError();
+		throw lastError;
 	}
 }

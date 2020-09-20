@@ -5,7 +5,7 @@ import i18n from 'i18n';
 import { writeFileSync } from 'fs';
 import { BaseService } from '../Service';
 import { Command, Context, TranslateFunc } from '../../Commands/Command';
-import { resolve, relative } from 'path';
+import { resolve, relative, join } from 'path';
 import { Precondition } from '../../../Modules/Permissions/Misc/Precondition';
 import { Message, GuildChannel, Guild } from 'eris';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
@@ -37,7 +37,7 @@ export class CommandService extends BaseService {
 				const constr = clazz.default;
 				const parent = Object.getPrototypeOf(constr);
 
-				if (!parent || parent.name !== 'Command') {
+				if (!parent || !parent.name.endsWith('Command')) {
 					continue;
 				}
 
@@ -221,9 +221,13 @@ export class CommandService extends BaseService {
 
 				args.push(val);
 			} catch (err) {
+				const m = err.message as string;
+				const s = m.split(/\r?\n/);
+
 				await this.client.messages.sendReply(message, {
 					color: Color.RED,
-					author: { name: err.message, icon_url: Images.CRITICAL },
+					author: { name: s[0], icon_url: Images.CRITICAL },
+					description: s.slice(1).join('\n'),
 					footer: null,
 					timestamp: null
 				});

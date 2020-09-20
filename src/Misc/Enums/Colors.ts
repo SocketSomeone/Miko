@@ -8,5 +8,6 @@ export enum Color {
 	MILK = '#f3edfe',
 	GRAY = '#6b7580',
 	DARK = '#87556f',
-	CYAN = '#289397'
+	CYAN = '#289397',
+	BLUE = '#20639B'
 }

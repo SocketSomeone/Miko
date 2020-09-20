@@ -230,7 +230,8 @@
 			"voice": "others.modules.voice",
 			"welcome": "others.modules.welcome",
 			"CONFIGURE": "others.modules.CONFIGURE",
-			"ECONOMY": "others.modules.ECONOMY"
+			"ECONOMY": "others.modules.ECONOMY",
+			"emotions": "others.modules.emotions"
 		},
 		"onBotAdd": {
 			"desc": "others.onBotAdd.desc",
@@ -712,7 +713,8 @@
 				"setcurrency": "info.help.cmdDesc.setcurrency",
 				"automod info": "info.help.cmdDesc.automod info",
 				"top": "info.help.cmdDesc.top",
-				"race": "info.help.cmdDesc.race"
+				"race": "info.help.cmdDesc.race",
+				"pat": "info.help.cmdDesc.pat"
 			},
 			"moduleDesc": {
 				"configure": "info.help.moduleDesc.configure",
@@ -722,7 +724,8 @@
 				"moderation": "info.help.moduleDesc.moderation",
 				"permissions": "info.help.moduleDesc.permissions",
 				"voice": "info.help.moduleDesc.voice",
-				"welcome": "info.help.moduleDesc.welcome"
+				"welcome": "info.help.moduleDesc.welcome",
+				"emotions": "info.help.moduleDesc.emotions"
 			}
 		},
 		"warns": {
@@ -815,6 +818,12 @@
 	"gamling": {
 		"race": {
 			"find": "gamling.race.find"
+		}
+	},
+	"emotions": {
+		"title": "emotions.title",
+		"pat": {
+			"solo": "emotions.pat.solo"
 		}
 	}
 }

@@ -113,15 +113,12 @@ export abstract class Command {
 		this.sendAsync = client.messages.sendEmbed.bind(client.messages);
 		this.showPaginated = client.messages.showPaginated.bind(client.messages);
 		this.awaitReactions = client.messages.awaitReactions.bind(client.messages);
+
+		this.checkDependies();
 	}
 
 	public async onLoaded() {
-		if (this.args.filter((x) => x.required).length >= 1 && this.examples.length < 1) {
-			console.error(`Missed examples for arguments in command "${this.name}"`);
-			process.exit(1);
-		}
-
-		this.getDescription((phrase, rep) => i18n.__({ locale: 'ru', phrase }, rep));
+		// NO-OP
 	}
 
 	protected getDescription(t: TranslateFunc) {
@@ -134,6 +131,15 @@ export abstract class Command {
 		}
 
 		return desc;
+	}
+
+	protected checkDependies() {
+		if (this.args.filter((x) => x.required).length >= 1 && this.examples.length < 1) {
+			console.error(`Missed examples for arguments in command "${this.name}"`);
+			process.exit(1);
+		}
+
+		this.getDescription((phrase, rep) => i18n.__({ locale: 'ru', phrase }, rep));
 	}
 
 	public getHelp(t: TranslateFunc, prefix: string): Embed {

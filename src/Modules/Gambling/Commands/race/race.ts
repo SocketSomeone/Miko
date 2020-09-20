@@ -51,6 +51,9 @@ export default class extends Command {
 		const sendGameMessage = async () => {
 			const embed = this.createEmbed({
 				title: t('gambling.race.title', { money }),
+				description: t('gambling.race.bet', {
+					bet: `${money} ${e(currency)}`
+				}),
 				fields: [
 					{
 						name: t('gambling.race.players'),
@@ -89,7 +92,7 @@ export default class extends Command {
 			return gameMessage;
 		};
 
-		game.on('init', async () => {
+		game.once('init', async () => {
 			await sendGameMessage();
 
 			await this.awaitReactions(
@@ -117,19 +120,14 @@ export default class extends Command {
 			await game.start();
 		});
 
-		game.on('gameUpdate', async () => {
-			await sendGameMessage();
-		});
-
-		game.on('tick', async () => {
-			await sendGameMessage();
-		});
-
-		game.on('winner', async (member: Member) => {
+		game.once('winner', async (member: Member) => {
 			const person = await BaseMember.get(member);
 			person.money += money * BigInt(game.players.size === 1 ? 2 : game.players.size);
 			await person.save();
 		});
+
+		game.on('gameUpdate', sendGameMessage);
+		game.on('tick', sendGameMessage);
 
 		game.init();
 	}

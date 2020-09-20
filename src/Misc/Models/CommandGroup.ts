@@ -6,5 +6,6 @@ export enum CommandGroup {
 	VOICE,
 	LOGS,
 	PERMISSIONS,
-	WELCOME
+	WELCOME,
+	EMOTIONS
 }

@@ -90,14 +90,14 @@ for (const [file, matches] of found) {
 
 console.log(chalk.blue('\nПроверка того, что все переведенные ключи используются...\n'));
 
-const keys = []
-	.concat(flattenLang(ru).map((key) => ['RU', key]))
+const keys = flattenLang(ru)
+	.map((key) => ['RU', key])
 	.filter(([, key], i, arr) => arr.findIndex(([, key2]) => key2 === key) === i);
 
 for (const [lang, key] of keys) {
 	if (!found.some(([, matches]) => matches.includes(key))) {
 		if (variablePrefixes.some((prefix) => key.startsWith(prefix))) {
-			console.log(chalk.yellow(`⚠️ ${chalk.blue(key)}: Ключ начинается с префикса переменной - пропуск проверки`));
+			// console.log(chalk.yellow(`⚠️ ${chalk.blue(key)}: Ключ начинается с префикса переменной - пропуск проверки`));
 			continue;
 		}
 

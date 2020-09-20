@@ -127,7 +127,6 @@ export default class extends Command {
 		});
 
 		game.on('gameUpdate', sendGameMessage);
-		game.on('tick', sendGameMessage);
 
 		game.init();
 	}

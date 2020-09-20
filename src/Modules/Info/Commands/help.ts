@@ -72,17 +72,17 @@ export default class extends Command {
 				.sort((a, b) => a.usage.localeCompare(b.usage))
 				.map((x, i) => {
 					const name = i === 0 ? '📖 Вот и список команд:' : '\u200b';
-					const desc = `info.help.cmdDesc.${x.name.toLowerCase()}`;
+					const desc = t(`info.help.cmdDesc.${x.name.toLowerCase()}`);
 					const page = pages[~~(i / 15)];
 
 					if (!page) {
 						pages.push({
 							name,
-							value: `\`${prefix + x.usage}\` - ${t(desc) === desc ? t('error.no') : t(desc)}`,
+							value: `\`${prefix + x.usage}\` - ${desc}`,
 							inline: false
 						});
 					} else {
-						page.value += `\n\n\`${prefix + x.usage}\` - ${t(desc) === desc ? t('error.no') : t(desc)}`;
+						page.value += `\n\n\`${prefix + x.usage}\` - ${desc}`;
 					}
 				});
 

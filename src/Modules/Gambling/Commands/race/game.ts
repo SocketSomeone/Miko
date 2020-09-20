@@ -12,7 +12,7 @@ export class Game extends EventEmitter {
 	private height: number = 6;
 	public maxPlayers: number = EMOJI_CARS.length;
 
-	private grid: string[][] = [];
+	private grid: string[][] = Array.from(Array(this.width), () => []);
 
 	public players: Set<string> = new Set();
 	public cars: Car[] = [];
@@ -25,14 +25,10 @@ export class Game extends EventEmitter {
 	private rotate: number = 0;
 	private nextPlace = 1;
 
-	public constructor(...players: Member[]) {
+	public constructor(creator: Member) {
 		super();
 
-		for (let x = 0; x < this.width; x++) {
-			this.grid[x] = [];
-		}
-
-		players.map((x) => this.addPlayer(x));
+		this.addPlayer(creator);
 		this.generateAffects();
 	}
 
@@ -60,7 +56,7 @@ export class Game extends EventEmitter {
 		}
 
 		for (const car of this.cars) {
-			this.grid[car.x < 0 ? 0 : car.x][car.y] = car.toString();
+			this.grid[car.x][car.y] = car.toString();
 		}
 	}
 
@@ -104,7 +100,7 @@ export class Game extends EventEmitter {
 		}
 
 		this.rotate++;
-		this.emit('tick', this.toString());
+		this.emit('gameUpdate');
 	}
 
 	public toString() {

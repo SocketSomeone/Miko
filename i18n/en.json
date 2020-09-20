@@ -549,7 +549,8 @@
 			"map": "gambling.race.map",
 			"footer": "gambling.race.footer",
 			"bot": "gambling.race.bot",
-			"finished": "gambling.race.finished"
+			"finished": "gambling.race.finished",
+			"bet": "gambling.race.bet"
 		}
 	},
 	"automod": {

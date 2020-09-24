@@ -824,7 +824,8 @@
 	"emotions": {
 		"title": "emotions.title",
 		"pat": {
-			"solo": "emotions.pat.solo"
+			"solo": "emotions.pat.solo",
+			"multi": "emotions.pat.multi"
 		}
 	}
 }

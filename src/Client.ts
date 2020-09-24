@@ -231,7 +231,7 @@ export class BaseClient extends Client {
 
 	private async setActivity() {
 		this.editStatus('online', {
-			name: [`за ${this.guilds.size} серверами`, `!help - Invite Miko`].random(),
+			name: 'mikoapp.xyz | !help',
 			type: 3
 		});
 	}

@@ -42,8 +42,6 @@ export class BaseMember extends BaseEntity {
 	}[];
 
 	public static async get(user: Member) {
-		if (!user) return undefined;
-
 		const hasFounded = await this.findOne({
 			where: {
 				guild: {

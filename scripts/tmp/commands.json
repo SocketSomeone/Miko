@@ -112,6 +112,20 @@
 		"module": "ECONOMY"
 	},
 	{
+		"name": "top",
+		"aliases": ["лидеры", "топ"],
+		"description": "Посмотреть лидеров по валюте.",
+		"examples": [""],
+		"module": "ECONOMY"
+	},
+	{
+		"name": "pat",
+		"aliases": ["погладить", "гладь"],
+		"description": "Погладить пользователя",
+		"examples": ["@user", ""],
+		"module": "EMOTIONS"
+	},
+	{
 		"name": "br",
 		"aliases": [],
 		"description": "Подкинуть кубики со ставкой.",
@@ -122,6 +136,13 @@
 		"name": "fortune",
 		"aliases": ["колесо"],
 		"description": "Сыграть в колесо фортуны.",
+		"examples": ["1000"],
+		"module": "GAMBLING"
+	},
+	{
+		"name": "race",
+		"aliases": [],
+		"description": "Сыграть в уличные гонки с друзьями!",
 		"examples": ["1000"],
 		"module": "GAMBLING"
 	},
@@ -402,7 +423,7 @@
 		"name": "welcome message",
 		"aliases": [],
 		"description": "Установить сообщение при входе на сервер.",
-		"examples": ["set {member} joined to our server! ✨", "delete"],
+		"examples": ["set {mention} joined to our server! ✨", "delete"],
 		"module": "WELCOME"
 	}
 ]

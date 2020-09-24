@@ -31,7 +31,7 @@ export default class extends Command {
 
 	public async execute(message: Message, [select]: [string], { funcs: { t, e }, guild, settings }: Context) {
 		const emoji = e(select || EmojisDefault.WALLET);
-
+		console.log(emoji);
 		if (emoji === EmojisDefault.UNKNOWN_EMOJI) throw new ExecuteError(t('error.emoji.notFound'));
 
 		if (emoji === settings.currency) throw new ExecuteError(t('error.changes.not'));

@@ -58,8 +58,6 @@ export class BaseMember extends BaseEntity {
 
 		const member = BaseMember.getDefaultMember(guild, sets, user.id);
 
-		await member.save();
-
 		return member;
 	}
 

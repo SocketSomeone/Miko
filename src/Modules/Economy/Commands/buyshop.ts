@@ -1,4 +1,4 @@
-import { Command, Context } from '../../../Framework/Commands/Command';
+import { Command, Context } from '../../../Framework/Services/Commands/Command';
 import { BaseClient } from '../../../Client';
 import { NumberResolver, AnyResolver, RoleResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';

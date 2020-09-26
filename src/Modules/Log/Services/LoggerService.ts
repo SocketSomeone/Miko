@@ -4,7 +4,7 @@ import { BaseEventLog } from '../Misc/EventLog';
 import { LogType } from '../Misc/LogType';
 import { resolve, relative } from 'path';
 import { glob } from 'glob';
-import { TranslateFunc } from '../../../Framework/Commands/Command';
+import { TranslateFunc } from '../../../Framework/Services/Commands/Command';
 import { TextChannel, Member } from 'eris';
 
 import i18n from 'i18n';

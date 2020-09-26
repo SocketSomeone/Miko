@@ -715,7 +715,18 @@
 				"automod info": "info.help.cmdDesc.automod info",
 				"top": "info.help.cmdDesc.top",
 				"race": "info.help.cmdDesc.race",
-				"pat": "info.help.cmdDesc.pat"
+				"pat": "info.help.cmdDesc.pat",
+				"angry": "info.help.cmdDesc.angry",
+				"bite": "info.help.cmdDesc.bite",
+				"cry": "info.help.cmdDesc.cry",
+				"happy": "info.help.cmdDesc.happy",
+				"hug": "info.help.cmdDesc.hug",
+				"kill": "info.help.cmdDesc.kill",
+				"kiss": "info.help.cmdDesc.kiss",
+				"lick": "info.help.cmdDesc.lick",
+				"sex": "info.help.cmdDesc.sex",
+				"slap": "info.help.cmdDesc.slap",
+				"sleep": "info.help.cmdDesc.sleep"
 			},
 			"moduleDesc": {
 				"configure": "info.help.moduleDesc.configure",
@@ -826,6 +837,74 @@
 		"pat": {
 			"solo": "emotions.pat.solo",
 			"multi": "emotions.pat.multi"
+		},
+		"angrymulti": "emotions.angrymulti",
+		"angrysolo": "emotions.angrysolo",
+		"bitemulti": "emotions.bitemulti",
+		"bitesolo": "emotions.bitesolo",
+		"crymulti": "emotions.crymulti",
+		"crysolo": "emotions.crysolo",
+		"happymulti": "emotions.happymulti",
+		"happysolo": "emotions.happysolo",
+		"hugmulti": "emotions.hugmulti",
+		"hugsolo": "emotions.hugsolo",
+		"killmulti": "emotions.killmulti",
+		"killsolo": "emotions.killsolo",
+		"kissmulti": "emotions.kissmulti",
+		"kisssolo": "emotions.kisssolo",
+		"lickmulti": "emotions.lickmulti",
+		"licksolo": "emotions.licksolo",
+		"patmulti": "emotions.patmulti",
+		"patsolo": "emotions.patsolo",
+		"sexmulti": "emotions.sexmulti",
+		"sexsolo": "emotions.sexsolo",
+		"slapmulti": "emotions.slapmulti",
+		"slapsolo": "emotions.slapsolo",
+		"sleepmulti": "emotions.sleepmulti",
+		"sleepsolo": "emotions.sleepsolo",
+		"angry": {
+			"multi": "emotions.angry.multi",
+			"solo": "emotions.angry.solo"
+		},
+		"bite": {
+			"multi": "emotions.bite.multi",
+			"solo": "emotions.bite.solo"
+		},
+		"cry": {
+			"multi": "emotions.cry.multi",
+			"solo": "emotions.cry.solo"
+		},
+		"happy": {
+			"multi": "emotions.happy.multi",
+			"solo": "emotions.happy.solo"
+		},
+		"hug": {
+			"multi": "emotions.hug.multi",
+			"solo": "emotions.hug.solo"
+		},
+		"kill": {
+			"multi": "emotions.kill.multi",
+			"solo": "emotions.kill.solo"
+		},
+		"kiss": {
+			"multi": "emotions.kiss.multi",
+			"solo": "emotions.kiss.solo"
+		},
+		"lick": {
+			"multi": "emotions.lick.multi",
+			"solo": "emotions.lick.solo"
+		},
+		"sex": {
+			"multi": "emotions.sex.multi",
+			"solo": "emotions.sex.solo"
+		},
+		"slap": {
+			"multi": "emotions.slap.multi",
+			"solo": "emotions.slap.solo"
+		},
+		"sleep": {
+			"multi": "emotions.sleep.multi",
+			"solo": "emotions.sleep.solo"
 		}
 	}
 }

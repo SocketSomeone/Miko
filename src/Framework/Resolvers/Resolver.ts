@@ -1,5 +1,5 @@
 import { BaseClient } from '../../Client';
-import { Context } from '../Commands/Command';
+import { Context } from '../Services/Commands/Command';
 
 export interface ResolverConstructor {
 	new (client: BaseClient): Resolver;

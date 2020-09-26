@@ -3,7 +3,7 @@ import { Guild, Role, Member, Message, TextChannel } from 'eris';
 import { Punishment, BasePunishment } from '../../../Entity/Punishment';
 import { Violation } from '../../../Misc/Enums/Violation';
 import { BaseMember } from '../../../Entity/Member';
-import { TranslateFunc } from '../../../Framework/Commands/Command';
+import { TranslateFunc } from '../../../Framework/Services/Commands/Command';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { BaseSettings } from '../../../Entity/GuildSettings';

@@ -1,5 +1,5 @@
 import { BaseClient } from '../../../Client';
-import { Context, Command } from '../../../Framework/Commands/Command';
+import { Context, Command } from '../../../Framework/Services/Commands/Command';
 import { Message, Role } from 'eris';
 import { StringResolver, RoleResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';

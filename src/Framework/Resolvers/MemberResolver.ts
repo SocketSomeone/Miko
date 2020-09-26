@@ -1,6 +1,6 @@
 import { Member } from 'eris';
 
-import { Context } from '../commands/Command';
+import { Context } from '../Services/Commands/Command';
 
 import { Resolver } from './Resolver';
 

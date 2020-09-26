@@ -1,5 +1,5 @@
 import { BaseClient } from '../../client';
-import { Context } from '../commands/Command';
+import { Context } from '../Services/Commands/Command';
 
 import { Resolver, ResolverConstructor } from './Resolver';
 

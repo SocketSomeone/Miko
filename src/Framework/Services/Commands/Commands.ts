@@ -4,7 +4,7 @@ import i18n from 'i18n';
 
 import { writeFileSync } from 'fs';
 import { BaseService } from '../Service';
-import { Command, Context, TranslateFunc } from '../../Commands/Command';
+import { Command, Context, TranslateFunc } from './Command';
 import { resolve, relative, join } from 'path';
 import { Precondition } from '../../../Modules/Permissions/Misc/Precondition';
 import { Message, GuildChannel, Guild } from 'eris';

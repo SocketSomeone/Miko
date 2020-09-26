@@ -2,7 +2,7 @@ import { BaseClient } from '../../../Client';
 import { LogType } from './LogType';
 import { Embed, Guild, Emoji, TextChannel } from 'eris';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
-import { TranslateFunc } from '../../../Framework/Commands/Command';
+import { TranslateFunc } from '../../../Framework/Services/Commands/Command';
 import { ExecuteIgnore } from '../../../Framework/Errors/ExecuteIgnore';
 import { withScope, captureException } from '@sentry/node';
 

@@ -1,6 +1,6 @@
 import moment, { Duration } from 'moment';
 
-import { Context } from '../commands/Command';
+import { Context } from '../Services/Commands/Command';
 
 import { Resolver } from './Resolver';
 

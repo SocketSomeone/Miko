@@ -1,6 +1,6 @@
 import { PermissionsTarget, PermissionsExecute } from '../../../Misc/Models/Permisson';
 import { Resolver, CommandResolver, EnumResolver } from '../../../Framework/Resolvers';
-import { Context } from '../../../Framework/Commands/Command';
+import { Context } from '../../../Framework/Services/Commands/Command';
 import { BaseClient } from '../../../Client';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 

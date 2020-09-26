@@ -1,5 +1,5 @@
 import { BaseClient } from '../../../Client';
-import { EmotionCommand } from '../Services/Emotion';
+import { EmotionCommand } from '../Services/EmotionCommand';
 
 export default class extends EmotionCommand {
 	public constructor(client: BaseClient) {

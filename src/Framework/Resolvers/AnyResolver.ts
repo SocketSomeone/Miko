@@ -1,6 +1,6 @@
 import { Resolver, ResolverConstructor } from './Resolver';
 import { BaseClient } from '../../Client';
-import { Context } from '../Commands/Command';
+import { Context } from '../Services/Commands/Command';
 
 export class AnyResolver extends Resolver {
 	private resolvers: Resolver[];

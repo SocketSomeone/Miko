@@ -1,19 +1,9 @@
-import {
-	BaseEntity,
-	Entity,
-	PrimaryGeneratedColumn,
-	Column,
-	ManyToOne,
-	JoinColumn,
-	CreateDateColumn,
-	PrimaryColumn,
-	BeforeInsert
-} from 'typeorm';
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, CreateDateColumn } from 'typeorm';
 import { BaseGuild } from './Guild';
 import { Moment } from 'moment';
 import { DateTransformer } from './Transformers';
-import { Guild, Member, TextChannel } from 'eris';
-import { TranslateFunc, Command } from '../Framework/Commands/Command';
+import { Member } from 'eris';
+import { TranslateFunc } from '../Framework/Services/Commands/Command';
 import { ColorResolve } from '../Misc/Utils/ColorResolver';
 import { Color } from '../Misc/Enums/Colors';
 import { BaseClient } from '../Client';
@@ -119,6 +109,6 @@ export class BasePunishment extends BaseEntity {
 					timestamp: new Date().toISOString()
 				}
 			})
-			.catch(async () => undefined);
+			.catch(() => undefined);
 	}
 }

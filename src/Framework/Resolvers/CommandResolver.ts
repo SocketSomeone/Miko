@@ -1,4 +1,4 @@
-import { Command, Context } from '../commands/Command';
+import { Command, Context } from '../Services/Commands/Command';
 
 import { Resolver } from './Resolver';
 

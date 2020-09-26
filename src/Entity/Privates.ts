@@ -1,7 +1,7 @@
 import { BaseEntity, Entity, Column, CreateDateColumn, PrimaryColumn } from 'typeorm';
 import { SetTransformer } from './Transformers/SetTransformer';
 import { ExecuteError } from '../Framework/Errors/ExecuteError';
-import { TranslateFunc } from '../Framework/Commands/Command';
+import { TranslateFunc } from '../Framework/Services/Commands/Command';
 import { Member, VoiceChannel, Permission, Role, Guild, Collection, PermissionOverwrite } from 'eris';
 import { GuildPermission } from '../Misc/Models/GuildPermissions';
 import { Permissions } from '../Misc/Utils/PermissionResolver';

@@ -1,14 +1,14 @@
 import i18n from 'i18n';
 
-import { BaseClient } from '../../Client';
+import { BaseClient } from '../../../Client';
 import { Guild, Member, Message, EmbedOptions, Embed, TextableChannel, User } from 'eris';
-import { GuildPermission } from '../../Misc/Models/GuildPermissions';
-import { Resolver, ResolverConstructor } from '../Resolvers/Resolver';
-import { CommandGroup } from '../../Misc/Models/CommandGroup';
-import { BaseSettings } from '../../Entity/GuildSettings';
-import { BaseEmbedOptions } from '../../Types';
-import { Images } from '../../Misc/Enums/Images';
-import { Color } from '../../Misc/Enums/Colors';
+import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
+import { Resolver, ResolverConstructor } from '../../Resolvers/Resolver';
+import { CommandGroup } from '../../../Misc/Models/CommandGroup';
+import { BaseSettings } from '../../../Entity/GuildSettings';
+import { BaseEmbedOptions } from '../../../Types';
+import { Images } from '../../../Misc/Enums/Images';
+import { Color } from '../../../Misc/Enums/Colors';
 
 interface Arg {
 	name: string;
@@ -62,6 +62,8 @@ export abstract class Command {
 	public userPermissions?: GuildPermission[];
 	public premiumOnly?: boolean;
 
+	//#region FUNCS
+
 	protected createEmbed: (options?: BaseEmbedOptions) => Embed;
 	protected replyAsync: (message: Message, reply: BaseEmbedOptions | string) => Promise<Message>;
 	protected sendAsync: (target: TextableChannel, embed: EmbedOptions | string, fallbackUser?: User) => Promise<Message>;
@@ -77,6 +79,8 @@ export abstract class Command {
 		func: (userID: string) => Promise<any>,
 		sets: { ttl: number; reactions: string[] }
 	) => Promise<any>;
+
+	//#endregion
 
 	public constructor(client: BaseClient, props: CommandOptions) {
 		this.client = client;

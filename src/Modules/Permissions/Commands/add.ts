@@ -6,7 +6,7 @@ import {
 	ChannelResolver
 } from '../../../Framework/Resolvers';
 import { BaseClient } from '../../../Client';
-import { Context, Command } from '../../../Framework/Commands/Command';
+import { Context, Command } from '../../../Framework/Services/Commands/Command';
 import { Message, Member, Role, GuildChannel, TextChannel } from 'eris';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { PermissionTargetResolver } from '../Resolvers/PermissionResolver';

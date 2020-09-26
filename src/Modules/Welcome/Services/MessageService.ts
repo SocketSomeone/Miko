@@ -4,7 +4,7 @@ import { WelcomeChannelType } from '../../../Misc/Enums/WelcomeTypes';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 
 import i18n from 'i18n';
-import { TranslateFunc } from '../../../Framework/Commands/Command';
+import { TranslateFunc } from '../../../Framework/Services/Commands/Command';
 
 export class MessageService extends BaseService {
 	public async init() {

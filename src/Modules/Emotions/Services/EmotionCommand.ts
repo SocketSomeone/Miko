@@ -1,9 +1,11 @@
 import { Member, Message } from 'eris';
 import { BaseClient } from '../../../Client';
-import { Command, Context } from '../../../Framework/Commands/Command';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
+import { Command, Context } from '../../../Framework/Services/Commands/Command';
 import { MemberResolver } from '../../../Framework/Resolvers';
 import { Color } from '../../../Misc/Enums/Colors';
+import { CommandGroup } from '../../../Misc/Models/CommandGroup';
+
+import i18n from 'i18n';
 
 interface ReactionOptions {
 	name: string;
@@ -31,6 +33,9 @@ export abstract class EmotionCommand extends Command {
 		});
 
 		this.images = opts.images;
+
+		i18n.__({ locale: 'ru', phrase: 'emotions.' + this.name + '.multi' });
+		i18n.__({ locale: 'ru', phrase: 'emotions.' + this.name + '.solo' });
 	}
 
 	public async execute(message: Message, [member]: [Member], { funcs: { t } }: Context) {

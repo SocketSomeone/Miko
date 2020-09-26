@@ -13,7 +13,7 @@ import {
 } from 'eris';
 import { withScope, captureException } from '@sentry/node';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
-import { TranslateFunc } from '../../Commands/Command';
+import { TranslateFunc } from '../Commands/Command';
 import { Color } from '../../../Misc/Enums/Colors';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { BaseEmbedOptions } from '../../../Types';

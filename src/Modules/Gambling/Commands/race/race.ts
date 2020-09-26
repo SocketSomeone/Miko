@@ -1,7 +1,7 @@
 import { Embed, Member, Message } from 'eris';
 import { BaseClient } from '../../../../Client';
 import { BaseMember } from '../../../../Entity/Member';
-import { Command, Context } from '../../../../Framework/Commands/Command';
+import { Command, Context } from '../../../../Framework/Services/Commands/Command';
 import { ExecuteError } from '../../../../Framework/Errors/ExecuteError';
 import { BigIntResolver } from '../../../../Framework/Resolvers';
 import { CommandGroup } from '../../../../Misc/Models/CommandGroup';

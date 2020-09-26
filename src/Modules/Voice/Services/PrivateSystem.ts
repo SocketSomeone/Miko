@@ -3,7 +3,7 @@ import { Member, VoiceChannel, Guild } from 'eris';
 import { ChannelType } from '../../../Types';
 import { PrivatesCache } from '../Cache/PrivateCache';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
-import { TranslateFunc } from '../../../Framework/Commands/Command';
+import { TranslateFunc } from '../../../Framework/Services/Commands/Command';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import PermissionResolver from '../../../Misc/Utils/PermissionResolver';
 

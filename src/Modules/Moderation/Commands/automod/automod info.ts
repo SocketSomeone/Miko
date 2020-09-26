@@ -1,4 +1,4 @@
-import { Command, Context } from '../../../../Framework/Commands/Command';
+import { Command, Context } from '../../../../Framework/Services/Commands/Command';
 import { BaseClient } from '../../../../Client';
 import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
 import { Message } from 'eris';

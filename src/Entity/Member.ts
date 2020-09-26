@@ -4,6 +4,7 @@ import { Member, Guild } from 'eris';
 import { Moment, Duration, duration } from 'moment';
 import { DateTransformer, BigIntTransformer, DurationTransformer } from './Transformers/';
 import { BaseSettings } from './GuildSettings';
+import moment from 'moment';
 
 @Entity()
 export class BaseMember extends BaseEntity {
@@ -31,7 +32,7 @@ export class BaseMember extends BaseEntity {
 	public savedRoles: string[] = [];
 
 	@Column({ type: 'varchar', transformer: DurationTransformer })
-	public voiceOnline: Duration;
+	public voiceOnline: Duration = duration(0, 'minutes');
 
 	@Column({ type: 'json', default: [] })
 	public warns: {
@@ -39,13 +40,15 @@ export class BaseMember extends BaseEntity {
 		createdAt: Date;
 		expireAt: Date;
 		moderator: string;
-	}[];
+	}[] = [];
 
-	public static async get(user: Member) {
+	public static async get(user: Member, g?: Guild) {
+		const guild = g || user.guild;
+
 		const hasFounded = await this.findOne({
 			where: {
 				guild: {
-					id: user.guild.id
+					id: guild.id
 				},
 				user: user.id
 			}
@@ -53,10 +56,10 @@ export class BaseMember extends BaseEntity {
 
 		if (hasFounded) return hasFounded;
 
-		const guild = await BaseGuild.get(user.guild);
-		const sets = await BaseSettings.findOne(user.guild.id);
+		const BGuild = await BaseGuild.get(guild);
+		const sets = await BaseSettings.findOne(guild.id);
 
-		const member = BaseMember.getDefaultMember(guild, sets, user.id);
+		const member = BaseMember.getDefaultMember(BGuild, sets, user.id);
 
 		return member;
 	}
@@ -67,7 +70,6 @@ export class BaseMember extends BaseEntity {
 
 		member.guild = guild;
 		member.user = userId;
-		member.voiceOnline = duration(0, 'minutes');
 		member.money = BigInt(settings.prices.standart);
 
 		return member;

@@ -68,7 +68,7 @@ export default class extends Command {
 			await BasePunishment.informUser(t, member, Punishment.MUTE, extra);
 
 			try {
-				await guild.banMember(member.id, 7, encodeURIComponent(reason));
+				await guild.banMember(member.id, 7, reason);
 
 				await BaseMember.saveMembers(guild, [member]);
 

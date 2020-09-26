@@ -53,9 +53,7 @@ export class RolesService extends BaseService {
 
 		if (!settings.welcomeEnabled || !settings.welcomeSaveRoles) return;
 
-		member.guild = guild;
-
-		const person = await BaseMember.get(member);
+		const person = await BaseMember.get(member, guild);
 		person.savedRoles = member.roles;
 
 		await person.save();

@@ -22,7 +22,7 @@ export default class extends Command {
 	public async execute({ member, channel }: Message, [], { funcs: { t, e }, guild, settings }: Context) {
 		const person = await BaseMember.get(member);
 
-		if (moment().isBefore(person.timelyAt))
+		if (person.timelyAt && moment().isBefore(person.timelyAt))
 			throw new ExecuteError(
 				t('economy.daily.wait', {
 					timeout: moment.duration(person.timelyAt.diff(moment())).humanize(false)
@@ -31,6 +31,7 @@ export default class extends Command {
 
 		person.money += BigInt(settings.prices.timely);
 		person.timelyAt = moment().add(24, 'h');
+
 		await person.save();
 
 		await this.sendAsync(channel, {

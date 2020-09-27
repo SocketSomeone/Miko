@@ -1,5 +1,4 @@
 import 'reflect-metadata';
-import 'moment-timezone';
 
 import i18n from 'i18n';
 import chalk from 'chalk';
@@ -30,8 +29,6 @@ import { ModerationModule } from './Modules/Moderation/ModerationModule';
 import { GamblingModule } from './Modules/Gambling/GamblingModule';
 import { PermissionsModule } from './Modules/Permissions/PermissionModule';
 import { WelcomeModule } from './Modules/Welcome/WelcomeModule';
-
-moment.tz.setDefault('Europe/Moscow');
 
 i18n.configure({
 	locales: ['ru', 'en'],
@@ -362,6 +359,7 @@ export class BaseClient extends Client {
 
 		while (srvObj) {
 			const serviceInjs = serviceInjections.get(srvObj) || new Map();
+
 			for (const [key, getInjType] of serviceInjs) {
 				const injConstr = getInjType();
 				const injService = this.services.get(injConstr);

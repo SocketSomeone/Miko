@@ -4,7 +4,7 @@ const { isNumber } = require('util');
 
 console.log('STARTING AND WAITING FOR DEBUGGER');
 
-let child = spawn('node', [`--inspect=19229`, './bin/root.js', '--no-rabbitmq', dev.TOKEN, 1, 1, 1], {
+let child = spawn('node', [`--inspect=19229`, './bin/root.js', '--no-rabbitmq', dev.TOKEN, 1, 1, 2], {
 	stdio: 'inherit'
 });
 

@@ -40,7 +40,7 @@ export default class extends BaseCommand {
 	) {
 		if (quantity < 1) throw new ExecuteError(t('moderation.purge.invalidQuantity'));
 
-		let messages = await message.channel.getMessages(Math.min(quantity, 100), message.id);
+		let messages = (await message.channel.getMessages(Math.min(quantity, 100), message.id)) || [];
 
 		if (member) messages.filter((a) => a.author && a.author.id === member.id);
 

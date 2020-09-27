@@ -205,16 +205,16 @@
 		"module": "GAMBLING"
 	},
 	{
-		"name": "race",
-		"aliases": [],
-		"description": "Сыграть в уличные гонки с друзьями!",
+		"name": "slotmachine",
+		"aliases": ["slots", "spin"],
+		"description": "Сыграть в слот-машину.",
 		"examples": ["1000"],
 		"module": "GAMBLING"
 	},
 	{
-		"name": "slotmachine",
-		"aliases": ["slots", "spin"],
-		"description": "Сыграть в слот-машину.",
+		"name": "race",
+		"aliases": [],
+		"description": "Сыграть в уличные гонки с друзьями!",
 		"examples": ["1000"],
 		"module": "GAMBLING"
 	},
@@ -226,122 +226,10 @@
 		"module": "GAMBLING"
 	},
 	{
-		"name": "log disable",
-		"aliases": [],
-		"description": "Выключить модуль логирования",
-		"examples": [""],
-		"module": "LOGS"
-	},
-	{
-		"name": "log enable",
-		"aliases": [],
-		"description": "Включить модуль логирования",
-		"examples": [""],
-		"module": "LOGS"
-	},
-	{
-		"name": "log set",
-		"aliases": [],
-		"description": "Установить или отобразить логи, которые отправляются в данный канал.",
-		"examples": ["BAN", "MESSAGE_DELETE, MESSAGE_EDITED", ""],
-		"module": "LOGS"
-	},
-	{
-		"name": "log unset",
-		"aliases": [],
-		"description": "Очистить логи, которые отправляются в данный канал.",
-		"examples": ["BAN", "MESSAGE_DELETE, MESSAGE_EDITED", ""],
-		"module": "LOGS"
-	},
-	{
-		"name": "automod ignore",
-		"aliases": ["autoignore"],
-		"description": "Добавить или очистить канал или пользователя для игнорирования автомодерацией.",
-		"examples": ["@role", "#text", ""],
-		"module": "MODERATION"
-	},
-	{
-		"name": "automod info",
-		"aliases": ["automod list"],
-		"description": "Посмотреть настройки автомодерации",
-		"examples": [""],
-		"module": "MODERATION"
-	},
-	{
-		"name": "automod disable",
-		"aliases": ["автомод выключить"],
-		"description": "Выключить автомодерацию текста в чатах.",
-		"examples": ["invites", ""],
-		"module": "MODERATION"
-	},
-	{
-		"name": "automod enable",
-		"aliases": ["автомод включить"],
-		"description": "Включить автомодерацию текста в чатах.",
-		"examples": ["invites", "caps, mentions", ""],
-		"module": "MODERATION"
-	},
-	{
-		"name": "ban",
-		"aliases": ["бан", "забанить"],
-		"description": "Забанить пользователя на сервере.",
-		"examples": ["@user", "@user 4.5"],
-		"module": "MODERATION"
-	},
-	{
-		"name": "kick",
-		"aliases": ["кик", "кикнуть"],
-		"description": "Выгнать пользователя с сервера.",
-		"examples": ["@user", "@user 4.1"],
-		"module": "MODERATION"
-	},
-	{
-		"name": "mute",
-		"aliases": ["мут", "замутить"],
-		"description": "Выдать затычку пользователю.",
-		"examples": ["@user", "@user 4.1"],
-		"module": "MODERATION"
-	},
-	{
-		"name": "tempban",
-		"aliases": ["темпбан", "тбан"],
-		"description": "Временная блокировка пользователя на сервере.",
-		"examples": ["@user 1m", "@user 1m 4.1"],
-		"module": "MODERATION"
-	},
-	{
-		"name": "tempmute",
-		"aliases": ["темпмут", "тмут"],
-		"description": "Временная затычка пользователя на сервере.",
-		"examples": ["@user 1m", "@user 1m 4.1"],
-		"module": "MODERATION"
-	},
-	{
-		"name": "unmute",
-		"aliases": ["размутить"],
-		"description": "Убрать затычку у пользователя.",
-		"examples": ["@user"],
-		"module": "MODERATION"
-	},
-	{
-		"name": "clear",
-		"aliases": ["prune", "purge", "очистить"],
-		"description": "Очистить определённое кол-во сообщений.",
-		"examples": ["100", "100 @user"],
-		"module": "MODERATION"
-	},
-	{
-		"name": "warns",
-		"aliases": ["преды"],
-		"description": "Посмотреть предупреждения пользователя.",
-		"examples": ["@user", ""],
-		"module": "MODERATION"
-	},
-	{
 		"name": "permission add",
 		"aliases": ["правило добавить"],
 		"description": "Добавить правило для использования команд бота.",
-		"examples": ["timely @role disable", "all #text disable", "ban @user enable"],
+		"examples": ["disable @role timely", "disable #text all", "enable @user ban"],
 		"module": "PERMISSIONS"
 	},
 	{
@@ -450,6 +338,118 @@
 		"module": "VOICE"
 	},
 	{
+		"name": "automod info",
+		"aliases": ["automod list"],
+		"description": "Посмотреть настройки автомодерации",
+		"examples": [""],
+		"module": "MODERATION"
+	},
+	{
+		"name": "automod ignore",
+		"aliases": ["autoignore"],
+		"description": "Добавить или очистить канал или пользователя для игнорирования автомодерацией.",
+		"examples": ["@role", "#text", ""],
+		"module": "MODERATION"
+	},
+	{
+		"name": "automod enable",
+		"aliases": ["автомод включить"],
+		"description": "Включить автомодерацию текста в чатах.",
+		"examples": ["invites", "caps, mentions", ""],
+		"module": "MODERATION"
+	},
+	{
+		"name": "automod disable",
+		"aliases": ["автомод выключить"],
+		"description": "Выключить автомодерацию текста в чатах.",
+		"examples": ["invites", ""],
+		"module": "MODERATION"
+	},
+	{
+		"name": "ban",
+		"aliases": ["бан", "забанить"],
+		"description": "Забанить пользователя на сервере.",
+		"examples": ["@user", "@user 4.5"],
+		"module": "MODERATION"
+	},
+	{
+		"name": "kick",
+		"aliases": ["кик", "кикнуть"],
+		"description": "Выгнать пользователя с сервера.",
+		"examples": ["@user", "@user 4.1"],
+		"module": "MODERATION"
+	},
+	{
+		"name": "mute",
+		"aliases": ["мут", "замутить"],
+		"description": "Выдать затычку пользователю.",
+		"examples": ["@user", "@user 4.1"],
+		"module": "MODERATION"
+	},
+	{
+		"name": "tempban",
+		"aliases": ["темпбан", "тбан"],
+		"description": "Временная блокировка пользователя на сервере.",
+		"examples": ["@user 1m", "@user 1m 4.1"],
+		"module": "MODERATION"
+	},
+	{
+		"name": "tempmute",
+		"aliases": ["темпмут", "тмут"],
+		"description": "Временная затычка пользователя на сервере.",
+		"examples": ["@user 1m", "@user 1m 4.1"],
+		"module": "MODERATION"
+	},
+	{
+		"name": "unmute",
+		"aliases": ["размутить"],
+		"description": "Убрать затычку у пользователя.",
+		"examples": ["@user"],
+		"module": "MODERATION"
+	},
+	{
+		"name": "clear",
+		"aliases": ["prune", "purge", "очистить"],
+		"description": "Очистить определённое кол-во сообщений.",
+		"examples": ["100", "100 @user"],
+		"module": "MODERATION"
+	},
+	{
+		"name": "warns",
+		"aliases": ["преды"],
+		"description": "Посмотреть предупреждения пользователя.",
+		"examples": ["@user", ""],
+		"module": "MODERATION"
+	},
+	{
+		"name": "log disable",
+		"aliases": [],
+		"description": "Выключить модуль логирования",
+		"examples": [""],
+		"module": "LOGS"
+	},
+	{
+		"name": "log enable",
+		"aliases": [],
+		"description": "Включить модуль логирования",
+		"examples": [""],
+		"module": "LOGS"
+	},
+	{
+		"name": "log set",
+		"aliases": [],
+		"description": "Установить или отобразить логи, которые отправляются в данный канал.",
+		"examples": ["BAN", "MESSAGE_DELETE, MESSAGE_EDITED", ""],
+		"module": "LOGS"
+	},
+	{
+		"name": "log unset",
+		"aliases": [],
+		"description": "Очистить логи, которые отправляются в данный канал.",
+		"examples": ["BAN", "MESSAGE_DELETE, MESSAGE_EDITED", ""],
+		"module": "LOGS"
+	},
+	{
 		"name": "welcome roles",
 		"aliases": [],
 		"description": "Установить или отобразить роли, которые выдают при входе на сервер.",
@@ -464,10 +464,10 @@
 		"module": "WELCOME"
 	},
 	{
-		"name": "welcome channel",
+		"name": "welcome enable",
 		"aliases": [],
-		"description": "Установить канал или лс, как чат для сообщения при входе на сервер.",
-		"examples": ["set #text", "delete"],
+		"description": "Включить модуль приветствия.",
+		"examples": [""],
 		"module": "WELCOME"
 	},
 	{
@@ -478,17 +478,17 @@
 		"module": "WELCOME"
 	},
 	{
-		"name": "welcome enable",
-		"aliases": [],
-		"description": "Включить модуль приветствия.",
-		"examples": [""],
-		"module": "WELCOME"
-	},
-	{
 		"name": "welcome message",
 		"aliases": [],
 		"description": "Установить сообщение при входе на сервер.",
 		"examples": ["set {mention} joined to our server! ✨", "delete"],
+		"module": "WELCOME"
+	},
+	{
+		"name": "welcome channel",
+		"aliases": [],
+		"description": "Установить канал или лс, как чат для сообщения при входе на сервер.",
+		"examples": ["set #text", "delete"],
 		"module": "WELCOME"
 	}
 ]

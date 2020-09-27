@@ -30,10 +30,9 @@ export default class extends BaseCommand {
 			group: CommandGroup.PERMISSIONS,
 			args: [
 				{
-					name: 'module/command',
-					resolver: PermissionTargetResolver,
-					required: true,
-					rest: true
+					name: 'state',
+					resolver: BooleanResolver,
+					required: true
 				},
 				{
 					name: 'role/member/channel',
@@ -46,21 +45,22 @@ export default class extends BaseCommand {
 					required: true
 				},
 				{
-					name: 'state',
-					resolver: BooleanResolver,
-					required: true
+					name: 'module/command',
+					resolver: PermissionTargetResolver,
+					required: true,
+					full: true
 				}
 			],
 			guildOnly: true,
 			premiumOnly: false,
 			userPermissions: [GuildPermission.ADMINISTRATOR],
-			examples: ['timely @role disable', 'all #text disable', 'ban @user enable']
+			examples: ['disable @role timely', 'disable #text all', 'enable @user ban']
 		});
 	}
 
 	public async execute(
 		message: Message,
-		[target, from, allow]: [PermissionsTarget, Role | Member | GuildChannel, boolean],
+		[allow, from, target]: [boolean, Role | Member | GuildChannel, PermissionsTarget],
 		{ funcs: { t }, guild, settings }: Context
 	) {
 		const permissions = await this.permissions.get(guild);

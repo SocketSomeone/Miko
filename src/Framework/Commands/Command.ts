@@ -24,7 +24,6 @@ interface Arg {
 	resolver: Resolver | ResolverConstructor;
 	required?: boolean;
 	full?: boolean;
-	rest?: boolean;
 }
 
 export type TranslateFunc = (key: string, replacements?: { [key: string]: any }) => string;
@@ -107,6 +106,7 @@ export abstract class BaseCommand {
 		this.replyAsync = this.msg.sendReply.bind(this.msg);
 		this.sendAsync = this.msg.sendEmbed.bind(this.msg);
 		this.showPaginated = this.msg.showPaginated.bind(this.msg);
+		this.awaitReactions = this.msg.awaitReactions.bind(this.msg);
 
 		this.resolvers = [];
 

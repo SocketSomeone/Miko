@@ -19,7 +19,7 @@ export interface PermissionsActivator {
 }
 
 export interface PermissionsTarget {
-	id: string | CommandGroup;
+	id: string;
 	type: PermissionsExecute;
 }
 

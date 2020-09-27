@@ -33,7 +33,7 @@ export class Precondition {
 			!(
 				(permission.target.type === PermissionsExecute.Command &&
 					String(permission.target.id).toLowerCase() === name.toLowerCase()) ||
-				(permission.target.type === PermissionsExecute.Module && permission.target.id === group) ||
+				(permission.target.type === PermissionsExecute.Module && permission.target.id === CommandGroup[group]) ||
 				(permission.target.type === PermissionsExecute.AllModules && permission.target.id === '*')
 			)
 		)

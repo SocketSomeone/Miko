@@ -189,10 +189,6 @@ export class CommandService extends BaseService {
 			let resolver = cmd.resolvers[i];
 			let rawVal = rawArgs[i];
 
-			if (arg.rest) {
-				rawVal = rawVal.startsWith('"') && rawVal.endsWith('"') ? rawVal.substring(1, rawVal.length - 1) : rawVal;
-			}
-
 			if (arg.full) {
 				rawVal = rawArgs.slice(i, rawArgs.length).join(' ');
 			}
@@ -201,8 +197,6 @@ export class CommandService extends BaseService {
 				const val = await resolver.resolve(rawVal, context, args);
 
 				if (typeof val === typeof undefined && arg.required) {
-					// TODO: missingRequired arg cmd.usage.replace('{prefix}, sets.prefix');
-
 					return;
 				}
 
@@ -328,7 +322,7 @@ export class CommandService extends BaseService {
 			}
 		}
 
-		return rawArgs;
+		return acc.length < 1 ? rawArgs : rawArgs.concat(acc);
 	}
 
 	public async resolve(message: Message, prefix?: string, guild?: Guild): Promise<[BaseCommand, string[]]> {

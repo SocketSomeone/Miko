@@ -18,7 +18,7 @@ export class CommandResolver extends Resolver {
 			return;
 		}
 
-		const name = value.toLowerCase();
+		const name = value.trim().toLowerCase();
 		const cmds = this.cmds.filter((c) => c.name.toLowerCase().includes(name) || c.aliases.indexOf(name) >= 0);
 
 		if (cmds.length === 0) {

@@ -1,4 +1,3 @@
-const { CommandService } = require('../bin/Framework/Services/Commands/Commands');
 const { BaseClient } = require('../bin/Client');
 const { writeFileSync } = require('fs');
 const i18n = require('i18n');
@@ -8,17 +7,15 @@ const client = new BaseClient({
 	shardCount: 1,
 	shardId: 1,
 	config: {},
-	flags: null
+	flags: ['--no-rabbitmq']
 });
 
-const service = new CommandService(client);
-
 (async () => {
-	await service.init();
+	await client.init();
 
 	const { CommandGroup } = require('../bin/Misc/Models/CommandGroup');
 
-	const commands = service.commands
+	const commands = [...client.commands.values()]
 		.map((c) => {
 			if (c.group === null) return null;
 

@@ -22,7 +22,7 @@ export class PermissionTargetResolver extends Resolver {
 			return;
 		}
 
-		const text = value.toLocaleLowerCase();
+		const text = value.toLowerCase();
 
 		if (all.has(text)) {
 			return {

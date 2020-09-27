@@ -1,4 +1,4 @@
-const { prod, maxShard, instance } = require('./config.json');
+const { prod, instance } = require('./config.json');
 
 const config = {
 	script: 'bin/Root.js',
@@ -6,16 +6,12 @@ const config = {
 	log_date_format: 'YYYY-MM-DD HH:mm:ss.SSS'
 };
 
-const apps = [];
-
-for (let j = 1; j <= maxShard; j++) {
-	apps.push({
-		name: `${instance} | Shard ${j}`,
-		args: `production ${prod.TOKEN} ${j} ${maxShard} --no-rabbitmq`,
-		...config
-	});
-}
-
 module.exports = {
-	apps
+	apps: [
+		{
+			name: `${instance} | Range shard: 0-1`,
+			args: `--no-rabbitmq ${prod.TOKEN} 0 1 2`,
+			...config
+		}
+	]
 };

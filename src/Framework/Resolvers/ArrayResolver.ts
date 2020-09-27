@@ -1,5 +1,5 @@
-import { BaseClient } from '../../client';
-import { Context } from '../Services/Commands/Command';
+import { Context } from '../Commands/Command';
+import { BaseModule } from '../Module';
 
 import { Resolver, ResolverConstructor } from './Resolver';
 
@@ -7,13 +7,13 @@ export class ArrayResolver extends Resolver {
 	private resolver: Resolver;
 	private def: any[];
 
-	public constructor(client: BaseClient, resolver: Resolver | ResolverConstructor, def?: any[]) {
-		super(client);
+	public constructor(module: BaseModule, resolver: Resolver | ResolverConstructor, def?: any[]) {
+		super(module);
 
 		if (resolver instanceof Resolver) {
 			this.resolver = resolver;
 		} else {
-			this.resolver = new resolver(client);
+			this.resolver = new resolver(module);
 		}
 
 		this.def = def;

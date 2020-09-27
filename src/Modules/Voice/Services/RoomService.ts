@@ -1,18 +1,19 @@
 import { BaseService } from '../../../Framework/Services/Service';
 import { Member, VoiceChannel, Guild } from 'eris';
 import { ChannelType } from '../../../Types';
-import { PrivatesCache } from '../Cache/PrivateCache';
+import { RoomCache } from '../Cache/RoomCache';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
-import { TranslateFunc } from '../../../Framework/Services/Commands/Command';
+import { TranslateFunc } from '../../../Framework/Commands/Command';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import PermissionResolver from '../../../Misc/Utils/PermissionResolver';
+import { Cache } from '../../../Framework/Decorators/Cache';
+import { GuildSettingsCache } from '../../../Framework/Cache';
 
-export class PrivateService extends BaseService {
-	protected cache: PrivatesCache;
+export class RoomService extends BaseService {
+	@Cache() protected cache: RoomCache;
+	@Cache() protected guilds: GuildSettingsCache;
 
 	public async init() {
-		this.cache = this.client.cache.rooms;
-
 		this.client.on('voiceChannelSwitch', this.onSwitch.bind(this));
 		this.client.on('voiceChannelLeave', this.onLeave.bind(this));
 		this.client.on('voiceChannelJoin', this.onJoin.bind(this));
@@ -23,7 +24,7 @@ export class PrivateService extends BaseService {
 
 		const guild = member.guild;
 
-		const sets = await this.client.cache.guilds.get(guild);
+		const sets = await this.guilds.get(guild);
 		const rooms = await this.cache.get(guild);
 
 		if (newChannel.id === sets.privateManager) {
@@ -45,7 +46,7 @@ export class PrivateService extends BaseService {
 
 	private async onJoin(member: Member, channel: VoiceChannel) {
 		const guild = member.guild;
-		const sets = await this.client.cache.guilds.get(guild);
+		const sets = await this.guilds.get(guild);
 
 		if (channel.id !== sets.privateManager) return;
 

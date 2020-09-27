@@ -8,22 +8,30 @@ import moment, { Moment } from 'moment';
 
 import { Client, Guild } from 'eris';
 import { BaseService } from './Framework/Services/Service';
-import { CommandService } from './Framework/Services/Commands/Commands';
-import { RabbitMqService } from './Framework/Services/Managers/RabbitMQ';
-import { MessageService } from './Framework/Services/Managers/Message';
-import { BaseCache, GuildSettingsCache, PermissionsCache, PunishmentsCache } from './Framework/Cache';
+import { MessagingService } from './Framework/Services/Messaging';
+import { BaseCache, GuildSettingsCache } from './Framework/Cache';
 import { glob } from 'glob';
 import { resolve } from 'path';
-import { ModerationService } from './Modules/Moderation/Services/Moderation';
-import { SchedulerService } from './Framework/Services/Managers/Scheduler';
 import { BaseGuild } from './Entity/Guild';
-import { PrivateService } from './Modules/Voice/Services/PrivateSystem';
-import { LoggingService } from './Modules/Log/Services/LoggerService';
-import { TranslateFunc } from './Framework/Services/Commands/Command';
+import { BaseCommand, TranslateFunc } from './Framework/Commands/Command';
 import { CommandGroup } from './Misc/Models/CommandGroup';
-import { ShopRolesCache } from './Modules/Configure/Cache/ShopRole';
 import { Images } from './Misc/Enums/Images';
-import { PrivatesCache } from './Modules/Voice/Cache/PrivateCache';
+import { BaseModule } from './Framework/Module';
+import { Service, serviceInjections } from './Framework/Decorators/Service';
+import { Cache, cacheInjections } from './Framework/Decorators/Cache';
+import { RabbitMQService as RabbitMqService } from './Framework/Services/RabbitMQ';
+import { BaseRequestHandler } from './Framework/Other/RequestHandler';
+import { LoggingService as LoggerService } from './Modules/Log/Services/LoggerService';
+import { ConfigureModule } from './Modules/Configure/ConfigureModule';
+import { LogModule } from './Modules/Log/LogModule';
+import { FrameworkModule } from './Framework/FrameworkModule';
+import { EconomyModule } from './Modules/Economy/EconomyModule';
+import { EmotionsModule } from './Modules/Emotions/EmotionsModule';
+import { VoiceModule } from './Modules/Voice/VoiceModule';
+import { ModerationModule } from './Modules/Moderation/ModerationModule';
+import { GamblingModule } from './Modules/Gambling/GamblingModule';
+import { PermissionsModule } from './Modules/Permissions/PermissionModule';
+import { WelcomeModule } from './Modules/Welcome/WelcomeModule';
 
 moment.tz.setDefault('Europe/Moscow');
 
@@ -45,75 +53,59 @@ i18n.configure({
 	}
 });
 
-interface BaseCacheObject {
-	[key: string]: BaseCache<any>;
-
-	guilds: GuildSettingsCache;
-	permissions: PermissionsCache;
-	punishments: PunishmentsCache;
-	shop: ShopRolesCache;
-	rooms: PrivatesCache;
-}
-
-/**
- * Shortcuts
- */
-export interface BaseClient {
-	commands: CommandService;
-	rabbitmq: RabbitMqService;
-	messages: MessageService;
-	moderation: ModerationService;
-	scheduler: SchedulerService;
-	privates: PrivateService;
-	logger: LoggingService;
-}
-
-interface ClientOptions {
+export interface ClientOptions {
 	token: string;
-	shardId: number;
+	firstShard: number;
+	lastShard: number;
 	shardCount: number;
-	config: any;
 	flags: string[];
+	config: any;
 }
 
 export class BaseClient extends Client {
+	public config: any;
+	public flags: string[];
+
+	public firstShardId: number;
+	public lastShardId: number;
+	public shardCount: number;
+	public requestHandler: BaseRequestHandler;
+
+	public modules: Map<new (client: BaseClient) => BaseModule, BaseModule>;
+	public services: Map<new (module: BaseModule) => BaseService, BaseService>;
+	public caches: Map<new (module: BaseModule) => BaseCache<any>, BaseCache<any>>;
+	public commands: Map<new (module: BaseModule) => BaseCommand, BaseCommand>;
+
 	public hasStarted: boolean = false;
 	public startedAt: Moment = moment();
 
-	public isDev: boolean;
-	public config: any;
-	public flags: string[];
-	public shardId: number;
-	public shardCount: number;
-
-	public service: {
-		[key: string]: BaseService;
-	};
-
-	public cache: BaseCacheObject;
-	private startingServices: BaseService[];
-	private activityInterval: NodeJS.Timeout;
-
-	public gatewayConnected: boolean;
+	public shardsConnected: Set<number> = new Set();
+	public activityInterval: NodeJS.Timer;
 	public stats: {
+		shardConnects: number;
+		shardDisconnects: number;
+		shardResumes: number;
 		wsEvents: number;
 		wsWarnings: number;
 		wsErrors: number;
 		cmdProcessed: number;
-		cmdFinished: number;
 		cmdErrors: number;
-		unavailableGuilds: number;
 	};
 
-	public constructor({ token, shardId, shardCount, config, flags }: ClientOptions) {
+	private startingServices: BaseService[];
+	@Service() private messageService: MessagingService;
+	@Service() private rabbitMqService: RabbitMqService;
+	@Cache() private guildsCache: GuildSettingsCache;
+
+	public constructor({ token, firstShard, lastShard, shardCount, config, flags }: ClientOptions) {
 		super(token, {
 			allowedMentions: {
 				everyone: false,
 				roles: true,
 				users: true
 			},
-			firstShardID: shardId - 1,
-			lastShardID: shardId - 1,
+			firstShardID: firstShard,
+			lastShardID: lastShard,
 			maxShards: shardCount,
 			disableEvents: {
 				TYPING_START: true,
@@ -127,65 +119,79 @@ export class BaseClient extends Client {
 			guildCreateTimeout: 60000
 		});
 
-		this.isDev = config.runEnv === 'dev';
-		this.config = config;
-		this.flags = flags;
-		this.shardId = shardId;
-		this.shardCount = shardCount;
-
 		this.stats = {
+			shardConnects: 0,
+			shardDisconnects: 0,
+			shardResumes: 0,
 			wsEvents: 0,
 			wsWarnings: 0,
 			wsErrors: 0,
 			cmdProcessed: 0,
-			cmdFinished: 0,
-			cmdErrors: 0,
-			unavailableGuilds: 0
+			cmdErrors: 0
 		};
 
-		this.service = {
-			commands: new CommandService(this),
-			rabbitmq: new RabbitMqService(this),
-			messages: new MessageService(this),
-			moderation: new ModerationService(this),
-			scheduler: new SchedulerService(this),
-			privates: new PrivateService(this),
-			logger: new LoggingService(this)
-		};
+		this.firstShardId = firstShard;
+		this.lastShardId = lastShard;
+		this.shardCount = shardCount;
 
-		Object.entries(this.service).map(([key, service]) => {
-			const shortcuts = this as any;
+		this.requestHandler = new BaseRequestHandler(this);
 
-			shortcuts[key] = service;
-		});
+		this.modules = new Map();
+		this.services = new Map();
+		this.caches = new Map();
+		this.commands = new Map();
+		this.startingServices = [];
 
-		this.startingServices = Object.values(this.service);
-
-		this.cache = {
-			guilds: new GuildSettingsCache(this),
-			permissions: new PermissionsCache(this),
-			punishments: new PunishmentsCache(this),
-			shop: new ShopRolesCache(this),
-			rooms: new PrivatesCache(this)
-		};
-
-		this.on('ready', this.onClientReady);
-		this.on('guildCreate', this.onGuildCreate);
-		this.on('guildDelete', this.onGuildDelete);
-		this.on('guildUnavailable', this.onGuildUnavailable);
-		this.on('connect', this.onConnect);
-		this.on('shardDisconnect', this.onDisconnect);
-		this.on('warn', this.onWarn);
-		this.on('error', this.onError);
-		this.on('rawWS', this.onRawWS);
+		this.config = config;
+		this.flags = flags;
 	}
 
 	public async init() {
-		const files = glob.sync('./bin/Extensions/**/*.ext.js');
+		await Promise.all(
+			glob
+				.sync('./bin/Extensions/**/*.ext.js')
+				.map((x) => import(resolve(__dirname, `../${x.substr(0, x.length - 3)}`)))
+		);
 
-		await Promise.all(files.map((x) => import(resolve(__dirname, `../${x.substr(0, x.length - 3)}`))));
+		this.registerModule(FrameworkModule);
+		this.registerModule(ConfigureModule);
+		this.registerModule(EconomyModule);
+		this.registerModule(EmotionsModule);
+		this.registerModule(GamblingModule);
+		this.registerModule(PermissionsModule);
+		this.registerModule(VoiceModule);
+		this.registerModule(ModerationModule);
+		this.registerModule(LogModule);
+		this.registerModule(WelcomeModule);
 
-		await Promise.all(Object.values(this.service).map((x) => x.init()));
+		this.setupInjections(this);
+
+		this.services.forEach((s) => this.setupInjections(s));
+		this.caches.forEach((c) => this.setupInjections(c));
+		this.commands.forEach((c) => this.setupInjections(c));
+
+		[...this.services.values()].forEach((srv) => this.startingServices.push(srv));
+
+		await Promise.all([...this.modules.values()].map((mod) => mod.init()));
+		await Promise.all([...this.services.values()].map((srv) => srv.init()));
+		await Promise.all([...this.commands.values()].map((cmd) => cmd.init()));
+
+		this.commands.forEach((cmd) => cmd.resolvers.forEach((res) => this.setupInjections(res)));
+
+		this.on('ready', this.onClientReady);
+		this.on('connect', this.onShardConnect);
+
+		this.on('shardReady', this.onShardReady);
+		this.on('shardResume', this.onShardResume);
+		this.on('shardDisconnect', this.onShardDisconnect);
+
+		this.on('guildCreate', this.onGuildCreate);
+		this.on('guildDelete', this.onGuildDelete);
+		this.on('guildUnavailable', this.onGuildUnavailable);
+
+		this.on('warn', this.onWarn);
+		this.on('error', this.onError);
+		this.on('rawWS', this.onRawWS);
 	}
 
 	public async waitForStartupTicket() {
@@ -194,18 +200,8 @@ export class BaseClient extends Client {
 			() => console.log(`Waiting for ticket since ${chalk.blue(Math.floor(process.uptime() - start))} seconds...`),
 			10000
 		);
-
-		await this.rabbitmq.waitForStartupTicket();
+		await this.rabbitMqService.waitForStartupTicket();
 		clearInterval(interval);
-	}
-
-	public serviceStartupDone(service: BaseService) {
-		this.startingServices = this.startingServices.filter((s) => s !== service);
-
-		if (this.startingServices.length === 0) {
-			console.log(chalk.green(`All services ready`));
-			this.rabbitmq.endStartup().catch((err) => console.error(err));
-		}
 	}
 
 	private async onClientReady() {
@@ -214,15 +210,14 @@ export class BaseClient extends Client {
 			return;
 		}
 
-		await Promise.all(Object.values(this.service).map((s) => s.onClientReady()));
+		await Promise.all([...this.services.values()].map((s) => s.onClientReady()));
 
 		this.hasStarted = true;
 		this.startedAt = moment();
 
 		console.log(chalk.green(`Client ready! Serving ${chalk.blue(this.guilds.size)} guilds.`));
 
-		await Promise.all(Object.values(this.cache).map((c) => c.init()));
-
+		await Promise.all([...this.caches.values()].map((c) => c.init()));
 		await BaseGuild.saveGuilds(this.guilds.map((g) => g));
 
 		await this.setActivity();
@@ -236,13 +231,22 @@ export class BaseClient extends Client {
 		});
 	}
 
+	public serviceStartupDone(service: BaseService) {
+		this.startingServices = this.startingServices.filter((s) => s !== service);
+
+		if (this.startingServices.length === 0) {
+			console.log(chalk.green(`All services ready`));
+			this.rabbitMqService.endStartup().catch((err) => console.error(err));
+		}
+	}
+
 	private async onGuildCreate(guild: Guild) {
 		await BaseGuild.saveGuilds([guild], {
 			joinedAt: moment(),
 			deletedAt: null
 		});
 
-		const { locale } = await this.cache.guilds.get(guild);
+		const { locale } = await this.guildsCache.get(guild);
 		const ownerDM = await this.getDMChannel(guild.ownerID);
 
 		const t: TranslateFunc = (phrase, replacements) => i18n.__({ phrase, locale }, replacements);
@@ -253,7 +257,7 @@ export class BaseClient extends Client {
 			.map(([key]) => t(`others.modules.${key.toLowerCase()}`))
 			.join('\n');
 
-		const embed = this.messages.createEmbed({
+		const embed = this.messageService.createEmbed({
 			author: { name: t('others.onBotAdd.title', { guild: guild.name }), icon_url: Images.HELP },
 			description: t('others.onBotAdd.desc', { modules }),
 			thumbnail: { url: this.user.dynamicAvatarURL('png', 4096) },
@@ -279,25 +283,32 @@ export class BaseClient extends Client {
 		});
 	}
 
-	private async onConnect() {
-		console.error('DISCORD CONNECT');
-		this.gatewayConnected = true;
-		await this.rabbitmq.sendStatusToManager();
+	private async onShardReady(shardId: number) {
+		console.log(chalk.green(`Shard ${chalk.blue(shardId + 1)} is ready`));
 	}
 
-	private async onDisconnect(err: Error) {
-		console.error('DISCORD DISCONNECT');
-		this.gatewayConnected = false;
-		await this.rabbitmq.sendStatusToManager(err);
+	private async onShardConnect(shardId: number) {
+		console.log(chalk.green(`Shard ${chalk.blue(shardId + 1)} is connected to the gateway`));
 
-		if (err) {
-			console.error(err);
-		}
+		this.shardsConnected.add(shardId + 1);
+		this.stats.shardConnects++;
+	}
+
+	private async onShardResume(shardId: number) {
+		console.log(chalk.green(`Shard ${chalk.blue(shardId + 1)} has resumed`));
+		this.shardsConnected.add(shardId + 1);
+		this.stats.shardResumes++;
+	}
+
+	private async onShardDisconnect(err: Error, shardId: number) {
+		console.error(chalk.red(`Shard ${chalk.blue(shardId + 1)} was disconnected: ${err}`));
+
+		this.shardsConnected.delete(shardId + 1);
+		this.stats.shardDisconnects++;
 	}
 
 	private async onGuildUnavailable(guild: Guild) {
 		console.error('DISCORD GUILD_UNAVAILABLE:', guild.id);
-		this.stats.unavailableGuilds++;
 	}
 
 	private async onWarn(warn: string) {
@@ -312,5 +323,116 @@ export class BaseClient extends Client {
 
 	private async onRawWS() {
 		this.stats.wsEvents++;
+	}
+
+	public registerModule<T extends BaseModule>(module: new (client: BaseClient) => T) {
+		if (this.modules.has(module)) {
+			throw new Error(`Module ${module.name} registered multiple times`);
+		}
+
+		this.modules.set(module, new module(this));
+	}
+
+	public registerService<T extends BaseService>(module: BaseModule, service: new (module: BaseModule) => T) {
+		if (this.services.has(service)) {
+			throw new Error(`Service ${service.name} registered multiple times`);
+		}
+
+		this.services.set(service, new service(module));
+	}
+
+	public registerCache<P extends any, T extends BaseCache<P>>(
+		module: BaseModule,
+		cache: new (module: BaseModule) => T
+	) {
+		if (this.caches.has(cache)) {
+			throw new Error(`Cache ${cache.name} registered multiple times`);
+		}
+
+		this.caches.set(cache, new cache(module));
+	}
+
+	public registerCommand<T extends BaseCommand>(module: BaseModule, command: new (module: BaseModule) => T) {
+		if (this.commands.has(command)) {
+			throw new Error(`Command ${command.name} (${new command(module).name}) registered multiple times`);
+		}
+
+		this.commands.set(command, new command(module));
+	}
+
+	public setupInjections(obj: any) {
+		const objName = chalk.blue(obj.name || obj.constructor.name);
+
+		let srvObj = obj.constructor;
+
+		while (srvObj) {
+			const serviceInjs = serviceInjections.get(srvObj) || new Map();
+			for (const [key, getInjType] of serviceInjs) {
+				const injConstr = getInjType();
+				const injService = this.services.get(injConstr);
+
+				if (!injService) {
+					throw new Error(`Could not inject ${chalk.blue(injConstr.name)} into ${objName}:${chalk.blue(key)}`);
+				}
+
+				obj[key] = injService;
+				console.debug(chalk.green(`Injected ${chalk.blue(injConstr.name)} into ${objName}:${chalk.blue(key)}`));
+			}
+
+			srvObj = Object.getPrototypeOf(srvObj);
+		}
+
+		let cacheObj = obj.constructor;
+
+		while (cacheObj) {
+			const cacheInjs = cacheInjections.get(cacheObj) || new Map();
+
+			for (const [key, getInjType] of cacheInjs) {
+				const injConstr = getInjType();
+				const injCache = this.caches.get(injConstr);
+
+				if (!injCache) {
+					throw new Error(`Could not inject ${chalk.blue(injConstr.name)} into ${objName}:${chalk.blue(key)}`);
+				}
+
+				obj[key] = injCache;
+				console.debug(chalk.green(`Injected ${chalk.blue(injConstr.name)} into ${objName}:${chalk.blue(key)}`));
+			}
+
+			cacheObj = Object.getPrototypeOf(cacheObj);
+		}
+	}
+
+	public flushCaches(guildId: string, caches?: string[]) {
+		[...this.caches.entries()].forEach(
+			([key, cache]) =>
+				(!caches ||
+					!caches.length ||
+					caches.some((c) => c.toLowerCase() === key.name.toLowerCase().replace('cache', ''))) &&
+				cache.flush(guildId)
+		);
+	}
+
+	public getCacheSizes() {
+		let channelCount = this.groupChannels.size + this.privateChannels.size;
+		let roleCount = 0;
+
+		this.guilds.forEach((g) => {
+			channelCount += g.channels.size;
+			roleCount += g.roles.size;
+		});
+
+		const res: any = {
+			guilds: this.guilds.size,
+			users: this.users.size,
+			channels: channelCount,
+			roles: roleCount
+		};
+
+		[...this.caches.entries()].forEach(
+			([key, cache]) => (res[key.name.toLowerCase().replace('cache', '')] = cache.size)
+		);
+
+		return res;
 	}
 }

@@ -3,15 +3,11 @@ import { PossiblyUncachedMessage, Emoji, TextChannel } from 'eris';
 import { BaseClient } from '../../../Client';
 import { ReactionRoleCache } from '../Cache/ReactionRole';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
+import { BaseModule } from '../../../Framework/Module';
+import { Cache } from '../../../Framework/Decorators/Cache';
 
 export class ReactionRoleService extends BaseService {
-	public cache: ReactionRoleCache;
-
-	public constructor(client: BaseClient) {
-		super(client);
-
-		this.cache = new ReactionRoleCache(client);
-	}
+	@Cache() public cache: ReactionRoleCache;
 
 	public async init() {
 		this.client.on('messageReactionAdd', this.onMessageReactionAdd.bind(this));

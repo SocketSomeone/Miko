@@ -1,12 +1,18 @@
 import { BaseEventLog } from '../Misc/EventLog';
 import { BaseClient } from '../../../Client';
 import { LogType } from '../Misc/LogType';
-import { TranslateFunc } from '../../../Framework/Services/Commands/Command';
+import { TranslateFunc } from '../../../Framework/Commands/Command';
 import { Guild, Member, VoiceChannel } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
 import { Images } from '../../../Misc/Enums/Images';
+import { Cache } from '../../../Framework/Decorators/Cache';
+import { RoomCache } from '../../Voice/Cache/RoomCache';
+import { GuildSettingsCache } from '../../../Framework/Cache';
 
 export default class onVoiceSwitchEvent extends BaseEventLog {
+	@Cache() rooms: RoomCache;
+	@Cache() guilds: GuildSettingsCache;
+
 	public constructor(client: BaseClient) {
 		super(client, LogType.VOICE_SWITCH);
 
@@ -16,8 +22,8 @@ export default class onVoiceSwitchEvent extends BaseEventLog {
 	private async onHandle(member: Member, channel: VoiceChannel, oldChannel: VoiceChannel) {
 		const guild = member.guild;
 
-		const rooms = await this.client.cache.rooms.get(guild);
-		const sets = await this.client.cache.guilds.get(guild);
+		const rooms = await this.rooms.get(guild);
+		const sets = await this.guilds.get(guild);
 
 		if (sets.privateManager === channel.id || sets.privateManager === oldChannel.id || rooms.has(oldChannel.id)) return;
 
@@ -31,7 +37,7 @@ export default class onVoiceSwitchEvent extends BaseEventLog {
 		newChannel: VoiceChannel,
 		oldChannel: VoiceChannel
 	) {
-		const embed = this.client.messages.createEmbed({
+		const embed = this.messages.createEmbed({
 			author: { name: t('logs.voiceSwitch'), icon_url: Images.VOICE_SWITCH },
 			color: Color.YELLOW,
 			fields: [

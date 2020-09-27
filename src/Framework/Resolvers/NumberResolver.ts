@@ -1,5 +1,6 @@
 import { BaseClient } from '../../client';
-import { Context } from '../Services/Commands/Command';
+import { Context } from '../Commands/Command';
+import { BaseModule } from '../Module';
 
 import { Resolver } from './Resolver';
 
@@ -10,8 +11,8 @@ export class NumberResolver extends Resolver {
 	private min?: number;
 	private max?: number;
 
-	public constructor(client: BaseClient, min?: number, max?: number) {
-		super(client);
+	public constructor(module: BaseModule, min?: number, max?: number) {
+		super(module);
 
 		this.min = min;
 		this.max = max;

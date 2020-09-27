@@ -4,7 +4,7 @@ import { BaseEventLog } from '../Misc/EventLog';
 import { LogType } from '../Misc/LogType';
 import { resolve, relative } from 'path';
 import { glob } from 'glob';
-import { TranslateFunc } from '../../../Framework/Services/Commands/Command';
+import { TranslateFunc } from '../../../Framework/Commands/Command';
 import { TextChannel, Member } from 'eris';
 
 import i18n from 'i18n';
@@ -12,9 +12,10 @@ import { Color } from '../../../Misc/Enums/Colors';
 import { BaseSettings } from '../../../Entity/GuildSettings';
 import { Punishment } from '../../../Entity/Punishment';
 import { Images } from '../../../Misc/Enums/Images';
+import { Service } from '../../../Framework/Decorators/Service';
+import { MessagingService } from '../../../Framework/Services/Messaging';
 
 interface ModLogContext {
-	t: TranslateFunc;
 	sets: BaseSettings;
 	member: Member;
 	target: Member;
@@ -26,11 +27,9 @@ interface ModLogContext {
 }
 
 export class LoggingService extends BaseService {
-	private logs: Map<LogType, BaseEventLog> = new Map();
+	@Service() protected messages: MessagingService;
 
-	public constructor(client: BaseClient) {
-		super(client);
-	}
+	private logs: Map<LogType, BaseEventLog> = new Map();
 
 	public async init() {
 		console.log('Loading log events...');
@@ -62,7 +61,7 @@ export class LoggingService extends BaseService {
 		console.log(`Loaded ${this.logs.size} events log.`);
 	}
 
-	public async logModAction({ t, sets, member, target, type, extra }: ModLogContext) {
+	public async logModAction({ sets, member, target, type, extra }: ModLogContext) {
 		if (!sets.modlog) return;
 
 		const modLogChannel = member.guild.channels.get(sets.modlog) as TextChannel;
@@ -71,7 +70,9 @@ export class LoggingService extends BaseService {
 
 		extra = extra || [];
 
-		const embed = this.client.messages.createEmbed({
+		const t: TranslateFunc = (key, replacements) => i18n.__({ locale: sets.locale, phrase: key }, replacements);
+
+		const embed = this.messages.createEmbed({
 			color: Color.DARK,
 			thumbnail: { url: member.avatarURL },
 			author: {
@@ -100,6 +101,6 @@ export class LoggingService extends BaseService {
 			footer: null
 		});
 
-		await this.client.messages.sendEmbed(modLogChannel, embed);
+		await this.messages.sendEmbed(modLogChannel, embed);
 	}
 }

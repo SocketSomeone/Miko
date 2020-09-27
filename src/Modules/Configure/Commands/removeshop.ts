@@ -1,16 +1,19 @@
-import { Command, Context } from '../../../Framework/Services/Commands/Command';
-import { BaseClient } from '../../../Client';
+import { BaseCommand, Context } from '../../../Framework/Commands/Command';
 import { NumberResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message } from 'eris';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
-import { BaseShopRole } from '../../../Entity/ShopRole';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { Color } from '../../../Misc/Enums/Colors';
+import { BaseModule } from '../../../Framework/Module';
+import { Cache } from '../../../Framework/Decorators/Cache';
+import { ShopRolesCache } from '../Cache/ShopRole';
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	@Cache() protected shop: ShopRolesCache;
+
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'removeshop',
 			aliases: [],
 			args: [
@@ -30,14 +33,14 @@ export default class extends Command {
 	}
 
 	public async execute(message: Message, [index]: [number], { funcs: { t, e }, guild, settings }: Context) {
-		const roles = await this.client.cache.shop.get(guild);
+		const roles = await this.shop.get(guild);
 		const role = roles[index - 1];
 
 		if (roles.length < 1 || !role) throw new ExecuteError(t('configure.removeshop.notFound'));
 
 		role.remove().catch(() => undefined);
 
-		this.client.cache.shop.flush(guild.id);
+		this.shop.flush(guild.id);
 
 		await this.replyAsync(message, {
 			color: Color.MAGENTA,

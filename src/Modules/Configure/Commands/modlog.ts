@@ -1,5 +1,4 @@
-import { Command, Context } from '../../../Framework/Services/Commands/Command';
-import { BaseClient } from '../../../Client';
+import { BaseCommand, Context } from '../../../Framework/Commands/Command';
 import { ChannelResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message, Channel } from 'eris';
@@ -8,16 +7,17 @@ import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { Images } from '../../../Misc/Enums/Images';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { ChannelType } from '../../../Types';
+import { BaseModule } from '../../../Framework/Module';
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'modlog',
 			aliases: [],
 			args: [
 				{
 					name: 'channel',
-					resolver: new ChannelResolver(client, ChannelType.GUILD_TEXT),
+					resolver: new ChannelResolver(module, ChannelType.GUILD_TEXT),
 					required: false
 				}
 			],

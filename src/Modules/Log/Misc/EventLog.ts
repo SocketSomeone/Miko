@@ -2,19 +2,28 @@ import { BaseClient } from '../../../Client';
 import { LogType } from './LogType';
 import { Embed, Guild, Emoji, TextChannel } from 'eris';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
-import { TranslateFunc } from '../../../Framework/Services/Commands/Command';
+import { TranslateFunc } from '../../../Framework/Commands/Command';
 import { ExecuteIgnore } from '../../../Framework/Errors/ExecuteIgnore';
 import { withScope, captureException } from '@sentry/node';
 
 import i18n from 'i18n';
+import { Cache } from '../../../Framework/Decorators/Cache';
+import { GuildSettingsCache } from '../../../Framework/Cache';
+import { Service } from '../../../Framework/Decorators/Service';
+import { MessagingService } from '../../../Framework/Services/Messaging';
 
 export abstract class BaseEventLog {
+	@Service() protected messages: MessagingService;
+	@Cache() protected guilds: GuildSettingsCache;
+
 	public type: LogType;
 	public client: BaseClient;
 
 	public constructor(client: BaseClient, type: LogType) {
 		this.client = client;
 		this.type = type;
+
+		client.setupInjections(this);
 	}
 
 	public abstract async execute(t: TranslateFunc, ...args: any[]): Promise<Embed>;
@@ -40,7 +49,7 @@ export abstract class BaseEventLog {
 			return;
 		}
 
-		const sets = await this.client.cache.guilds.get(guild);
+		const sets = await this.guilds.get(guild);
 
 		if (sets.loggerEnabled !== true) {
 			return;
@@ -65,7 +74,7 @@ export abstract class BaseEventLog {
 				return;
 			}
 
-			await this.client.messages.sendEmbed(channel, embed);
+			await this.messages.sendEmbed(channel, embed);
 		} catch (err) {
 			if (err instanceof ExecuteIgnore) {
 				return;

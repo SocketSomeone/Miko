@@ -1,12 +1,16 @@
 import { BaseEventLog } from '../Misc/EventLog';
 import { BaseClient } from '../../../Client';
 import { LogType } from '../Misc/LogType';
-import { TranslateFunc } from '../../../Framework/Services/Commands/Command';
+import { TranslateFunc } from '../../../Framework/Commands/Command';
 import { Guild, Message, PrivateChannel, GroupChannel, TextChannel } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
 import { Images } from '../../../Misc/Enums/Images';
+import { Service } from '../../../Framework/Decorators/Service';
+import { CommandService } from '../../../Framework/Services/Commands';
 
 export default class onMessageDeleteEvent extends BaseEventLog {
+	@Service() protected commands: CommandService;
+
 	public constructor(client: BaseClient) {
 		super(client, LogType.MESSAGE_DELETED);
 
@@ -24,7 +28,7 @@ export default class onMessageDeleteEvent extends BaseEventLog {
 			return;
 		}
 
-		const [isCommand] = await this.client.commands.resolve(message, null, guild);
+		const [isCommand] = await this.commands.resolve(message, null, guild);
 
 		if (isCommand) {
 			return;
@@ -34,7 +38,7 @@ export default class onMessageDeleteEvent extends BaseEventLog {
 	}
 
 	public async execute(t: TranslateFunc, guild: Guild, { id, content, member, channel }: Message) {
-		const embed = this.client.messages.createEmbed({
+		const embed = this.messages.createEmbed({
 			author: { name: t('logs.messageDeleted'), icon_url: Images.MESSAGE_DELETE },
 			color: Color.RED,
 			title: t('logs.msgDeleted'),

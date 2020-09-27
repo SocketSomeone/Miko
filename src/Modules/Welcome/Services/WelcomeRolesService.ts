@@ -2,8 +2,15 @@ import { BaseService } from '../../../Framework/Services/Service';
 import { BaseMember } from '../../../Entity/Member';
 import { Guild, Member } from 'eris';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
+import { Cache } from '../../../Framework/Decorators/Cache';
+import { GuildSettingsCache } from '../../../Framework/Cache';
+import { Service } from '../../../Framework/Decorators/Service';
+import { ModerationService } from '../../Moderation/Services/Moderation';
 
-export class RolesService extends BaseService {
+export class WelcomeRolesService extends BaseService {
+	@Service() moderation: ModerationService;
+	@Cache() guilds: GuildSettingsCache;
+
 	public async init() {
 		this.client.on('guildMemberAdd', this.returnRoles.bind(this));
 		this.client.on('guildMemberRemove', this.saveRoles.bind(this));
@@ -12,7 +19,7 @@ export class RolesService extends BaseService {
 	public async returnRoles(guild: Guild, member: Member) {
 		if (member.user.bot) return;
 
-		const settings = await this.client.cache.guilds.get(guild);
+		const settings = await this.guilds.get(guild);
 		const roles: string[] = [];
 
 		if (!settings.welcomeEnabled) {
@@ -39,7 +46,7 @@ export class RolesService extends BaseService {
 		if (roles && roles.length >= 1) {
 			await member.edit(
 				{
-					roles: this.client.moderation.editableRoles(guild, roles, me).map((x) => x.id)
+					roles: this.moderation.editableRoles(guild, roles, me).map((x) => x.id)
 				},
 				'Auto Assign Role OR Saved Roles'
 			);
@@ -49,7 +56,7 @@ export class RolesService extends BaseService {
 	public async saveRoles(guild: Guild, member: Member) {
 		if (member.user.bot) return;
 
-		const settings = await this.client.cache.guilds.get(guild);
+		const settings = await this.guilds.get(guild);
 
 		if (!settings.welcomeEnabled || !settings.welcomeSaveRoles) return;
 

@@ -1,11 +1,12 @@
 import { Member, Message } from 'eris';
 import { BaseClient } from '../../../Client';
-import { Command, Context } from '../../../Framework/Services/Commands/Command';
+import { BaseCommand, Context } from '../../../Framework/Commands/Command';
 import { MemberResolver } from '../../../Framework/Resolvers';
 import { Color } from '../../../Misc/Enums/Colors';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 
 import i18n from 'i18n';
+import { BaseModule } from '../../../Framework/Module';
 
 interface ReactionOptions {
 	name: string;
@@ -13,11 +14,11 @@ interface ReactionOptions {
 	images: string[];
 }
 
-export abstract class EmotionCommand extends Command {
+export abstract class EmotionCommand extends BaseCommand {
 	private images: string[];
 
-	public constructor(client: BaseClient, opts: ReactionOptions) {
-		super(client, {
+	public constructor(module: BaseModule, opts: ReactionOptions) {
+		super(module, {
 			...opts,
 			args: [
 				{
@@ -33,9 +34,6 @@ export abstract class EmotionCommand extends Command {
 		});
 
 		this.images = opts.images;
-
-		i18n.__({ locale: 'ru', phrase: 'emotions.' + this.name + '.multi' });
-		i18n.__({ locale: 'ru', phrase: 'emotions.' + this.name + '.solo' });
 	}
 
 	public async execute(message: Message, [member]: [Member], { funcs: { t } }: Context) {

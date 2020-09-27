@@ -1,7 +1,7 @@
 import { BaseEventLog } from '../Misc/EventLog';
 import { BaseClient } from '../../../Client';
 import { LogType } from '../Misc/LogType';
-import { TranslateFunc } from '../../../Framework/Services/Commands/Command';
+import { TranslateFunc } from '../../../Framework/Commands/Command';
 import { Guild, Constants, Role } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
@@ -26,7 +26,7 @@ export default class onRoleUpdateEvent extends BaseEventLog {
 			return;
 		}
 
-		const embed = this.client.messages.createEmbed({
+		const embed = this.messages.createEmbed({
 			author: { name: t('logs.roleUpdate'), icon_url: Images.ROLE_UPDATE },
 			color: Color.YELLOW,
 			fields: [

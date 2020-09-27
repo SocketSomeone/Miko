@@ -13,24 +13,20 @@ const rawParams = process.argv.slice(2);
 const args = rawParams.filter((a) => !a.startsWith('--'));
 const flags = rawParams.filter((a) => a.startsWith('--'));
 
-const runEnv = args[0];
-const token = args[1];
-const shardId = Number(args[2]);
+const token = args[0];
+const firstShard = Number(args[1]);
+const lastShard = Number(args[2]);
 const shardCount = Number(args[3]);
 
 init({
 	dsn: config.sentryDsn,
 	release: pkg.version,
-	environment: runEnv
+	environment: process.env.NODE_ENV || 'production'
 });
 
 configureScope((scope) => {
 	scope.setTag('instance', 'Miko');
-	scope.setTag('shard', `${shardId} / ${shardCount}`);
-});
-
-process.on('uncaughtException', (reason: any, p: any) => {
-	console.error('Uncaught Exception at: Promise', p, 'reason:', reason);
+	scope.setTag('shardRange', `${firstShard} - ${lastShard}`);
 });
 
 process.on('unhandledRejection', (reason: any, p: any) => {
@@ -39,14 +35,21 @@ process.on('unhandledRejection', (reason: any, p: any) => {
 
 const main = async () => {
 	console.log(chalk.green('-------------------------------------'));
-	console.log(chalk.green(`This is shard ${chalk.blue(`${shardId}/${shardCount}`)} of instance ${chalk.blue('Miko')}`));
+	console.log(
+		chalk.green(
+			`These are shards ${chalk.blue(`${firstShard}`)} to ${chalk.blue(`${lastShard}`)} of ${chalk.blue(
+				`${shardCount}`
+			)} instance ${chalk.blue('Miko')}`
+		)
+	);
 	console.log(chalk.green('-------------------------------------'));
 
 	const client = new BaseClient({
 		token,
-		shardId,
+		firstShard,
+		lastShard,
 		shardCount,
-		config: { ...config, runEnv },
+		config: { ...config },
 		flags
 	});
 

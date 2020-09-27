@@ -1,5 +1,5 @@
-import { BaseClient } from '../../../Client';
-import { Context, Command } from '../../../Framework/Services/Commands/Command';
+import { BaseModule } from '../../../Framework/Module';
+import { Context, BaseCommand } from '../../../Framework/Commands/Command';
 import { Message } from 'eris';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { NumberResolver } from '../../../Framework/Resolvers';
@@ -7,17 +7,21 @@ import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { Color } from '../../../Misc/Enums/Colors';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { Images } from '../../../Misc/Enums/Images';
+import { Cache } from '../../../Framework/Decorators/Cache';
+import { PermissionsCache } from '../../../Framework/Cache';
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	@Cache() protected permissions: PermissionsCache;
+
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'permission remove',
 			aliases: ['правило удалить'],
 			group: CommandGroup.PERMISSIONS,
 			args: [
 				{
 					name: 'number',
-					resolver: new NumberResolver(client, 1),
+					resolver: new NumberResolver(module, 1),
 					required: true
 				}
 			],
@@ -29,12 +33,12 @@ export default class extends Command {
 	}
 
 	public async execute(message: Message, [index]: [number], { funcs: { t }, guild, settings }: Context) {
-		const permissions = await this.client.cache.permissions.get(guild);
+		const permissions = await this.permissions.get(guild);
 
 		if (typeof permissions[index - 1] === 'undefined') throw new ExecuteError(t('perms.notFound'));
 
 		permissions.splice(index - 1, 1);
-		await this.client.cache.permissions.save(guild.id, permissions);
+		await this.permissions.save(guild.id, permissions);
 
 		await this.replyAsync(message, {
 			color: Color.MAGENTA,

@@ -1,12 +1,12 @@
-import { BaseService } from '../Service';
+import { BaseService } from './Service';
 import { Guild } from 'eris';
-import { ScheduledAction, BaseScheduledAction } from '../../../Entity/ScheduledAction';
+import { ScheduledAction, BaseScheduledAction } from '../../Entity/ScheduledAction';
 import { In, Not } from 'typeorm';
 
 import chalk from 'chalk';
 import moment, { Moment } from 'moment';
 import { withScope, captureException } from '@sentry/node';
-import { BaseGuild } from '../../../Entity/Guild';
+import { BaseGuild } from '../../Entity/Guild';
 
 type ScheduledActionsFunctions = {
 	[k in ScheduledAction]: (guild: Guild, args: any) => Promise<boolean>;

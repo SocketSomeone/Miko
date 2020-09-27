@@ -1,14 +1,14 @@
-import { Command, Context } from '../../../Framework/Services/Commands/Command';
-import { BaseClient } from '../../../Client';
+import { BaseCommand, Context } from '../../../Framework/Commands/Command';
 import { MemberResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message, Member } from 'eris';
 import { BaseMember } from '../../../Entity/Member';
 import { Images } from '../../../Misc/Enums/Images';
+import { BaseModule } from '../../../Framework/Module';
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'bal',
 			aliases: ['$', 'balance'],
 			args: [

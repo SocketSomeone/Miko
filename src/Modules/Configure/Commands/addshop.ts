@@ -1,5 +1,4 @@
-import { Command, Context } from '../../../Framework/Services/Commands/Command';
-import { BaseClient } from '../../../Client';
+import { BaseCommand, Context } from '../../../Framework/Commands/Command';
 import { RoleResolver, BigIntResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message, Role } from 'eris';
@@ -7,10 +6,15 @@ import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { BaseShopRole } from '../../../Entity/ShopRole';
 import { Images } from '../../../Misc/Enums/Images';
+import { BaseModule } from '../../../Framework/Module';
+import { Cache } from '../../../Framework/Decorators/Cache';
+import { ShopRolesCache } from '../Cache/ShopRole';
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	@Cache() shop: ShopRolesCache;
+
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'addshop',
 			aliases: [],
 			args: [
@@ -39,7 +43,7 @@ export default class extends Command {
 		[role, price]: [Role, bigint],
 		{ funcs: { t, e }, guild, settings: { currency } }: Context
 	) {
-		const roles = await this.client.cache.shop.get(guild);
+		const roles = await this.shop.get(guild);
 		const changeRole = roles.find((x) => x.id === role.id);
 
 		const embed = this.createEmbed({
@@ -69,7 +73,7 @@ export default class extends Command {
 			}).save();
 		}
 
-		this.client.cache.shop.flush(guild.id);
+		this.shop.flush(guild.id);
 
 		await this.replyAsync(message, embed);
 	}

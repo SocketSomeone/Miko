@@ -1,17 +1,17 @@
 import { Role } from 'eris';
 
-import { Context } from '../Services/Commands/Command';
+import { Context } from '../Commands/Command';
 
 import { Resolver } from './Resolver';
-import { BaseClient } from '../../Client';
+import { BaseModule } from '../Module';
 
 const idRegex = /^(?:<@&)?(\d+)>?$/;
 
 export class RoleResolver extends Resolver {
 	private allowEveryone: boolean;
 
-	public constructor(client: BaseClient, allowEveryone: boolean = false) {
-		super(client);
+	public constructor(module: BaseModule, allowEveryone: boolean = false) {
+		super(module);
 
 		this.allowEveryone = allowEveryone;
 	}

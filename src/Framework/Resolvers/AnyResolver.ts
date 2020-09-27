@@ -1,12 +1,13 @@
 import { Resolver, ResolverConstructor } from './Resolver';
 import { BaseClient } from '../../Client';
-import { Context } from '../Services/Commands/Command';
+import { Context } from '../Commands/Command';
+import { BaseModule } from '../Module';
 
 export class AnyResolver extends Resolver {
 	private resolvers: Resolver[];
 
-	public constructor(client: BaseClient, ...resolvers: Resolver[] | ResolverConstructor[]) {
-		super(client);
+	public constructor(module: BaseModule, ...resolvers: Resolver[] | ResolverConstructor[]) {
+		super(module);
 
 		this.resolvers = [];
 
@@ -14,7 +15,7 @@ export class AnyResolver extends Resolver {
 			if (r instanceof Resolver) {
 				this.resolvers.push(r);
 			} else {
-				this.resolvers.push(new r(this.client));
+				this.resolvers.push(new r(this.module));
 			}
 		});
 	}

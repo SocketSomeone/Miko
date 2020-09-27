@@ -1,14 +1,19 @@
 import { BaseClient } from '../../../Client';
-import { Context, Command } from '../../../Framework/Services/Commands/Command';
+import { Context, BaseCommand } from '../../../Framework/Commands/Command';
 import { Message, Member } from 'eris';
 import { StringResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { Images } from '../../../Misc/Enums/Images';
+import { Service } from '../../../Framework/Decorators/Service';
+import { RoomService } from '../Services/RoomService';
+import { BaseModule } from '../../../Framework/Module';
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	@Service() protected roomService: RoomService;
+
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'voice name',
 			aliases: ['v name'],
 			group: CommandGroup.VOICE,
@@ -28,10 +33,8 @@ export default class extends Command {
 	}
 
 	public async execute(message: Message, [name]: [string], { funcs: { t }, guild, settings: { prefix } }: Context) {
-		const system = this.client.privates;
 		const member = message.member;
-
-		const p = await system.getRoomByVoice(t, guild, member.voiceState.channelID);
+		const p = await this.roomService.getRoomByVoice(t, guild, member.voiceState.channelID);
 
 		await p.edit(t, member, {
 			name: name.substr(0, 24)

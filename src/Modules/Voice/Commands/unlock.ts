@@ -1,22 +1,27 @@
 import { BaseClient } from '../../../Client';
-import { Context, Command } from '../../../Framework/Services/Commands/Command';
+import { Context, BaseCommand } from '../../../Framework/Commands/Command';
 import { Message, Member, Role } from 'eris';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { AnyResolver, RoleResolver, MemberResolver } from '../../../Framework/Resolvers';
 import { ActionRoom } from '../../../Entity/Privates';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { Images } from '../../../Misc/Enums/Images';
+import { BaseModule } from '../../../Framework/Module';
+import { Service } from '../../../Framework/Decorators/Service';
+import { RoomService } from '../Services/RoomService';
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	@Service() roomService: RoomService;
+
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'voice unlock',
 			aliases: ['v unlock'],
 			group: CommandGroup.VOICE,
 			args: [
 				{
 					name: 'role/member',
-					resolver: new AnyResolver(client, RoleResolver, MemberResolver),
+					resolver: new AnyResolver(module, RoleResolver, MemberResolver),
 					required: false
 				}
 			],
@@ -32,10 +37,8 @@ export default class extends Command {
 		[target]: [Member | Role],
 		{ funcs: { t }, guild, settings: { prefix } }: Context
 	) {
-		const system = this.client.privates;
 		const member = message.member;
-
-		const p = await system.getRoomByVoice(t, guild, member.voiceState.channelID);
+		const p = await this.roomService.getRoomByVoice(t, guild, member.voiceState.channelID);
 
 		await p.actionRoom(t, member, target || guild, ActionRoom.LOCK, true);
 

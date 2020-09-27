@@ -1,7 +1,7 @@
 import { BaseEventLog } from '../Misc/EventLog';
 import { BaseClient } from '../../../Client';
 import { LogType } from '../Misc/LogType';
-import { TranslateFunc } from '../../../Framework/Services/Commands/Command';
+import { TranslateFunc } from '../../../Framework/Commands/Command';
 import { Guild, Constants, Role } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
 import { Images } from '../../../Misc/Enums/Images';
@@ -14,7 +14,7 @@ export default class onRoleDeleteEvent extends BaseEventLog {
 	}
 
 	public async execute(t: TranslateFunc, guild: Guild, role: Role) {
-		const embed = this.client.messages.createEmbed({
+		const embed = this.messages.createEmbed({
 			author: { name: t('logs.roleDelete'), icon_url: Images.ROLE_DELETE },
 			color: Color.RED,
 			fields: [

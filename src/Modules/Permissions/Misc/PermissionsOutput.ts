@@ -1,5 +1,5 @@
 import { Permission, PermissionsExecute, PermissionsFrom } from '../../../Misc/Models/Permisson';
-import { TranslateFunc } from '../../../Framework/Services/Commands/Command';
+import { TranslateFunc } from '../../../Framework/Commands/Command';
 
 export default (t: TranslateFunc, v: Permission, i: number) => {
 	let activator;

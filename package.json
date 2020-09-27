@@ -7,7 +7,7 @@
 	"scripts": {
 		"prebuild": "rimraf bin",
 		"build": "tsc && yarn deploy",
-		"start": "node scripts/dev-run.js",
+		"start": "cross-env NODE_ENV=dev node scripts/dev-run.js",
 		"release": "yarn build && yarn format && standard-version",
 		"typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
 		"migrate": "yarn typeorm migration:generate -n MigrateEnitity && yarn typeorm migration:run",

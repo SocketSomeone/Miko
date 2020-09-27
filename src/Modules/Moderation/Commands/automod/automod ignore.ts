@@ -1,4 +1,4 @@
-import { Command, Context } from '../../../../Framework/Services/Commands/Command';
+import { BaseCommand, Context } from '../../../../Framework/Commands/Command';
 import { BaseClient } from '../../../../Client';
 import { RoleResolver, ChannelResolver } from '../../../../Framework/Resolvers';
 import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
@@ -8,19 +8,20 @@ import { GuildPermission } from '../../../../Misc/Models/GuildPermissions';
 import { AnyResolver } from '../../../../Framework/Resolvers/AnyResolver';
 import { Images } from '../../../../Misc/Enums/Images';
 import { ChannelType } from '../../../../Types';
+import { BaseModule } from '../../../../Framework/Module';
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'automod ignore',
 			aliases: ['autoignore'],
 			args: [
 				{
 					name: 'role/channel',
 					resolver: new AnyResolver(
-						client,
-						new RoleResolver(client),
-						new ChannelResolver(client, ChannelType.GUILD_TEXT)
+						module,
+						new RoleResolver(module),
+						new ChannelResolver(module, ChannelType.GUILD_TEXT)
 					),
 					required: false
 				}

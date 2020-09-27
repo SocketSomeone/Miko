@@ -1,22 +1,22 @@
 import { Embed, Member, Message } from 'eris';
-import { BaseClient } from '../../../../Client';
 import { BaseMember } from '../../../../Entity/Member';
-import { Command, Context } from '../../../../Framework/Services/Commands/Command';
+import { BaseCommand, Context } from '../../../../Framework/Commands/Command';
 import { ExecuteError } from '../../../../Framework/Errors/ExecuteError';
+import { BaseModule } from '../../../../Framework/Module';
 import { BigIntResolver } from '../../../../Framework/Resolvers';
 import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
 import { GuildPermission } from '../../../../Misc/Models/GuildPermissions';
 import { Game } from './game';
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'race',
 			aliases: [],
 			args: [
 				{
 					name: 'money',
-					resolver: new BigIntResolver(client, 20n),
+					resolver: new BigIntResolver(module, 20n),
 					required: true
 				}
 			],

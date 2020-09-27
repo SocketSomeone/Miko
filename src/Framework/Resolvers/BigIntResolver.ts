@@ -1,5 +1,6 @@
 import { BaseClient } from '../../client';
-import { Context } from '../Services/Commands/Command';
+import { Context } from '../Commands/Command';
+import { BaseModule } from '../Module';
 
 import { Resolver } from './Resolver';
 
@@ -10,8 +11,8 @@ export class BigIntResolver extends Resolver {
 	private min?: bigint;
 	private max?: bigint;
 
-	public constructor(client: BaseClient, min?: bigint, max?: bigint) {
-		super(client);
+	public constructor(module: BaseModule, min?: bigint, max?: bigint) {
+		super(module);
 
 		this.min = min;
 		this.max = max;

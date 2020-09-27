@@ -3,87 +3,74 @@ import moment from 'moment';
 import i18n from 'i18n';
 
 import { writeFileSync } from 'fs';
-import { BaseService } from '../Service';
-import { Command, Context, TranslateFunc } from './Command';
+import { BaseService } from './Service';
+import { BaseCommand, Context, TranslateFunc } from '../Commands/Command';
 import { resolve, relative, join } from 'path';
-import { Precondition } from '../../../Modules/Permissions/Misc/Precondition';
+import { Precondition } from '../../Modules/Permissions/Misc/Precondition';
 import { Message, GuildChannel, Guild } from 'eris';
-import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
-import EmojiResolver from '../../../Misc/Utils/EmojiResolver';
+import { GuildPermission } from '../../Misc/Models/GuildPermissions';
+import EmojiResolver from '../../Misc/Utils/EmojiResolver';
 import { withScope, captureException } from '@sentry/node';
-import { ExecuteError } from '../../Errors/ExecuteError';
-import { Color } from '../../../Misc/Enums/Colors';
-import { BaseSettings } from '../../../Entity/GuildSettings';
-import { Images } from '../../../Misc/Enums/Images';
+import { ExecuteError } from '../Errors/ExecuteError';
+import { Color } from '../../Misc/Enums/Colors';
+import { BaseSettings } from '../../Entity/GuildSettings';
+import { Images } from '../../Misc/Enums/Images';
+import chalk from 'chalk';
+import { Cache } from '../Decorators/Cache';
+import { GuildSettingsCache, PermissionsCache } from '../Cache';
+import { Service } from '../Decorators/Service';
+import { MessagingService } from './Messaging';
 
 const RATE_LIMIT = 1;
 const COOLDOWN = 5;
 
 export class CommandService extends BaseService {
-	public commands: Command[] = [];
+	@Service() msg: MessagingService;
+	@Cache() guilds: GuildSettingsCache;
+	@Cache() permissions: PermissionsCache;
 
-	private commandMap: Map<string, Command> = new Map();
+	private commandMap: Map<string, BaseCommand> = new Map();
 	private commandCalls: Map<string, { last: number; warned: boolean }> = new Map();
 
 	public async init() {
-		console.log('Loading commands...');
+		for (const cmd of this.client.commands.values()) {
+			if (this.commandMap.has(cmd.name.toLowerCase())) {
+				console.error(chalk.red(`Duplicate command name ${chalk.blue(cmd.name)}`));
+				process.exit(1);
+			}
+			this.commandMap.set(cmd.name.toLowerCase(), cmd);
 
-		const files = glob.sync('./bin/**/Commands/**/*.js');
-
-		for (const file of files) {
-			const clazz = require(resolve(__dirname, `../../../../${file}`));
-
-			if (clazz.default) {
-				const constr = clazz.default;
-				const parent = Object.getPrototypeOf(constr);
-
-				if (!parent || !parent.name.endsWith('Command')) {
-					continue;
-				}
-
-				const inst: Command = new constr(this.client);
-
-				this.commands.push(inst);
-
-				if (this.commandMap.has(inst.name.toLowerCase())) {
-					console.error(`Duplicate command name ${inst.name} in ${relative(process.cwd(), file)}`);
+			// Register aliases
+			cmd.aliases.forEach((a) => {
+				if (this.commandMap.has(a.toLowerCase())) {
+					console.error(chalk.red(`Duplicate command alias ${chalk.blue(a)}`));
 					process.exit(1);
 				}
+				this.commandMap.set(a.toLowerCase(), cmd);
+			});
 
-				this.commandMap.set(inst.name.toLowerCase(), inst);
-
-				for (const alias of inst.aliases) {
-					if (this.commandMap.has(alias.toLowerCase())) {
-						console.error(`Duplicate command alias ${alias} in ${relative(process.cwd(), file)}`);
-						process.exit(1);
-					}
-
-					this.commandMap.set(alias.toLowerCase(), inst);
-				}
-
-				console.log(`Loaded ${inst.name} from ${relative(process.cwd(), file)}`);
-			}
+			console.log(chalk.green(`Loaded ${chalk.blue(cmd.name)} from ${chalk.blue(cmd.module.name)}`));
 		}
 
-		console.log(`Loaded ${this.commands.length} commands`);
+		console.log(chalk.green(`Loaded ${chalk.blue(this.client.commands.size)} commands!`));
 	}
 
 	public async onClientReady() {
 		this.client.on('messageCreate', this.onMessage.bind(this));
 
-		await Promise.all(this.commands.map((x) => x.onLoaded()));
-
 		await super.onClientReady();
 	}
 
 	public async onMessage(message: Message) {
-		if (message.author.id === this.client.user.id || message.author.bot || !message.content.length) return;
+		if (message.author.id === this.client.user.id || message.author.bot || !message.content.length) {
+			return;
+		}
 
 		const start = moment();
 
 		const channel = message.channel,
 			guild = (channel as GuildChannel).guild,
-			sets = guild ? await this.client.cache.guilds.get(guild) : new BaseSettings();
+			sets = guild ? await this.guilds.get(guild) : new BaseSettings();
 
 		const [cmd, splits] = await this.resolve(message, sets.prefix);
 
@@ -125,12 +112,12 @@ export class CommandService extends BaseService {
 			const withoutPermissions = new Set([guild.ownerID, this.client.config.ownerID]);
 
 			if (!withoutPermissions.has(member.id)) {
-				const permissions = await this.client.cache.permissions.get(guild);
+				const permissions = await this.permissions.get(guild);
 
 				const { answer, permission } = Precondition.checkPermissions({ context, command: cmd, message }, permissions);
 
 				if (!answer) {
-					this.client.messages.sendReply(
+					this.msg.sendReply(
 						message,
 						{
 							author: {
@@ -156,7 +143,7 @@ export class CommandService extends BaseService {
 							.map(([s]) => `\`${s}\``)
 							.join(', ');
 
-						await this.client.messages.sendReply(message, {
+						await this.msg.sendReply(message, {
 							color: Color.RED,
 							author: { name: t('error.missed.userpermissions.title'), icon_url: Images.CRITICAL },
 							description: t('error.missed.userpermissions.desc', { missed }),
@@ -179,7 +166,7 @@ export class CommandService extends BaseService {
 					.map(([s]) => `\`${s}\``)
 					.join(', ');
 
-				await this.client.messages.sendReply(message, {
+				await this.msg.sendReply(message, {
 					color: Color.RED,
 					author: { name: t('error.missed.botpermissions.title'), icon_url: Images.CRITICAL },
 					description: t('error.missed.botpermissions.desc', { missed }),
@@ -224,7 +211,7 @@ export class CommandService extends BaseService {
 				const m = err.message as string;
 				const s = m.split(/\r?\n/);
 
-				await this.client.messages.sendReply(message, {
+				await this.msg.sendReply(message, {
 					color: Color.RED,
 					author: { name: s[0], icon_url: Images.CRITICAL },
 					description: s.slice(1).join('\n'),
@@ -242,18 +229,16 @@ export class CommandService extends BaseService {
 
 		try {
 			await cmd.execute(message, args, context);
-
-			this.client.stats.cmdFinished++;
 		} catch (err) {
 			if (err instanceof ExecuteError) {
-				const embed = this.client.messages.createEmbed({
+				const embed = this.msg.createEmbed({
 					author: { name: err.message, icon_url: Images.WARN },
 					color: Color.YELLOW,
 					footer: null,
 					timestamp: null
 				});
 
-				await this.client.messages.sendReply(message, embed);
+				await this.msg.sendReply(message, embed);
 
 				return;
 			}
@@ -275,7 +260,7 @@ export class CommandService extends BaseService {
 				captureException(err);
 			});
 
-			await this.client.messages.sendReply(message, {
+			await this.msg.sendReply(message, {
 				author: { name: t('error.execCommand.title'), icon_url: Images.CRITICAL },
 				description: t('error.execCommand.desc', {
 					error: err.message
@@ -346,13 +331,13 @@ export class CommandService extends BaseService {
 		return rawArgs;
 	}
 
-	public async resolve(message: Message, prefix?: string, guild?: Guild): Promise<[Command, string[]]> {
+	public async resolve(message: Message, prefix?: string, guild?: Guild): Promise<[BaseCommand, string[]]> {
 		if (!prefix) {
 			if (!guild) {
 				return [null, null];
 			}
 
-			let { prefix: GuildPrefix } = await this.client.cache.guilds.get(guild);
+			let { prefix: GuildPrefix } = await this.guilds.get(guild);
 
 			prefix = GuildPrefix;
 		}
@@ -393,7 +378,7 @@ export class CommandService extends BaseService {
 				lastCall.warned = true;
 				lastCall.last = now + COOLDOWN;
 
-				await this.client.messages.sendReply(message, {
+				await this.msg.sendReply(message, {
 					color: Color.RED,
 					author: { name: t('error.ratelimit.title'), icon_url: Images.CRITICAL },
 					description: t('error.ratelimit.desc'),

@@ -1,4 +1,4 @@
-import { Command, Context } from '../../../Framework/Services/Commands/Command';
+import { BaseCommand, Context } from '../../../Framework/Commands/Command';
 import { BaseClient } from '../../../Client';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message, Member, Emoji } from 'eris';
@@ -10,18 +10,19 @@ import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
 
 import slotSymbols from '../Misc/slot-symbols';
+import { BaseModule } from '../../../Framework/Module';
 
 const machine = new SlotMachine(3, slotSymbols);
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'slotmachine',
 			aliases: ['slots', 'spin'],
 			args: [
 				{
 					name: 'money',
-					resolver: new BigIntResolver(client, 30n),
+					resolver: new BigIntResolver(module, 30n),
 					required: true
 				}
 			],

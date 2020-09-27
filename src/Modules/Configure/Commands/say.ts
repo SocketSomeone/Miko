@@ -1,15 +1,14 @@
-import { BaseClient } from '../../../Client';
-import { Context, Command } from '../../../Framework/Services/Commands/Command';
-import { Message, EmbedOptions } from 'eris';
+import { Context, BaseCommand } from '../../../Framework/Commands/Command';
+import { Message } from 'eris';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
-import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { BaseMessage } from '../../../Entity/Message';
 import { StringResolver } from '../../../Framework/Resolvers';
+import { BaseModule } from '../../../Framework/Module';
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'say',
 			aliases: ['embed', 'ph', 'placeholder'],
 			group: CommandGroup.CONFIGURE,
@@ -34,8 +33,8 @@ export default class extends Command {
 		[placeholder]: [string],
 		{ funcs: { t }, guild, settings: { prefix } }: Context
 	) {
-		const embed = this.client.messages.fillTemplate(placeholder);
-		const nm = await this.client.messages.sendEmbed(message.channel, embed);
+		const embed = this.msg.fillTemplate(placeholder);
+		const nm = await this.msg.sendEmbed(message.channel, embed);
 
 		await BaseMessage.create({
 			guildId: guild.id,

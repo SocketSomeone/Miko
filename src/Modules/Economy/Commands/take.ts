@@ -1,16 +1,15 @@
-import { Command, Context } from '../../../Framework/Services/Commands/Command';
-import { BaseClient } from '../../../Client';
+import { BaseCommand, Context } from '../../../Framework/Commands/Command';
+import { BaseModule } from '../../../Framework/Module';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message, Member } from 'eris';
 import { BaseMember } from '../../../Entity/Member';
-import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { BigIntResolver, MemberResolver } from '../../../Framework/Resolvers';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { Images } from '../../../Misc/Enums/Images';
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'take',
 			aliases: ['забрать'],
 			args: [
@@ -21,7 +20,7 @@ export default class extends Command {
 				},
 				{
 					name: 'money',
-					resolver: new BigIntResolver(client, 1n),
+					resolver: new BigIntResolver(module, 1n),
 					required: true
 				}
 			],

@@ -1,15 +1,15 @@
-import { Command, Context, TranslateFunc } from '../../../Framework/Services/Commands/Command';
-import { BaseClient } from '../../../Client';
+import { BaseCommand, Context, TranslateFunc } from '../../../Framework/Commands/Command';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message, Guild } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { Images } from '../../../Misc/Enums/Images';
+import { BaseModule } from '../../../Framework/Module';
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'voice disable',
 			aliases: ['v disable'],
 			args: [],

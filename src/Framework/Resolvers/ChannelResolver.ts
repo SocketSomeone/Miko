@@ -1,18 +1,19 @@
 import { Channel } from 'eris';
 
-import { Context } from '../Services/Commands/Command';
+import { Context } from '../Commands/Command';
 
 import { Resolver } from './Resolver';
 import { BaseClient } from '../../Client';
 import { ChannelType } from '../../Types';
+import { BaseModule } from '../Module';
 
 const channelRegex = /^(?:<#)?(\d+)>?$/;
 
 export class ChannelResolver extends Resolver {
 	private type: ChannelType;
 
-	public constructor(client: BaseClient, type?: ChannelType) {
-		super(client);
+	public constructor(module: BaseModule, type?: ChannelType) {
+		super(module);
 
 		this.type = type;
 	}

@@ -1,6 +1,6 @@
 import moment, { Moment } from 'moment';
 
-import { Context } from '../Services/Commands/Command';
+import { Context } from '../Commands/Command';
 
 import { Resolver } from './Resolver';
 

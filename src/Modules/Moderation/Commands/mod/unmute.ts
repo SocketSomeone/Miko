@@ -1,15 +1,21 @@
-import { Command, Context } from '../../../../Framework/Services/Commands/Command';
-import { BaseClient } from '../../../../Client';
+import { BaseCommand, Context } from '../../../../Framework/Commands/Command';
 import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
 import { Message, Member } from 'eris';
 import { ExecuteError } from '../../../../Framework/Errors/ExecuteError';
 import { Color } from '../../../../Misc/Enums/Colors';
 import { MemberResolver } from '../../../../Framework/Resolvers';
 import { GuildPermission } from '../../../../Misc/Models/GuildPermissions';
+import { BaseModule } from '../../../../Framework/Module';
+import { Service } from '../../../../Framework/Decorators/Service';
+import { ModerationService } from '../../Services/Moderation';
+import { LoggingService } from '../../../Log/Services/LoggerService';
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	@Service() protected moderation: ModerationService;
+	@Service() protected logger: LoggingService;
+
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'unmute',
 			aliases: ['размутить'],
 			group: CommandGroup.MODERATION,
@@ -35,7 +41,7 @@ export default class extends Command {
 	) {
 		reason = reason || t('moderation.noreason');
 
-		const embed = this.client.messages.createEmbed({
+		const embed = this.createEmbed({
 			color: Color.DARK,
 			title: t('moderation.unmute.title'),
 			description: t('moderation.unmute.done', {
@@ -51,16 +57,15 @@ export default class extends Command {
 			throw new ExecuteError(t('error.missed.muterole'));
 		} else if (!target.roles.includes(mutedRole)) {
 			throw new ExecuteError(t('moderation.unmute.notmuted'));
-		} else if (this.client.moderation.isPunishable(guild, target, message.member, me)) {
+		} else if (this.moderation.isPunishable(guild, target, message.member, me)) {
 			try {
 				await target.removeRole(mutedRole, `Unmuted by ${message.author.username}#${message.author.discriminator}`);
 
-				await this.client.logger.logModAction({
+				await this.logger.logModAction({
 					sets: settings,
 					member: message.member,
 					type: 'UNMUTE',
-					target,
-					t
+					target
 				});
 			} catch (err) {
 				throw new ExecuteError(t('moderation.unmute.error'));

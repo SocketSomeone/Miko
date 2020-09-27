@@ -1,4 +1,4 @@
-import { Command, Context } from '../../../../Framework/Services/Commands/Command';
+import { BaseCommand, Context } from '../../../../Framework/Commands/Command';
 import { BaseClient } from '../../../../Client';
 import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
 import { Message, Member } from 'eris';
@@ -9,10 +9,15 @@ import { MemberResolver, StringResolver } from '../../../../Framework/Resolvers'
 import { GuildPermission } from '../../../../Misc/Models/GuildPermissions';
 import { Punishment, BasePunishment } from '../../../../Entity/Punishment';
 import { Images } from '../../../../Misc/Enums/Images';
+import { BaseModule } from '../../../../Framework/Module';
+import { Service } from '../../../../Framework/Decorators/Service';
+import { ModerationService } from '../../Services/Moderation';
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	@Service() protected moderation: ModerationService;
+
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'ban',
 			aliases: ['бан', 'забанить'],
 			group: CommandGroup.MODERATION,
@@ -47,7 +52,7 @@ export default class extends Command {
 			{ name: 'logs.mod.duration', value: `∞` }
 		];
 
-		const embed = this.client.messages.createEmbed({
+		const embed = this.createEmbed({
 			color: Color.DARK,
 			author: { name: t('moderation.ban.title'), icon_url: Images.MODERATION },
 			description: t('moderation.ban.done', {
@@ -64,7 +69,7 @@ export default class extends Command {
 			footer: null
 		});
 
-		if (this.client.moderation.isPunishable(guild, member, message.member, me)) {
+		if (this.moderation.isPunishable(guild, member, message.member, me)) {
 			await BasePunishment.informUser(t, member, Punishment.MUTE, extra);
 
 			try {
@@ -73,7 +78,6 @@ export default class extends Command {
 				await BaseMember.saveMembers(guild, [member]);
 
 				await BasePunishment.new({
-					client: this.client,
 					settings,
 					member: message.member,
 					target: member,

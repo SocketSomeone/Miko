@@ -1,4 +1,4 @@
-import { Command, Context } from '../../../Framework/Services/Commands/Command';
+import { BaseCommand, Context } from '../../../Framework/Commands/Command';
 import { BaseClient } from '../../../Client';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message, Member, Emoji } from 'eris';
@@ -8,16 +8,17 @@ import { Color } from '../../../Misc/Enums/Colors';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { chance } from '../../../Misc/Utils/Chance';
 import { BigIntResolver } from '../../../Framework/Resolvers';
+import { BaseModule } from '../../../Framework/Module';
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'whereischicken',
 			aliases: ['wis'],
 			args: [
 				{
 					name: 'money',
-					resolver: new BigIntResolver(client, 20n),
+					resolver: new BigIntResolver(module, 20n),
 					required: true
 				}
 			],

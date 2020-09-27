@@ -1,4 +1,4 @@
-import { Command, Context } from '../../../Framework/Services/Commands/Command';
+import { BaseCommand, Context } from '../../../Framework/Commands/Command';
 import { BaseClient } from '../../../Client';
 import { StringResolver, EnumResolver, ChannelResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
@@ -10,29 +10,30 @@ import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { WelcomeChannelType } from '../../../Misc/Enums/WelcomeTypes';
 import { Images } from '../../../Misc/Enums/Images';
 import { ChannelType } from '../../../Types';
+import { BaseModule } from '../../../Framework/Module';
 
 enum Action {
 	SET = 'set',
 	DELETE = 'delete'
 }
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'welcome channel',
 			aliases: [],
 			args: [
 				{
 					name: 'set/delete',
-					resolver: new EnumResolver(client, Object.values(Action)),
+					resolver: new EnumResolver(module, Object.values(Action)),
 					required: true
 				},
 				{
 					name: 'channel',
 					resolver: new AnyResolver(
-						client,
-						new ChannelResolver(client, ChannelType.GUILD_TEXT),
-						new StringResolver(client)
+						module,
+						new ChannelResolver(module, ChannelType.GUILD_TEXT),
+						new StringResolver(module)
 					),
 					required: true,
 					full: true

@@ -1,14 +1,23 @@
 import i18n from 'i18n';
 
-import { BaseClient } from '../../../Client';
-import { Guild, Member, Message, EmbedOptions, Embed, TextableChannel, User } from 'eris';
-import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
-import { Resolver, ResolverConstructor } from '../../Resolvers/Resolver';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
-import { BaseSettings } from '../../../Entity/GuildSettings';
-import { BaseEmbedOptions } from '../../../Types';
-import { Images } from '../../../Misc/Enums/Images';
-import { Color } from '../../../Misc/Enums/Colors';
+import { BaseClient } from '../../Client';
+import { Guild, Member, Message, Embed } from 'eris';
+import { GuildPermission } from '../../Misc/Models/GuildPermissions';
+import { Resolver, ResolverConstructor } from '../Resolvers/Resolver';
+import { CommandGroup } from '../../Misc/Models/CommandGroup';
+import { BaseSettings } from '../../Entity/GuildSettings';
+import { Images } from '../../Misc/Enums/Images';
+import { Color } from '../../Misc/Enums/Colors';
+import { Service } from '../Decorators/Service';
+import {
+	CreateEmbedFunc,
+	ReplyFunc,
+	SendFunc,
+	MessagingService,
+	ShowPaginatedFunc,
+	awaitReactionsFunc as AwaitReactionsFunc
+} from '../Services/Messaging';
+import { BaseModule } from '../Module';
 
 interface Arg {
 	name: string;
@@ -46,48 +55,42 @@ interface CommandOptions {
 	userPermissions?: GuildPermission[];
 }
 
-export abstract class Command {
+export abstract class BaseCommand {
 	public client: BaseClient;
+	public module: BaseModule;
 	public resolvers: Resolver[];
 
 	public name: string;
+
 	public aliases: string[];
 	public args: Arg[];
+
 	public group: CommandGroup;
 	public usage: string;
-	public examples: string[];
-
 	public guildOnly: boolean;
-	public botPermissions?: GuildPermission[];
-	public userPermissions?: GuildPermission[];
 	public premiumOnly?: boolean;
 
-	//#region FUNCS
+	public botPermissions?: GuildPermission[];
+	public userPermissions?: GuildPermission[];
 
-	protected createEmbed: (options?: BaseEmbedOptions) => Embed;
-	protected replyAsync: (message: Message, reply: BaseEmbedOptions | string) => Promise<Message>;
-	protected sendAsync: (target: TextableChannel, embed: EmbedOptions | string, fallbackUser?: User) => Promise<Message>;
-	protected showPaginated: (
-		prevMsg: Message,
-		page: number,
-		maxPage: number,
-		render: (page: number, maxPage: number) => Embed
-	) => Promise<void>;
+	public examples: string[];
 
-	protected awaitReactions: (
-		prevMsg: Message,
-		func: (userID: string) => Promise<any>,
-		sets: { ttl: number; reactions: string[] }
-	) => Promise<any>;
+	@Service() protected msg: MessagingService;
 
-	//#endregion
+	protected createEmbed: CreateEmbedFunc;
+	protected replyAsync: ReplyFunc;
+	protected sendAsync: SendFunc;
+	protected showPaginated: ShowPaginatedFunc;
+	protected awaitReactions: AwaitReactionsFunc;
 
-	public constructor(client: BaseClient, props: CommandOptions) {
-		this.client = client;
+	public constructor(module: BaseModule, props: CommandOptions) {
+		this.module = module;
+		this.client = module.client;
 
 		this.name = props.name;
-		this.usage = `${this.name} `;
 		this.aliases = props.aliases.map((x) => x.toLowerCase());
+
+		this.usage = `${this.name} `;
 		this.group = props.group;
 		this.args = (props && props.args) || [];
 		this.examples = (props && props.examples) || [];
@@ -97,6 +100,13 @@ export abstract class Command {
 
 		this.guildOnly = props.guildOnly;
 		this.premiumOnly = props.premiumOnly;
+	}
+
+	public async init() {
+		this.createEmbed = this.msg.createEmbed.bind(this.msg);
+		this.replyAsync = this.msg.sendReply.bind(this.msg);
+		this.sendAsync = this.msg.sendEmbed.bind(this.msg);
+		this.showPaginated = this.msg.showPaginated.bind(this.msg);
 
 		this.resolvers = [];
 
@@ -104,25 +114,13 @@ export abstract class Command {
 			if (arg.resolver instanceof Resolver) {
 				this.resolvers.push(arg.resolver);
 			} else {
-				this.resolvers.push(new arg.resolver(this.client));
+				this.resolvers.push(new arg.resolver(this.module));
 			}
 
 			delete arg.resolver;
 
 			this.usage += arg.required ? `<${arg.name}> ` : `[${arg.name}] `;
 		});
-
-		this.createEmbed = client.messages.createEmbed.bind(client.messages);
-		this.replyAsync = client.messages.sendReply.bind(client.messages);
-		this.sendAsync = client.messages.sendEmbed.bind(client.messages);
-		this.showPaginated = client.messages.showPaginated.bind(client.messages);
-		this.awaitReactions = client.messages.awaitReactions.bind(client.messages);
-
-		this.checkDependies();
-	}
-
-	public async onLoaded() {
-		// NO-OP
 	}
 
 	protected getDescription(t: TranslateFunc) {

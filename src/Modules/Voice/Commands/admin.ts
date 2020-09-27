@@ -1,13 +1,17 @@
-import { BaseClient } from '../../../Client';
-import { Context, Command } from '../../../Framework/Services/Commands/Command';
+import { BaseModule } from '../../../Framework/Module';
+import { Context, BaseCommand } from '../../../Framework/Commands/Command';
 import { Message, Member } from 'eris';
 import { MemberResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Images } from '../../../Misc/Enums/Images';
+import { Service } from '../../../Framework/Decorators/Service';
+import { RoomService } from '../Services/RoomService';
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	@Service() protected roomService: RoomService;
+
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'voice admin',
 			aliases: ['v admin'],
 			group: CommandGroup.VOICE,
@@ -25,10 +29,9 @@ export default class extends Command {
 	}
 
 	public async execute(message: Message, [user]: [Member], { funcs: { t }, guild, settings }: Context) {
-		const system = this.client.privates;
 		const member = message.member;
 
-		const p = await system.getRoomByVoice(t, guild, member.voiceState.channelID);
+		const p = await this.roomService.getRoomByVoice(t, guild, member.voiceState.channelID);
 
 		const newAdmin = await p.actionAdmin(t, member, user);
 

@@ -1,5 +1,5 @@
-import { Command, Context } from '../../../Framework/Services/Commands/Command';
-import { BaseClient } from '../../../Client';
+import { BaseCommand, Context } from '../../../Framework/Commands/Command';
+import { BaseModule } from '../../../Framework/Module';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message, Member } from 'eris';
 import { BaseMember } from '../../../Entity/Member';
@@ -7,9 +7,9 @@ import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { BigIntResolver, MemberResolver } from '../../../Framework/Resolvers';
 import { Images } from '../../../Misc/Enums/Images';
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'give',
 			aliases: ['pay', 'передать'],
 			args: [
@@ -20,7 +20,7 @@ export default class extends Command {
 				},
 				{
 					name: 'money',
-					resolver: new BigIntResolver(client, 0n),
+					resolver: new BigIntResolver(module, 0n),
 					required: true
 				}
 			],

@@ -1,4 +1,4 @@
-import { Command, Context } from '../../../Framework/Services/Commands/Command';
+import { BaseCommand, Context } from '../../../Framework/Commands/Command';
 import { BaseClient } from '../../../Client';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message, Member, Emoji } from 'eris';
@@ -8,19 +8,20 @@ import { Color } from '../../../Misc/Enums/Colors';
 import { chance } from '../../../Misc/Utils/Chance';
 import { Syntax } from '../../../Misc/Models/Syntax';
 import { BigIntResolver } from '../../../Framework/Resolvers';
+import { BaseModule } from '../../../Framework/Module';
 
 const multipliers: number[] = [0.1, 0.2, 0.3, 0.5, 1.3, 1.7, 1.5, 2],
 	side_arrows: string[] = ['⬆️', '↗️', '➡️', '↘️', '⬇️', '↙️', '⬅️', '↖️'];
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'fortune',
 			aliases: ['колесо'],
 			args: [
 				{
 					name: 'money',
-					resolver: new BigIntResolver(client, 50n),
+					resolver: new BigIntResolver(module, 50n),
 					required: true
 				}
 			],

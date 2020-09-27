@@ -1,16 +1,16 @@
-import { Command, Context } from '../../../Framework/Services/Commands/Command';
-import { BaseClient } from '../../../Client';
+import { BaseCommand, Context } from '../../../Framework/Commands/Command';
+import { BaseModule } from '../../../Framework/Module';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
-import { Message, Member } from 'eris';
+import { Message } from 'eris';
 import { BaseMember } from '../../../Entity/Member';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { Images } from '../../../Misc/Enums/Images';
 
 import moment from 'moment';
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'daily',
 			aliases: ['timely', 'награда'],
 			group: CommandGroup.ECONOMY,

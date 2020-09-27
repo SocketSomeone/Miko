@@ -119,9 +119,74 @@
 		"module": "ECONOMY"
 	},
 	{
+		"name": "angry",
+		"aliases": ["злица", "злюсь"],
+		"description": "Злится",
+		"examples": ["@user", ""],
+		"module": "EMOTIONS"
+	},
+	{
+		"name": "bite",
+		"aliases": ["кусь", "укусить"],
+		"description": "Укусить",
+		"examples": ["@user", ""],
+		"module": "EMOTIONS"
+	},
+	{
+		"name": "cry",
+		"aliases": ["плак", "плачу", "sad", "грущу"],
+		"description": "Плакать",
+		"examples": ["@user", ""],
+		"module": "EMOTIONS"
+	},
+	{ "name": "happy", "aliases": ["рад"], "description": "Радоваться", "examples": ["@user", ""], "module": "EMOTIONS" },
+	{
+		"name": "hug",
+		"aliases": ["обнять", "обнимашки"],
+		"description": "Обнять",
+		"examples": ["@user", ""],
+		"module": "EMOTIONS"
+	},
+	{ "name": "kill", "aliases": ["убить"], "description": "Убить", "examples": ["@user", ""], "module": "EMOTIONS" },
+	{
+		"name": "kiss",
+		"aliases": ["поцелуй", "цом"],
+		"description": "Поцеловать",
+		"examples": ["@user", ""],
+		"module": "EMOTIONS"
+	},
+	{
+		"name": "lick",
+		"aliases": ["лизь", "лизнуть"],
+		"description": "Облизаться",
+		"examples": ["@user", ""],
+		"module": "EMOTIONS"
+	},
+	{
 		"name": "pat",
 		"aliases": ["погладить", "гладь"],
-		"description": "Погладить пользователя",
+		"description": "Погладить",
+		"examples": ["@user", ""],
+		"module": "EMOTIONS"
+	},
+	{
+		"name": "sex",
+		"aliases": ["секс", "изнасиловать"],
+		"description": "Заняться сексом",
+		"examples": ["@user", ""],
+		"module": "EMOTIONS"
+	},
+	{
+		"name": "slap",
+		"aliases": ["hit", "пощёчина", "ударить"],
+		"description": "Ударить",
+		"examples": ["@user", ""],
+		"module": "EMOTIONS"
+	},
+	{
+		"name": "sleep",
+		"aliases": ["спатьки", "сплю"],
+		"description": "Спать",
 		"examples": ["@user", ""],
 		"module": "EMOTIONS"
 	},

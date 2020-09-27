@@ -2,7 +2,7 @@ import { BaseCache } from '../../../Framework/Cache';
 import { BasePrivate } from '../../../Entity/Privates';
 import { Guild, VoiceChannel } from 'eris';
 
-export class PrivatesCache extends BaseCache<Map<string, BasePrivate>> {
+export class RoomCache extends BaseCache<Map<string, BasePrivate>> {
 	public async init() {
 		// NO-OP
 	}

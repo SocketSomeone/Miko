@@ -1,15 +1,16 @@
 import { BaseClient } from '../../../Client';
-import { Context, Command } from '../../../Framework/Services/Commands/Command';
+import { Context, BaseCommand } from '../../../Framework/Commands/Command';
 import { Message } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { Images } from '../../../Misc/Enums/Images';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
+import { BaseModule } from '../../../Framework/Module';
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'log disable',
 			aliases: [],
 			group: CommandGroup.LOGS,

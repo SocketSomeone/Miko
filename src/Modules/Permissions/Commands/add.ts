@@ -6,7 +6,7 @@ import {
 	ChannelResolver
 } from '../../../Framework/Resolvers';
 import { BaseClient } from '../../../Client';
-import { Context, Command } from '../../../Framework/Services/Commands/Command';
+import { Context, BaseCommand } from '../../../Framework/Commands/Command';
 import { Message, Member, Role, GuildChannel, TextChannel } from 'eris';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { PermissionTargetResolver } from '../Resolvers/PermissionResolver';
@@ -16,10 +16,15 @@ import { Color } from '../../../Misc/Enums/Colors';
 import { Images } from '../../../Misc/Enums/Images';
 import PermissionsOutput from '../Misc/PermissionsOutput';
 import { ChannelType } from '../../../Types';
+import { BaseModule } from '../../../Framework/Module';
+import { Cache } from '../../../Framework/Decorators/Cache';
+import { PermissionsCache } from '../../../Framework/Cache';
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	@Cache() protected permissions: PermissionsCache;
+
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'permission add',
 			aliases: ['правило добавить'],
 			group: CommandGroup.PERMISSIONS,
@@ -33,10 +38,10 @@ export default class extends Command {
 				{
 					name: 'role/member/channel',
 					resolver: new AnyResolver(
-						client,
-						new MemberResolver(client),
-						new RoleResolver(client, true),
-						new ChannelResolver(client, ChannelType.GUILD_TEXT)
+						module,
+						new MemberResolver(module),
+						new RoleResolver(module, true),
+						new ChannelResolver(module, ChannelType.GUILD_TEXT)
 					),
 					required: true
 				},
@@ -58,7 +63,7 @@ export default class extends Command {
 		[target, from, allow]: [PermissionsTarget, Role | Member | GuildChannel, boolean],
 		{ funcs: { t }, guild, settings }: Context
 	) {
-		const permissions = await this.client.cache.permissions.get(guild);
+		const permissions = await this.permissions.get(guild);
 
 		let perm = permissions.find((x) => x.target.id === target.id && x.activator.id === from.id);
 		let isExist = !!perm;
@@ -97,7 +102,7 @@ export default class extends Command {
 			perm.allow = allow;
 		}
 
-		await this.client.cache.permissions.save(guild.id, permissions);
+		await this.permissions.save(guild.id, permissions);
 
 		await this.replyAsync(message, {
 			color: Color.MAGENTA,

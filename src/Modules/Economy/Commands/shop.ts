@@ -1,16 +1,20 @@
-import { Command, Context } from '../../../Framework/Services/Commands/Command';
-import { BaseClient } from '../../../Client';
+import { BaseCommand, Context } from '../../../Framework/Commands/Command';
+import { BaseModule } from '../../../Framework/Module';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { EmbedField, Message } from 'eris';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { NumberResolver } from '../../../Framework/Resolvers';
 import { Images } from '../../../Misc/Enums/Images';
+import { Cache } from '../../../Framework/Decorators/Cache';
+import { ShopRolesCache } from '../../Configure/Cache/ShopRole';
 
 const ROLE_PER_PAGE = 8;
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	@Cache() protected shop: ShopRolesCache;
+
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'shop',
 			aliases: ['магазин', 'шоп', 'магаз', 'items'],
 			args: [
@@ -27,7 +31,7 @@ export default class extends Command {
 	}
 
 	public async execute(message: Message, [offset]: [number], { funcs: { t, e }, guild, settings }: Context) {
-		const items = await this.client.cache.shop.get(guild);
+		const items = await this.shop.get(guild);
 
 		if (items.length < 1) {
 			throw new ExecuteError(t('economy.shop.empty'));

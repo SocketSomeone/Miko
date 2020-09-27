@@ -1,5 +1,5 @@
 import { BaseClient } from '../../../Client';
-import { Context, Command } from '../../../Framework/Services/Commands/Command';
+import { Context, BaseCommand } from '../../../Framework/Commands/Command';
 import { Message, Role } from 'eris';
 import { StringResolver, RoleResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
@@ -8,14 +8,16 @@ import { BaseMessage } from '../../../Entity/Message';
 import { ReactionRoleService } from '../Services/ReactionRoles';
 import { BaseReactionRole } from '../../../Entity/ReactionRole';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
+import { BaseModule } from '../../../Framework/Module';
+import { Service } from '../../../Framework/Decorators/Service';
 
 const CUSTOM_EMOJI_REGEX = /<(?:.*)?:(\w+):(\d+)>/;
 
-export default class extends Command {
-	protected service: ReactionRoleService;
+export default class extends BaseCommand {
+	@Service() protected service: ReactionRoleService;
 
-	public constructor(client: BaseClient) {
-		super(client, {
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'reactionrole',
 			aliases: ['rr'],
 			group: CommandGroup.CONFIGURE,
@@ -42,12 +44,6 @@ export default class extends Command {
 			premiumOnly: false,
 			examples: ['111 ✨ @role']
 		});
-
-		this.service = new ReactionRoleService(client);
-	}
-
-	public async onLoaded() {
-		await this.service.init();
 	}
 
 	public async execute(

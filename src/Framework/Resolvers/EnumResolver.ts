@@ -1,13 +1,14 @@
 import { BaseClient } from '../../client';
-import { Context } from '../Services/Commands/Command';
+import { Context } from '../Commands/Command';
+import { BaseModule } from '../Module';
 
 import { Resolver } from './Resolver';
 
 export class EnumResolver extends Resolver {
 	private values: Map<string, string>;
 
-	public constructor(client: BaseClient, values: string[]) {
-		super(client);
+	public constructor(module: BaseModule, values: string[]) {
+		super(module);
 
 		this.values = new Map();
 		values.forEach((v) => this.values.set(v.toLowerCase(), v));

@@ -1,5 +1,6 @@
 import moment, { Duration, Moment } from 'moment';
 import { BaseClient } from '../../Client';
+import { BaseModule } from '../Module';
 
 interface CacheMeta {
 	cachedAt: Moment;
@@ -8,6 +9,7 @@ interface CacheMeta {
 
 export abstract class BaseCache<T> {
 	protected client: BaseClient;
+	protected module: BaseModule;
 
 	protected maxCacheDuration: Duration = moment.duration(6, 'h');
 	protected cache: Map<string, T> = new Map();
@@ -15,8 +17,9 @@ export abstract class BaseCache<T> {
 
 	private pending: Map<string, Promise<T>> = new Map();
 
-	public constructor(client: BaseClient) {
-		this.client = client;
+	public constructor(module: BaseModule) {
+		this.module = module;
+		this.client = module.client;
 	}
 
 	public abstract async init(): Promise<void>;
@@ -65,10 +68,6 @@ export abstract class BaseCache<T> {
 		return value;
 	}
 
-	protected isObject(item: Partial<T>) {
-		return item && typeof item === 'object' && !Array.isArray(item);
-	}
-
 	public has(key: string) {
 		const meta = this.cacheMeta.get(key);
 		return meta && this.cache.has(key) && meta.validUntil.isAfter(moment());
@@ -82,20 +81,6 @@ export abstract class BaseCache<T> {
 	public clear() {
 		this.cache = new Map();
 		this.cacheMeta = new Map();
-	}
-
-	public partition(fn: (value: T) => boolean): [Map<string, T>, Map<string, T>] {
-		const results: [Map<string, T>, Map<string, T>] = [new Map(), new Map()];
-
-		for (const [key, val] of this.cache) {
-			if (fn(val)) {
-				results[0].set(key, val);
-			} else {
-				results[1].set(key, val);
-			}
-		}
-
-		return results;
 	}
 
 	get size() {

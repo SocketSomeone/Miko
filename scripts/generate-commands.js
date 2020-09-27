@@ -1,4 +1,4 @@
-const { CommandService } = require('../bin/Framework/Services/Handlers/Commands');
+const { CommandService } = require('../bin/Framework/Services/Commands/Commands');
 const { BaseClient } = require('../bin/Client');
 const { writeFileSync } = require('fs');
 const i18n = require('i18n');

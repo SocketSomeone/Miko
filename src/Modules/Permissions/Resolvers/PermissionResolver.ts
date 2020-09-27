@@ -1,8 +1,8 @@
 import { PermissionsTarget, PermissionsExecute } from '../../../Misc/Models/Permisson';
 import { Resolver, CommandResolver, EnumResolver } from '../../../Framework/Resolvers';
-import { Context } from '../../../Framework/Services/Commands/Command';
-import { BaseClient } from '../../../Client';
+import { Context } from '../../../Framework/Commands/Command';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
+import { BaseModule } from '../../../Framework/Module';
 
 const all = new Set(['all', 'все', 'всё']);
 
@@ -10,11 +10,11 @@ export class PermissionTargetResolver extends Resolver {
 	private commmandResolver: CommandResolver;
 	private enumResolver: EnumResolver;
 
-	public constructor(client: BaseClient) {
-		super(client);
+	public constructor(module: BaseModule) {
+		super(module);
 
-		this.commmandResolver = new CommandResolver(this.client);
-		this.enumResolver = new EnumResolver(client, Object.keys(CommandGroup));
+		this.commmandResolver = new CommandResolver(module);
+		this.enumResolver = new EnumResolver(module, Object.keys(CommandGroup));
 	}
 
 	public async resolve(value: string, ctx: Context): Promise<PermissionsTarget> {

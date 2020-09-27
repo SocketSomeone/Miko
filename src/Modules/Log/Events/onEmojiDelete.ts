@@ -1,7 +1,7 @@
 import { BaseEventLog } from '../Misc/EventLog';
 import { BaseClient } from '../../../Client';
 import { LogType } from '../Misc/LogType';
-import { TranslateFunc } from '../../../Framework/Services/Commands/Command';
+import { TranslateFunc } from '../../../Framework/Commands/Command';
 import { Guild, Constants } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
 import { Emoji } from 'eris';
@@ -21,7 +21,7 @@ export default class onEmojiDeleteEvent extends BaseEventLog {
 	}
 
 	public async execute(t: TranslateFunc, guild: Guild, emoji: Emoji) {
-		const embed = this.client.messages.createEmbed({
+		const embed = this.messages.createEmbed({
 			author: { name: t('logs.emojiDelete'), icon_url: Images.EMOJI_DELETE },
 			color: Color.RED,
 			fields: [

@@ -1,23 +1,22 @@
-import { Command, Context } from '../../../Framework/Services/Commands/Command';
-import { BaseClient } from '../../../Client';
+import { BaseCommand, Context } from '../../../Framework/Commands/Command';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
-import { Message, Member, Emoji } from 'eris';
+import { Message } from 'eris';
 import { BaseMember } from '../../../Entity/Member';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { Color } from '../../../Misc/Enums/Colors';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { chance } from '../../../Misc/Utils/Chance';
 import { BigIntResolver } from '../../../Framework/Resolvers';
+import { BaseModule } from '../../../Framework/Module';
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'br',
 			aliases: [],
 			args: [
 				{
 					name: 'money',
-					resolver: new BigIntResolver(client, 1n),
+					resolver: new BigIntResolver(module, 1n),
 					required: true
 				}
 			],

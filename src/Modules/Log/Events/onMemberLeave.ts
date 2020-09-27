@@ -1,7 +1,7 @@
 import { BaseEventLog } from '../Misc/EventLog';
 import { BaseClient } from '../../../Client';
 import { LogType } from '../Misc/LogType';
-import { TranslateFunc } from '../../../Framework/Services/Commands/Command';
+import { TranslateFunc } from '../../../Framework/Commands/Command';
 import { Guild, Constants, Role, Member } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
 import { Images } from '../../../Misc/Enums/Images';
@@ -14,7 +14,7 @@ export default class onMemberLeaveEvent extends BaseEventLog {
 	}
 
 	public async execute(t: TranslateFunc, guild: Guild, member: Member) {
-		const embed = this.client.messages.createEmbed({
+		const embed = this.messages.createEmbed({
 			author: { name: t('logs.guildLeave'), icon_url: Images.MEMBER_LEAVE },
 			color: Color.RED,
 			fields: [

@@ -1,17 +1,25 @@
-import { Command, Context } from '../Services/Commands/Command';
+import { BaseClient } from '../../Client';
+import { BaseCommand, Context } from '../Commands/Command';
+import { BaseModule } from '../Module';
 
 import { Resolver } from './Resolver';
 
 export class CommandResolver extends Resolver {
-	public async resolve(value: string, { guild, funcs: { t } }: Context): Promise<Command> {
+	private cmds: BaseCommand[] = [];
+
+	public constructor(module: BaseModule) {
+		super(module);
+
+		this.cmds = [...this.client.commands.values()];
+	}
+
+	public async resolve(value: string, { guild, funcs: { t } }: Context): Promise<BaseCommand> {
 		if (!guild || !value) {
 			return;
 		}
 
 		const name = value.toLowerCase();
-		const cmds = this.client.commands.commands.filter(
-			(c) => (c.name.toLowerCase().includes(name) || c.aliases.indexOf(name) >= 0) && c.group !== null
-		);
+		const cmds = this.cmds.filter((c) => c.name.toLowerCase().includes(name) || c.aliases.indexOf(name) >= 0);
 
 		if (cmds.length === 0) {
 			throw Error(t(`resolvers.command.notFound`));

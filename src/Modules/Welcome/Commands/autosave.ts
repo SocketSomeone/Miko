@@ -1,18 +1,15 @@
-import { Command, Context } from '../../../Framework/Services/Commands/Command';
-import { BaseClient } from '../../../Client';
-import { StringResolver } from '../../../Framework/Resolvers';
+import { BaseCommand, Context } from '../../../Framework/Commands/Command';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message, Member, Guild, User } from 'eris';
-import { BaseMember } from '../../../Entity/Member';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { Images } from '../../../Misc/Enums/Images';
+import { BaseModule } from '../../../Framework/Module';
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'welcome saveroles',
 			aliases: [],
 			args: [],
@@ -24,7 +21,7 @@ export default class extends Command {
 		});
 	}
 
-	public async execute(message: Message, []: [], { funcs: { t, e }, guild, settings }: Context) {
+	public async execute(message: Message, []: [], { funcs: { t, e }, settings }: Context) {
 		if (!settings.welcomeEnabled) throw new ExecuteError(t('error.module.disabled'));
 
 		settings.welcomeSaveRoles = !settings.welcomeSaveRoles;

@@ -1,4 +1,4 @@
-import { Command, Context } from '../../../../Framework/Services/Commands/Command';
+import { BaseCommand, Context } from '../../../../Framework/Commands/Command';
 import { BaseClient } from '../../../../Client';
 import { EnumResolver, ArrayResolver } from '../../../../Framework/Resolvers';
 import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
@@ -8,18 +8,19 @@ import { GuildPermission } from '../../../../Misc/Models/GuildPermissions';
 import { Violation } from '../../../../Misc/Enums/Violation';
 import { ExecuteError } from '../../../../Framework/Errors/ExecuteError';
 import { Images } from '../../../../Misc/Enums/Images';
+import { BaseModule } from '../../../../Framework/Module';
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'automod enable',
 			aliases: ['автомод включить'],
 			args: [
 				{
 					name: 'type',
 					resolver: new ArrayResolver(
-						client,
-						new EnumResolver(client, Object.values(Violation)),
+						module,
+						new EnumResolver(module, Object.values(Violation)),
 						Object.values(Violation)
 					),
 					required: false,

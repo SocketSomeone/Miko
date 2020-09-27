@@ -1,4 +1,4 @@
-import { Command, Context } from '../../../Framework/Services/Commands/Command';
+import { BaseCommand, Context } from '../../../Framework/Commands/Command';
 import { BaseClient } from '../../../Client';
 import { EnumResolver, StringResolver } from '../../../Framework/Resolvers';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
@@ -7,21 +7,22 @@ import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { Images } from '../../../Misc/Enums/Images';
+import { BaseModule } from '../../../Framework/Module';
 
 enum Action {
 	SET = 'set',
 	DELETE = 'delete'
 }
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'welcome message',
 			aliases: [],
 			args: [
 				{
 					name: 'set/delete',
-					resolver: new EnumResolver(client, Object.values(Action)),
+					resolver: new EnumResolver(module, Object.values(Action)),
 					required: true
 				},
 				{

@@ -1,17 +1,15 @@
-import { Command, Context } from '../../../Framework/Services/Commands/Command';
-import { BaseClient } from '../../../Client';
+import { BaseCommand, Context } from '../../../Framework/Commands/Command';
+import { BaseModule } from '../../../Framework/Module';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { EmbedField, Message } from 'eris';
-import { Images } from '../../../Misc/Enums/Images';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { BaseMember } from '../../../Entity/Member';
-import { BaseGuild } from '../../../Entity/Guild';
 
 const USERS_PER_PAGE = 8;
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'top',
 			aliases: ['лидеры', 'топ'],
 			args: [],

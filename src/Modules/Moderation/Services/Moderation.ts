@@ -3,7 +3,7 @@ import { Guild, Role, Member, Message, TextChannel } from 'eris';
 import { Punishment, BasePunishment } from '../../../Entity/Punishment';
 import { Violation } from '../../../Misc/Enums/Violation';
 import { BaseMember } from '../../../Entity/Member';
-import { TranslateFunc } from '../../../Framework/Services/Commands/Command';
+import { TranslateFunc } from '../../../Framework/Commands/Command';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { BaseSettings } from '../../../Entity/GuildSettings';
@@ -12,6 +12,10 @@ import { Images } from '../../../Misc/Enums/Images';
 import moment from 'moment';
 import i18n from 'i18n';
 import { DISCORD_EMOJI_REGEX, EMOJIS_REGEX } from '../../../Misc/Regex/Emoji';
+import { Cache } from '../../../Framework/Decorators/Cache';
+import { GuildSettingsCache, PunishmentsCache } from '../../../Framework/Cache';
+import { Service } from '../../../Framework/Decorators/Service';
+import { MessagingService } from '../../../Framework/Services/Messaging';
 
 interface Arguments {
 	guild: Guild;
@@ -36,6 +40,11 @@ type PunishmentFunctions = {
 };
 
 export class ModerationService extends BaseService {
+	@Service() protected messages: MessagingService;
+
+	@Cache() protected guilds: GuildSettingsCache;
+	@Cache() protected punishments: PunishmentsCache;
+
 	private messageCache: Map<string, MiniMessage[]> = new Map();
 	public getMessageCacheSize() {
 		return this.messageCache.size;
@@ -95,7 +104,7 @@ export class ModerationService extends BaseService {
 
 		if (!guild) return;
 
-		const settings = await this.client.cache.guilds.get(guild);
+		const settings = await this.guilds.get(guild);
 
 		if (Object.values(settings.autoMod).every((b) => b === false)) {
 			return;
@@ -165,7 +174,7 @@ export class ModerationService extends BaseService {
 
 		const warnsAfter = warnsBefore + 1;
 
-		const punishmentConfigs = await this.client.cache.punishments.get(guild);
+		const punishmentConfigs = await this.punishments.get(guild);
 		const punishmentConfig = punishmentConfigs.find((c) => c.amount > warnsBefore && c.amount <= warnsAfter);
 
 		if (punishmentConfig) {
@@ -195,7 +204,6 @@ export class ModerationService extends BaseService {
 			if (!punishmentResult) return;
 
 			await BasePunishment.new({
-				client: this.client,
 				settings,
 				member: guild.members.get(this.client.user.id),
 				target: member,
@@ -408,7 +416,7 @@ export class ModerationService extends BaseService {
 	private async sendReplyAndDelete(message: Message, type: Violation, settings: BaseSettings) {
 		const t: TranslateFunc = (phrase, replace) => i18n.__({ locale: settings.locale, phrase }, replace);
 
-		const reply = await this.client.messages.sendReply(message, {
+		const reply = await this.messages.sendReply(message, {
 			color: Color.YELLOW,
 			timestamp: null,
 			footer: null,

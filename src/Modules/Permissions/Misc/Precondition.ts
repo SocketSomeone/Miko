@@ -1,12 +1,12 @@
 import { PermissionsFrom, PermissionsExecute, Permission } from '../../../Misc/Models/Permisson';
-import { Context, Command } from '../../../Framework/Services/Commands/Command';
+import { Context, BaseCommand } from '../../../Framework/Commands/Command';
 import { Message } from 'eris';
 import Enum from '../../../Misc/Utils/Enum';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 
 interface Precondtion {
 	context: Context;
-	command: Command;
+	command: BaseCommand;
 	message: Message;
 }
 

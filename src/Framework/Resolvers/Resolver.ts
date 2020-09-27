@@ -1,15 +1,18 @@
 import { BaseClient } from '../../Client';
-import { Context } from '../Services/Commands/Command';
+import { Context } from '../Commands/Command';
+import { BaseModule } from '../Module';
 
 export interface ResolverConstructor {
-	new (client: BaseClient): Resolver;
+	new (module: BaseModule): Resolver;
 }
 
 export abstract class Resolver {
 	protected client: BaseClient;
+	protected module: BaseModule;
 
-	public constructor(client: BaseClient) {
-		this.client = client;
+	public constructor(module: BaseModule) {
+		this.module = module;
+		this.client = module.client;
 	}
 
 	public abstract async resolve(value: any, context: Context, previous: any[]): Promise<any>;

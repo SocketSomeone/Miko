@@ -1,15 +1,14 @@
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
-import { BaseClient } from '../../../Client';
-import { Context, Command } from '../../../Framework/Services/Commands/Command';
+import { Context, BaseCommand } from '../Command';
 import { Message } from 'eris';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
-import { CommandResolver } from '../../../Framework/Resolvers';
+import { CommandResolver } from '../../Resolvers';
 import { Images } from '../../../Misc/Enums/Images';
-import { Color } from '../../../Misc/Enums/Colors';
+import { BaseModule } from '../../Module';
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'help',
 			aliases: ['помощь', 'h'],
 			group: null,
@@ -27,7 +26,7 @@ export default class extends Command {
 		});
 	}
 
-	public async execute(message: Message, [c]: [Command], { funcs: { t }, guild, settings: { prefix } }: Context) {
+	public async execute(message: Message, [c]: [BaseCommand], { funcs: { t }, guild, settings: { prefix } }: Context) {
 		if (c) {
 			await this.replyAsync(message, c.getHelp(t, prefix));
 			return;
@@ -65,7 +64,7 @@ export default class extends Command {
 			}
 
 			const [group, i] = groups[page - 1];
-			const commands = this.client.commands.commands.filter((x) => x.group === i);
+			const commands = [...this.client.commands.values()].filter((x) => x.group === i);
 			const pages: { name: string; value: string; inline?: boolean }[] = [];
 
 			commands

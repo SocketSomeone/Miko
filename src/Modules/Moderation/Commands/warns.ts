@@ -1,5 +1,4 @@
-import { BaseClient } from '../../../Client';
-import { Context, Command } from '../../../Framework/Services/Commands/Command';
+import { Context, BaseCommand } from '../../../Framework/Commands/Command';
 import { Message, Member } from 'eris';
 import { MemberResolver } from '../../../Framework/Resolvers';
 import { BaseMember } from '../../../Entity/Member';
@@ -9,10 +8,11 @@ import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { Images } from '../../../Misc/Enums/Images';
 
 import moment from 'moment';
+import { BaseModule } from '../../../Framework/Module';
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'warns',
 			aliases: ['преды'],
 			group: CommandGroup.MODERATION,

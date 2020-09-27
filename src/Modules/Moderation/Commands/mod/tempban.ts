@@ -1,4 +1,4 @@
-import { Command, Context } from '../../../../Framework/Services/Commands/Command';
+import { BaseCommand, Context } from '../../../../Framework/Commands/Command';
 import { BaseClient } from '../../../../Client';
 import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
 import { Message, Member } from 'eris';
@@ -12,10 +12,17 @@ import { ScheduledAction } from '../../../../Entity/ScheduledAction';
 import { Images } from '../../../../Misc/Enums/Images';
 
 import moment, { Duration } from 'moment';
+import { BaseModule } from '../../../../Framework/Module';
+import { Service } from '../../../../Framework/Decorators/Service';
+import { SchedulerService } from '../../../../Framework/Services/Scheduler';
+import { ModerationService } from '../../Services/Moderation';
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	@Service() scheduler: SchedulerService;
+	@Service() moderation: ModerationService;
+
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'tempban',
 			aliases: ['темпбан', 'тбан'],
 			group: CommandGroup.MODERATION,
@@ -55,7 +62,7 @@ export default class extends Command {
 			{ name: 'logs.mod.duration', value: duration.locale(settings.locale).humanize(false) }
 		];
 
-		const embed = this.client.messages.createEmbed({
+		const embed = this.createEmbed({
 			color: Color.DARK,
 			author: { name: t('moderation.ban.title'), icon_url: Images.MODERATION },
 			description: t('moderation.ban.done', {
@@ -73,7 +80,7 @@ export default class extends Command {
 			timestamp: moment().add(duration).toISOString()
 		});
 
-		if (this.client.moderation.isPunishable(guild, member, message.member, me)) {
+		if (this.moderation.isPunishable(guild, member, message.member, me)) {
 			await BasePunishment.informUser(t, member, Punishment.MUTE, extra);
 
 			try {
@@ -82,7 +89,6 @@ export default class extends Command {
 				await BaseMember.saveMembers(guild, [member]);
 
 				await BasePunishment.new({
-					client: this.client,
 					settings,
 					member: message.member,
 					target: member,
@@ -96,7 +102,7 @@ export default class extends Command {
 					}
 				});
 
-				await this.client.scheduler.addScheduledAction(
+				await this.scheduler.addScheduledAction(
 					guild.id,
 					ScheduledAction.UNBAN,
 					{ memberId: member.id },

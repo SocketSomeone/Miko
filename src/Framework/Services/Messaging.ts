@@ -1,48 +1,16 @@
-import { BaseService } from '../Service';
-import {
-	EmbedOptions,
-	Embed,
-	TextableChannel,
-	Message,
-	GuildChannel,
-	User,
-	Emoji,
-	Guild,
-	VoiceChannel,
-	Member
-} from 'eris';
+import { BaseService } from './Service';
+import { EmbedOptions, Embed, TextableChannel, Message, GuildChannel, User, Emoji } from 'eris';
 import { withScope, captureException } from '@sentry/node';
-import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
+import { GuildPermission } from '../../Misc/Models/GuildPermissions';
 import { TranslateFunc } from '../Commands/Command';
-import { Color } from '../../../Misc/Enums/Colors';
-import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
-import { BaseEmbedOptions } from '../../../Types';
-import { BaseSettings } from '../../../Entity/GuildSettings';
+import { Color } from '../../Misc/Enums/Colors';
+import { ColorResolve } from '../../Misc/Utils/ColorResolver';
+import { BaseEmbedOptions } from '../../Types';
 
 const upSymbol = 'left:736460400656384090';
 const downSymbol = 'right:736460400089890867';
 
-function convertEmbedToPlain(embed: EmbedOptions) {
-	const url = embed.url ? `(${embed.url})` : '';
-	const authorUrl = embed.author && embed.author.url ? `(${embed.author.url})` : '';
-
-	let fields = '';
-
-	if (embed.fields && embed.fields.length) {
-		fields = '\n\n' + embed.fields.map((f) => `**${f.name}**\n${f.value}`).join('\n\n') + '\n\n';
-	}
-
-	return (
-		'**Failed to send embed...\nEmbedded links disabled for this channel.**\n' +
-		(embed.author ? `_${embed.author.name}_ ${authorUrl}\n` : '') +
-		(embed.title ? `**${embed.title}** ${url}\n` : '') +
-		(embed.description ? embed.description + '\n' : '') +
-		fields +
-		(embed.footer ? `_${embed.footer.text}_` : '')
-	);
-}
-
-export class MessageService extends BaseService {
+export class MessagingService extends BaseService {
 	public createEmbed(options: BaseEmbedOptions = {}): Embed {
 		let color = options.color ? (options.color as number | string) : Color.PRIMARY;
 
@@ -101,7 +69,7 @@ export class MessageService extends BaseService {
 
 		const content = convertEmbedToPlain(e);
 
-		const handleException = (err: Error, reportIndicent = true) => {
+		const handleException = (err: Error) => {
 			withScope((scope) => {
 				if (target instanceof GuildChannel) {
 					scope.setUser({ id: target.guild.id });
@@ -148,13 +116,13 @@ export class MessageService extends BaseService {
 						if (err.code === 50007) {
 							// NO-OP
 						} else {
-							handleException(err, false);
+							handleException(err);
 						}
 
 						return undefined;
 					}
 				} catch (e) {
-					handleException(e, false);
+					handleException(e);
 
 					return undefined;
 				}
@@ -361,4 +329,40 @@ export class MessageService extends BaseService {
 			setTimeout(timeOut, ttl);
 		});
 	}
+}
+
+export type CreateEmbedFunc = (options?: BaseEmbedOptions) => Embed;
+export type ReplyFunc = (message: Message, reply: BaseEmbedOptions | string) => Promise<Message>;
+export type SendFunc = (target: TextableChannel, embed: EmbedOptions | string, fallbackUser?: User) => Promise<Message>;
+export type ShowPaginatedFunc = (
+	prevMsg: Message,
+	page: number,
+	maxPage: number,
+	render: (page: number, maxPage: number) => Embed
+) => Promise<void>;
+
+export type awaitReactionsFunc = (
+	prevMsg: Message,
+	func: (userID: string) => Promise<any>,
+	sets: { ttl: number; reactions: string[] }
+) => Promise<any>;
+
+function convertEmbedToPlain(embed: EmbedOptions) {
+	const url = embed.url ? `(${embed.url})` : '';
+	const authorUrl = embed.author && embed.author.url ? `(${embed.author.url})` : '';
+
+	let fields = '';
+
+	if (embed.fields && embed.fields.length) {
+		fields = '\n\n' + embed.fields.map((f) => `**${f.name}**\n${f.value}`).join('\n\n') + '\n\n';
+	}
+
+	return (
+		'**Failed to send embed...\nEmbedded links disabled for this channel.**\n' +
+		(embed.author ? `_${embed.author.name}_ ${authorUrl}\n` : '') +
+		(embed.title ? `**${embed.title}** ${url}\n` : '') +
+		(embed.description ? embed.description + '\n' : '') +
+		fields +
+		(embed.footer ? `_${embed.footer.text}_` : '')
+	);
 }

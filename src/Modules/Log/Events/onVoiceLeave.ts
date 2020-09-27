@@ -1,12 +1,16 @@
 import { BaseEventLog } from '../Misc/EventLog';
 import { BaseClient } from '../../../Client';
 import { LogType } from '../Misc/LogType';
-import { TranslateFunc } from '../../../Framework/Services/Commands/Command';
+import { TranslateFunc } from '../../../Framework/Commands/Command';
 import { Guild, Member, VoiceChannel } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
 import { Images } from '../../../Misc/Enums/Images';
+import { Cache } from '../../../Framework/Decorators/Cache';
+import { RoomCache } from '../../Voice/Cache/RoomCache';
 
 export default class onVoiceLeaveEvent extends BaseEventLog {
+	@Cache() protected rooms: RoomCache;
+
 	public constructor(client: BaseClient) {
 		super(client, LogType.VOICE_LEAVE);
 
@@ -15,7 +19,7 @@ export default class onVoiceLeaveEvent extends BaseEventLog {
 
 	private async onChannelLeave(member: Member, channel: VoiceChannel) {
 		const guild = member.guild;
-		const rooms = await this.client.cache.rooms.get(guild);
+		const rooms = await this.rooms.get(guild);
 
 		if (rooms.has(channel.id)) return;
 
@@ -23,7 +27,7 @@ export default class onVoiceLeaveEvent extends BaseEventLog {
 	}
 
 	public async execute(t: TranslateFunc, guild: Guild, member: Member, channel: VoiceChannel) {
-		const embed = this.client.messages.createEmbed({
+		const embed = this.messages.createEmbed({
 			author: { name: t('logs.voiceLeaved'), icon_url: Images.VOICE_LEAVE },
 			color: Color.RED,
 			fields: [

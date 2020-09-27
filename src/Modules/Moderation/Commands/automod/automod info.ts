@@ -1,4 +1,4 @@
-import { Command, Context } from '../../../../Framework/Services/Commands/Command';
+import { BaseCommand, Context } from '../../../../Framework/Commands/Command';
 import { BaseClient } from '../../../../Client';
 import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
 import { Message } from 'eris';
@@ -6,10 +6,11 @@ import { Color } from '../../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../../Misc/Models/GuildPermissions';
 import { Images } from '../../../../Misc/Enums/Images';
 import { Syntax } from '../../../../Misc/Models/Syntax';
+import { BaseModule } from '../../../../Framework/Module';
 
-export default class extends Command {
-	public constructor(client: BaseClient) {
-		super(client, {
+export default class extends BaseCommand {
+	public constructor(module: BaseModule) {
+		super(module, {
 			name: 'automod info',
 			aliases: ['automod list'],
 			args: [],

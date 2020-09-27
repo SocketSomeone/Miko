@@ -3,12 +3,14 @@ import { BaseGuild } from './Guild';
 import { Moment } from 'moment';
 import { DateTransformer } from './Transformers';
 import { Member } from 'eris';
-import { TranslateFunc } from '../Framework/Services/Commands/Command';
+import { TranslateFunc } from '../Framework/Commands/Command';
 import { ColorResolve } from '../Misc/Utils/ColorResolver';
 import { Color } from '../Misc/Enums/Colors';
 import { BaseClient } from '../Client';
 import { BaseSettings } from './GuildSettings';
 import i18n from 'i18n';
+import { Service } from '../Framework/Decorators/Service';
+import { LoggingService as LoggerService } from '../Modules/Log/Services/LoggerService';
 
 export enum Punishment {
 	BAN = 'ban',
@@ -19,7 +21,6 @@ export enum Punishment {
 }
 
 interface ContextLog {
-	client: BaseClient;
 	settings: BaseSettings;
 	member: Member;
 	target: Member;
@@ -58,22 +59,21 @@ export class BasePunishment extends BaseEntity {
 	@CreateDateColumn()
 	public createdAt: Date;
 
-	public static async new({ opts, member, target, client, settings, extra }: ContextLog) {
-		const t: TranslateFunc = (key, replacements) => i18n.__({ locale: settings.locale, phrase: key }, replacements);
+	@Service() protected static logger: LoggerService;
 
+	public static async new({ opts, member, target, settings, extra }: ContextLog) {
 		await this.create({
 			...opts,
 			guild: BaseGuild.create({ id: member.guild.id }),
 			member: target.id
 		}).save();
 
-		await client.logger.logModAction({
+		await this.logger.logModAction({
 			sets: settings,
 			type: opts.type,
 			member,
 			target,
-			extra,
-			t
+			extra
 		});
 	}
 

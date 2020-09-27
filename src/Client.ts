@@ -20,8 +20,6 @@ import { BaseModule } from './Framework/Module';
 import { Service, serviceInjections } from './Framework/Decorators/Service';
 import { Cache, cacheInjections } from './Framework/Decorators/Cache';
 import { RabbitMQService as RabbitMqService } from './Framework/Services/RabbitMQ';
-import { BaseRequestHandler } from './Framework/Other/RequestHandler';
-import { LoggingService as LoggerService } from './Modules/Log/Services/LoggerService';
 import { ConfigureModule } from './Modules/Configure/ConfigureModule';
 import { LogModule } from './Modules/Log/LogModule';
 import { FrameworkModule } from './Framework/FrameworkModule';
@@ -69,7 +67,6 @@ export class BaseClient extends Client {
 	public firstShardId: number;
 	public lastShardId: number;
 	public shardCount: number;
-	public requestHandler: BaseRequestHandler;
 
 	public modules: Map<new (client: BaseClient) => BaseModule, BaseModule>;
 	public services: Map<new (module: BaseModule) => BaseService, BaseService>;
@@ -133,8 +130,6 @@ export class BaseClient extends Client {
 		this.firstShardId = firstShard;
 		this.lastShardId = lastShard;
 		this.shardCount = shardCount;
-
-		this.requestHandler = new BaseRequestHandler(this);
 
 		this.modules = new Map();
 		this.services = new Map();

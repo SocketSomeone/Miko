@@ -4,7 +4,7 @@ import chalk from 'chalk';
 import moment from 'moment';
 import { GuildSettingsCache } from '../Cache';
 
-import { Cache } from '../decorators/Cache';
+import { Cache } from '../Decorators/Cache';
 import { BaseService } from './Service';
 
 const RETRY_INTERVAL = 10000;
@@ -229,7 +229,6 @@ export class RabbitMQService extends BaseService {
 	}
 
 	public async sendStatusToManager(err?: Error) {
-		const req = this.client.requestHandler;
 		let channelCount = this.client.groupChannels.size + this.client.privateChannels.size;
 		let roleCount = 0;
 
@@ -252,11 +251,7 @@ export class RabbitMQService extends BaseService {
 			gateway: [...this.client.shardsConnected],
 			error: err ? err.message : null,
 			metrics: {
-				...this.client.stats,
-				httpRequests: [...req.requestStats.entries()].map(([url, stats]) => ({ url, stats })),
-				httpRequestsQueued: Object.keys(req.ratelimits)
-					.filter((endpoint) => req.ratelimits[endpoint]._queue.length > 0)
-					.reduce((acc, endpoint) => acc.concat([{ endpoint, count: req.ratelimits[endpoint]._queue.length }]), [])
+				...this.client.stats
 			},
 			service: {},
 			cache: {

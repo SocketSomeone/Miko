@@ -5,7 +5,7 @@ import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
-import { LogType } from '../Misc/LogType';
+import { LogType } from '../Others/LogType';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { Images } from '../../../Misc/Enums/Images';
 import { BaseModule } from '../../../Framework/Module';

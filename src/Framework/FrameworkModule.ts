@@ -1,5 +1,5 @@
 import { BaseClient } from '../Client';
-import { GuildSettingsCache, PermissionsCache } from './Cache';
+import { GuildSettingsCache } from './Cache';
 import { BaseModule } from './Module';
 import { CommandService } from './Services/Commands';
 import { MessagingService } from './Services/Messaging';
@@ -21,7 +21,6 @@ export class FrameworkModule extends BaseModule {
 
 		// Caches
 		this.registerCache(GuildSettingsCache);
-		this.registerCache(PermissionsCache);
 
 		// Commands
 		this.registerCommand(help);

@@ -7,12 +7,8 @@ import { Color } from '../../../Misc/Enums/Colors';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { Images } from '../../../Misc/Enums/Images';
 import { BaseModule } from '../../../Framework/Module';
-import { Cache } from '../../../Framework/Decorators/Cache';
-import { PermissionsCache } from '../../../Framework/Cache';
 
 export default class extends BaseCommand {
-	@Cache() protected permissions: PermissionsCache;
-
 	public constructor(module: BaseModule) {
 		super(module, {
 			name: 'permission move',
@@ -42,7 +38,7 @@ export default class extends BaseCommand {
 		[targetId, sourceId]: [number, number],
 		{ funcs: { t }, guild, settings }: Context
 	) {
-		const permissions = await this.permissions.get(guild);
+		const permissions = settings.permissions;
 
 		const target = permissions[targetId - 1];
 		const source = permissions[sourceId - 1];
@@ -53,7 +49,7 @@ export default class extends BaseCommand {
 		target.index = sourceId;
 		source.index = targetId;
 
-		await this.permissions.save(guild.id, permissions);
+		await settings.save();
 
 		await this.replyAsync(message, {
 			color: Color.MAGENTA,

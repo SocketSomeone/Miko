@@ -44,12 +44,6 @@ export class BaseGuild extends BaseEntity {
 	@JoinColumn()
 	public punishments: BasePunishment[];
 
-	@Column({ type: 'json', default: [] })
-	public permissions: Permission[] = [];
-
-	@Column({ type: 'json', default: [] })
-	public punishmentConfig: PunishmentConfig[] = [];
-
 	@CreateDateColumn({ nullable: true, transformer: DateTransformer })
 	public joinedAt: Moment;
 
@@ -69,11 +63,7 @@ export class BaseGuild extends BaseEntity {
 
 		if (hasFounded) return hasFounded;
 
-		const guild = this.getDefaultGuild(g);
-
-		await guild.save();
-
-		return guild;
+		return this.getDefaultGuild(g);
 	}
 
 	static async saveGuilds(guilds: Guild[], options?: Partial<BaseGuild>) {
@@ -100,9 +90,7 @@ export class BaseGuild extends BaseEntity {
 			id: g.id,
 			name: g.name,
 			memberCount: g.memberCount,
-			ownerID: g.ownerID,
-			permissions: [],
-			punishmentConfig: []
+			ownerID: g.ownerID
 		});
 
 		return guild;

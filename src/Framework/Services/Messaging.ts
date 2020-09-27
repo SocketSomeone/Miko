@@ -50,7 +50,7 @@ export class MessagingService extends BaseService {
 			}
 
 			setTimeout(() => {
-				m.delete().catch(undefined);
+				m.delete().catch(() => undefined);
 
 				resolve(null);
 			}, ttl);

@@ -8,11 +8,8 @@ import { Color } from '../../../Misc/Enums/Colors';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { Images } from '../../../Misc/Enums/Images';
 import { Cache } from '../../../Framework/Decorators/Cache';
-import { PermissionsCache } from '../../../Framework/Cache';
 
 export default class extends BaseCommand {
-	@Cache() protected permissions: PermissionsCache;
-
 	public constructor(module: BaseModule) {
 		super(module, {
 			name: 'permission remove',
@@ -33,12 +30,12 @@ export default class extends BaseCommand {
 	}
 
 	public async execute(message: Message, [index]: [number], { funcs: { t }, guild, settings }: Context) {
-		const permissions = await this.permissions.get(guild);
+		const permissions = settings.permissions;
 
 		if (typeof permissions[index - 1] === 'undefined') throw new ExecuteError(t('perms.notFound'));
 
 		permissions.splice(index - 1, 1);
-		await this.permissions.save(guild.id, permissions);
+		await settings.save();
 
 		await this.replyAsync(message, {
 			color: Color.MAGENTA,

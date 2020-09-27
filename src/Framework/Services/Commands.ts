@@ -17,7 +17,7 @@ import { BaseSettings } from '../../Entity/GuildSettings';
 import { Images } from '../../Misc/Enums/Images';
 import chalk from 'chalk';
 import { Cache } from '../Decorators/Cache';
-import { GuildSettingsCache, PermissionsCache } from '../Cache';
+import { GuildSettingsCache } from '../Cache';
 import { Service } from '../Decorators/Service';
 import { MessagingService } from './Messaging';
 
@@ -27,7 +27,6 @@ const COOLDOWN = 5;
 export class CommandService extends BaseService {
 	@Service() msg: MessagingService;
 	@Cache() guilds: GuildSettingsCache;
-	@Cache() permissions: PermissionsCache;
 
 	private commandMap: Map<string, BaseCommand> = new Map();
 	private commandCalls: Map<string, { last: number; warned: boolean }> = new Map();
@@ -112,9 +111,10 @@ export class CommandService extends BaseService {
 			const withoutPermissions = new Set([guild.ownerID, this.client.config.ownerID]);
 
 			if (!withoutPermissions.has(member.id)) {
-				const permissions = await this.permissions.get(guild);
-
-				const { answer, permission } = Precondition.checkPermissions({ context, command: cmd, message }, permissions);
+				const { answer, permission } = Precondition.checkPermissions(
+					{ context, command: cmd, message },
+					sets.permissions
+				);
 
 				if (!answer) {
 					this.msg.sendReply(
@@ -197,6 +197,8 @@ export class CommandService extends BaseService {
 				const val = await resolver.resolve(rawVal, context, args);
 
 				if (typeof val === typeof undefined && arg.required) {
+					// TODO: Not found required argument
+
 					return;
 				}
 

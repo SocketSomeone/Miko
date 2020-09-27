@@ -1,7 +1,7 @@
 import { BaseService } from '../../../Framework/Services/Service';
 import { BaseClient } from '../../../Client';
-import { BaseEventLog } from '../Misc/EventLog';
-import { LogType } from '../Misc/LogType';
+import { BaseEventLog } from '../Others/EventLog';
+import { LogType } from '../Others/LogType';
 import { resolve, relative } from 'path';
 import { glob } from 'glob';
 import { TranslateFunc } from '../../../Framework/Commands/Command';

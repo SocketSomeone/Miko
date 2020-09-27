@@ -1,6 +1,6 @@
-import { BaseEventLog } from '../Misc/EventLog';
+import { BaseEventLog } from '../Others/EventLog';
 import { BaseClient } from '../../../Client';
-import { LogType } from '../Misc/LogType';
+import { LogType } from '../Others/LogType';
 import { TranslateFunc } from '../../../Framework/Commands/Command';
 import { Guild, Constants, Role } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';

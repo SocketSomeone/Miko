@@ -5,7 +5,6 @@ import {
 	BooleanResolver,
 	ChannelResolver
 } from '../../../Framework/Resolvers';
-import { BaseClient } from '../../../Client';
 import { Context, BaseCommand } from '../../../Framework/Commands/Command';
 import { Message, Member, Role, GuildChannel, TextChannel } from 'eris';
 import { CommandGroup } from '../../../Misc/Models/CommandGroup';
@@ -18,11 +17,9 @@ import PermissionsOutput from '../Misc/PermissionsOutput';
 import { ChannelType } from '../../../Types';
 import { BaseModule } from '../../../Framework/Module';
 import { Cache } from '../../../Framework/Decorators/Cache';
-import { PermissionsCache } from '../../../Framework/Cache';
+import { GuildSettingsCache } from '../../../Framework/Cache';
 
 export default class extends BaseCommand {
-	@Cache() protected permissions: PermissionsCache;
-
 	public constructor(module: BaseModule) {
 		super(module, {
 			name: 'permission add',
@@ -63,7 +60,7 @@ export default class extends BaseCommand {
 		[allow, from, target]: [boolean, Role | Member | GuildChannel, PermissionsTarget],
 		{ funcs: { t }, guild, settings }: Context
 	) {
-		const permissions = await this.permissions.get(guild);
+		const permissions = settings.permissions;
 
 		let perm = permissions.find((x) => x.target.id === target.id && x.activator.id === from.id);
 		let isExist = !!perm;
@@ -102,7 +99,7 @@ export default class extends BaseCommand {
 			perm.allow = allow;
 		}
 
-		await this.permissions.save(guild.id, permissions);
+		await settings.save();
 
 		await this.replyAsync(message, {
 			color: Color.MAGENTA,

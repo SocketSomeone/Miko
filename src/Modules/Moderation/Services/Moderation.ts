@@ -13,7 +13,7 @@ import moment from 'moment';
 import i18n from 'i18n';
 import { DISCORD_EMOJI_REGEX, EMOJIS_REGEX } from '../../../Misc/Regex/Emoji';
 import { Cache } from '../../../Framework/Decorators/Cache';
-import { GuildSettingsCache, PunishmentsCache } from '../../../Framework/Cache';
+import { GuildSettingsCache } from '../../../Framework/Cache';
 import { Service } from '../../../Framework/Decorators/Service';
 import { MessagingService } from '../../../Framework/Services/Messaging';
 
@@ -43,7 +43,6 @@ export class ModerationService extends BaseService {
 	@Service() protected messages: MessagingService;
 
 	@Cache() protected guilds: GuildSettingsCache;
-	@Cache() protected punishments: PunishmentsCache;
 
 	private messageCache: Map<string, MiniMessage[]> = new Map();
 	public getMessageCacheSize() {
@@ -174,7 +173,7 @@ export class ModerationService extends BaseService {
 
 		const warnsAfter = warnsBefore + 1;
 
-		const punishmentConfigs = await this.punishments.get(guild);
+		const punishmentConfigs = settings.punishmentConfig;
 		const punishmentConfig = punishmentConfigs.find((c) => c.amount > warnsBefore && c.amount <= warnsAfter);
 
 		if (punishmentConfig) {

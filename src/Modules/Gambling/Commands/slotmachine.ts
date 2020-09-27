@@ -9,7 +9,7 @@ import { SlotMachine } from 'slot-machine';
 import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { Color } from '../../../Misc/Enums/Colors';
 
-import slotSymbols from '../Misc/slot-symbols';
+import slotSymbols from '../Others/slot-symbols';
 import { BaseModule } from '../../../Framework/Module';
 
 const machine = new SlotMachine(3, slotSymbols);

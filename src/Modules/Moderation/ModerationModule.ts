@@ -1,5 +1,4 @@
 import { BaseClient } from '../../Client';
-import { PunishmentsCache } from '../../Framework/Cache';
 import { BaseModule } from '../../Framework/Module';
 import automodIgnore from './Commands/automod/automod ignore';
 import automodInfo from './Commands/automod/automod info';
@@ -23,9 +22,6 @@ export class ModerationModule extends BaseModule {
 
 		// Services
 		this.registerService(ModerationService);
-
-		// Caches
-		this.registerCache(PunishmentsCache);
 
 		// Commands
 		this.registerCommand(automodInfo);

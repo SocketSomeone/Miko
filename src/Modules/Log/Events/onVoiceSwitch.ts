@@ -1,6 +1,6 @@
-import { BaseEventLog } from '../Misc/EventLog';
+import { BaseEventLog } from '../Others/EventLog';
 import { BaseClient } from '../../../Client';
-import { LogType } from '../Misc/LogType';
+import { LogType } from '../Others/LogType';
 import { TranslateFunc } from '../../../Framework/Commands/Command';
 import { Guild, Member, VoiceChannel } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
@@ -11,7 +11,6 @@ import { GuildSettingsCache } from '../../../Framework/Cache';
 
 export default class onVoiceSwitchEvent extends BaseEventLog {
 	@Cache() rooms: RoomCache;
-	@Cache() guilds: GuildSettingsCache;
 
 	public constructor(client: BaseClient) {
 		super(client, LogType.VOICE_SWITCH);

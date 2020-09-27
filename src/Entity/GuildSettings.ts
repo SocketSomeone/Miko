@@ -1,9 +1,11 @@
 import { BaseEntity, Entity, Column, PrimaryColumn, OneToOne, JoinColumn } from 'typeorm';
 import { EmojisDefault } from '../Misc/Enums/EmojisDefaults';
-import { Violation } from '../Misc/Enums/Violation';
+import { PunishmentConfig, Violation } from '../Misc/Enums/Violation';
 import { SetTransformer } from './Transformers/SetTransformer';
 import { WelcomeChannelType } from '../Misc/Enums/WelcomeTypes';
-import { LogType } from '../Modules/Log/Misc/LogType';
+import { LogType } from '../Modules/Log/Others/LogType';
+import { Permission } from '../Misc/Models/Permisson';
+import { PermissionTransformer } from './Transformers';
 
 interface GuildPrices {
 	timely: string;
@@ -125,4 +127,14 @@ export class BaseSettings extends BaseEntity {
 		[LogType.MESSAGE_EDITED]: null,
 		[LogType.MESSAGE_DELETED]: null
 	};
+
+	@Column({
+		type: 'json',
+		default: [],
+		transformer: PermissionTransformer
+	})
+	public permissions: Permission[] = [];
+
+	@Column({ type: 'json', default: [] })
+	public punishmentConfig: PunishmentConfig[] = [];
 }

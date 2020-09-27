@@ -1,6 +1,6 @@
-import { BaseEventLog } from '../Misc/EventLog';
+import { BaseEventLog } from '../Others/EventLog';
 import { BaseClient } from '../../../Client';
-import { LogType } from '../Misc/LogType';
+import { LogType } from '../Others/LogType';
 import { TranslateFunc } from '../../../Framework/Commands/Command';
 import { Guild, Constants, Role } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
@@ -52,10 +52,10 @@ export default class onRoleUpdateEvent extends BaseEventLog {
 		}
 
 		for (const compare of compares.sort((a, b) => a.key.localeCompare(b.key))) {
-			let value = `\`${compare.old}\` => \`${compare.new}\``;
+			let value = `\`${compare.old}\` → \`${compare.new}\``;
 
 			if (compare.key === 'color') {
-				value = `\`${color(Number(compare.old))}\` => \`${color(Number(compare.new))}\``;
+				value = `\`${color(Number(compare.old))}\` → \`${color(Number(compare.new))}\``;
 			}
 
 			embed.fields.push({

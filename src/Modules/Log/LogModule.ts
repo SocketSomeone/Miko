@@ -1,4 +1,5 @@
 import { BaseClient } from '../../Client';
+import { BasePunishment } from '../../Entity/Punishment';
 import { BaseModule } from '../../Framework/Module';
 import { MessagingService } from '../../Framework/Services/Messaging';
 import disable from './Commands/disable';
@@ -21,5 +22,8 @@ export class LogModule extends BaseModule {
 		this.registerCommand(enable);
 		this.registerCommand(set);
 		this.registerCommand(unset);
+
+		// Entity Injections
+		client.setupInjections(BasePunishment);
 	}
 }

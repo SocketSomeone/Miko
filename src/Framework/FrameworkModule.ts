@@ -6,6 +6,7 @@ import { MessagingService } from './Services/Messaging';
 import { SchedulerService } from './Services/Scheduler';
 import { RabbitMQService } from './Services/RabbitMQ';
 import help from './Commands/Info/help';
+import { BasePunishment } from '../Entity/Punishment';
 
 export class FrameworkModule extends BaseModule {
 	public name: string = 'Framework';

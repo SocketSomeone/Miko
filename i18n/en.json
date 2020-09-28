@@ -370,7 +370,8 @@
 			"until": "moderation.mute.until",
 			"done": "moderation.mute.done",
 			"error": "moderation.mute.error",
-			"already": "moderation.mute.already"
+			"already": "moderation.mute.already",
+			"cannot": "moderation.mute.cannot"
 		},
 		"noreason": "moderation.noreason",
 		"unmute": {

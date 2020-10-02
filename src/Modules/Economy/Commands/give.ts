@@ -1,6 +1,5 @@
 import { BaseCommand, Context } from '../../../Framework/Commands/Command';
 import { BaseModule } from '../../../Framework/Module';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message, Member } from 'eris';
 import { BaseMember } from '../../../Entity/Member';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
@@ -24,7 +23,6 @@ export default class extends BaseCommand {
 					required: true
 				}
 			],
-			group: CommandGroup.ECONOMY,
 			guildOnly: true,
 			premiumOnly: false,
 			examples: ['@user 1000']

@@ -4,7 +4,6 @@ import { BaseClient } from '../../Client';
 import { Guild, Member, Message, Embed } from 'eris';
 import { GuildPermission } from '../../Misc/Models/GuildPermissions';
 import { Resolver, ResolverConstructor } from '../Resolvers/Resolver';
-import { CommandGroup } from '../../Misc/Models/CommandGroup';
 import { BaseSettings } from '../../Entity/GuildSettings';
 import { Images } from '../../Misc/Enums/Images';
 import { Color } from '../../Misc/Enums/Colors';
@@ -42,7 +41,6 @@ export type Context = {
 
 interface CommandOptions {
 	name: string;
-	group: CommandGroup;
 	aliases: string[];
 	examples?: string[];
 	args?: Arg[];
@@ -64,7 +62,6 @@ export abstract class BaseCommand {
 	public aliases: string[];
 	public args: Arg[];
 
-	public group: CommandGroup;
 	public usage: string;
 	public guildOnly: boolean;
 	public premiumOnly?: boolean;
@@ -90,7 +87,6 @@ export abstract class BaseCommand {
 		this.aliases = props.aliases.map((x) => x.toLowerCase());
 
 		this.usage = `${this.name} `;
-		this.group = props.group;
 		this.args = (props && props.args) || [];
 		this.examples = (props && props.examples) || [];
 
@@ -99,6 +95,8 @@ export abstract class BaseCommand {
 
 		this.guildOnly = props.guildOnly;
 		this.premiumOnly = props.premiumOnly;
+
+		this.checkValid();
 	}
 
 	public async init() {
@@ -121,6 +119,8 @@ export abstract class BaseCommand {
 
 			this.usage += arg.required ? `<${arg.name}> ` : `[${arg.name}] `;
 		});
+
+		this.resolvers.forEach((res) => res.init());
 	}
 
 	protected getDescription(t: TranslateFunc) {
@@ -135,7 +135,7 @@ export abstract class BaseCommand {
 		return desc;
 	}
 
-	protected checkDependies() {
+	protected checkValid() {
 		if (this.args.filter((x) => x.required).length >= 1 && this.examples.length < 1) {
 			console.error(`Missed examples for arguments in command "${this.name}"`);
 			process.exit(1);

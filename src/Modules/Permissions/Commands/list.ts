@@ -1,6 +1,5 @@
 import { Context, BaseCommand } from '../../../Framework/Commands/Command';
 import { Message } from 'eris';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import PermissionsOutput from '../Misc/PermissionsOutput';
@@ -13,9 +12,8 @@ const PERMS_PER_PAGE = 10;
 export default class extends BaseCommand {
 	public constructor(module: BaseModule) {
 		super(module, {
-			name: 'permissions list',
+			name: 'permission list',
 			aliases: ['список правил'],
-			group: CommandGroup.PERMISSIONS,
 			args: [],
 			guildOnly: true,
 			premiumOnly: false,

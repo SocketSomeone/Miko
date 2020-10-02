@@ -15,6 +15,10 @@ export abstract class Resolver {
 		this.client = module.client;
 	}
 
+	public init() {
+		// NO-OP
+	}
+
 	public abstract async resolve(value: any, context: Context, previous: any[]): Promise<any>;
 
 	public getType() {

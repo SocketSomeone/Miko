@@ -48,7 +48,7 @@ export class CommandService extends BaseService {
 				this.commandMap.set(a.toLowerCase(), cmd);
 			});
 
-			console.log(chalk.green(`Loaded ${chalk.blue(cmd.name)} from ${chalk.blue(cmd.module.name)}`));
+			console.log(chalk.green(`Loaded ${chalk.blue(cmd.name)} from ${chalk.blue(cmd.module.names.en)}`));
 		}
 
 		console.log(chalk.green(`Loaded ${chalk.blue(this.client.commands.size)} commands!`));
@@ -189,7 +189,7 @@ export class CommandService extends BaseService {
 			let resolver = cmd.resolvers[i];
 			let rawVal = rawArgs[i];
 
-			if (arg.full) {
+			if (rawVal && arg.full) {
 				rawVal = rawArgs.slice(i, rawArgs.length).join(' ');
 			}
 

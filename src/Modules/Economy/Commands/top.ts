@@ -1,6 +1,5 @@
 import { BaseCommand, Context } from '../../../Framework/Commands/Command';
 import { BaseModule } from '../../../Framework/Module';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { EmbedField, Message } from 'eris';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { BaseMember } from '../../../Entity/Member';
@@ -13,7 +12,6 @@ export default class extends BaseCommand {
 			name: 'top',
 			aliases: ['лидеры', 'топ'],
 			args: [],
-			group: CommandGroup.ECONOMY,
 			guildOnly: true,
 			premiumOnly: false
 		});

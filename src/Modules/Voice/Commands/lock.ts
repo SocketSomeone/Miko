@@ -1,7 +1,5 @@
-import { BaseClient } from '../../../Client';
 import { Context, BaseCommand } from '../../../Framework/Commands/Command';
 import { Message, Member, Role } from 'eris';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { AnyResolver, RoleResolver, MemberResolver } from '../../../Framework/Resolvers';
 import { ActionRoom } from '../../../Entity/Privates';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
@@ -17,10 +15,9 @@ export default class extends BaseCommand {
 		super(module, {
 			name: 'voice lock',
 			aliases: ['v lock'],
-			group: CommandGroup.VOICE,
 			args: [
 				{
-					name: 'role/member',
+					name: 'role | member',
 					resolver: new AnyResolver(module, RoleResolver, MemberResolver),
 					required: false
 				}

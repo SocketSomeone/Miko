@@ -2,7 +2,6 @@ import { BaseModule } from '../../../Framework/Module';
 import { Context, BaseCommand } from '../../../Framework/Commands/Command';
 import { Message, Member } from 'eris';
 import { MemberResolver } from '../../../Framework/Resolvers';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Images } from '../../../Misc/Enums/Images';
 import { Service } from '../../../Framework/Decorators/Service';
 import { RoomService } from '../Services/RoomService';
@@ -14,7 +13,6 @@ export default class extends BaseCommand {
 		super(module, {
 			name: 'voice admin',
 			aliases: ['v admin'],
-			group: CommandGroup.VOICE,
 			args: [
 				{
 					name: 'user',

@@ -2,7 +2,6 @@ import { BaseClient } from '../../../Client';
 import { Context, BaseCommand } from '../../../Framework/Commands/Command';
 import { Message, Role } from 'eris';
 import { StringResolver, RoleResolver } from '../../../Framework/Resolvers';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { BaseMessage } from '../../../Entity/Message';
 import { ReactionRoleService } from '../Services/ReactionRoles';
@@ -20,7 +19,6 @@ export default class extends BaseCommand {
 		super(module, {
 			name: 'reactionrole',
 			aliases: ['rr'],
-			group: CommandGroup.CONFIGURE,
 			args: [
 				{
 					name: 'messageId',

@@ -1,6 +1,4 @@
 import { BaseCommand, Context } from '../../../../Framework/Commands/Command';
-import { BaseClient } from '../../../../Client';
-import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
 import { Message } from 'eris';
 import { Color } from '../../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../../Misc/Models/GuildPermissions';
@@ -14,7 +12,6 @@ export default class extends BaseCommand {
 			name: 'automod info',
 			aliases: ['automod list'],
 			args: [],
-			group: CommandGroup.MODERATION,
 			guildOnly: true,
 			premiumOnly: false,
 			userPermissions: [GuildPermission.MANAGE_GUILD]

@@ -1,5 +1,4 @@
 import { BaseCommand, Context } from '../../../../Framework/Commands/Command';
-import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
 import { Message, Member } from 'eris';
 import { BaseMember } from '../../../../Entity/Member';
 import { ExecuteError } from '../../../../Framework/Errors/ExecuteError';
@@ -19,7 +18,6 @@ export default class extends BaseCommand {
 		super(module, {
 			name: 'mute',
 			aliases: ['мут', 'замутить'],
-			group: CommandGroup.MODERATION,
 			args: [
 				{
 					name: 'user',

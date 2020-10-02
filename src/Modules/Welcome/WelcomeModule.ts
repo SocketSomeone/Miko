@@ -1,5 +1,6 @@
 import { BaseClient } from '../../Client';
 import { BaseModule } from '../../Framework/Module';
+import { Lang } from '../../Misc/Enums/Languages';
 import autoassignrole from './Commands/autoassignrole';
 import autosave from './Commands/autosave';
 import channel from './Commands/channel';
@@ -10,7 +11,10 @@ import { WelcomeRolesService } from './Services/WelcomeRolesService';
 import { WelcomeService } from './Services/WelcomeService';
 
 export class WelcomeModule extends BaseModule {
-	public name: string = 'Welcome';
+	public names = {
+		[Lang.en]: 'Welcome',
+		[Lang.ru]: 'Приветствие'
+	};
 
 	public constructor(client: BaseClient) {
 		super(client);

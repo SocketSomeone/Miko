@@ -1,6 +1,5 @@
 import { BaseCommand, Context } from '../../../../Framework/Commands/Command';
 import { BaseModule } from '../../../../Framework/Module';
-import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
 import { Message, Member } from 'eris';
 import { BaseMember } from '../../../../Entity/Member';
 import { Color } from '../../../../Misc/Enums/Colors';
@@ -24,7 +23,6 @@ export default class extends BaseCommand {
 		super(module, {
 			name: 'tempmute',
 			aliases: ['темпмут', 'тмут'],
-			group: CommandGroup.MODERATION,
 			args: [
 				{
 					name: 'user',

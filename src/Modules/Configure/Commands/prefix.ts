@@ -1,6 +1,5 @@
 import { BaseCommand, Context } from '../../../Framework/Commands/Command';
 import { StringResolver } from '../../../Framework/Resolvers';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
@@ -20,7 +19,6 @@ export default class extends BaseCommand {
 					required: false
 				}
 			],
-			group: CommandGroup.CONFIGURE,
 			guildOnly: true,
 			premiumOnly: false,
 			userPermissions: [GuildPermission.MANAGE_GUILD],

@@ -1,10 +1,9 @@
-import { Embed, Member, Message } from 'eris';
+import { Member, Message } from 'eris';
 import { BaseMember } from '../../../../Entity/Member';
 import { BaseCommand, Context } from '../../../../Framework/Commands/Command';
 import { ExecuteError } from '../../../../Framework/Errors/ExecuteError';
 import { BaseModule } from '../../../../Framework/Module';
 import { BigIntResolver } from '../../../../Framework/Resolvers';
-import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
 import { GuildPermission } from '../../../../Misc/Models/GuildPermissions';
 import { Game } from './game';
 
@@ -20,7 +19,6 @@ export default class extends BaseCommand {
 					required: true
 				}
 			],
-			group: CommandGroup.GAMBLING,
 			guildOnly: true,
 			premiumOnly: false,
 			examples: ['1000'],
@@ -50,7 +48,7 @@ export default class extends BaseCommand {
 
 		const sendGameMessage = async () => {
 			const embed = this.createEmbed({
-				title: t('gambling.race.title', { money }),
+				title: t('gambling.race.title'),
 				description: t('gambling.race.bet', {
 					bet: `${money} ${e(currency)}`
 				}),

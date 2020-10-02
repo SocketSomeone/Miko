@@ -1,21 +1,16 @@
-import { BaseClient } from '../../../Client';
 import { Context, BaseCommand } from '../../../Framework/Commands/Command';
 import { Message } from 'eris';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { Color } from '../../../Misc/Enums/Colors';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { Images } from '../../../Misc/Enums/Images';
 import { BaseModule } from '../../../Framework/Module';
-import { Cache } from '../../../Framework/Decorators/Cache';
-import { GuildSettingsCache } from '../../../Framework/Cache';
 
 export default class extends BaseCommand {
 	public constructor(module: BaseModule) {
 		super(module, {
-			name: 'permissions clear',
+			name: 'permission clear',
 			aliases: ['правила очистить'],
-			group: CommandGroup.PERMISSIONS,
 			args: [],
 			guildOnly: true,
 			premiumOnly: false,

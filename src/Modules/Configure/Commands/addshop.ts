@@ -1,6 +1,5 @@
 import { BaseCommand, Context } from '../../../Framework/Commands/Command';
 import { RoleResolver, BigIntResolver } from '../../../Framework/Resolvers';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message, Role } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
@@ -29,7 +28,6 @@ export default class extends BaseCommand {
 					required: true
 				}
 			],
-			group: CommandGroup.CONFIGURE,
 			guildOnly: true,
 			premiumOnly: false,
 			botPermissions: [GuildPermission.MANAGE_ROLES],

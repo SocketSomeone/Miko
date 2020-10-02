@@ -1,5 +1,4 @@
 import { BaseCommand, Context } from '../../../../Framework/Commands/Command';
-import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
 import { Message, Member } from 'eris';
 import { ExecuteError } from '../../../../Framework/Errors/ExecuteError';
 import { MemberResolver, NumberResolver } from '../../../../Framework/Resolvers';
@@ -13,7 +12,6 @@ export default class extends BaseCommand {
 		super(module, {
 			name: 'clear',
 			aliases: ['prune', 'purge', 'очистить'],
-			group: CommandGroup.MODERATION,
 			args: [
 				{
 					name: 'count',

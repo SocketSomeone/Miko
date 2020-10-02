@@ -1,5 +1,3 @@
-import { CommandGroup } from './CommandGroup';
-
 export enum PermissionsFrom {
 	User,
 	Channel,

@@ -277,6 +277,9 @@
 		},
 		"boolean": {
 			"invalid": "resolvers.boolean.invalid"
+		},
+		"module": {
+			"notFound": "resolvers.module.notFound"
 		}
 	},
 	"key": {
@@ -727,7 +730,9 @@
 				"lick": "info.help.cmdDesc.lick",
 				"sex": "info.help.cmdDesc.sex",
 				"slap": "info.help.cmdDesc.slap",
-				"sleep": "info.help.cmdDesc.sleep"
+				"sleep": "info.help.cmdDesc.sleep",
+				"permission clear": "info.help.cmdDesc.permission clear",
+				"permission list": "info.help.cmdDesc.permission list"
 			},
 			"moduleDesc": {
 				"configure": "info.help.moduleDesc.configure",
@@ -739,7 +744,8 @@
 				"voice": "info.help.moduleDesc.voice",
 				"welcome": "info.help.moduleDesc.welcome",
 				"emotions": "info.help.moduleDesc.emotions"
-			}
+			},
+			"desc": "info.help.desc"
 		},
 		"warns": {
 			"title": "info.warns.title",

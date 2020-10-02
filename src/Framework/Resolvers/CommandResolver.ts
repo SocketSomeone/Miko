@@ -1,4 +1,3 @@
-import { BaseClient } from '../../Client';
 import { BaseCommand, Context } from '../Commands/Command';
 import { BaseModule } from '../Module';
 

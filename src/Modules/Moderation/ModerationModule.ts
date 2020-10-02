@@ -1,5 +1,6 @@
 import { BaseClient } from '../../Client';
 import { BaseModule } from '../../Framework/Module';
+import { Lang } from '../../Misc/Enums/Languages';
 import automodIgnore from './Commands/automod/automod ignore';
 import automodInfo from './Commands/automod/automod info';
 import disable from './Commands/automod/disable';
@@ -15,7 +16,10 @@ import warns from './Commands/warns';
 import { ModerationService } from './Services/Moderation';
 
 export class ModerationModule extends BaseModule {
-	public name: string = 'Moderation';
+	public names = {
+		[Lang.en]: 'Moderation',
+		[Lang.ru]: 'Модерация'
+	};
 
 	public constructor(client: BaseClient) {
 		super(client);

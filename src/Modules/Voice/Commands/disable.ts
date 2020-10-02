@@ -1,5 +1,4 @@
 import { BaseCommand, Context, TranslateFunc } from '../../../Framework/Commands/Command';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message, Guild } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
@@ -13,7 +12,6 @@ export default class extends BaseCommand {
 			name: 'voice disable',
 			aliases: ['v disable'],
 			args: [],
-			group: CommandGroup.VOICE,
 			guildOnly: true,
 			premiumOnly: false,
 			botPermissions: [GuildPermission.MANAGE_CHANNELS],

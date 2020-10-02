@@ -1,6 +1,5 @@
 import { Context, BaseCommand } from '../../../Framework/Commands/Command';
 import { Message } from 'eris';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { NumberResolver } from '../../../Framework/Resolvers';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { Color } from '../../../Misc/Enums/Colors';
@@ -13,7 +12,6 @@ export default class extends BaseCommand {
 		super(module, {
 			name: 'permission move',
 			aliases: [],
-			group: CommandGroup.PERMISSIONS,
 			args: [
 				{
 					name: 'number',

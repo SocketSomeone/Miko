@@ -1,20 +1,17 @@
 import { BaseModule } from '../../../Framework/Module';
 import { Context, BaseCommand } from '../../../Framework/Commands/Command';
 import { Message } from 'eris';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { NumberResolver } from '../../../Framework/Resolvers';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { Color } from '../../../Misc/Enums/Colors';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { Images } from '../../../Misc/Enums/Images';
-import { Cache } from '../../../Framework/Decorators/Cache';
 
 export default class extends BaseCommand {
 	public constructor(module: BaseModule) {
 		super(module, {
 			name: 'permission remove',
 			aliases: ['правило удалить'],
-			group: CommandGroup.PERMISSIONS,
 			args: [
 				{
 					name: 'number',

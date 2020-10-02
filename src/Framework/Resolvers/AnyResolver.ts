@@ -1,17 +1,19 @@
 import { Resolver, ResolverConstructor } from './Resolver';
-import { BaseClient } from '../../Client';
 import { Context } from '../Commands/Command';
 import { BaseModule } from '../Module';
 
 export class AnyResolver extends Resolver {
-	private resolvers: Resolver[];
+	private resolvers: Resolver[] = [];
+	private temporary: Resolver[] | ResolverConstructor[] = [];
 
 	public constructor(module: BaseModule, ...resolvers: Resolver[] | ResolverConstructor[]) {
 		super(module);
 
-		this.resolvers = [];
+		this.temporary = resolvers;
+	}
 
-		resolvers.forEach((r: Resolver | ResolverConstructor) => {
+	public init() {
+		this.temporary.forEach((r: Resolver | ResolverConstructor) => {
 			if (r instanceof Resolver) {
 				this.resolvers.push(r);
 			} else {

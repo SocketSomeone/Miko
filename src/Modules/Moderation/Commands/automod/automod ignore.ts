@@ -1,7 +1,5 @@
 import { BaseCommand, Context } from '../../../../Framework/Commands/Command';
-import { BaseClient } from '../../../../Client';
 import { RoleResolver, ChannelResolver } from '../../../../Framework/Resolvers';
-import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
 import { Message, Role, Channel } from 'eris';
 import { Color } from '../../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../../Misc/Models/GuildPermissions';
@@ -17,7 +15,7 @@ export default class extends BaseCommand {
 			aliases: ['autoignore'],
 			args: [
 				{
-					name: 'role/channel',
+					name: 'role | channel',
 					resolver: new AnyResolver(
 						module,
 						new RoleResolver(module),
@@ -26,7 +24,6 @@ export default class extends BaseCommand {
 					required: false
 				}
 			],
-			group: CommandGroup.MODERATION,
 			guildOnly: true,
 			premiumOnly: false,
 			userPermissions: [GuildPermission.ADMINISTRATOR],

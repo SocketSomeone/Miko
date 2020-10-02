@@ -5,11 +5,12 @@ import { CommandService } from './Services/Commands';
 import { MessagingService } from './Services/Messaging';
 import { SchedulerService } from './Services/Scheduler';
 import { RabbitMQService } from './Services/RabbitMQ';
-import help from './Commands/Info/help';
-import { BasePunishment } from '../Entity/Punishment';
+import { Lang } from '../Misc/Enums/Languages';
 
 export class FrameworkModule extends BaseModule {
-	public name: string = 'Framework';
+	public names = {
+		[Lang.en]: 'Framework'
+	};
 
 	public constructor(client: BaseClient) {
 		super(client);
@@ -22,8 +23,5 @@ export class FrameworkModule extends BaseModule {
 
 		// Caches
 		this.registerCache(GuildSettingsCache);
-
-		// Commands
-		this.registerCommand(help);
 	}
 }

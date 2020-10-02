@@ -2,10 +2,13 @@ import { BaseClient } from '../Client';
 import { BaseCache } from './Cache';
 import { BaseCommand } from './Commands/Command';
 import { BaseService } from './Services/Service';
+import { Lang } from '../Misc/Enums/Languages';
 
 export abstract class BaseModule {
 	public client: BaseClient;
-	public abstract name: string;
+	public abstract names: {
+		[key in Lang]?: string;
+	};
 
 	public constructor(client: BaseClient) {
 		this.client = client;

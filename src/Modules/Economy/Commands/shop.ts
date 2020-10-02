@@ -1,6 +1,5 @@
 import { BaseCommand, Context } from '../../../Framework/Commands/Command';
 import { BaseModule } from '../../../Framework/Module';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { EmbedField, Message } from 'eris';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { NumberResolver } from '../../../Framework/Resolvers';
@@ -24,7 +23,6 @@ export default class extends BaseCommand {
 					required: false
 				}
 			],
-			group: CommandGroup.ECONOMY,
 			guildOnly: true,
 			premiumOnly: false
 		});

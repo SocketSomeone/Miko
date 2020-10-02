@@ -1,6 +1,4 @@
 import { BaseCommand, Context } from '../../../Framework/Commands/Command';
-import { BaseClient } from '../../../Client';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
 import { WelcomeRolesService } from '../Services/WelcomeRolesService';
@@ -18,7 +16,6 @@ export default class extends BaseCommand {
 			name: 'welcome enable',
 			aliases: [],
 			args: [],
-			group: CommandGroup.WELCOME,
 			guildOnly: true,
 			premiumOnly: false,
 			botPermissions: [GuildPermission.SEND_MESSAGES],

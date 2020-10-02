@@ -1,6 +1,5 @@
 import { BaseCommand, Context } from '../../../Framework/Commands/Command';
 import { MemberResolver } from '../../../Framework/Resolvers';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message, Member } from 'eris';
 import { BaseMember } from '../../../Entity/Member';
 import { Images } from '../../../Misc/Enums/Images';
@@ -18,7 +17,6 @@ export default class extends BaseCommand {
 					required: false
 				}
 			],
-			group: CommandGroup.ECONOMY,
 			guildOnly: true,
 			premiumOnly: false,
 			examples: ['@user']

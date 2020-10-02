@@ -1,6 +1,4 @@
 import { BaseCommand, Context } from '../../../../Framework/Commands/Command';
-import { BaseClient } from '../../../../Client';
-import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
 import { Message, Member } from 'eris';
 import { BaseMember } from '../../../../Entity/Member';
 import { ExecuteError } from '../../../../Framework/Errors/ExecuteError';
@@ -25,7 +23,6 @@ export default class extends BaseCommand {
 		super(module, {
 			name: 'tempban',
 			aliases: ['темпбан', 'тбан'],
-			group: CommandGroup.MODERATION,
 			args: [
 				{
 					name: 'user',

@@ -1,5 +1,4 @@
 import { BaseCommand, Context } from '../../../../Framework/Commands/Command';
-import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
 import { Message, Member } from 'eris';
 import { BaseMember } from '../../../../Entity/Member';
 import { Color } from '../../../../Misc/Enums/Colors';
@@ -19,7 +18,6 @@ export default class extends BaseCommand {
 		super(module, {
 			name: 'kick',
 			aliases: ['кик', 'кикнуть'],
-			group: CommandGroup.MODERATION,
 			args: [
 				{
 					name: 'user',

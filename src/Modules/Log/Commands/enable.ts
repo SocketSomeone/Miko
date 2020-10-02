@@ -1,8 +1,6 @@
-import { BaseClient } from '../../../Client';
 import { Context, BaseCommand } from '../../../Framework/Commands/Command';
 import { Message } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { Images } from '../../../Misc/Enums/Images';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
@@ -13,7 +11,6 @@ export default class extends BaseCommand {
 		super(module, {
 			name: 'log enable',
 			aliases: [],
-			group: CommandGroup.LOGS,
 			args: [],
 			guildOnly: true,
 			premiumOnly: false,

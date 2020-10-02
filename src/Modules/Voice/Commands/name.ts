@@ -1,8 +1,6 @@
-import { BaseClient } from '../../../Client';
 import { Context, BaseCommand } from '../../../Framework/Commands/Command';
-import { Message, Member } from 'eris';
+import { Message } from 'eris';
 import { StringResolver } from '../../../Framework/Resolvers';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { Images } from '../../../Misc/Enums/Images';
 import { Service } from '../../../Framework/Decorators/Service';
@@ -16,7 +14,6 @@ export default class extends BaseCommand {
 		super(module, {
 			name: 'voice name',
 			aliases: ['v name'],
-			group: CommandGroup.VOICE,
 			args: [
 				{
 					name: 'name',

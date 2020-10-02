@@ -13,9 +13,13 @@ import name from './Commands/name';
 import owner from './Commands/owner';
 import show from './Commands/show';
 import unlock from './Commands/unlock';
+import { Lang } from '../../Misc/Enums/Languages';
 
 export class VoiceModule extends BaseModule {
-	public name: string = 'Voice';
+	public names = {
+		[Lang.en]: 'Private Channels',
+		[Lang.ru]: 'Приватные комнаты'
+	};
 
 	public constructor(client: BaseClient) {
 		super(client);

@@ -1,6 +1,5 @@
 import { BaseCommand, Context } from '../../../Framework/Commands/Command';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
-import { Message, Member, Guild, User } from 'eris';
+import { Message } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
@@ -13,7 +12,6 @@ export default class extends BaseCommand {
 			name: 'welcome saveroles',
 			aliases: [],
 			args: [],
-			group: CommandGroup.WELCOME,
 			guildOnly: true,
 			premiumOnly: false,
 			botPermissions: [GuildPermission.MANAGE_ROLES],

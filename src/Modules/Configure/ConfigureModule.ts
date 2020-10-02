@@ -1,5 +1,6 @@
 import { BaseClient } from '../../Client';
 import { BaseModule } from '../../Framework/Module';
+import { Lang } from '../../Misc/Enums/Languages';
 import { ReactionRoleCache } from './Cache/ReactionRole';
 import { ShopRolesCache } from './Cache/ShopRole';
 import addshop from './Commands/addshop';
@@ -14,7 +15,10 @@ import standartMoney from './Commands/standart-money';
 import { ReactionRoleService } from './Services/ReactionRoles';
 
 export class ConfigureModule extends BaseModule {
-	public name: string = 'Configure';
+	public names = {
+		[Lang.en]: 'Configure',
+		[Lang.ru]: 'Конфигурация'
+	};
 
 	public constructor(client: BaseClient) {
 		super(client);

@@ -7,7 +7,6 @@ import {
 } from '../../../Framework/Resolvers';
 import { Context, BaseCommand } from '../../../Framework/Commands/Command';
 import { Message, Member, Role, GuildChannel, TextChannel } from 'eris';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { PermissionTargetResolver } from '../Resolvers/PermissionResolver';
 import { PermissionsTarget, PermissionsFrom, Permission } from '../../../Misc/Models/Permisson';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
@@ -16,15 +15,12 @@ import { Images } from '../../../Misc/Enums/Images';
 import PermissionsOutput from '../Misc/PermissionsOutput';
 import { ChannelType } from '../../../Types';
 import { BaseModule } from '../../../Framework/Module';
-import { Cache } from '../../../Framework/Decorators/Cache';
-import { GuildSettingsCache } from '../../../Framework/Cache';
 
 export default class extends BaseCommand {
 	public constructor(module: BaseModule) {
 		super(module, {
 			name: 'permission add',
 			aliases: ['правило добавить'],
-			group: CommandGroup.PERMISSIONS,
 			args: [
 				{
 					name: 'state',
@@ -32,7 +28,7 @@ export default class extends BaseCommand {
 					required: true
 				},
 				{
-					name: 'role/member/channel',
+					name: 'role | member | channel',
 					resolver: new AnyResolver(
 						module,
 						new MemberResolver(module),

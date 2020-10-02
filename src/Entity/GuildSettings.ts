@@ -6,14 +6,11 @@ import { WelcomeChannelType } from '../Misc/Enums/WelcomeTypes';
 import { LogType } from '../Modules/Log/Others/LogType';
 import { Permission } from '../Misc/Models/Permisson';
 import { PermissionTransformer } from './Transformers';
+import { Lang } from '../Misc/Enums/Languages';
 
 interface GuildPrices {
 	timely: string;
 	standart: string;
-}
-
-enum Lang {
-	ru = 'ru'
 }
 
 @Entity()

@@ -3,9 +3,6 @@ import { BaseClient } from '../../../Client';
 import { BaseCommand, Context } from '../../../Framework/Commands/Command';
 import { MemberResolver } from '../../../Framework/Resolvers';
 import { Color } from '../../../Misc/Enums/Colors';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
-
-import i18n from 'i18n';
 import { BaseModule } from '../../../Framework/Module';
 
 interface ReactionOptions {
@@ -28,7 +25,6 @@ export abstract class EmotionCommand extends BaseCommand {
 				}
 			],
 			examples: ['@user'],
-			group: CommandGroup.EMOTIONS,
 			premiumOnly: false,
 			guildOnly: true
 		});

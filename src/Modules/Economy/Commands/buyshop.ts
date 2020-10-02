@@ -1,7 +1,6 @@
 import { BaseCommand, Context } from '../../../Framework/Commands/Command';
 import { BaseModule } from '../../../Framework/Module';
 import { NumberResolver, AnyResolver, RoleResolver } from '../../../Framework/Resolvers';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message, Role } from 'eris';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
@@ -19,12 +18,11 @@ export default class extends BaseCommand {
 			aliases: ['buy', 'купить'],
 			args: [
 				{
-					name: 'role/index',
+					name: 'role | index',
 					resolver: new AnyResolver(module, RoleResolver, NumberResolver),
 					required: true
 				}
 			],
-			group: CommandGroup.ECONOMY,
 			guildOnly: true,
 			premiumOnly: false,
 			botPermissions: [GuildPermission.MANAGE_ROLES],

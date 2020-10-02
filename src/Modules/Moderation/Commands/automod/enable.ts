@@ -1,7 +1,5 @@
 import { BaseCommand, Context } from '../../../../Framework/Commands/Command';
-import { BaseClient } from '../../../../Client';
 import { EnumResolver, ArrayResolver } from '../../../../Framework/Resolvers';
-import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
 import { Message } from 'eris';
 import { Color } from '../../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../../Misc/Models/GuildPermissions';
@@ -27,7 +25,6 @@ export default class extends BaseCommand {
 					full: true
 				}
 			],
-			group: CommandGroup.MODERATION,
 			guildOnly: true,
 			premiumOnly: false,
 			botPermissions: [GuildPermission.MANAGE_MESSAGES],

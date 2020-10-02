@@ -3,7 +3,6 @@ import { Message, Member } from 'eris';
 import { MemberResolver } from '../../../Framework/Resolvers';
 import { BaseMember } from '../../../Entity/Member';
 import { Color } from '../../../Misc/Enums/Colors';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
 import { Images } from '../../../Misc/Enums/Images';
 
@@ -15,7 +14,6 @@ export default class extends BaseCommand {
 		super(module, {
 			name: 'warns',
 			aliases: ['преды'],
-			group: CommandGroup.MODERATION,
 			args: [
 				{
 					name: 'user',

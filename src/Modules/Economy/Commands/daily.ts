@@ -1,6 +1,5 @@
 import { BaseCommand, Context } from '../../../Framework/Commands/Command';
 import { BaseModule } from '../../../Framework/Module';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message } from 'eris';
 import { BaseMember } from '../../../Entity/Member';
 import { ExecuteError } from '../../../Framework/Errors/ExecuteError';
@@ -13,7 +12,6 @@ export default class extends BaseCommand {
 		super(module, {
 			name: 'daily',
 			aliases: ['timely', 'награда'],
-			group: CommandGroup.ECONOMY,
 			guildOnly: true,
 			premiumOnly: false
 		});

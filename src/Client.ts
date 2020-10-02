@@ -13,7 +13,6 @@ import { glob } from 'glob';
 import { resolve } from 'path';
 import { BaseGuild } from './Entity/Guild';
 import { BaseCommand, TranslateFunc } from './Framework/Commands/Command';
-import { CommandGroup } from './Misc/Models/CommandGroup';
 import { Images } from './Misc/Enums/Images';
 import { BaseModule } from './Framework/Module';
 import { Service, serviceInjections } from './Framework/Decorators/Service';
@@ -29,6 +28,7 @@ import { ModerationModule } from './Modules/Moderation/ModerationModule';
 import { GamblingModule } from './Modules/Gambling/GamblingModule';
 import { PermissionsModule } from './Modules/Permissions/PermissionModule';
 import { WelcomeModule } from './Modules/Welcome/WelcomeModule';
+import { UtilitiesModule } from './Modules/Utilities/UtilitiesModule';
 
 i18n.configure({
 	locales: ['ru', 'en'],
@@ -150,10 +150,11 @@ export class BaseClient extends Client {
 		this.registerModule(EconomyModule);
 		this.registerModule(EmotionsModule);
 		this.registerModule(GamblingModule);
-		this.registerModule(PermissionsModule);
-		this.registerModule(VoiceModule);
-		this.registerModule(ModerationModule);
 		this.registerModule(LogModule);
+		this.registerModule(ModerationModule);
+		this.registerModule(PermissionsModule);
+		this.registerModule(UtilitiesModule);
+		this.registerModule(VoiceModule);
 		this.registerModule(WelcomeModule);
 
 		this.setupInjections(this);
@@ -162,7 +163,7 @@ export class BaseClient extends Client {
 		this.caches.forEach((c) => this.setupInjections(c));
 		this.commands.forEach((c) => this.setupInjections(c));
 
-		[...this.services.values()].forEach((srv) => this.startingServices.push(srv));
+		this.startingServices = [...this.services.values()];
 
 		await Promise.all([...this.modules.values()].map((mod) => mod.init()));
 		await Promise.all([...this.services.values()].map((srv) => srv.init()));
@@ -243,10 +244,10 @@ export class BaseClient extends Client {
 
 		const t: TranslateFunc = (phrase, replacements) => i18n.__({ phrase, locale }, replacements);
 
-		const modules = Object.entries(CommandGroup)
-			.sort(([a], [b]) => a.localeCompare(b))
-			.filter(([key]) => key.length > 1)
-			.map(([key]) => t(`others.modules.${key.toLowerCase()}`))
+		const modules = [...this.modules.values()]
+			.sort((a, b) => a.names[locale].localeCompare(b.names[locale]))
+			.filter((m) => !(m instanceof FrameworkModule))
+			.map((m) => m.names[locale])
 			.join('\n');
 
 		const embed = this.messageService.createEmbed({

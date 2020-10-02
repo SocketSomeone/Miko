@@ -1,7 +1,5 @@
 import { BaseCommand, Context } from '../../../Framework/Commands/Command';
-import { BaseClient } from '../../../Client';
-import { StringResolver, RoleResolver, EnumResolver } from '../../../Framework/Resolvers';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
+import { RoleResolver, EnumResolver } from '../../../Framework/Resolvers';
 import { Message, Role } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
@@ -21,7 +19,7 @@ export default class extends BaseCommand {
 			aliases: [],
 			args: [
 				{
-					name: 'add/delete',
+					name: 'add | delete',
 					resolver: new EnumResolver(module, Object.values(Action))
 				},
 				{
@@ -29,7 +27,6 @@ export default class extends BaseCommand {
 					resolver: RoleResolver
 				}
 			],
-			group: CommandGroup.WELCOME,
 			guildOnly: true,
 			premiumOnly: false,
 			botPermissions: [GuildPermission.MANAGE_ROLES],

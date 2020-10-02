@@ -1,5 +1,4 @@
 import { BaseCommand, Context } from '../../../../Framework/Commands/Command';
-import { CommandGroup } from '../../../../Misc/Models/CommandGroup';
 import { Message, Member } from 'eris';
 import { ExecuteError } from '../../../../Framework/Errors/ExecuteError';
 import { Color } from '../../../../Misc/Enums/Colors';
@@ -18,7 +17,6 @@ export default class extends BaseCommand {
 		super(module, {
 			name: 'unmute',
 			aliases: ['размутить'],
-			group: CommandGroup.MODERATION,
 			args: [
 				{
 					name: 'user',

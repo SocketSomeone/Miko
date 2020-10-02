@@ -1,6 +1,5 @@
 import { Context, BaseCommand } from '../../../Framework/Commands/Command';
 import { Message } from 'eris';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { BaseMessage } from '../../../Entity/Message';
 import { StringResolver } from '../../../Framework/Resolvers';
@@ -11,7 +10,6 @@ export default class extends BaseCommand {
 		super(module, {
 			name: 'say',
 			aliases: ['embed', 'ph', 'placeholder'],
-			group: CommandGroup.CONFIGURE,
 			args: [
 				{
 					name: 'placeholder',

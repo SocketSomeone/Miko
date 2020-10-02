@@ -1,8 +1,6 @@
 import { PermissionsFrom, PermissionsExecute, Permission } from '../../../Misc/Models/Permisson';
 import { Context, BaseCommand } from '../../../Framework/Commands/Command';
 import { Message } from 'eris';
-import Enum from '../../../Misc/Utils/Enum';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 
 interface Precondtion {
 	context: Context;
@@ -27,13 +25,14 @@ export class Precondition {
 
 	private static checkPermission(
 		permission: Permission,
-		{ command: { name, group }, message: { member, channel } }: Precondtion
+		{ command: { name, module }, message: { member, channel } }: Precondtion
 	): boolean | null {
 		if (
 			!(
 				(permission.target.type === PermissionsExecute.Command &&
 					String(permission.target.id).toLowerCase() === name.toLowerCase()) ||
-				(permission.target.type === PermissionsExecute.Module && permission.target.id === CommandGroup[group]) ||
+				(permission.target.type === PermissionsExecute.Module &&
+					permission.target.id.toLowerCase() === module.names.en.toLowerCase()) ||
 				(permission.target.type === PermissionsExecute.AllModules && permission.target.id === '*')
 			)
 		)

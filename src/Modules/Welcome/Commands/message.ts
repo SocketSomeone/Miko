@@ -1,7 +1,5 @@
 import { BaseCommand, Context } from '../../../Framework/Commands/Command';
-import { BaseClient } from '../../../Client';
 import { EnumResolver, StringResolver } from '../../../Framework/Resolvers';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { Message } from 'eris';
 import { Color } from '../../../Misc/Enums/Colors';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
@@ -21,7 +19,7 @@ export default class extends BaseCommand {
 			aliases: [],
 			args: [
 				{
-					name: 'set/delete',
+					name: 'set | delete',
 					resolver: new EnumResolver(module, Object.values(Action)),
 					required: true
 				},
@@ -32,7 +30,6 @@ export default class extends BaseCommand {
 					full: true
 				}
 			],
-			group: CommandGroup.WELCOME,
 			guildOnly: true,
 			premiumOnly: false,
 			botPermissions: [GuildPermission.MANAGE_CHANNELS],

@@ -1,7 +1,6 @@
 import { Context, BaseCommand } from '../../../Framework/Commands/Command';
 import { Message } from 'eris';
 import { NumberResolver } from '../../../Framework/Resolvers';
-import { CommandGroup } from '../../../Misc/Models/CommandGroup';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { Images } from '../../../Misc/Enums/Images';
 import { BaseModule } from '../../../Framework/Module';
@@ -15,7 +14,6 @@ export default class extends BaseCommand {
 		super(module, {
 			name: 'voice limit',
 			aliases: ['v limit'],
-			group: CommandGroup.VOICE,
 			args: [
 				{
 					name: 'limit',

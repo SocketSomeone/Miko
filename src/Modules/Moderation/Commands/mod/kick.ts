@@ -64,7 +64,7 @@ export default class extends BaseCommand {
 		});
 
 		if (this.moderation.isPunishable(guild, member, message.member, me)) {
-			await BasePunishment.informUser(t, member, Punishment.MUTE, extra);
+			await BasePunishment.informUser(t, member, Punishment.KICK, extra);
 
 			try {
 				await guild.kickMember(member.id, encodeURIComponent(reason));

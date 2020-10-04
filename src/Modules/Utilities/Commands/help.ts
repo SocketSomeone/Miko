@@ -107,7 +107,7 @@ export default class extends BaseCommand {
 				icon_url: this.client.user.dynamicAvatarURL('png', 4096)
 			},
 			thumbnail: {
-				url: (guild && guild.dynamicIconURL()) || this.client.user.dynamicAvatarURL('png', 4096)
+				url: (guild && guild.dynamicIconURL('png', 4096)) || this.client.user.dynamicAvatarURL('png', 4096)
 			}
 		});
 

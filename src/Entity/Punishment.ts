@@ -2,7 +2,7 @@ import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColu
 import { BaseGuild } from './Guild';
 import { Moment } from 'moment';
 import { DateTransformer } from './Transformers';
-import { Member } from 'eris';
+import { Member, PrivateChannel } from 'eris';
 import { TranslateFunc } from '../Framework/Commands/Command';
 import { ColorResolve } from '../Misc/Utils/ColorResolver';
 import { Color } from '../Misc/Enums/Colors';
@@ -83,13 +83,11 @@ export class BasePunishment extends BaseEntity {
 		type: Punishment,
 		extra?: { name: string; value: string }[]
 	) {
-		const dmChannel = await member.user.getDMChannel();
+		const dmChannel: PrivateChannel = await member.user.getDMChannel().catch(() => undefined);
 
-		const fields = extra
-			.filter((x) => !!x.value)
-			.map((e) => {
-				return { name: t(e.name), value: e.value.substr(0, 1024), inline: true };
-			});
+		if (!dmChannel) {
+			return;
+		}
 
 		return dmChannel
 			.createMessage({
@@ -105,7 +103,15 @@ export class BasePunishment extends BaseEntity {
 						text: member.guild.name,
 						icon_url: member.guild.dynamicIconURL('png', 4096)
 					},
-					fields,
+					fields: extra
+						.filter((x) => !!x.value)
+						.map((e) => {
+							return {
+								name: t(e.name),
+								value: e.value.substr(0, 1024),
+								inline: true
+							};
+						}),
 					timestamp: new Date().toISOString()
 				}
 			})

@@ -349,7 +349,13 @@
 		"guildLeave": "logs.guildLeave",
 		"roomCreate": "logs.roomCreate",
 		"roomCreated": "logs.roomCreated",
-		"roomDeleted": "logs.roomDeleted"
+		"roomDeleted": "logs.roomDeleted",
+		"misc": {
+			"target": "logs.misc.target",
+			"moderator": "logs.misc.moderator",
+			"reason": "logs.misc.reason",
+			"duration": "logs.misc.duration"
+		}
 	},
 	"moderation": {
 		"purge": {

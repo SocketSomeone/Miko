@@ -1,16 +1,13 @@
+import i18n from 'i18n';
+
 import { BaseService } from '../../../Framework/Services/Service';
 import { Guild, Role, Member, Message, TextChannel, EmbedField, User } from 'eris';
-import { Punishment, BasePunishment } from '../../../Entity/Punishment';
+import { Punishment } from '../../../Entity/Punishment';
 import { Violation } from '../../../Misc/Enums/Violation';
-import { BaseMember } from '../../../Entity/Member';
 import { TranslateFunc } from '../../../Framework/Commands/Command';
 import { Color } from '../../../Misc/Enums/Colors';
-import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { BaseSettings } from '../../../Entity/GuildSettings';
 import { Images } from '../../../Misc/Enums/Images';
-
-import moment from 'moment';
-import i18n from 'i18n';
 import { DISCORD_EMOJI_REGEX, EMOJIS_REGEX } from '../../../Misc/Regex/Emoji';
 import { Cache } from '../../../Framework/Decorators/Cache';
 import { GuildSettingsCache } from '../../../Framework/Cache';
@@ -18,6 +15,7 @@ import { Service } from '../../../Framework/Decorators/Service';
 import { MessagingService } from '../../../Framework/Services/Messaging';
 import { WarnService } from './WarnService';
 import { PunishmentService } from './Punishment';
+import { setServers } from 'dns';
 
 export class ModerationService extends BaseService {
 	@Service() protected punishmentService: PunishmentService;
@@ -27,14 +25,12 @@ export class ModerationService extends BaseService {
 
 	public async addWarnAndPunish(
 		guild: Guild,
-		message: Message,
+		{ member }: Message,
 		type: Violation,
 		settings: BaseSettings,
 		moderator?: { user: Member; reason: string },
 		extra?: EmbedField[]
 	) {
-		const { member } = message;
-
 		const { warnsBefore, warnsAfter } = await this.warnService.addWarn(member, type);
 
 		const punishmentConfigs = settings.punishmentConfig;
@@ -48,7 +44,7 @@ export class ModerationService extends BaseService {
 	public async sendWarnMessage(message: Message, type: Violation, settings: BaseSettings) {
 		const t: TranslateFunc = (phrase, replace) => i18n.__({ locale: settings.locale, phrase }, replace);
 
-		const reply = await this.messages.sendReply(
+		await this.messages.sendReply(
 			message,
 			{
 				color: Color.YELLOW,
@@ -77,6 +73,8 @@ export class ModerationService extends BaseService {
 
 		if (!modLogChannel) return;
 
+		const t: TranslateFunc = (phrase, replacements) => i18n.__({ locale: settings.locale, phrase }, replacements);
+
 		const embed = this.messages.createEmbed({
 			color: Color.DARK,
 			thumbnail: { url: member.avatarURL },
@@ -86,18 +84,18 @@ export class ModerationService extends BaseService {
 			},
 			fields: [
 				{
-					name: 'Target',
+					name: t('logs.misc.target'),
 					value: target.mention,
 					inline: true
 				},
 				{
-					name: 'Moderator',
+					name: t('logs.misc.moderator'),
 					value: member.mention,
 					inline: true
 				},
 				...extra.map((e) => {
 					return {
-						name: e.name,
+						name: t(`logs.misc.${e.name.toLowerCase()}`),
 						value: e.value,
 						inline: true
 					};
@@ -145,18 +143,10 @@ export class ModerationService extends BaseService {
 			} as Role);
 	}
 
-	public isHigherRole(role: Role, highest?: Role, guild?: Guild, me?: Member) {
-		const highestRole = highest || this.getHighestRole(guild, me.roles);
-
-		if (!highestRole) return false;
-
-		return highestRole.position > role.position;
-	}
-
-	public editableRoles(guild: Guild, roles: string[], me: Member): Role[] {
+	public editableRoles(guild: Guild, roles: string[], me: Member) {
 		const highestBotRole = this.getHighestRole(guild, me.roles);
 
-		return roles.map((r) => guild.roles.get(r)).filter((r) => !!r && this.isHigherRole(r, highestBotRole));
+		return roles.map((r) => guild.roles.get(r)).filter((r) => !!r && highestBotRole.position > r.position);
 	}
 
 	public isPunishable(guild: Guild, targetMember: Member, authorMember: Member, me: Member) {
@@ -164,19 +154,19 @@ export class ModerationService extends BaseService {
 		const highestMemberRole = this.getHighestRole(guild, targetMember.roles);
 		const highestAuthorRole = this.getHighestRole(guild, authorMember.roles);
 
-		if (guild.ownerID === authorMember.id) {
+		if (guild.ownerID === authorMember.id)
 			return (
 				targetMember.id !== me.user.id &&
 				targetMember.id !== authorMember.id &&
 				highestBotRole.position > highestMemberRole.position
 			);
-		}
-
-		return (
-			targetMember.id !== guild.ownerID &&
-			targetMember.id !== me.user.id &&
-			highestBotRole.position > highestMemberRole.position &&
-			highestAuthorRole.position > highestMemberRole.position
-		);
+		else
+			return (
+				targetMember.id !== guild.ownerID &&
+				targetMember.id !== me.user.id &&
+				targetMember.id !== authorMember.id &&
+				highestBotRole.position > highestMemberRole.position &&
+				highestAuthorRole.position > highestMemberRole.position
+			);
 	}
 }

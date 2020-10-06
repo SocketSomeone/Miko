@@ -20,7 +20,7 @@ export class WelcomeRolesService extends BaseService {
 		if (member.user.bot) return;
 
 		const settings = await this.guilds.get(guild);
-		const roles: string[] = [];
+		const roles: Set<string> = new Set();
 
 		if (!settings.welcomeEnabled) {
 			return;
@@ -37,19 +37,16 @@ export class WelcomeRolesService extends BaseService {
 			const person = await BaseMember.get(member);
 
 			if (person.savedRoles && person.savedRoles.length > 0) {
-				roles.push(...person.savedRoles);
+				person.savedRoles.forEach((r) => roles.add(r));
 			}
 		}
 
-		roles.push(...settings.onWelcomeRoles);
+		settings.onWelcomeRoles.forEach((r) => roles.add(r));
 
-		if (roles && roles.length >= 1) {
-			await member.edit(
-				{
-					roles: this.moderation.editableRoles(guild, roles, me).map((x) => x.id)
-				},
-				'Auto Assign Role OR Saved Roles'
-			);
+		if (roles && roles.size >= 1) {
+			await member.edit({
+				roles: this.moderation.editableRoles(guild, [...roles.values()], me).map((r) => r.id)
+			});
 		}
 	}
 

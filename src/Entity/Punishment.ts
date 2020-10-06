@@ -2,31 +2,12 @@ import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColu
 import { BaseGuild } from './Guild';
 import { Moment } from 'moment';
 import { DateTransformer } from './Transformers';
-import { Member, PrivateChannel } from 'eris';
-import { TranslateFunc } from '../Framework/Commands/Command';
-import { ColorResolve } from '../Misc/Utils/ColorResolver';
-import { Color } from '../Misc/Enums/Colors';
-import { BaseClient } from '../Client';
-import { BaseSettings } from './GuildSettings';
-import i18n from 'i18n';
-import { Service } from '../Framework/Decorators/Service';
-import { LoggingService as LoggerService } from '../Modules/Log/Services/LoggerService';
 
 export enum Punishment {
 	BAN = 'ban',
 	KICK = 'kick',
 	SOFTBAN = 'softban',
-	MUTE = 'mute',
-	IGNORE = 'ignore'
-}
-
-interface ContextLog {
-	settings: BaseSettings;
-	member: Member;
-	target: Member;
-	opts?: Partial<BasePunishment>;
-	type?: Punishment | string;
-	extra?: { name: string; value: string }[];
+	MUTE = 'mute'
 }
 
 @Entity()
@@ -44,10 +25,7 @@ export class BasePunishment extends BaseEntity {
 	@Column({ type: 'varchar', nullable: false })
 	public type: Punishment;
 
-	@Column({ type: 'json' })
-	public args: any;
-
-	@Column({ type: 'varchar', nullable: false })
+	@Column({ type: 'varchar', nullable: true })
 	public reason: string;
 
 	@Column({ type: 'bigint', nullable: false })
@@ -59,62 +37,7 @@ export class BasePunishment extends BaseEntity {
 	@CreateDateColumn()
 	public createdAt: Date;
 
-	@Service() protected static logger: LoggerService;
-
-	public static async new({ opts, member, target, settings, extra }: ContextLog) {
-		await this.create({
-			...opts,
-			guild: BaseGuild.create({ id: member.guild.id }),
-			member: target.id
-		}).save();
-
-		await this.logger.logModAction({
-			sets: settings,
-			type: opts.type,
-			member,
-			target,
-			extra
-		});
-	}
-
-	public static async informUser(
-		t: TranslateFunc,
-		member: Member,
-		type: Punishment,
-		extra?: { name: string; value: string }[]
-	) {
-		const dmChannel: PrivateChannel = await member.user.getDMChannel().catch(() => undefined);
-
-		if (!dmChannel) {
-			return;
-		}
-
-		return dmChannel
-			.createMessage({
-				embed: {
-					color: ColorResolve(Color.DARK),
-					author: {
-						name: t(`moderation.dm.${type}`, {
-							guild: member.guild.name
-						}),
-						icon_url: member.guild.iconURL
-					},
-					footer: {
-						text: member.guild.name,
-						icon_url: member.guild.dynamicIconURL('png', 4096)
-					},
-					fields: extra
-						.filter((x) => !!x.value)
-						.map((e) => {
-							return {
-								name: t(e.name),
-								value: e.value.substr(0, 1024),
-								inline: true
-							};
-						}),
-					timestamp: new Date().toISOString()
-				}
-			})
-			.catch(() => undefined);
+	public static async savePunishment(data: Partial<BasePunishment>) {
+		await this.create(data).save();
 	}
 }

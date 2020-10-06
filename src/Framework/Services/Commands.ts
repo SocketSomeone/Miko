@@ -249,6 +249,7 @@ export class CommandService extends BaseService {
 				}
 
 				scope.setTag('command', cmd.name);
+				scope.setExtra('guild', sets.id);
 				scope.setExtra('channel', channel.id);
 				scope.setExtra('message', message.content);
 				scope.setExtra('Execute Time', moment().unix() - start.unix());

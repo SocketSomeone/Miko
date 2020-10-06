@@ -10,9 +10,11 @@ import { Images } from '../../../../Misc/Enums/Images';
 import { BaseModule } from '../../../../Framework/Module';
 import { Service } from '../../../../Framework/Decorators/Service';
 import { ModerationService } from '../../Services/Moderation';
+import { PunishmentService } from '../../Services/Punishment';
 
 export default class extends BaseCommand {
 	@Service() protected moderation: ModerationService;
+	@Service() protected punishment: PunishmentService;
 
 	public constructor(module: BaseModule) {
 		super(module, {
@@ -40,23 +42,22 @@ export default class extends BaseCommand {
 
 	public async execute(
 		message: Message,
-		[member, r]: [Member, string],
+		[member, reason]: [Member, string],
 		{ funcs: { t, e }, guild, me, settings }: Context
 	) {
-		const reason = r || t('moderation.noreason');
-		const extra = [{ name: 'logs.mod.reason', value: reason }];
+		const extra = [{ name: 'Reason', value: reason }];
 
 		const embed = this.createEmbed({
 			color: Color.DARK,
 			author: { name: t('moderation.kick.title'), icon_url: Images.MODERATION },
 			footer: null,
 			description: t('moderation.kick.done', {
-				user: `${message.author.username}#${message.author.discriminator}`,
-				target: `${member.user.username}#${member.user.discriminator}`
+				user: `${message.author.tag}`,
+				target: `${member.user.tag}`
 			}),
 			fields: extra.map((x) => {
 				return {
-					name: t(x.name),
+					name: x.name,
 					value: x.value,
 					inline: true
 				};
@@ -64,25 +65,8 @@ export default class extends BaseCommand {
 		});
 
 		if (this.moderation.isPunishable(guild, member, message.member, me)) {
-			await BasePunishment.informUser(t, member, Punishment.KICK, extra);
-
 			try {
-				await guild.kickMember(member.id, encodeURIComponent(reason));
-
-				await BaseMember.saveMembers(guild, [member]);
-
-				await BasePunishment.new({
-					settings,
-					member: message.member,
-					target: member,
-					extra,
-					opts: {
-						type: Punishment.KICK,
-						args: '',
-						reason,
-						moderator: message.author.id
-					}
-				});
+				await this.punishment.punish(guild, member, Punishment.KICK, settings, { user: message.member, reason }, extra);
 			} catch (err) {
 				throw new ExecuteError(t('moderation.kick.error'));
 			}

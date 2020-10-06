@@ -4,7 +4,13 @@ import { Member, Guild } from 'eris';
 import { Moment, Duration, duration } from 'moment';
 import { DateTransformer, BigIntTransformer, DurationTransformer } from './Transformers/';
 import { BaseSettings } from './GuildSettings';
-import moment from 'moment';
+import { WarnTransformer } from './Transformers/WarnTransformer';
+
+export interface IWarn {
+	createdAt: Date;
+	expireAt: Date;
+	moderator: string;
+}
 
 @Entity()
 export class BaseMember extends BaseEntity {
@@ -34,13 +40,8 @@ export class BaseMember extends BaseEntity {
 	@Column({ type: 'varchar', transformer: DurationTransformer })
 	public voiceOnline: Duration = duration(0, 'minutes');
 
-	@Column({ type: 'json', default: [] })
-	public warns: {
-		reason: string;
-		createdAt: Date;
-		expireAt: Date;
-		moderator: string;
-	}[] = [];
+	@Column({ type: 'json', default: [], transformer: WarnTransformer })
+	public warns: IWarn[] = [];
 
 	public static async get(user: Member, g?: Guild) {
 		const guild = g || user.guild;

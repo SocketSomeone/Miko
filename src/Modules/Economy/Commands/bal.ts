@@ -30,7 +30,7 @@ export default class extends BaseCommand {
 		await this.sendAsync(message.channel, {
 			author: {
 				name: t('economy.bal.title', {
-					member: `${target.user.username}#${target.user.discriminator}`
+					member: `${target.user.tag}`
 				}),
 				icon_url: Images.ECONOMY
 			},

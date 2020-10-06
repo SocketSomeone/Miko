@@ -12,8 +12,10 @@ import tempban from './Commands/mod/tempban';
 import tempmute from './Commands/mod/tempmute';
 import unmute from './Commands/mod/unmute';
 import purge from './Commands/purge/purge';
-import warns from './Commands/warns';
+import { AutoModerationService } from './Services/AutoModeration';
 import { ModerationService } from './Services/Moderation';
+import { PunishmentService } from './Services/Punishment';
+import { WarnService } from './Services/WarnService';
 
 export class ModerationModule extends BaseModule {
 	public names = {
@@ -26,6 +28,9 @@ export class ModerationModule extends BaseModule {
 
 		// Services
 		this.registerService(ModerationService);
+		this.registerService(AutoModerationService);
+		this.registerService(PunishmentService);
+		this.registerService(WarnService);
 
 		// Commands
 		this.registerCommand(automodInfo);
@@ -41,6 +46,5 @@ export class ModerationModule extends BaseModule {
 		this.registerCommand(unmute);
 
 		this.registerCommand(purge);
-		this.registerCommand(warns);
 	}
 }

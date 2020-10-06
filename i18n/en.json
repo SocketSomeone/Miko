@@ -913,5 +913,7 @@
 			"multi": "emotions.sleep.multi",
 			"solo": "emotions.sleep.solo"
 		}
-	}
+	},
+	"Reason": "Reason",
+	"Duration": "Duration"
 }

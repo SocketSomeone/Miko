@@ -25,17 +25,15 @@ export class SchedulerService extends BaseService {
 		await super.onClientReady();
 	}
 
-	public async addScheduledAction(guildId: string, actionType: ScheduledAction, args: any, date: Moment) {
-		const action = new BaseScheduledAction();
+	public async addScheduledAction(guildId: string, type: ScheduledAction, args: { [key: string]: any }, date: Moment) {
+		const action = await BaseScheduledAction.create({
+			guild: BaseGuild.create({ id: guildId }),
+			type,
+			date,
+			args
+		}).save();
 
-		action.guild = BaseGuild.create({ id: guildId });
-		action.type = actionType;
-		action.date = date;
-		action.args = args;
-
-		await action.save();
-
-		if (action.date !== null) {
+		if (date !== null) {
 			this.createTimer(action);
 		}
 	}

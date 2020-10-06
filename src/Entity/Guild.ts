@@ -6,15 +6,12 @@ import {
 	JoinColumn,
 	Column,
 	CreateDateColumn,
-	createQueryBuilder,
-	OneToOne
+	createQueryBuilder
 } from 'typeorm';
-import { Permission } from '../Misc/Models/Permisson';
 import { BaseMember } from './Member';
 import { BaseScheduledAction } from './ScheduledAction';
 import { Guild } from 'eris';
 import { BasePunishment } from './Punishment';
-import { PunishmentConfig } from '../Misc/Enums/Violation';
 import { Moment } from 'moment';
 import { DateTransformer } from './Transformers';
 

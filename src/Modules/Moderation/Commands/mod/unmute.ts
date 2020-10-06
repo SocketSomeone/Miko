@@ -7,11 +7,11 @@ import { GuildPermission } from '../../../../Misc/Models/GuildPermissions';
 import { BaseModule } from '../../../../Framework/Module';
 import { Service } from '../../../../Framework/Decorators/Service';
 import { ModerationService } from '../../Services/Moderation';
-import { LoggingService } from '../../../Log/Services/LoggerService';
+import { PunishmentService } from '../../Services/Punishment';
 
 export default class extends BaseCommand {
 	@Service() protected moderation: ModerationService;
-	@Service() protected logger: LoggingService;
+	@Service() protected punishment: PunishmentService;
 
 	public constructor(module: BaseModule) {
 		super(module, {
@@ -37,14 +37,12 @@ export default class extends BaseCommand {
 		[target, reason]: [Member, string],
 		{ funcs: { t, e }, guild, me, settings }: Context
 	) {
-		reason = reason || t('moderation.noreason');
-
 		const embed = this.createEmbed({
 			color: Color.DARK,
 			title: t('moderation.unmute.title'),
 			description: t('moderation.unmute.done', {
-				user: `${message.author.username}#${message.author.discriminator}`,
-				target: `${target.user.username}#${target.user.discriminator}`
+				user: `${message.author.tag}`,
+				target: `${target.user.tag}`
 			}),
 			footer: null
 		});
@@ -57,14 +55,9 @@ export default class extends BaseCommand {
 			throw new ExecuteError(t('moderation.unmute.notmuted'));
 		} else if (this.moderation.isPunishable(guild, target, message.member, me)) {
 			try {
-				await target.removeRole(mutedRole, `Unmuted by ${message.author.username}#${message.author.discriminator}`);
+				await target.removeRole(mutedRole, `Unmuted by ${message.author.tag}`);
 
-				await this.logger.logModAction({
-					sets: settings,
-					member: message.member,
-					type: 'UNMUTE',
-					target
-				});
+				await this.moderation.logModAction(guild, settings, message.member, target, 'UNMUTE');
 			} catch (err) {
 				throw new ExecuteError(t('moderation.unmute.error'));
 			}

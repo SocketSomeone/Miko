@@ -1,4 +1,4 @@
-import { Permission, PermissionsExecute, PermissionsFrom } from '../../../Misc/Models/Permisson';
+import { Permission, Target, Activator } from '../../../Misc/Models/Permisson';
 import { TranslateFunc } from '../../../Framework/Commands/Command';
 
 export default (t: TranslateFunc, v: Permission, i: number) => {
@@ -6,17 +6,17 @@ export default (t: TranslateFunc, v: Permission, i: number) => {
 	let target;
 
 	switch (v.target.type) {
-		case PermissionsExecute.AllModules:
+		case Target.AllModules:
 			target = t('perms.allModules');
 			break;
 
-		case PermissionsExecute.Module:
+		case Target.Module:
 			target = t('perms.module', {
 				module: v.target.id
 			});
 			break;
 
-		case PermissionsExecute.Command:
+		case Target.Command:
 			target = t('perms.command', {
 				cmd: v.target.id
 			});
@@ -24,15 +24,15 @@ export default (t: TranslateFunc, v: Permission, i: number) => {
 	}
 
 	switch (v.activator.type) {
-		case PermissionsFrom.Channel:
+		case Activator.Channel:
 			activator = `<#${v.activator.id}>`;
 			break;
 
-		case PermissionsFrom.Role || PermissionsFrom.Server:
+		case Activator.Role || Activator.Server:
 			activator = `<@&${v.activator.id}>`;
 			break;
 
-		case PermissionsFrom.User:
+		case Activator.User:
 			activator = `<@${v.activator.id}>`;
 			break;
 	}

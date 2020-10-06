@@ -43,19 +43,19 @@ export default class extends BaseCommand {
 		});
 
 		if (target instanceof Role) {
-			if (settings.autoModIgnoreRoles.has(target.id)) settings.autoModIgnoreRoles.delete(target.id);
-			else settings.autoModIgnoreRoles.add(target.id);
+			if (settings.autoMod.ignoreRoles.has(target.id)) settings.autoMod.ignoreRoles.delete(target.id);
+			else settings.autoMod.ignoreRoles.add(target.id);
 
-			embed.description = t(`automod.${settings.autoModIgnoreRoles.has(target.id) ? 'enabled' : 'disabled'}.amir`, {
+			embed.description = t(`automod.${settings.autoMod.ignoreRoles.has(target.id) ? 'enabled' : 'disabled'}.amir`, {
 				role: target.mention
 			});
 		} else {
 			let channel = target || message.channel;
 
-			if (settings.autoModIgnoreChannels.has(channel.id)) settings.autoModIgnoreChannels.delete(channel.id);
-			else settings.autoModIgnoreChannels.add(channel.id);
+			if (settings.autoMod.ignoreChannels.has(channel.id)) settings.autoMod.ignoreChannels.delete(channel.id);
+			else settings.autoMod.ignoreChannels.add(channel.id);
 
-			embed.description = t(`automod.${settings.autoModIgnoreRoles.has(target.id) ? 'enabled' : 'disabled'}.amic`, {
+			embed.description = t(`automod.${settings.autoMod.ignoreChannels.has(target.id) ? 'enabled' : 'disabled'}.amic`, {
 				channel: channel.mention
 			});
 		}

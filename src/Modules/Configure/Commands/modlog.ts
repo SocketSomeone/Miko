@@ -29,13 +29,13 @@ export default class extends BaseCommand {
 
 	public async execute(message: Message, [channel]: [Channel], { funcs: { t, e }, guild, settings }: Context) {
 		if (channel) {
-			if (channel.id === settings.modlog) throw new ExecuteError(t('error.changes.not'));
+			if (channel.id === settings.logger.moder) throw new ExecuteError(t('error.changes.not'));
 
-			settings.modlog = channel.id;
+			settings.logger.moder = channel.id;
 			await settings.save();
 		}
 
-		if (!settings.modlog || !guild.channels.has(settings.modlog))
+		if (!settings.logger.moder || !guild.channels.has(settings.logger.moder))
 			throw new ExecuteError(t('configure.modlog.notFound'));
 
 		await this.replyAsync(message, {
@@ -45,7 +45,7 @@ export default class extends BaseCommand {
 				icon_url: channel ? Images.SUCCESS : Images.SETTINGS
 			},
 			description: t(`configure.modlog.${channel ? 'new' : 'info'}`, {
-				channel: `<#${settings.modlog}>`
+				channel: `<#${settings.logger.moder}>`
 			}),
 			footer: null,
 			timestamp: null

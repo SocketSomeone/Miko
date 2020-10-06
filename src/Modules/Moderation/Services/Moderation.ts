@@ -33,7 +33,7 @@ export class ModerationService extends BaseService {
 	) {
 		const { warnsBefore, warnsAfter } = await this.warnService.addWarn(member, type);
 
-		const punishmentConfigs = settings.punishmentConfig;
+		const punishmentConfigs = settings.autoMod.config;
 		const punishmentConfig = punishmentConfigs.find((c) => c.amount > warnsBefore && c.amount <= warnsAfter);
 
 		if (punishmentConfig) {
@@ -67,9 +67,9 @@ export class ModerationService extends BaseService {
 		type: string | Punishment,
 		extra: EmbedField[] = []
 	) {
-		if (!settings.modlog) return;
+		if (!settings.logger.moder) return;
 
-		const modLogChannel = guild.channels.get(settings.modlog) as TextChannel;
+		const modLogChannel = guild.channels.get(settings.logger.moder) as TextChannel;
 
 		if (!modLogChannel) return;
 

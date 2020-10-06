@@ -83,7 +83,7 @@ export class AutoModerationService extends BaseService {
 		const allViolations: Set<Violation> = new Set(Object.values(Violation));
 
 		for (const violation of allViolations) {
-			if (settings.autoMod[violation] !== true) {
+			if (settings.autoMod.violations[violation] !== true) {
 				continue;
 			}
 
@@ -127,11 +127,11 @@ export class AutoModerationService extends BaseService {
 			return;
 		}
 
-		if (settings.autoModIgnoreChannels.has(message.channel.id)) {
+		if (settings.autoMod.ignoreChannels.has(message.channel.id)) {
 			return;
 		}
 
-		if (message.member.roles.some((x) => settings.autoModIgnoreRoles.has(x))) {
+		if (message.member.roles.some((x) => settings.autoMod.ignoreRoles.has(x))) {
 			return;
 		}
 

@@ -28,7 +28,13 @@ export default class extends BaseCommand {
 	public async execute(
 		message: Message,
 		[money]: [bigint],
-		{ funcs: { t, e }, guild, settings: { currency } }: Context
+		{
+			funcs: { t, e },
+			guild,
+			settings: {
+				economy: { currency }
+			}
+		}: Context
 	) {
 		const person = await BaseMember.get(message.member);
 

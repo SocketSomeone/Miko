@@ -33,7 +33,13 @@ export default class extends BaseCommand {
 	public async execute(
 		message: Message,
 		[user, money]: [Member, bigint],
-		{ funcs: { t, e }, guild, settings }: Context
+		{
+			funcs: { t, e },
+			guild,
+			settings: {
+				economy: { currency }
+			}
+		}: Context
 	) {
 		const target = await BaseMember.get(user);
 
@@ -45,7 +51,7 @@ export default class extends BaseCommand {
 			description: t('economy.award.desc', {
 				member: message.member,
 				target: user,
-				amount: `${money} ${e(settings.currency)}`
+				amount: `${money} ${e(currency)}`
 			}),
 			timestamp: null,
 			footer: null

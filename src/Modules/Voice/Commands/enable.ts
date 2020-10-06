@@ -21,10 +21,10 @@ export default class extends BaseCommand {
 	}
 
 	public async execute(message: Message, [], { funcs: { t, e }, guild, settings }: Context) {
-		if (settings.privateManager && guild.channels.has(settings.privateManager))
+		if (settings.private.manager && guild.channels.has(settings.private.manager))
 			throw new ExecuteError(t('error.module.enable'));
 
-		settings.privateManager = await this.createManager(guild);
+		settings.private.manager = await this.createManager(guild);
 		await settings.save();
 
 		await this.replyAsync(message, {

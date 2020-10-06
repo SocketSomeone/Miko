@@ -28,13 +28,13 @@ export default class extends BaseCommand {
 
 	public async execute(message: Message, [role]: [Role], { funcs: { t, e }, guild, settings }: Context) {
 		if (role) {
-			if (role.id === settings.mutedRole) throw new ExecuteError(t('error.changes.not'));
+			if (role.id === settings.moderation.muteRole) throw new ExecuteError(t('error.changes.not'));
 
-			settings.mutedRole = role.id;
+			settings.moderation.muteRole = role.id;
 			await settings.save();
 		}
 
-		if (!settings.mutedRole || !guild.roles.has(settings.mutedRole))
+		if (!settings.moderation.muteRole || !guild.roles.has(settings.moderation.muteRole))
 			throw new ExecuteError(t('configure.muterole.notFound'));
 
 		await this.replyAsync(message, {
@@ -44,7 +44,7 @@ export default class extends BaseCommand {
 				icon_url: role ? Images.SUCCESS : Images.SETTINGS
 			},
 			description: t(`configure.muterole.${role ? 'new' : 'info'}`, {
-				role: `<@&${settings.mutedRole}>`
+				role: `<@&${settings.moderation.muteRole}>`
 			}),
 			footer: null,
 			timestamp: null

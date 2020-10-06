@@ -30,14 +30,14 @@ export default class extends BaseCommand {
 	}
 
 	public async execute(message: Message, [types]: [LogType[]], { funcs: { t, e }, guild, settings }: Context) {
-		if (settings.loggerEnabled !== true) throw new ExecuteError(t('error.module.disabled'));
+		if (settings.logger.enabled !== true) throw new ExecuteError(t('error.module.disabled'));
 
-		const needToChange = types.filter((x) => settings.logger[x] !== message.channel.id);
+		const needToChange = types.filter((x) => settings.logger.events[x] !== message.channel.id);
 
 		if (needToChange.length < 1) throw new ExecuteError(t('error.changes.not'));
 
 		for (const type of needToChange) {
-			settings.logger[type] = message.channel.id;
+			settings.logger.events[type] = message.channel.id;
 		}
 
 		await settings.save();

@@ -20,7 +20,7 @@ export default class extends BaseCommand {
 	}
 
 	public async execute(message: Message, [], { funcs: { t, e }, guild, settings }: Context) {
-		settings.privateManager = await this.deleteManager(t, guild, settings.privateManager);
+		settings.private.manager = await this.deleteManager(t, guild, settings.private.manager);
 		await settings.save();
 
 		await this.replyAsync(message, {

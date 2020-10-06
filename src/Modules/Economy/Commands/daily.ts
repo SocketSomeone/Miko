@@ -17,7 +17,17 @@ export default class extends BaseCommand {
 		});
 	}
 
-	public async execute({ member, channel }: Message, [], { funcs: { t, e }, guild, settings }: Context) {
+	public async execute(
+		{ member, channel }: Message,
+		[],
+		{
+			funcs: { t, e },
+			guild,
+			settings: {
+				economy: { currency, timely }
+			}
+		}: Context
+	) {
 		const person = await BaseMember.get(member);
 
 		if (person.timelyAt && moment().isBefore(person.timelyAt))
@@ -27,7 +37,7 @@ export default class extends BaseCommand {
 				})
 			);
 
-		person.money += BigInt(settings.prices.timely);
+		person.money += timely;
 		person.timelyAt = moment().add(24, 'h');
 
 		await person.save();
@@ -37,7 +47,7 @@ export default class extends BaseCommand {
 			thumbnail: { url: member.avatarURL },
 			description: t('economy.daily.desc', {
 				member: member,
-				amount: `${settings.prices.timely} ${e(settings.currency)}`,
+				amount: `${timely} ${e(currency)}`,
 				timeout: moment.duration(person.timelyAt.diff(moment())).humanize(false)
 			}),
 			timestamp: null,

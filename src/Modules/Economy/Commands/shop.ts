@@ -28,7 +28,17 @@ export default class extends BaseCommand {
 		});
 	}
 
-	public async execute(message: Message, [offset]: [number], { funcs: { t, e }, guild, settings }: Context) {
+	public async execute(
+		message: Message,
+		[offset]: [number],
+		{
+			funcs: { t, e },
+			guild,
+			settings: {
+				economy: { currency }
+			}
+		}: Context
+	) {
 		const items = await this.shop.get(guild);
 
 		if (items.length < 1) {
@@ -56,9 +66,7 @@ export default class extends BaseCommand {
 					},
 					{
 						name: t('economy.shop.fields.cost'),
-						value: message.member.roles.includes(role.id)
-							? t('economy.shop.bought')
-							: `${role.cost} ${e(settings.currency)}`,
+						value: message.member.roles.includes(role.id) ? t('economy.shop.bought') : `${role.cost} ${e(currency)}`,
 						inline: true
 					}
 				);

@@ -24,9 +24,9 @@ export default class extends BaseCommand {
 	}
 
 	public async execute(message: Message, [], { funcs: { t, e }, settings }: Context) {
-		if (settings.welcomeEnabled) throw new ExecuteError(t('error.module.enable'));
+		if (settings.welcome.enabled) throw new ExecuteError(t('error.module.enable'));
 
-		settings.welcomeEnabled = true;
+		settings.welcome.enabled = true;
 		await settings.save();
 
 		await this.replyAsync(message, {

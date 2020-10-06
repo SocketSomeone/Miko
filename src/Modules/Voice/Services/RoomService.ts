@@ -27,7 +27,7 @@ export class RoomService extends BaseService {
 		const sets = await this.guilds.get(guild);
 		const rooms = await this.cache.get(guild);
 
-		if (newChannel.id === sets.privateManager) {
+		if (newChannel.id === sets.private.manager) {
 			if (
 				rooms.has(oldChannel.id) &&
 				rooms.get(oldChannel.id).owner === member.id &&
@@ -48,7 +48,7 @@ export class RoomService extends BaseService {
 		const guild = member.guild;
 		const sets = await this.guilds.get(guild);
 
-		if (channel.id !== sets.privateManager) return;
+		if (channel.id !== sets.private.manager) return;
 
 		await this.createRoom(member, guild, channel).catch(() => undefined);
 	}

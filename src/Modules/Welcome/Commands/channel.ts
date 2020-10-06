@@ -50,7 +50,7 @@ export default class extends BaseCommand {
 		[action, channel]: [Action, TextChannel | string],
 		{ funcs: { t, e }, guild, settings }: Context
 	) {
-		if (!settings.welcomeEnabled) throw new ExecuteError(t('error.module.disabled'));
+		if (!settings.welcome.enabled) throw new ExecuteError(t('error.module.disabled'));
 
 		const embed = this.createEmbed({
 			color: Color.MAGENTA,
@@ -62,15 +62,15 @@ export default class extends BaseCommand {
 		switch (action) {
 			case Action.SET: {
 				if (channel instanceof TextChannel) {
-					settings.welcomeChannelType = WelcomeChannelType.GUILD_CHANNEL;
-					settings.welcomeChannel = channel.id;
+					settings.welcome.channelType = WelcomeChannelType.GUILD_CHANNEL;
+					settings.welcome.channel = channel.id;
 
 					embed.description = t('welcome.channel.set', {
 						channel: channel.mention
 					});
 				} else if (/^(DM|ЛС|Личка|Личные сообщения)$/i.test(channel)) {
-					settings.welcomeChannelType = WelcomeChannelType.DM;
-					settings.welcomeChannel = null;
+					settings.welcome.channelType = WelcomeChannelType.DM;
+					settings.welcome.channel = null;
 
 					embed.description = t('welcome.channel.dm');
 				} else {
@@ -81,8 +81,8 @@ export default class extends BaseCommand {
 			}
 
 			case Action.DELETE: {
-				settings.welcomeChannelType = null;
-				settings.welcomeChannel = null;
+				settings.welcome.channelType = null;
+				settings.welcome.channel = null;
 
 				embed.description = t('welcome.channel.deleted');
 				break;

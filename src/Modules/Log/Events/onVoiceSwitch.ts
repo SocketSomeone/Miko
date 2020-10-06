@@ -24,7 +24,8 @@ export default class onVoiceSwitchEvent extends BaseEventLog {
 		const rooms = await this.rooms.get(guild);
 		const sets = await this.guilds.get(guild);
 
-		if (sets.privateManager === channel.id || sets.privateManager === oldChannel.id || rooms.has(oldChannel.id)) return;
+		if (sets.private.manager === channel.id || sets.private.manager === oldChannel.id || rooms.has(oldChannel.id))
+			return;
 
 		await super.handleEvent(guild, member, channel, oldChannel);
 	}

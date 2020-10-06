@@ -115,7 +115,7 @@ export class PunishmentService extends BaseService {
 	}
 
 	private async mute(guild: Guild, member: Member, settings: BaseSettings) {
-		const mutedRole = settings.mutedRole;
+		const mutedRole = settings.moderation.muteRole;
 		if (!mutedRole || !guild.roles.has(mutedRole)) {
 			return false;
 		}

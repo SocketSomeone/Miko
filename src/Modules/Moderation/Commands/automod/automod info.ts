@@ -19,8 +19,8 @@ export default class extends BaseCommand {
 	}
 
 	public async execute(message: Message, [], { funcs: { t, e }, guild, settings }: Context) {
-		const ignoredChannels = [...settings.autoModIgnoreChannels].filter((x) => guild.channels.has(x));
-		const ignoredRoles = [...settings.autoModIgnoreRoles].filter((x) => guild.roles.has(x));
+		const ignoredChannels = [...settings.autoMod.ignoreChannels].filter((x) => guild.channels.has(x));
+		const ignoredRoles = [...settings.autoMod.ignoreRoles].filter((x) => guild.roles.has(x));
 
 		let embed = this.createEmbed({
 			color: Color.GRAY,

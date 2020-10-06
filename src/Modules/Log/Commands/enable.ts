@@ -20,9 +20,9 @@ export default class extends BaseCommand {
 	}
 
 	public async execute(message: Message, [], { funcs: { t }, guild, settings }: Context) {
-		if (settings.welcomeEnabled) throw new ExecuteError(t('error.module.enable'));
+		if (settings.logger.enabled) throw new ExecuteError(t('error.module.enable'));
 
-		settings.loggerEnabled = true;
+		settings.logger.enabled = true;
 		await settings.save();
 
 		await this.replyAsync(message, {

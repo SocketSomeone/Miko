@@ -20,15 +20,15 @@ export default class extends BaseCommand {
 	}
 
 	public async execute(message: Message, []: [], { funcs: { t, e }, settings }: Context) {
-		if (!settings.welcomeEnabled) throw new ExecuteError(t('error.module.disabled'));
+		if (!settings.welcome.enabled) throw new ExecuteError(t('error.module.disabled'));
 
-		settings.welcomeSaveRoles = !settings.welcomeSaveRoles;
+		settings.welcome.saveRoles = !settings.welcome.saveRoles;
 		await settings.save();
 
 		await this.replyAsync(message, {
 			color: Color.MAGENTA,
 			author: {
-				name: t(`welcome.autosave.${settings.welcomeSaveRoles ? 'enable' : 'disable'}`),
+				name: t(`welcome.autosave.${settings.welcome.saveRoles ? 'enable' : 'disable'}`),
 				icon_url: Images.SUCCESS
 			},
 			footer: null,

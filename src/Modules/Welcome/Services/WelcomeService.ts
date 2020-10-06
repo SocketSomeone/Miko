@@ -21,11 +21,11 @@ export class WelcomeService extends BaseService {
 	public async onGuildMemberAdd(guild: Guild, { user, mention }: Member) {
 		const sets = await this.guilds.get(guild);
 
-		if (sets.welcomeEnabled !== true || sets.welcomeChannelType === null || sets.welcomeMessage === null) {
+		if (sets.welcome.enabled !== true || sets.welcome.channelType === null || sets.welcome.message === null) {
 			return;
 		}
 
-		const message = this.messages.fillTemplate(sets.welcomeMessage, {
+		const message = this.messages.fillTemplate(sets.welcome.message, {
 			members: guild.memberCount,
 			server: guild.name,
 			mention
@@ -33,7 +33,7 @@ export class WelcomeService extends BaseService {
 
 		const t: TranslateFunc = (phrase, replace) => i18n.__({ locale: sets.locale, phrase }, replace);
 
-		switch (sets.welcomeChannelType) {
+		switch (sets.welcome.channelType) {
 			case WelcomeChannelType.DM: {
 				const channel = await user.getDMChannel();
 
@@ -43,7 +43,7 @@ export class WelcomeService extends BaseService {
 			}
 
 			case WelcomeChannelType.GUILD_CHANNEL: {
-				const channel = guild.channels.get(sets.welcomeChannel) as TextChannel;
+				const channel = guild.channels.get(sets.welcome.channel) as TextChannel;
 
 				if (!channel) {
 					return;

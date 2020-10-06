@@ -71,7 +71,7 @@ export class BaseMember extends BaseEntity {
 
 		member.guild = guild;
 		member.user = userId;
-		member.money = BigInt(settings.prices.standart);
+		member.money = BigInt(settings.economy.standart);
 
 		return member;
 	}

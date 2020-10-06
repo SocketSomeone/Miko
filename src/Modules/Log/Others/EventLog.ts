@@ -51,15 +51,15 @@ export abstract class BaseEventLog {
 
 		const sets = await this.guilds.get(guild);
 
-		if (sets.loggerEnabled !== true) {
+		if (sets.logger.enabled !== true) {
 			return;
 		}
 
-		if (!sets.logger[this.type]) {
+		if (!sets.logger.events[this.type]) {
 			return;
 		}
 
-		const channel = guild.channels.get(sets.logger[this.type]) as TextChannel;
+		const channel = guild.channels.get(sets.logger.events[this.type]) as TextChannel;
 
 		if (!channel) {
 			return;

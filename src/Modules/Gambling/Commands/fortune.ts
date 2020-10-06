@@ -29,7 +29,17 @@ export default class extends BaseCommand {
 		});
 	}
 
-	public async execute(message: Message, [bet]: [bigint], { funcs: { t, e }, guild, settings: { currency } }: Context) {
+	public async execute(
+		message: Message,
+		[bet]: [bigint],
+		{
+			funcs: { t, e },
+			guild,
+			settings: {
+				economy: { currency }
+			}
+		}: Context
+	) {
 		const person = await BaseMember.get(message.member);
 
 		if (person.money < bet) throw new ExecuteError(t('error.enough.money'));

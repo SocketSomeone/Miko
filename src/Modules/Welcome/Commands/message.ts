@@ -39,7 +39,7 @@ export default class extends BaseCommand {
 	}
 
 	public async execute(message: Message, [action, m]: [Action, string], { funcs: { t, e }, guild, settings }: Context) {
-		if (!settings.welcomeEnabled) throw new ExecuteError(t('error.module.disabled'));
+		if (!settings.welcome.enabled) throw new ExecuteError(t('error.module.disabled'));
 
 		const embed = this.createEmbed({
 			color: Color.MAGENTA,
@@ -50,13 +50,13 @@ export default class extends BaseCommand {
 
 		switch (action) {
 			case Action.SET: {
-				settings.welcomeMessage = m.length < 1 ? null : m;
+				settings.welcome.message = m.length < 1 ? null : m;
 				embed.description = t('welcome.message.ok');
 				break;
 			}
 
 			case Action.DELETE: {
-				settings.welcomeMessage = null;
+				settings.welcome.message = null;
 				embed.description = t('welcome.message.deleted');
 				break;
 			}

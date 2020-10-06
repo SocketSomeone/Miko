@@ -32,9 +32,9 @@ export default class extends BaseCommand {
 
 		if (emoji === EmojisDefault.UNKNOWN_EMOJI) throw new ExecuteError(t('error.emoji.notFound'));
 
-		if (emoji === settings.currency) throw new ExecuteError(t('error.changes.not'));
+		if (emoji === settings.economy.currency) throw new ExecuteError(t('error.changes.not'));
 
-		settings.currency = emoji;
+		settings.economy.currency = emoji;
 		await settings.save();
 
 		await this.replyAsync(message, {
@@ -43,7 +43,7 @@ export default class extends BaseCommand {
 				name: t('configure.title', { guild: guild.name }),
 				icon_url: Images.SUCCESS
 			},
-			description: t(`configure.setcurrency`, { currency: settings.currency }),
+			description: t(`configure.setcurrency`, { currency: settings.economy.currency }),
 			footer: null,
 			timestamp: null
 		});

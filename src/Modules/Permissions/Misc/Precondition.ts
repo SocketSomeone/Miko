@@ -1,4 +1,4 @@
-import { PermissionsFrom, PermissionsExecute, Permission } from '../../../Misc/Models/Permisson';
+import { Activator, Target, Permission } from '../../../Misc/Models/Permisson';
 import { Context, BaseCommand } from '../../../Framework/Commands/Command';
 import { Message } from 'eris';
 
@@ -29,32 +29,32 @@ export class Precondition {
 	): boolean | null {
 		if (
 			!(
-				(permission.target.type === PermissionsExecute.Command &&
+				(permission.target.type === Target.Command &&
 					String(permission.target.id).toLowerCase() === name.toLowerCase()) ||
-				(permission.target.type === PermissionsExecute.Module &&
+				(permission.target.type === Target.Module &&
 					permission.target.id.toLowerCase() === module.names.en.toLowerCase()) ||
-				(permission.target.type === PermissionsExecute.AllModules && permission.target.id === '*')
+				(permission.target.type === Target.AllModules && permission.target.id === '*')
 			)
 		)
 			return null;
 
 		switch (permission.activator.type) {
-			case PermissionsFrom.User:
+			case Activator.User:
 				if (permission.activator.id === member.id) return permission.allow;
 				break;
 
-			case PermissionsFrom.Channel:
+			case Activator.Channel:
 				if (permission.activator.id === channel.id) return permission.allow;
 				break;
 
-			case PermissionsFrom.Role:
+			case Activator.Role:
 				if (!member) break;
 
 				if (member.roles.includes(permission.activator.id)) return permission.allow;
 
 				break;
 
-			case PermissionsFrom.Server:
+			case Activator.Server:
 				if (!member) break;
 
 				return permission.allow;

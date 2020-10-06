@@ -8,7 +8,7 @@ import {
 import { Context, BaseCommand } from '../../../Framework/Commands/Command';
 import { Message, Member, Role, GuildChannel, TextChannel } from 'eris';
 import { PermissionTargetResolver } from '../Resolvers/PermissionResolver';
-import { PermissionsTarget, PermissionsFrom, Permission } from '../../../Misc/Models/Permisson';
+import { PermissionsTarget, Activator, Permission } from '../../../Misc/Models/Permisson';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { Color } from '../../../Misc/Enums/Colors';
 import { Images } from '../../../Misc/Enums/Images';
@@ -78,15 +78,15 @@ export default class extends BaseCommand {
 
 			switch (from.constructor) {
 				case Member:
-					perm.activator.type = PermissionsFrom.User;
+					perm.activator.type = Activator.User;
 					break;
 
 				case Role:
-					perm.activator.type = from.id === guild.id ? PermissionsFrom.Server : PermissionsFrom.Role;
+					perm.activator.type = from.id === guild.id ? Activator.Server : Activator.Role;
 					break;
 
 				case TextChannel:
-					perm.activator.type = PermissionsFrom.Channel;
+					perm.activator.type = Activator.Channel;
 					break;
 			}
 

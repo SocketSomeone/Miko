@@ -40,13 +40,13 @@ export default class extends BaseCommand {
 		[action, role]: [Action, Role],
 		{ funcs: { t, e }, guild, settings }: Context
 	) {
-		if (!settings.welcomeEnabled) throw new ExecuteError(t('error.module.disabled'));
+		if (!settings.welcome.enabled) throw new ExecuteError(t('error.module.disabled'));
 
 		const embed = this.createEmbed({
 			color: Color.MAGENTA,
 			author: { name: t('welcome.title'), icon_url: Images.SUCCESS },
 			description: t('welcome.aar.list', {
-				roles: [...settings.onWelcomeRoles]
+				roles: [...settings.welcome.roles]
 					.filter((x) => guild.roles.has(x))
 					.map((x) => `<@&${x}>`)
 					.join(', ')
@@ -58,7 +58,7 @@ export default class extends BaseCommand {
 		if (role) {
 			switch (action) {
 				case Action.ADD: {
-					if (!settings.onWelcomeRoles.has(role.id)) settings.onWelcomeRoles.add(role.id);
+					if (!settings.welcome.roles.has(role.id)) settings.welcome.roles.add(role.id);
 
 					embed.description = t('welcome.aar.added', {
 						role: role.mention
@@ -67,7 +67,7 @@ export default class extends BaseCommand {
 				}
 
 				case Action.DELETE: {
-					if (settings.onWelcomeRoles.has(role.id)) settings.onWelcomeRoles.delete(role.id);
+					if (settings.welcome.roles.has(role.id)) settings.welcome.roles.delete(role.id);
 
 					embed.description = t('welcome.aar.deleted', {
 						role: role.mention

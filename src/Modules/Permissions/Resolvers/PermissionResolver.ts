@@ -1,4 +1,4 @@
-import { PermissionsTarget, PermissionsExecute } from '../../../Misc/Models/Permisson';
+import { PermissionsTarget, Target } from '../../../Misc/Models/Permisson';
 import { Resolver, CommandResolver, EnumResolver } from '../../../Framework/Resolvers';
 import { Context } from '../../../Framework/Commands/Command';
 import { BaseModule } from '../../../Framework/Module';
@@ -27,7 +27,7 @@ export class PermissionTargetResolver extends Resolver {
 		if (all.has(text)) {
 			return {
 				id: '*',
-				type: PermissionsExecute.AllModules
+				type: Target.AllModules
 			};
 		}
 
@@ -35,7 +35,7 @@ export class PermissionTargetResolver extends Resolver {
 
 		if (module) {
 			return {
-				type: PermissionsExecute.Module,
+				type: Target.Module,
 				id: module.names.en
 			};
 		}
@@ -43,7 +43,7 @@ export class PermissionTargetResolver extends Resolver {
 		const command = await this.commmandResolver.resolve(value, ctx);
 
 		return {
-			type: PermissionsExecute.Command,
+			type: Target.Command,
 			id: command.name
 		};
 	}

@@ -17,7 +17,17 @@ export default class extends BaseCommand {
 		});
 	}
 
-	public async execute(message: Message, [], { funcs: { t, e }, guild, settings }: Context) {
+	public async execute(
+		message: Message,
+		[],
+		{
+			funcs: { t, e },
+			guild,
+			settings: {
+				economy: { currency }
+			}
+		}: Context
+	) {
 		const data = await BaseMember.find({
 			where: {
 				guild: {
@@ -55,7 +65,7 @@ export default class extends BaseCommand {
 					},
 					{
 						name: t('economy.top.fields.cost'),
-						value: `${m.money} ${e(settings.currency)}`,
+						value: `${m.money} ${e(currency)}`,
 						inline: true
 					}
 				);

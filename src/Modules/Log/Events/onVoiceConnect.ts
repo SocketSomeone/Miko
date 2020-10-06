@@ -18,7 +18,7 @@ export default class onVoiceConnectEvent extends BaseEventLog {
 	private async onVoiceChannelJoin(member: Member, channel: VoiceChannel) {
 		const sets = await this.guilds.get(channel.guild);
 
-		if (sets.privateManager === channel.id) return;
+		if (sets.private.manager === channel.id) return;
 
 		await super.handleEvent(channel.guild, member, channel);
 	}

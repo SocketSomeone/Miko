@@ -1,12 +1,16 @@
-import { BaseEntity, Entity, Column, PrimaryColumn, OneToOne, JoinColumn } from 'typeorm';
+import { BaseEntity, Entity, Column, PrimaryColumn } from 'typeorm';
 import { EmojisDefault } from '../Misc/Enums/EmojisDefaults';
 import { PunishmentConfig, Violation } from '../Misc/Enums/Violation';
 import { SetTransformer } from './Transformers/SetTransformer';
-import { WelcomeChannelType } from '../Misc/Enums/WelcomeTypes';
-import { LogType } from '../Modules/Log/Others/LogType';
 import { Permission } from '../Misc/Models/Permisson';
 import { PermissionTransformer } from './Transformers';
 import { Lang } from '../Misc/Enums/Languages';
+import { WelcomeSettings } from '../Modules/Welcome/Models/WelcomeSettings';
+import { LoggerSettings } from '../Modules/Log/Models/LoggerSettings';
+import { AutomodSettings } from '../Modules/Moderation/Models/AutomodSettings';
+import { EconomySettings } from '../Modules/Economy/Models/EconomySettings';
+import { PrivateSettings } from '../Modules/Voice/Models/PrivateSettings';
+import { ModerationSettings } from '../Modules/Moderation/Models/ModerationSettings';
 
 interface GuildPrices {
 	timely: string;
@@ -24,107 +28,6 @@ export class BaseSettings extends BaseEntity {
 	@Column({ type: 'varchar' })
 	public locale: Lang = Lang.ru;
 
-	@Column({ type: 'varchar', default: {}, array: true })
-	public ignoreChannels: string[] = [];
-
-	@Column({ type: 'varchar', default: null, nullable: true })
-	public modlog: string = null;
-
-	@Column({ type: 'varchar', default: null, nullable: true })
-	public mutedRole: string = null;
-
-	@Column({ type: 'varchar', default: null, nullable: true })
-	public privateManager: string = null;
-
-	@Column({ type: 'varchar', default: EmojisDefault.WALLET })
-	public currency: string = EmojisDefault.WALLET;
-
-	@Column({
-		type: 'json',
-		default: {
-			timely: '15',
-			standart: '100'
-		}
-	})
-	public prices: GuildPrices = {
-		timely: '15',
-		standart: '100'
-	};
-
-	@Column({
-		type: 'json',
-		default: {}
-	})
-	public autoMod: {
-		[key in Violation]: boolean;
-	} = {
-		[Violation.invites]: false,
-		[Violation.allCaps]: false,
-		[Violation.duplicateText]: false,
-		[Violation.zalgo]: false,
-		[Violation.emojis]: false,
-		[Violation.externalLinks]: false,
-		[Violation.mentions]: false
-	};
-
-	@Column({ type: 'varchar', default: {}, array: true, transformer: SetTransformer })
-	public autoModIgnoreRoles: Set<string> = new Set();
-
-	@Column({ type: 'varchar', default: {}, array: true, transformer: SetTransformer })
-	public autoModIgnoreChannels: Set<string> = new Set();
-
-	@Column({ type: 'boolean', default: false })
-	public welcomeEnabled: boolean = false;
-
-	@Column({ type: 'varchar', default: {}, array: true, transformer: SetTransformer })
-	public onWelcomeRoles: Set<string> = new Set();
-
-	@Column({ type: 'boolean', default: false })
-	public welcomeSaveRoles: boolean = false;
-
-	@Column({ type: 'integer', default: null, nullable: true })
-	public welcomeChannelType: WelcomeChannelType = null;
-
-	@Column({ type: 'bigint', default: null, nullable: true })
-	public welcomeChannel: string = null;
-
-	@Column({ type: 'varchar', default: null, nullable: true })
-	public welcomeMessage: string = null;
-
-	@Column({ type: 'boolean', default: false })
-	public loggerEnabled: boolean = false;
-
-	@Column({ type: 'json', default: {} })
-	public logger: { [key in LogType]: string } = {
-		[LogType.BAN]: null,
-		[LogType.UNBAN]: null,
-
-		[LogType.CHANNEL_CREATE]: null,
-		[LogType.CHANNEL_DELETE]: null,
-
-		[LogType.EMOJI_CREATE]: null,
-		[LogType.EMOJI_UPDATE]: null,
-		[LogType.EMOJI_DELETE]: null,
-
-		[LogType.ROLE_CREATE]: null,
-		[LogType.ROLE_DELETE]: null,
-		[LogType.ROLE_UPDATE]: null,
-
-		[LogType.ROOM_CREATE]: null,
-		[LogType.ROOM_DELETE]: null,
-
-		[LogType.VOICE_JOIN]: null,
-		[LogType.VOICE_LEAVE]: null,
-		[LogType.VOICE_SWITCH]: null,
-
-		[LogType.MEMBER_JOIN]: null,
-		[LogType.MEMBER_LEAVE]: null,
-		[LogType.MEMBER_UPDATE_ROLES]: null,
-
-		[LogType.MESSAGE_EDITED]: null,
-		[LogType.MESSAGE_DELETED]: null
-	};
-
 	@Column({
 		type: 'json',
 		default: [],
@@ -132,6 +35,21 @@ export class BaseSettings extends BaseEntity {
 	})
 	public permissions: Permission[] = [];
 
-	@Column({ type: 'json', default: [] })
-	public punishmentConfig: PunishmentConfig[] = [];
+	@Column((type) => ModerationSettings)
+	public moderation: ModerationSettings;
+
+	@Column((type) => PrivateSettings)
+	public private: PrivateSettings;
+
+	@Column((type) => EconomySettings)
+	public economy: EconomySettings;
+
+	@Column((type) => AutomodSettings)
+	public autoMod: AutomodSettings;
+
+	@Column((type) => WelcomeSettings)
+	public welcome: WelcomeSettings;
+
+	@Column((type) => LoggerSettings)
+	public logger: LoggerSettings;
 }

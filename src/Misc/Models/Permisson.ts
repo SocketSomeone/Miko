@@ -1,11 +1,11 @@
-export enum PermissionsFrom {
+export enum Activator {
 	User,
 	Channel,
 	Role,
 	Server
 }
 
-export enum PermissionsExecute {
+export enum Target {
 	Command,
 	Module,
 	AllModules = '*'
@@ -13,12 +13,12 @@ export enum PermissionsExecute {
 
 export interface PermissionsActivator {
 	id: string;
-	type: PermissionsFrom;
+	type: Activator;
 }
 
 export interface PermissionsTarget {
 	id: string;
-	type: PermissionsExecute;
+	type: Target;
 }
 
 export interface Permission {

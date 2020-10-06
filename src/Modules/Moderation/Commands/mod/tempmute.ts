@@ -78,7 +78,7 @@ export default class extends BaseCommand {
 			timestamp: moment().add(duration).toISOString()
 		});
 
-		const mutedRole = settings.mutedRole;
+		const mutedRole = settings.moderation.muteRole;
 
 		if (!mutedRole || !guild.roles.has(mutedRole)) {
 			throw new ExecuteError(t('error.missed.muterole'));

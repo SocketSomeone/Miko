@@ -39,7 +39,13 @@ export default class extends BaseCommand {
 	public async execute(
 		message: Message,
 		[role, price]: [Role, bigint],
-		{ funcs: { t, e }, guild, settings: { currency } }: Context
+		{
+			funcs: { t, e },
+			guild,
+			settings: {
+				economy: { currency }
+			}
+		}: Context
 	) {
 		const roles = await this.shop.get(guild);
 		const changeRole = roles.find((x) => x.id === role.id);

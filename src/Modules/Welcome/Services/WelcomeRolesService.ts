@@ -22,7 +22,7 @@ export class WelcomeRolesService extends BaseService {
 		const settings = await this.guilds.get(guild);
 		const roles: Set<string> = new Set();
 
-		if (!settings.welcomeEnabled) {
+		if (!settings.welcome.enabled) {
 			return;
 		}
 
@@ -33,7 +33,7 @@ export class WelcomeRolesService extends BaseService {
 			return;
 		}
 
-		if (settings.welcomeSaveRoles) {
+		if (settings.welcome.saveRoles) {
 			const person = await BaseMember.get(member);
 
 			if (person.savedRoles && person.savedRoles.length > 0) {
@@ -41,7 +41,7 @@ export class WelcomeRolesService extends BaseService {
 			}
 		}
 
-		settings.onWelcomeRoles.forEach((r) => roles.add(r));
+		settings.welcome.roles.forEach((r) => roles.add(r));
 
 		if (roles && roles.size >= 1) {
 			await member.edit({
@@ -55,7 +55,7 @@ export class WelcomeRolesService extends BaseService {
 
 		const settings = await this.guilds.get(guild);
 
-		if (!settings.welcomeEnabled || !settings.welcomeSaveRoles) return;
+		if (!settings.welcome.enabled || !settings.welcome.saveRoles) return;
 
 		const person = await BaseMember.get(member, guild);
 		person.savedRoles = member.roles;

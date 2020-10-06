@@ -28,9 +28,9 @@ export default class extends BaseCommand {
 
 	public async execute(message: Message, [money]: [bigint], { funcs: { t, e }, guild, settings }: Context) {
 		if (money) {
-			if (String(money) === settings.prices.standart) throw new ExecuteError(t('error.changes.not'));
+			if (money === settings.economy.standart) throw new ExecuteError(t('error.changes.not'));
 
-			settings.prices.standart = String(money);
+			settings.economy.standart = money;
 			await settings.save();
 		}
 
@@ -41,7 +41,7 @@ export default class extends BaseCommand {
 				icon_url: money ? Images.SUCCESS : Images.SETTINGS
 			},
 			description: t(`configure.standart.${money ? 'new' : 'info'}`, {
-				amount: `${settings.prices.standart} ${e(settings.currency)}`
+				amount: `${settings.economy.standart} ${e(settings.economy.currency)}`
 			}),
 			footer: null,
 			timestamp: null

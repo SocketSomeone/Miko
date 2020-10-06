@@ -1,11 +1,8 @@
-import glob from 'glob';
 import moment from 'moment';
 import i18n from 'i18n';
 
-import { writeFileSync } from 'fs';
 import { BaseService } from './Service';
 import { BaseCommand, Context, TranslateFunc } from '../Commands/Command';
-import { resolve, relative, join } from 'path';
 import { Precondition } from '../../Modules/Permissions/Misc/Precondition';
 import { Message, GuildChannel, Guild } from 'eris';
 import { GuildPermission } from '../../Misc/Models/GuildPermissions';

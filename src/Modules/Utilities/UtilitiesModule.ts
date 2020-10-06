@@ -1,6 +1,7 @@
 import { BaseClient } from '../../Client';
 import { BaseModule } from '../../Framework/Module';
 import { Lang } from '../../Misc/Enums/Languages';
+import avatar from './Commands/avatar';
 import help from './Commands/help';
 
 export class UtilitiesModule extends BaseModule {
@@ -14,5 +15,6 @@ export class UtilitiesModule extends BaseModule {
 
 		// Commands
 		this.registerCommand(help);
+		this.registerCommand(avatar);
 	}
 }

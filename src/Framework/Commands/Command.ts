@@ -124,7 +124,7 @@ export abstract class BaseCommand {
 	}
 
 	protected getDescription(t: TranslateFunc) {
-		const key = `info.help.cmdDesc.${this.name.toLowerCase()}`;
+		const key = `utilities.help.cmdDesc.${this.name.toLowerCase()}`;
 		const desc = t(key);
 
 		if (key === desc) {
@@ -154,12 +154,12 @@ export abstract class BaseCommand {
 			description,
 			fields: [
 				{
-					name: t('info.help.cmd.ex'),
+					name: t('utilities.help.cmd.ex'),
 					inline: false,
 					value: '>>> ' + field + this.examples.map((ex) => prefix + this.name + ' ' + ex).join('\n')
 				},
 				{
-					name: t('info.help.cmd.aliases'),
+					name: t('utilities.help.cmd.aliases'),
 					value: this.aliases.length >= 1 ? this.aliases.map((x) => `\`${x}\``).join(', ') : null,
 					inline: false
 				}

@@ -78,7 +78,7 @@ export default class extends BaseCommand {
 		commands
 			.sort((a, b) => a.usage.localeCompare(b.usage))
 			.map((x, i) => {
-				const desc = t(`info.help.cmdDesc.${x.name.toLowerCase()}`);
+				const desc = t(`utilities.help.cmdDesc.${x.name.toLowerCase()}`);
 				const page = fields[~~(i / 15)];
 
 				if (!page) {
@@ -94,16 +94,16 @@ export default class extends BaseCommand {
 
 		const embed = this.createEmbed({
 			author: {
-				name: t('info.help.title'),
+				name: t('utilities.help.title'),
 				icon_url: Images.HELP
 			},
 			fields,
-			description: t('info.help.desc', {
+			description: t('utilities.help.desc', {
 				botId: this.client.user.id,
 				prefix
 			}),
 			footer: {
-				text: t('info.help.footer'),
+				text: t('utilities.help.footer'),
 				icon_url: this.client.user.dynamicAvatarURL('png', 4096)
 			},
 			thumbnail: {

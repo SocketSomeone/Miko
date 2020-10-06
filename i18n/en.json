@@ -997,8 +997,13 @@
 				"welcome disable": "utilities.help.cmdDesc.welcome disable",
 				"welcome message": "utilities.help.cmdDesc.welcome message",
 				"welcome channel": "utilities.help.cmdDesc.welcome channel",
-				"avatar": "utilities.help.cmdDesc.avatar"
+				"avatar": "utilities.help.cmdDesc.avatar",
+				"invite": "utilities.help.cmdDesc.invite"
 			}
+		},
+		"invite": {
+			"title": "utilities.invite.title",
+			"desc": "utilities.invite.desc"
 		}
 	}
 }

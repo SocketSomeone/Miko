@@ -27,5 +27,6 @@ export enum Images {
 	VOICE = 'https://i.imgur.com/npogl49.png',
 	SHOP = 'https://i.imgur.com/HSIqjBI.png',
 	TIME = 'https://i.imgur.com/tbmm9GY.png',
-	HELP = 'https://i.imgur.com/JpATjyV.png'
+	HELP = 'https://i.imgur.com/JpATjyV.png',
+	INVITE = 'https://i.imgur.com/Uh0tIiW.png'
 }

@@ -24,7 +24,9 @@ export default class extends BaseCommand {
 	public async execute(message: Message, [member]: [Member], {}: Context) {
 		await this.replyAsync(message, {
 			author: { name: member.tag, icon_url: message.author.avatarURL },
-			image: { url: member.avatarURL }
+			image: { url: member.avatarURL },
+			footer: null,
+			timestamp: null
 		});
 	}
 }

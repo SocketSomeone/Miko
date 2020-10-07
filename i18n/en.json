@@ -738,7 +738,9 @@
 				"slap": "info.help.cmdDesc.slap",
 				"sleep": "info.help.cmdDesc.sleep",
 				"permission clear": "info.help.cmdDesc.permission clear",
-				"permission list": "info.help.cmdDesc.permission list"
+				"permission list": "info.help.cmdDesc.permission list",
+				"avatar": "info.help.cmdDesc.avatar",
+				"invite": "info.help.cmdDesc.invite"
 			},
 			"moduleDesc": {
 				"configure": "info.help.moduleDesc.configure",

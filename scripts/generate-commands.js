@@ -13,8 +13,6 @@ const client = new BaseClient({
 (async () => {
 	await client.init();
 
-	const { CommandGroup } = require('../bin/Misc/Models/CommandGroup');
-
 	const commands = [...client.commands.values()]
 		.map((c) => {
 			if (c.group === null) return null;
@@ -24,9 +22,9 @@ const client = new BaseClient({
 			return {
 				name: c.name,
 				aliases: c.aliases,
-				description: i18n.__({ locale: 'ru', phrase: `info.help.cmdDesc.${c.name.toLowerCase()}` }),
+				description: i18n.__({ locale: 'ru', phrase: `utilities.help.cmdDesc.${c.name.toLowerCase()}` }),
 				examples: c.examples.concat([field]).filter((x) => x !== null),
-				module: CommandGroup[c.group]
+				module: c.module.names.en.toUpperCase()
 			};
 		})
 		.filter((x) => !!x);

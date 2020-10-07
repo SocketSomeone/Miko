@@ -24,6 +24,11 @@
 			"pre-commit": "yarn i18n && yarn nxv && yarn pretty-quick --staged"
 		}
 	},
+	"standard-version": {
+		"skip": {
+			"changelog": true
+		}
+	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/SocketSomeone/Miko.git"

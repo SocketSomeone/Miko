@@ -226,116 +226,32 @@
 		"module": "GAMBLING"
 	},
 	{
-		"name": "permission add",
-		"aliases": ["правило добавить"],
-		"description": "Добавить правило для использования команд бота.",
-		"examples": ["disable @role timely", "disable #text all", "enable @user ban"],
-		"module": "PERMISSIONS"
-	},
-	{
-		"name": "permissions clear",
-		"aliases": ["правила очистить"],
-		"description": "Очистить список правил для использования команд бота.",
-		"examples": [""],
-		"module": "PERMISSIONS"
-	},
-	{
-		"name": "permissions list",
-		"aliases": ["список правил"],
-		"description": "Посмотреть список правил.",
-		"examples": [""],
-		"module": "PERMISSIONS"
-	},
-	{
-		"name": "permission move",
+		"name": "log disable",
 		"aliases": [],
-		"description": "Поменять местами правила из списка.",
-		"examples": ["1 2"],
-		"module": "PERMISSIONS"
-	},
-	{
-		"name": "permission remove",
-		"aliases": ["правило удалить"],
-		"description": "Удалить правило из списка.",
-		"examples": ["1"],
-		"module": "PERMISSIONS"
-	},
-	{
-		"name": "voice admin",
-		"aliases": ["v admin"],
-		"description": "Выдать права администратора в вашей приватной комнате.",
-		"examples": ["@user"],
-		"module": "VOICE"
-	},
-	{
-		"name": "voice disable",
-		"aliases": ["v disable"],
-		"description": "Выключить модуль приватных комнат.",
+		"description": "Выключить модуль логирования",
 		"examples": [""],
-		"module": "VOICE"
+		"module": "LOGS"
 	},
 	{
-		"name": "voice enable",
-		"aliases": ["v enable"],
-		"description": "Включить модуль приватных комнат.",
+		"name": "log enable",
+		"aliases": [],
+		"description": "Включить модуль логирования",
 		"examples": [""],
-		"module": "VOICE"
+		"module": "LOGS"
 	},
 	{
-		"name": "voice hide",
-		"aliases": ["v hide"],
-		"description": "Скрыть приватную комнату.",
-		"examples": ["@role", "@user", ""],
-		"module": "VOICE"
+		"name": "log set",
+		"aliases": [],
+		"description": "Установить или отобразить логи, которые отправляются в данный канал.",
+		"examples": ["BAN", "MESSAGE_DELETE, MESSAGE_EDITED", ""],
+		"module": "LOGS"
 	},
 	{
-		"name": "voice kick",
-		"aliases": ["v kick"],
-		"description": "Выгнать пользователя из приватной комнаты.",
-		"examples": ["@user", ""],
-		"module": "VOICE"
-	},
-	{
-		"name": "voice limit",
-		"aliases": ["v limit"],
-		"description": "Установить лимит на вход в приватную комнату.",
-		"examples": ["15"],
-		"module": "VOICE"
-	},
-	{
-		"name": "voice lock",
-		"aliases": ["v lock"],
-		"description": "Закрыть доступ входа в приватную комнату.",
-		"examples": ["@role", "@user", ""],
-		"module": "VOICE"
-	},
-	{
-		"name": "voice name",
-		"aliases": ["v name"],
-		"description": "Изменить наименование приватной комнаты.",
-		"examples": ["🌟 Shines like a star"],
-		"module": "VOICE"
-	},
-	{
-		"name": "voice owner",
-		"aliases": ["v owner"],
-		"description": "Передать права владельца приватной комнаты.",
-		"examples": ["@user", ""],
-		"module": "VOICE"
-	},
-	{
-		"name": "voice show",
-		"aliases": ["v show"],
-		"description": "Сделать видимой приватную комнату.",
-		"examples": ["@role", "@user", ""],
-		"module": "VOICE"
-	},
-	{
-		"name": "voice unlock",
-		"aliases": ["v unlock"],
-		"description": "Открыть доступ входа в приватную комнату.",
-		"examples": ["@role", "@user", ""],
-		"module": "VOICE"
+		"name": "log unset",
+		"aliases": [],
+		"description": "Очистить логи, которые отправляются в данный канал.",
+		"examples": ["BAN", "MESSAGE_DELETE, MESSAGE_EDITED", ""],
+		"module": "LOGS"
 	},
 	{
 		"name": "automod info",
@@ -415,39 +331,137 @@
 		"module": "MODERATION"
 	},
 	{
-		"name": "warns",
-		"aliases": ["преды"],
-		"description": "Посмотреть предупреждения пользователя.",
+		"name": "permission add",
+		"aliases": ["правило добавить"],
+		"description": "Добавить правило для использования команд бота.",
+		"examples": ["disable @role timely", "disable #text all", "enable @user ban"],
+		"module": "PERMISSIONS"
+	},
+	{
+		"name": "permission clear",
+		"aliases": ["правила очистить"],
+		"description": "Очистить список правил для использования команд бота.",
+		"examples": [""],
+		"module": "PERMISSIONS"
+	},
+	{
+		"name": "permission list",
+		"aliases": ["список правил"],
+		"description": "Посмотреть список правил.",
+		"examples": [""],
+		"module": "PERMISSIONS"
+	},
+	{
+		"name": "permission move",
+		"aliases": [],
+		"description": "Поменять местами правила из списка.",
+		"examples": ["1 2"],
+		"module": "PERMISSIONS"
+	},
+	{
+		"name": "permission remove",
+		"aliases": ["правило удалить"],
+		"description": "Удалить правило из списка.",
+		"examples": ["1"],
+		"module": "PERMISSIONS"
+	},
+	{
+		"name": "help",
+		"aliases": ["помощь", "h"],
+		"description": "Посмотреть помощь по командам",
+		"examples": ["Configure", "ban", ""],
+		"module": "UTILITIES"
+	},
+	{
+		"name": "avatar",
+		"aliases": ["ава", "ava", "аватарка"],
+		"description": "Посмотреть аватарку пользователя!",
+		"examples": ["@user"],
+		"module": "UTILITIES"
+	},
+	{
+		"name": "invite",
+		"aliases": ["инвайт", "пригласить"],
+		"description": "Посмотреть полезные ссылки Мико!",
+		"examples": [""],
+		"module": "UTILITIES"
+	},
+	{
+		"name": "voice admin",
+		"aliases": ["v admin"],
+		"description": "Выдать права администратора в вашей приватной комнате.",
+		"examples": ["@user"],
+		"module": "PRIVATE CHANNELS"
+	},
+	{
+		"name": "voice disable",
+		"aliases": ["v disable"],
+		"description": "Выключить модуль приватных комнат.",
+		"examples": [""],
+		"module": "PRIVATE CHANNELS"
+	},
+	{
+		"name": "voice enable",
+		"aliases": ["v enable"],
+		"description": "Включить модуль приватных комнат.",
+		"examples": [""],
+		"module": "PRIVATE CHANNELS"
+	},
+	{
+		"name": "voice hide",
+		"aliases": ["v hide"],
+		"description": "Скрыть приватную комнату.",
+		"examples": ["@role", "@user", ""],
+		"module": "PRIVATE CHANNELS"
+	},
+	{
+		"name": "voice kick",
+		"aliases": ["v kick"],
+		"description": "Выгнать пользователя из приватной комнаты.",
 		"examples": ["@user", ""],
-		"module": "MODERATION"
+		"module": "PRIVATE CHANNELS"
 	},
 	{
-		"name": "log disable",
-		"aliases": [],
-		"description": "Выключить модуль логирования",
-		"examples": [""],
-		"module": "LOGS"
+		"name": "voice limit",
+		"aliases": ["v limit"],
+		"description": "Установить лимит на вход в приватную комнату.",
+		"examples": ["15"],
+		"module": "PRIVATE CHANNELS"
 	},
 	{
-		"name": "log enable",
-		"aliases": [],
-		"description": "Включить модуль логирования",
-		"examples": [""],
-		"module": "LOGS"
+		"name": "voice lock",
+		"aliases": ["v lock"],
+		"description": "Закрыть доступ входа в приватную комнату.",
+		"examples": ["@role", "@user", ""],
+		"module": "PRIVATE CHANNELS"
 	},
 	{
-		"name": "log set",
-		"aliases": [],
-		"description": "Установить или отобразить логи, которые отправляются в данный канал.",
-		"examples": ["BAN", "MESSAGE_DELETE, MESSAGE_EDITED", ""],
-		"module": "LOGS"
+		"name": "voice name",
+		"aliases": ["v name"],
+		"description": "Изменить наименование приватной комнаты.",
+		"examples": ["🌟 Shines like a star"],
+		"module": "PRIVATE CHANNELS"
 	},
 	{
-		"name": "log unset",
-		"aliases": [],
-		"description": "Очистить логи, которые отправляются в данный канал.",
-		"examples": ["BAN", "MESSAGE_DELETE, MESSAGE_EDITED", ""],
-		"module": "LOGS"
+		"name": "voice owner",
+		"aliases": ["v owner"],
+		"description": "Передать права владельца приватной комнаты.",
+		"examples": ["@user", ""],
+		"module": "PRIVATE CHANNELS"
+	},
+	{
+		"name": "voice show",
+		"aliases": ["v show"],
+		"description": "Сделать видимой приватную комнату.",
+		"examples": ["@role", "@user", ""],
+		"module": "PRIVATE CHANNELS"
+	},
+	{
+		"name": "voice unlock",
+		"aliases": ["v unlock"],
+		"description": "Открыть доступ входа в приватную комнату.",
+		"examples": ["@role", "@user", ""],
+		"module": "PRIVATE CHANNELS"
 	},
 	{
 		"name": "welcome roles",

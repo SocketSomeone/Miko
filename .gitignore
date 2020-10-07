@@ -6,6 +6,5 @@ yarn.lock
 bin
 yarn-error.log
 node_modules
-config.json
 bin
 CHANGELOG.md

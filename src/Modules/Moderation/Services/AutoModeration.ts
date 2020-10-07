@@ -8,11 +8,6 @@ import { BaseService } from '../../../Framework/Services/Service';
 import { Violation } from '../../../Misc/Enums/Violation';
 import { ModerationService } from './Moderation';
 
-interface Arguments {
-	guild: Guild;
-	settings: BaseSettings;
-}
-
 interface MiniMessage {
 	id: string;
 	author: string;
@@ -70,7 +65,7 @@ export class AutoModerationService extends BaseService {
 		const channel = message.channel as TextChannel;
 		const guild = channel.guild;
 
-		if (!this.shouldProcess(guild, message.member || message.author, message)) {
+		if (!(await this.shouldProcess(guild, message.member || message.author, message))) {
 			return;
 		}
 
@@ -122,10 +117,6 @@ export class AutoModerationService extends BaseService {
 		}
 
 		const settings = await this.guilds.get(guild);
-
-		if (Object.values(settings.autoMod).every((b) => b === false)) {
-			return;
-		}
 
 		if (settings.autoMod.ignoreChannels.has(message.channel.id)) {
 			return;

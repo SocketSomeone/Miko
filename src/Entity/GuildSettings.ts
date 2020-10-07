@@ -28,20 +28,20 @@ export class BaseSettings extends BaseEntity {
 	public permissions: Permission[] = [];
 
 	@Column((type) => ModerationSettings)
-	public moderation: ModerationSettings;
+	public moderation: ModerationSettings = new ModerationSettings();
 
 	@Column((type) => PrivateSettings)
-	public private: PrivateSettings;
+	public private: PrivateSettings = new PrivateSettings();
 
 	@Column((type) => EconomySettings)
-	public economy: EconomySettings;
+	public economy: EconomySettings = new EconomySettings();
 
 	@Column((type) => AutomodSettings)
-	public autoMod: AutomodSettings;
+	public autoMod: AutomodSettings = new AutomodSettings();
 
 	@Column((type) => WelcomeSettings)
-	public welcome: WelcomeSettings;
+	public welcome: WelcomeSettings = new WelcomeSettings();
 
 	@Column((type) => LoggerSettings)
-	public logger: LoggerSettings;
+	public logger: LoggerSettings = new LoggerSettings();
 }

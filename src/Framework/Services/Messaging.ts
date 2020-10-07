@@ -7,6 +7,8 @@ import { Color } from '../../Misc/Enums/Colors';
 import { ColorResolve } from '../../Misc/Utils/ColorResolver';
 import { BaseEmbedOptions } from '../../Types';
 
+import i18n from 'i18n';
+
 const upSymbol = 'left:736460400656384090';
 const downSymbol = 'right:736460400089890867';
 

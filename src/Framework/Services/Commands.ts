@@ -272,7 +272,7 @@ export class CommandService extends BaseService {
 			return content.substring(prefix.length).trim();
 		}
 
-		const regex = /^(?:<@!?)?(\d+)>? (.*)$/;
+		const regex = /^(?:<@(?:!|&)?)?(\d+)>? (.*)$/;
 
 		if (regex.test(content)) {
 			const matches = content.match(regex);

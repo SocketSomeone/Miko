@@ -7,8 +7,8 @@ export class EconomySettings {
 	public currency: string = EmojisDefault.WALLET;
 
 	@Column({ type: 'bigint', transformer: BigIntTransformer, default: 50 })
-	public timely: bigint;
+	public timely: bigint = 50n;
 
 	@Column({ type: 'bigint', transformer: BigIntTransformer, default: 150 })
-	public standart: bigint;
+	public standart: bigint = 150n;
 }

@@ -109,7 +109,7 @@ export class AutoModerationService extends BaseService {
 
 	private async shouldProcess(guild: Guild, user: User | Member, message: Message) {
 		if (user.bot) {
-			return;
+			return false;
 		}
 
 		if (!guild) {
@@ -125,8 +125,6 @@ export class AutoModerationService extends BaseService {
 		if (message.member.roles.some((x) => settings.autoMod.ignoreRoles.has(x))) {
 			return;
 		}
-
-		return true;
 	}
 
 	private async invites(guild: Guild, message: Message, settings: BaseSettings): Promise<boolean> {

@@ -31,6 +31,7 @@ export default class extends BaseCommand {
 			if (prefix === settings.prefix) throw new ExecuteError(t('error.changes.not'));
 
 			settings.prefix = prefix;
+			console.log(settings);
 			await settings.save();
 		}
 

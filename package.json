@@ -16,7 +16,7 @@
 		"gc": "node ./scripts/generate-commands.js",
 		"i18n": "node scripts/check-i18n.js",
 		"ssh": "ssh root@185.185.68.44",
-		"deploy": "pscp -r ./bin root@185.185.68.44:/root/Miko",
+		"deploy": "yarn build && pscp -r ./bin root@185.185.68.44:/root/Miko",
 		"deployLang": "pscp -r ./i18n root@185.185.68.44:/root/Miko"
 	},
 	"husky": {

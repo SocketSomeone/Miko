@@ -23,11 +23,6 @@ export default class extends BaseCommand {
 			aliases: ['правило добавить'],
 			args: [
 				{
-					name: 'state',
-					resolver: BooleanResolver,
-					required: true
-				},
-				{
 					name: 'role | member | channel',
 					resolver: new AnyResolver(
 						module,
@@ -38,7 +33,12 @@ export default class extends BaseCommand {
 					required: true
 				},
 				{
-					name: 'module/command',
+					name: 'enable | disable',
+					resolver: BooleanResolver,
+					required: true
+				},
+				{
+					name: 'module | command',
 					resolver: PermissionTargetResolver,
 					required: true,
 					full: true
@@ -47,7 +47,7 @@ export default class extends BaseCommand {
 			guildOnly: true,
 			premiumOnly: false,
 			userPermissions: [GuildPermission.ADMINISTRATOR],
-			examples: ['disable @role timely', 'disable #text all', 'enable @user ban']
+			examples: ['@role disable timely', '#text disable all', '@user enable ban']
 		});
 	}
 

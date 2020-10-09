@@ -28,7 +28,7 @@ export default class onMessageDeleteEvent extends BaseEventLog {
 			return;
 		}
 
-		const [isCommand] = await this.commands.resolve(message, null, guild);
+		const [isCommand] = await this.commands.resolveCommand(message, null, guild);
 
 		if (isCommand) {
 			return;

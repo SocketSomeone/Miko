@@ -73,7 +73,9 @@ export class MessagingService extends BaseService {
 			}
 
 			if (!target.permissionsOf(this.client.user.id).has(GuildPermission.EMBED_LINKS)) {
-				throw new SendError(`I don't have permission to send embeds. Enable \`Embed Links\` permission for Miko.`);
+				throw new SendError(
+					`I don't have permission to send embeds.\nEnable "Embed Links" permission for Miko in this channel.`
+				);
 			}
 		}
 

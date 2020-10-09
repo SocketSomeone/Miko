@@ -64,19 +64,17 @@ export class CommandService extends BaseService {
 			return;
 		}
 
-		const start = moment();
+		const channel = message.channel;
+		const guild = (channel as GuildChannel).guild;
 
-		const channel = message.channel,
-			guild = (channel as GuildChannel).guild,
-			sets = guild ? await this.guilds.get(guild) : new BaseSettings();
+		const sets = guild ? await this.guilds.get(guild) : new BaseSettings();
+		const t = <TranslateFunc>((phrase, replacements) => i18n.__({ locale: sets.locale, phrase }, replacements));
 
-		const [cmd, splits] = await this.resolve(message, sets.prefix);
+		const [cmd, splits] = await this.resolveCommand(message, sets.prefix);
 
 		if (!cmd || (cmd.guildOnly && !guild)) {
 			return;
 		}
-
-		const t: TranslateFunc = (phrase, replacements) => i18n.__({ locale: sets.locale, phrase }, replacements);
 
 		const ratelimit = await this.isRatelimited(message, t);
 
@@ -97,19 +95,26 @@ export class CommandService extends BaseService {
 
 		if (guild) {
 			let member = message.member;
-			context.me = guild.members.get(this.client.user.id);
 
-			if (!context.me) {
-				context.me = await guild.getRESTMember(this.client.user.id).catch(() => undefined);
+			if (!member) {
+				member = guild.members.get(message.author.id);
 			}
 
-			if (!member || !context.me) {
+			if (!member) {
+				member = await guild.getRESTMember(message.author.id);
+			}
+
+			if (!member) {
 				return;
 			}
 
-			const withoutPermissions = new Set([guild.ownerID, this.client.config.ownerID]);
-
-			if (!withoutPermissions.has(member.id)) {
+			if (
+				!(
+					member.id === guild.ownerID ||
+					member.permission.has(GuildPermission.ADMINISTRATOR) ||
+					this.client.config.ownerID === member.id
+				)
+			) {
 				const { answer, permission } = Precondition.checkPermissions(
 					{ context, command: cmd, message },
 					sets.permissions
@@ -131,7 +136,7 @@ export class CommandService extends BaseService {
 					);
 
 					return;
-				} else if (permission === null && !member.permission.has(GuildPermission.ADMINISTRATOR)) {
+				} else if (permission === null) {
 					const missingPerms = cmd.userPermissions.filter(
 						(p) => !(channel as GuildChannel).permissionsOf(member.id).has(p)
 					);
@@ -153,6 +158,12 @@ export class CommandService extends BaseService {
 						return;
 					}
 				}
+			}
+
+			context.me = guild.members.get(this.client.user.id);
+
+			if (!context.me) {
+				context.me = await guild.getRESTMember(this.client.user.id).catch(() => undefined);
 			}
 
 			const missingPerms = cmd.botPermissions.filter(
@@ -234,9 +245,7 @@ export class CommandService extends BaseService {
 				});
 
 				if (err.fallbackUser) {
-					const userDM = await message.author.getDMChannel();
-
-					await userDM.createMessage({ embed }).catch(() => undefined);
+					await this.msg.sendEmbed(await message.author.getDMChannel(), embed);
 				} else {
 					await this.msg.sendReply(message, embed);
 				}
@@ -332,7 +341,7 @@ export class CommandService extends BaseService {
 		return acc.length < 1 ? rawArgs : rawArgs.concat(acc);
 	}
 
-	public async resolve(message: Message, prefix?: string, guild?: Guild): Promise<[BaseCommand, string[]]> {
+	public async resolveCommand(message: Message, prefix?: string, guild?: Guild): Promise<[BaseCommand, string[]]> {
 		if (!prefix) {
 			if (!guild) {
 				return [null, null];

@@ -17,6 +17,8 @@ import { Cache } from '../Decorators/Cache';
 import { GuildSettingsCache } from '../Cache';
 import { Service } from '../Decorators/Service';
 import { MessagingService } from './Messaging';
+import { InternalError } from '../Errors/InternalError';
+import { SendError } from '../Errors/SendError';
 
 const RATE_LIMIT = 1;
 const COOLDOWN = 5;
@@ -223,15 +225,21 @@ export class CommandService extends BaseService {
 		try {
 			await cmd.execute(message, args, context);
 		} catch (err) {
-			if (err instanceof ExecuteError) {
+			if (err instanceof InternalError) {
 				const embed = this.msg.createEmbed({
-					author: { name: err.message, icon_url: Images.WARN },
-					color: Color.YELLOW,
+					author: { name: err.message, icon_url: err.isWarn ? Images.WARN : Images.CRITICAL },
+					color: err.isWarn ? Color.YELLOW : Color.RED,
 					footer: null,
 					timestamp: null
 				});
 
-				await this.msg.sendReply(message, embed);
+				if (err.fallbackUser) {
+					const userDM = await message.author.getDMChannel();
+
+					await userDM.createMessage({ embed }).catch(() => undefined);
+				} else {
+					await this.msg.sendReply(message, embed);
+				}
 
 				return;
 			}
@@ -249,7 +257,6 @@ export class CommandService extends BaseService {
 				scope.setExtra('guild', sets.id);
 				scope.setExtra('channel', channel.id);
 				scope.setExtra('message', message.content);
-				scope.setExtra('Execute Time', moment().unix() - start.unix());
 
 				captureException(err);
 			});
@@ -272,7 +279,7 @@ export class CommandService extends BaseService {
 			return content.substring(prefix.length).trim();
 		}
 
-		const regex = /^(?:<@(?:!|&)?)?(\d+)>? (.*)$/;
+		const regex = /^(?:<@!?)?(\d+)>? (.*)$/;
 
 		if (regex.test(content)) {
 			const matches = content.match(regex);

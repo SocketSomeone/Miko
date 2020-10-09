@@ -1001,7 +1001,10 @@
 				"welcome channel": "utilities.help.cmdDesc.welcome channel",
 				"avatar": "utilities.help.cmdDesc.avatar",
 				"invite": "utilities.help.cmdDesc.invite"
-			}
+			},
+			"title": "utilities.help.title",
+			"desc": "utilities.help.desc",
+			"footer": "utilities.help.footer"
 		},
 		"invite": {
 			"title": "utilities.invite.title",

@@ -1,7 +1,9 @@
-export class ExecuteError extends Error {
-	constructor(data: string) {
-		super();
+import { InternalError } from './InternalError';
 
-		this.message = data;
+export class ExecuteError extends InternalError {
+	constructor(data: string) {
+		super(data);
+
+		this.isWarn = true;
 	}
 }

@@ -3,7 +3,6 @@ import { LogType } from './LogType';
 import { Embed, Guild, Emoji, TextChannel } from 'eris';
 import { GuildPermission } from '../../../Misc/Models/GuildPermissions';
 import { TranslateFunc } from '../../../Framework/Commands/Command';
-import { ExecuteIgnore } from '../../../Framework/Errors/ExecuteIgnore';
 import { withScope, captureException } from '@sentry/node';
 
 import i18n from 'i18n';
@@ -11,6 +10,7 @@ import { Cache } from '../../../Framework/Decorators/Cache';
 import { GuildSettingsCache } from '../../../Framework/Cache';
 import { Service } from '../../../Framework/Decorators/Service';
 import { MessagingService } from '../../../Framework/Services/Messaging';
+import { IgnoreError } from '../../../Framework/Errors/IgnoreError';
 
 export abstract class BaseEventLog {
 	@Service() protected messages: MessagingService;
@@ -38,7 +38,7 @@ export abstract class BaseEventLog {
 		const auditLogEntry = auditLogs.entries.find((l) => l.targetID === user.id);
 
 		if (auditLogEntry && auditLogEntry.user.id === this.client.user.id) {
-			throw new ExecuteIgnore();
+			throw new IgnoreError();
 		}
 
 		return auditLogEntry;
@@ -76,7 +76,7 @@ export abstract class BaseEventLog {
 
 			await this.messages.sendEmbed(channel, embed);
 		} catch (err) {
-			if (err instanceof ExecuteIgnore) {
+			if (err instanceof IgnoreError) {
 				return;
 			}
 

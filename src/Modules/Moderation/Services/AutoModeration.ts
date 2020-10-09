@@ -107,7 +107,7 @@ export class AutoModerationService extends BaseService {
 		}
 	}
 
-	private async shouldProcess(guild: Guild, user: User | Member, message: Message) {
+	private async shouldProcess(guild: Guild, user: User | Member, { channel }: Message) {
 		if (user.bot) {
 			return false;
 		}
@@ -118,11 +118,17 @@ export class AutoModerationService extends BaseService {
 
 		const settings = await this.guilds.get(guild);
 
-		if (settings.autoMod.ignoreChannels.has(message.channel.id)) {
+		if (settings.autoMod.ignoreChannels.has(channel.id)) {
 			return;
 		}
 
-		if (message.member.roles.some((x) => settings.autoMod.ignoreRoles.has(x))) {
+		let member = user instanceof Member ? user : guild.members.get(user.id);
+
+		if (!member) {
+			member = await guild.getRESTMember(user.id);
+		}
+
+		if (member.roles.some((x) => settings.autoMod.ignoreRoles.has(x))) {
 			return;
 		}
 	}
@@ -164,16 +170,15 @@ export class AutoModerationService extends BaseService {
 			return false;
 		}
 
-		new Map().keys;
-
-		cached = cached.filter(
-			(m) =>
-				m.id !== message.id &&
-				m.author === message.author.id &&
-				m.content.toLowerCase() === message.content.toLowerCase() &&
-				moment().diff(m.createdAt, 'second') < timeframe
+		return (
+			cached.filter(
+				(m) =>
+					m.id !== message.id &&
+					m.author === message.author.id &&
+					m.content.toLowerCase() === message.content.toLowerCase() &&
+					moment().diff(m.createdAt, 'second') < timeframe
+			).length >= 2
 		);
-		return cached.length >= 2;
 	}
 
 	private async externalLinks(guild: Guild, message: Message, settings: BaseSettings): Promise<boolean> {

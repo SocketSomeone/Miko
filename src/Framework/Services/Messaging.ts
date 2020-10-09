@@ -2,12 +2,10 @@ import { BaseService } from './Service';
 import { EmbedOptions, Embed, TextableChannel, Message, GuildChannel, User, Emoji } from 'eris';
 import { withScope, captureException } from '@sentry/node';
 import { GuildPermission } from '../../Misc/Models/GuildPermissions';
-import { TranslateFunc } from '../Commands/Command';
 import { Color } from '../../Misc/Enums/Colors';
 import { ColorResolve } from '../../Misc/Utils/ColorResolver';
 import { BaseEmbedOptions } from '../../Types';
-
-import i18n from 'i18n';
+import { SendError } from '../Errors/SendError';
 
 const upSymbol = 'left:736460400656384090';
 const downSymbol = 'right:736460400089890867';
@@ -45,7 +43,7 @@ export class MessagingService extends BaseService {
 
 	public sendReply(message: Message, reply: BaseEmbedOptions | string, ttl: number = null) {
 		return new Promise<Message>(async (resolve, reject) => {
-			const m = await this.sendEmbed(message.channel, reply, message.author);
+			const m = await this.sendEmbed(message.channel, reply);
 
 			if (!ttl) {
 				return resolve(m);
@@ -59,7 +57,7 @@ export class MessagingService extends BaseService {
 		});
 	}
 
-	public sendEmbed(target: TextableChannel, embed: BaseEmbedOptions | string, fallbackUser?: User) {
+	public sendEmbed(target: TextableChannel, embed: BaseEmbedOptions | string) {
 		const e = typeof embed === 'string' ? this.createEmbed({ description: embed }) : this.createEmbed(embed);
 
 		e.fields = e.fields
@@ -69,104 +67,31 @@ export class MessagingService extends BaseService {
 				return x;
 			});
 
-		const content = convertEmbedToPlain(e);
+		if (target instanceof GuildChannel) {
+			if (!target.permissionsOf(this.client.user.id).has(GuildPermission.SEND_MESSAGES)) {
+				throw new SendError(`I don't have permission to send messages in this channel.`);
+			}
 
-		const handleException = (err: Error) => {
+			if (!target.permissionsOf(this.client.user.id).has(GuildPermission.EMBED_LINKS)) {
+				throw new SendError(`I don't have permission to send embeds. Enable \`Embed Links\` permission for Miko.`);
+			}
+		}
+
+		try {
+			return target.createMessage({ embed: e });
+		} catch (err) {
 			withScope((scope) => {
 				if (target instanceof GuildChannel) {
 					scope.setUser({ id: target.guild.id });
 					scope.setExtra('permissions', target.permissionsOf(this.client.user.id).json);
 				}
-
 				scope.setExtra('channel', target.id);
 				scope.setExtra('message', embed);
-				scope.setExtra('content', content);
-
-				if (fallbackUser) {
-					scope.setExtra('fallbackUser', fallbackUser.id);
-				}
-
 				captureException(err);
 			});
-		};
 
-		return new Promise<Message>((resolve, reject) => {
-			const t: TranslateFunc = (phrase, replacements) => i18n.__({ locale: 'ru', phrase }, replacements);
-
-			const sendDM = async (error?: any): Promise<Message> => {
-				if (!fallbackUser) {
-					return undefined;
-				}
-
-				try {
-					const channel = await fallbackUser.getDMChannel();
-
-					let msg = t('embed.notificationDeveloper', {
-						error: error ? error.message : t('error.unknown')
-					});
-
-					if (error && error.code === 50013) {
-						msg = t('embed.missPermissions', {
-							name: this.client.user.username,
-							channelId: target.id
-						});
-					}
-
-					try {
-						return await channel.createMessage(msg);
-					} catch (err) {
-						if (err.code === 50007) {
-							// NO-OP
-						} else {
-							handleException(err);
-						}
-
-						return undefined;
-					}
-				} catch (e) {
-					handleException(e);
-
-					return undefined;
-				}
-			};
-
-			const sendPlain = async (error?: any): Promise<Message> => {
-				// If we don't have permission to send messages try DM
-				if (
-					target instanceof GuildChannel &&
-					!target.permissionsOf(this.client.user.id).has(GuildPermission.SEND_MESSAGES)
-				) {
-					return sendDM({ code: 50013 });
-				}
-
-				try {
-					return await target.createMessage(content);
-				} catch (err) {
-					handleException(err);
-					return sendDM(error);
-				}
-			};
-
-			const send = async (): Promise<Message> => {
-				if (
-					target instanceof GuildChannel &&
-					(!target.permissionsOf(this.client.user.id).has(GuildPermission.SEND_MESSAGES) ||
-						!target.permissionsOf(this.client.user.id).has(GuildPermission.EMBED_LINKS))
-				) {
-					return sendPlain();
-				}
-
-				try {
-					return await target.createMessage({ embed: e });
-				} catch (e) {
-					handleException(e);
-
-					return sendPlain();
-				}
-			};
-
-			resolve(send());
-		});
+			throw new SendError('An error occured while sending a message.');
+		}
 	}
 
 	public fillTemplate(msg: string, strings?: { [x: string]: string | number }): string | Embed {
@@ -238,7 +163,7 @@ export class MessagingService extends BaseService {
 			await prevMsg.edit({ embed });
 		} else {
 			author = prevMsg.author;
-			prevMsg = await this.sendEmbed(prevMsg.channel, embed, prevMsg.author);
+			prevMsg = await this.sendEmbed(prevMsg.channel, embed);
 
 			if (maxPage !== 1 && doPaginate) {
 				await prevMsg.addReaction(upSymbol);
@@ -335,7 +260,8 @@ export class MessagingService extends BaseService {
 
 export type CreateEmbedFunc = (options?: BaseEmbedOptions) => Embed;
 export type ReplyFunc = (message: Message, reply: BaseEmbedOptions | string) => Promise<Message>;
-export type SendFunc = (target: TextableChannel, embed: EmbedOptions | string, fallbackUser?: User) => Promise<Message>;
+export type SendFunc = (target: TextableChannel, embed: EmbedOptions | string) => Promise<Message>;
+
 export type ShowPaginatedFunc = (
 	prevMsg: Message,
 	page: number,
@@ -348,23 +274,3 @@ export type awaitReactionsFunc = (
 	func: (userID: string) => Promise<any>,
 	sets: { ttl: number; reactions: string[] }
 ) => Promise<any>;
-
-function convertEmbedToPlain(embed: EmbedOptions) {
-	const url = embed.url ? `(${embed.url})` : '';
-	const authorUrl = embed.author && embed.author.url ? `(${embed.author.url})` : '';
-
-	let fields = '';
-
-	if (embed.fields && embed.fields.length) {
-		fields = '\n\n' + embed.fields.map((f) => `**${f.name}**\n${f.value}`).join('\n\n') + '\n\n';
-	}
-
-	return (
-		'**Failed to send embed...\nEmbedded links disabled for this channel.**\n' +
-		(embed.author ? `_${embed.author.name}_ ${authorUrl}\n` : '') +
-		(embed.title ? `**${embed.title}** ${url}\n` : '') +
-		(embed.description ? embed.description + '\n' : '') +
-		fields +
-		(embed.footer ? `_${embed.footer.text}_` : '')
-	);
-}

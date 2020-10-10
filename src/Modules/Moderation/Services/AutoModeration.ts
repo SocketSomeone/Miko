@@ -7,6 +7,7 @@ import { Service } from '../../../Framework/Decorators/Service';
 import { BaseService } from '../../../Framework/Services/Service';
 import { Violation } from '../../../Misc/Enums/Violation';
 import { ModerationService } from './Moderation';
+import { PunishmentService } from './Punishment';
 
 interface MiniMessage {
 	id: string;

@@ -5,7 +5,7 @@ import { MemberResolver } from '../../../../Framework/Resolvers';
 import { BasePunishment } from '../../../../Entity/Punishment';
 import { Images } from '../../../../Misc/Enums/Images';
 import { BaseModule } from '../../../../Framework/Module';
-import moment from 'moment';
+import moment, { duration } from 'moment';
 import { ExecuteError } from '../../../../Framework/Errors/ExecuteError';
 
 const PUNISHMENT_PER_PAGE = 5;
@@ -47,16 +47,16 @@ export default class extends BaseCommand {
 		const maxPage = Math.ceil(punishments.length / PUNISHMENT_PER_PAGE);
 		const startPage = 0;
 
-		await this.showPaginated(message, startPage, maxPage, (page, maxPage) => {
+		await this.showPaginated(message, startPage, maxPage, (page) => {
 			const fields: EmbedField[] = [];
 
 			punishments.slice(page * PUNISHMENT_PER_PAGE, (page + 1) * PUNISHMENT_PER_PAGE).map((p, i) => {
-				const duration = !!p.date ? moment.duration(p.date.diff(p.createdAt)) : null;
-
 				fields.push(
 					{
 						name: t('moderation.punishs.type'),
-						value: `**${p.type.toUpperCase()}** \`(${(duration && duration.humanize(false)) || '∞'})\``,
+						value: `${p.type.toUpperCase()} \`(${
+							(p.duration && duration(p.duration, 'seconds').humanize(false)) || '∞'
+						})\``,
 						inline: true
 					},
 					{
@@ -66,7 +66,7 @@ export default class extends BaseCommand {
 					},
 					{
 						name: t('moderation.punishs.date'),
-						value: `**${moment(p.createdAt).format('lll')}**`,
+						value: `\`${p.reason || 'No reason'}\` **|** \`${moment(p.createdAt).format('LL')}\``,
 						inline: true
 					}
 				);

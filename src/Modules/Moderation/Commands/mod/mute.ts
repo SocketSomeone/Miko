@@ -75,7 +75,15 @@ export default class extends BaseCommand {
 			throw new ExecuteError(t('moderation.mute.already'));
 		} else if (this.moderation.isPunishable(guild, member, message.member, me)) {
 			try {
-				await this.punishment.punish(guild, member, Punishment.MUTE, settings, { user: message.member, reason }, extra);
+				await this.punishment.punish(
+					guild,
+					member,
+					Punishment.MUTE,
+					settings,
+					null,
+					{ user: message.member, reason },
+					extra
+				);
 			} catch (err) {
 				console.log(err);
 				throw new ExecuteError(t('moderation.mute.error'));

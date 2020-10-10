@@ -86,7 +86,15 @@ export default class extends BaseCommand {
 			throw new ExecuteError(t('moderation.mute.already'));
 		} else if (this.moderation.isPunishable(guild, member, message.member, me)) {
 			try {
-				await this.punishment.punish(guild, member, Punishment.MUTE, settings, { user: message.member, reason }, extra);
+				await this.punishment.punish(
+					guild,
+					member,
+					Punishment.MUTE,
+					settings,
+					duration,
+					{ user: message.member, reason },
+					extra
+				);
 
 				await this.scheduler.addScheduledAction(
 					guild.id,

@@ -7,7 +7,8 @@ export enum Punishment {
 	BAN = 'ban',
 	KICK = 'kick',
 	SOFTBAN = 'softban',
-	MUTE = 'mute'
+	MUTE = 'mute',
+	WARN = 'warn'
 }
 
 @Entity()
@@ -19,8 +20,8 @@ export class BasePunishment extends BaseEntity {
 	@JoinColumn()
 	public guild: BaseGuild;
 
-	@Column({ nullable: true, transformer: DateTransformer, type: 'timestamp without time zone' })
-	public date: Moment;
+	@Column({ nullable: true })
+	public duration: number;
 
 	@Column({ type: 'varchar', nullable: false })
 	public type: Punishment;

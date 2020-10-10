@@ -14,5 +14,5 @@ export class PunishmentConfig {
 	public id: number;
 	public type: Punishment;
 	public amount: number;
-	public args: string;
+	public duration: number;
 }

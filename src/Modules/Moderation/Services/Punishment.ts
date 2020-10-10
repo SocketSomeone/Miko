@@ -1,4 +1,6 @@
 import { EmbedField, Guild, Member, PrivateChannel, User } from 'eris';
+import moment from 'moment';
+import { Duration, Moment } from 'moment';
 import { BaseGuild } from '../../../Entity/Guild';
 import { BaseSettings } from '../../../Entity/GuildSettings';
 import { BasePunishment, Punishment } from '../../../Entity/Punishment';
@@ -9,7 +11,13 @@ import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { ModerationService } from './Moderation';
 
 type PunishmentFunctions = {
-	[key in Punishment]: (guild: Guild, member: Member, settings: BaseSettings) => Promise<boolean>;
+	[key in Punishment]: (
+		guild: Guild,
+		member: Member,
+		settings: BaseSettings,
+		moderator?: { user: Member; reason: string },
+		extra?: EmbedField[]
+	) => Promise<boolean>;
 };
 
 export class PunishmentService extends BaseService {
@@ -19,7 +27,8 @@ export class PunishmentService extends BaseService {
 		[Punishment.BAN]: this.ban.bind(this),
 		[Punishment.KICK]: this.kick.bind(this),
 		[Punishment.SOFTBAN]: this.softban.bind(this),
-		[Punishment.MUTE]: this.mute.bind(this)
+		[Punishment.MUTE]: this.mute.bind(this),
+		[Punishment.WARN]: this.warn.bind(this)
 	};
 
 	public async punish(
@@ -27,6 +36,7 @@ export class PunishmentService extends BaseService {
 		member: Member,
 		type: Punishment,
 		settings: BaseSettings,
+		duration?: Duration,
 		modAndReason?: { user: Member; reason: string },
 		extra?: EmbedField[]
 	) {
@@ -37,7 +47,7 @@ export class PunishmentService extends BaseService {
 
 		await this.informAboutPunishment(member, type, extra);
 
-		const punishmentResult = await func(guild, member, settings);
+		const punishmentResult = await func(guild, member, settings, modAndReason, extra);
 		if (!punishmentResult) {
 			return;
 		}
@@ -47,6 +57,7 @@ export class PunishmentService extends BaseService {
 		await BasePunishment.savePunishment({
 			guild: BaseGuild.create({ id: guild.id }),
 			type,
+			duration: duration.asSeconds(),
 			reason: modAndReason ? modAndReason.reason : null,
 			moderator: moderator.id,
 			member: member.id
@@ -84,6 +95,21 @@ export class PunishmentService extends BaseService {
 				}
 			})
 			.catch(() => undefined);
+	}
+
+	private async warn(
+		guild: Guild,
+		member: Member,
+		settings: BaseSettings,
+		moderator?: { user: Member; reason: string },
+		extra?: EmbedField[]
+	) {
+		try {
+			await this.mod.addWarnAndPunish(guild, { member }, settings, moderator, extra);
+			return true;
+		} catch (err) {
+			return false;
+		}
 	}
 
 	private async ban(guild: Guild, member: Member, settings: BaseSettings) {

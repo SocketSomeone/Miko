@@ -15,7 +15,7 @@ import { Service } from '../../../Framework/Decorators/Service';
 import { MessagingService } from '../../../Framework/Services/Messaging';
 import { WarnService } from './WarnService';
 import { PunishmentService } from './Punishment';
-import { setServers } from 'dns';
+import { duration } from 'moment';
 
 export class ModerationService extends BaseService {
 	@Service() protected punishmentService: PunishmentService;
@@ -25,7 +25,7 @@ export class ModerationService extends BaseService {
 
 	public async addWarnAndPunish(
 		guild: Guild,
-		{ member }: Message,
+		{ member }: { member: Member } | Message,
 		settings: BaseSettings,
 		moderator?: { user: Member; reason: string },
 		extra?: EmbedField[]
@@ -36,7 +36,15 @@ export class ModerationService extends BaseService {
 		const punishmentConfig = punishmentConfigs.find((c) => c.amount > warnsBefore && c.amount <= warnsAfter);
 
 		if (punishmentConfig) {
-			await this.punishmentService.punish(guild, member, punishmentConfig.type, settings, moderator, extra);
+			await this.punishmentService.punish(
+				guild,
+				member,
+				punishmentConfig.type,
+				settings,
+				duration(punishmentConfig.duration, 'seconds'),
+				moderator,
+				extra
+			);
 		}
 	}
 

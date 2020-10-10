@@ -43,36 +43,28 @@ export default class extends BaseCommand {
 		person.money -= money;
 
 		const int = chance.integer({ min: 0, max: 100 });
+		const data = {
+			int,
+			bet: `${money * 2n - money} ${e(currency)}`
+		};
 
 		const embed = this.createEmbed({
-			title: t('gambling.br.title'),
+			author: { name: t('gambling.br.title'), icon_url: 'https://i.imgur.com/p210WxA.png' },
 			color: int < 80 ? Color.RED : Color.GREEN,
-			thumbnail: {
-				url: 'https://i.imgur.com/p210WxA.png'
-			},
-			footer: null
+			footer: null,
+			timestamp: null
 		});
 
 		if (int.range([80, 95])) {
 			person.money += money * 2n;
 
-			embed.description = t('gambling.br.win', {
-				int,
-				bet: money * 2n - money,
-				emoji: e(currency)
-			});
+			embed.description = t('gambling.br.win', data);
 		} else if (int.range([95, 101])) {
 			person.money += money * 3n;
 
-			embed.description = t('gambling.br.win', {
-				int,
-				bet: money * 3n - money,
-				emoji: e(currency)
-			});
+			embed.description = t('gambling.br.win', data);
 		} else {
-			embed.description = t('gambling.br.lose', {
-				int
-			});
+			embed.description = t('gambling.br.lose', data);
 		}
 
 		await person.save();

@@ -13,6 +13,7 @@ import mute from './Commands/mod/mute';
 import tempban from './Commands/mod/tempban';
 import tempmute from './Commands/mod/tempmute';
 import unmute from './Commands/mod/unmute';
+import warn from './Commands/mod/warn';
 import purge from './Commands/purge/purge';
 import { AutoModerationService } from './Services/AutoModeration';
 import { ModerationService } from './Services/Moderation';
@@ -46,6 +47,7 @@ export class ModerationModule extends BaseModule {
 		this.registerCommand(tempban);
 		this.registerCommand(tempmute);
 		this.registerCommand(unmute);
+		this.registerCommand(warn);
 
 		this.registerCommand(purge);
 

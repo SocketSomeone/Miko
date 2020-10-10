@@ -16,16 +16,20 @@ const items: { mult: number; chance: number }[] = [
 		chance: 20
 	},
 	{
+		mult: 0.25,
+		chance: 40
+	},
+	{
 		mult: 0.5,
 		chance: 60
 	},
 	{
 		mult: 2,
-		chance: 60
+		chance: 45
 	},
 	{
 		mult: 4,
-		chance: 35
+		chance: 15
 	},
 	{
 		mult: 10,

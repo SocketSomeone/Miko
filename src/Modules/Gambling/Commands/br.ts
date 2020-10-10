@@ -15,7 +15,7 @@ export default class extends BaseCommand {
 			args: [
 				{
 					name: 'money',
-					resolver: new BigIntResolver(module, 1n),
+					resolver: new BigIntResolver(module, 10n),
 					required: true
 				}
 			],

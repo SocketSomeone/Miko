@@ -27,7 +27,6 @@ export class ModerationService extends BaseService {
 		guild: Guild,
 		{ member }: { member: Member } | Message,
 		settings: BaseSettings,
-		moderator?: { user: Member; reason: string },
 		extra?: EmbedField[]
 	) {
 		const { warnsBefore, warnsAfter } = await this.warnService.addWarn(member);
@@ -42,7 +41,7 @@ export class ModerationService extends BaseService {
 				punishmentConfig.type,
 				settings,
 				duration(punishmentConfig.duration, 'seconds'),
-				moderator,
+				{ user: null, reason: 'Warn limit exceeded' },
 				extra
 			);
 		}

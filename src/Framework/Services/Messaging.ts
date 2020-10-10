@@ -36,7 +36,7 @@ export class MessagingService extends BaseService {
 
 	get defaultFooter() {
 		return {
-			text: `✨ Miko`,
+			text: `🌸 Miko`,
 			icon_url: this.client.user.dynamicAvatarURL('png', 4096)
 		};
 	}

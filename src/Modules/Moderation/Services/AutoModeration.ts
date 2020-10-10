@@ -99,7 +99,7 @@ export class AutoModerationService extends BaseService {
 
 			await this.mod.sendWarnMessage(message, violation, settings);
 
-			await this.mod.addWarnAndPunish(guild, message, settings, null, [
+			await this.mod.addWarnAndPunish(guild, message, settings, [
 				{ name: 'Reason', value: 'Automod' },
 				{ name: 'Channel', value: channel.name },
 				{ name: 'Message', value: message.content }

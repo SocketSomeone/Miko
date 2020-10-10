@@ -7,6 +7,7 @@ import { BaseModule } from '../../../Framework/Module';
 import { ModuleResolver } from '../../../Framework/Resolvers/ModuleResolver';
 import { FrameworkModule } from '../../../Framework/FrameworkModule';
 import { Lang } from '../../../Misc/Enums/Languages';
+import { Color } from '../../../Misc/Enums/Colors';
 
 interface ModuleContext {
 	module: BaseModule;
@@ -59,12 +60,35 @@ export default class extends BaseCommand {
 				.filter((m) => !(m instanceof FrameworkModule))
 				.sort((a, b) => a.names[locale].localeCompare(b.names[locale]));
 
-			this.showPaginated(message, 0, groups.length, (page) => {
+			this.showPaginated(message, 0, groups.length + 1, (page) => {
+				if (page === 0) {
+					return this.createEmbed({
+						author: { name: t('utilities.help.title'), icon_url: Images.HELP },
+						thumbnail: { url: this.client.user.dynamicAvatarURL('png') },
+						description: t('utilities.help.desc', {
+							botId: this.client.user.id,
+							prefix
+						}),
+						fields: groups.map((g) => {
+							return <EmbedField>{
+								name: g.names[locale],
+								value: `\`${prefix}help ${g.names[locale]}\``,
+								inline: true
+							};
+						}),
+						footer: {
+							text: t('utilities.help.arrows'),
+							icon_url: this.client.user.dynamicAvatarURL('png')
+						},
+						timestamp: null
+					});
+				}
+
 				return this.moduleInfo({
 					t,
 					prefix,
 					locale,
-					module: groups[page],
+					module: groups[page - 1],
 					guild
 				});
 			});
@@ -83,7 +107,7 @@ export default class extends BaseCommand {
 
 				if (!page) {
 					fields.push({
-						name: `📚 ${module.names[locale]}`,
+						name: `📖 ${module.names[locale]}`,
 						value: `\`${prefix + x.usage}\` - ${desc}`,
 						inline: false
 					});

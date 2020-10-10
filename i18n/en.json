@@ -1029,7 +1029,8 @@
 			},
 			"title": "utilities.help.title",
 			"desc": "utilities.help.desc",
-			"footer": "utilities.help.footer"
+			"footer": "utilities.help.footer",
+			"arrows": "utilities.help.arrows"
 		},
 		"invite": {
 			"title": "utilities.invite.title",

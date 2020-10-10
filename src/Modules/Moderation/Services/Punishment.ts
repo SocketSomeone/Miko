@@ -11,13 +11,7 @@ import { ColorResolve } from '../../../Misc/Utils/ColorResolver';
 import { ModerationService } from './Moderation';
 
 type PunishmentFunctions = {
-	[key in Punishment]: (
-		guild: Guild,
-		member: Member,
-		settings: BaseSettings,
-		moderator?: { user: Member; reason: string },
-		extra?: EmbedField[]
-	) => Promise<boolean>;
+	[key in Punishment]: (guild: Guild, member: Member, settings: BaseSettings) => Promise<boolean>;
 };
 
 export class PunishmentService extends BaseService {
@@ -47,7 +41,7 @@ export class PunishmentService extends BaseService {
 
 		await this.informAboutPunishment(member, type, extra);
 
-		const punishmentResult = await func(guild, member, settings, modAndReason, extra);
+		const punishmentResult = await func(guild, member, settings);
 		if (!punishmentResult) {
 			return;
 		}
@@ -57,7 +51,7 @@ export class PunishmentService extends BaseService {
 		await BasePunishment.savePunishment({
 			guild: BaseGuild.create({ id: guild.id }),
 			type,
-			duration: duration.asSeconds(),
+			duration: (duration && duration.asSeconds()) || null,
 			reason: modAndReason ? modAndReason.reason : null,
 			moderator: moderator.id,
 			member: member.id
@@ -97,15 +91,9 @@ export class PunishmentService extends BaseService {
 			.catch(() => undefined);
 	}
 
-	private async warn(
-		guild: Guild,
-		member: Member,
-		settings: BaseSettings,
-		moderator?: { user: Member; reason: string },
-		extra?: EmbedField[]
-	) {
+	private async warn(guild: Guild, member: Member, settings: BaseSettings) {
 		try {
-			await this.mod.addWarnAndPunish(guild, { member }, settings, moderator, extra);
+			await this.mod.addWarnAndPunish(guild, { member }, settings);
 			return true;
 		} catch (err) {
 			return false;

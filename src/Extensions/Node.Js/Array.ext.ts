@@ -5,7 +5,7 @@ interface Array<T> {
 	first(): T; //
 	last(): T; //
 	random(): T; //
-	randomByChace(): T;
+	randomByChance(): T;
 	shuffle(): Array<T>;
 }
 
@@ -47,7 +47,7 @@ Array.prototype.shuffle = function () {
 	return this.sort(() => Math.random() - 0.5);
 };
 
-Array.prototype.randomByChace = function () {
+Array.prototype.randomByChance = function () {
 	const sorted = this.sort((a: any, b: any) => a.chance - b.chance);
 
 	return randomByWeight(

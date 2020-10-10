@@ -8,6 +8,7 @@ import { ExecuteError } from '../../../../Framework/Errors/ExecuteError';
 import { Images } from '../../../../Misc/Enums/Images';
 import { BaseModule } from '../../../../Framework/Module';
 import { Punishment } from '../../../../Entity/Punishment';
+import { Duration } from 'moment';
 
 export default class extends BaseCommand {
 	public constructor(module: BaseModule) {
@@ -38,25 +39,9 @@ export default class extends BaseCommand {
 		});
 	}
 
-	public async execute(message: Message, [types]: [Violation[]], { funcs: { t, e }, guild, settings }: Context) {
-		const needToChange = types.filter((x) => settings.autoMod.violations[x] !== true);
-
-		if (needToChange.length < 1) throw new ExecuteError(t('error.changes.not'));
-
-		for (const type of needToChange) {
-			settings.autoMod.violations[type] = true;
-			await settings.save();
-		}
-
-		await this.replyAsync(message, {
-			author: {
-				name: t('automod.enabled.any'),
-				icon_url: Images.SUCCESS
-			},
-			color: Color.MAGENTA,
-			footer: null,
-			timestamp: null,
-			description: `>>> ${needToChange.map((type) => t(`automod.types.${type}`)).join(', \n')}`
-		});
-	}
+	public async execute(
+		message: Message,
+		[amount, punish, duration]: [number, Punishment, Duration],
+		{ funcs: { t, e }, guild, settings }: Context
+	) {}
 }

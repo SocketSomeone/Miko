@@ -69,8 +69,8 @@ export default class extends BaseCommand {
 
 		if (person.money < money) throw new ExecuteError(t('error.enough.money'));
 
-		const mult = items.randomByChace().mult;
-		const result = Math.round(Number(money) * mult - Number(money));
+		const { mult } = items.randomByChance();
+		const result = ~~(Number(money) * mult - Number(money));
 
 		person.money += BigInt(result);
 		await person.save();

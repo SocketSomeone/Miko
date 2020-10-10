@@ -384,6 +384,7 @@ export class CommandService extends BaseService {
 
 			this.commandCalls.set(message.author.id, lastCall);
 		} else if (now - lastCall.last < (1 / RATE_LIMIT) * 1000) {
+			console.log(lastCall);
 			if (!lastCall.warned) {
 				lastCall.warned = true;
 				lastCall.last = now + COOLDOWN;

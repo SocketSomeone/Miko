@@ -41,7 +41,7 @@ export default class extends BaseCommand {
 			args: [
 				{
 					name: 'money',
-					resolver: new BigIntResolver(module, 1n),
+					resolver: new BigIntResolver(module, 10n),
 					required: true
 				}
 			],
@@ -66,7 +66,7 @@ export default class extends BaseCommand {
 		if (person.money < money) throw new ExecuteError(t('error.enough.money'));
 
 		const mult = items.randomByChace().mult;
-		const result = Number(money) * mult - Number(money);
+		const result = Math.round(Number(money) * mult - Number(money));
 
 		person.money += BigInt(result);
 		await person.save();

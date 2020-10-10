@@ -261,7 +261,7 @@ export class MessagingService extends BaseService {
 }
 
 export type CreateEmbedFunc = (options?: BaseEmbedOptions) => Embed;
-export type ReplyFunc = (message: Message, reply: BaseEmbedOptions | string) => Promise<Message>;
+export type ReplyFunc = (message: Message, reply: BaseEmbedOptions | string, ttl?: number) => Promise<Message>;
 export type SendFunc = (target: TextableChannel, embed: EmbedOptions | string) => Promise<Message>;
 
 export type ShowPaginatedFunc = (

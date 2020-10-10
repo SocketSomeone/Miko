@@ -65,6 +65,6 @@ export default class extends BaseCommand {
 			throw new ExecuteError(t('moderation.purge.error'));
 		}
 
-		await this.replyAsync(message, embed);
+		await this.replyAsync(message, embed, 15 * 1000);
 	}
 }

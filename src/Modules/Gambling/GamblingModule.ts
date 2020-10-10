@@ -2,6 +2,7 @@ import { BaseClient } from '../../Client';
 import { BaseModule } from '../../Framework/Module';
 import { Lang } from '../../Misc/Enums/Languages';
 import br from './Commands/br';
+import casino from './Commands/casino';
 import fortune from './Commands/fortune';
 import race from './Commands/race/race';
 import slotmachine from './Commands/slotmachine';
@@ -22,5 +23,6 @@ export class GamblingModule extends BaseModule {
 		this.registerCommand(slotmachine);
 		this.registerCommand(race);
 		this.registerCommand(whereischicken);
+		this.registerCommand(casino);
 	}
 }

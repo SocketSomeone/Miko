@@ -561,6 +561,11 @@
 			"bot": "gambling.race.bot",
 			"finished": "gambling.race.finished",
 			"bet": "gambling.race.bet"
+		},
+		"casino": {
+			"title": "gambling.casino.title",
+			"lose": "gambling.casino.lose",
+			"win": "gambling.casino.win"
 		}
 	},
 	"automod": {
@@ -1000,7 +1005,8 @@
 				"welcome message": "utilities.help.cmdDesc.welcome message",
 				"welcome channel": "utilities.help.cmdDesc.welcome channel",
 				"avatar": "utilities.help.cmdDesc.avatar",
-				"invite": "utilities.help.cmdDesc.invite"
+				"invite": "utilities.help.cmdDesc.invite",
+				"casino": "utilities.help.cmdDesc.casino"
 			},
 			"title": "utilities.help.title",
 			"desc": "utilities.help.desc",

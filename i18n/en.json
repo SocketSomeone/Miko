@@ -396,7 +396,8 @@
 			"moderator": "moderation.punishs.moderator",
 			"type": "moderation.punishs.type",
 			"date": "moderation.punishs.date"
-		}
+		},
+		"warns": "moderation.warns"
 	},
 	"configure": {
 		"title": "configure.title",
@@ -1017,7 +1018,8 @@
 				"avatar": "utilities.help.cmdDesc.avatar",
 				"invite": "utilities.help.cmdDesc.invite",
 				"casino": "utilities.help.cmdDesc.casino",
-				"punishments": "utilities.help.cmdDesc.punishments"
+				"punishments": "utilities.help.cmdDesc.punishments",
+				"warns": "utilities.help.cmdDesc.warns"
 			},
 			"title": "utilities.help.title",
 			"desc": "utilities.help.desc",

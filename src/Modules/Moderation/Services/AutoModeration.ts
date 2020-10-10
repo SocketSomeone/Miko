@@ -98,7 +98,7 @@ export class AutoModerationService extends BaseService {
 
 			await this.mod.sendWarnMessage(message, violation, settings);
 
-			await this.mod.addWarnAndPunish(guild, message, violation, settings, null, [
+			await this.mod.addWarnAndPunish(guild, message, settings, null, [
 				{ name: 'Reason', value: 'Automod' },
 				{ name: 'Channel', value: channel.name },
 				{ name: 'Message', value: message.content }
@@ -131,6 +131,8 @@ export class AutoModerationService extends BaseService {
 		if (member.roles.some((x) => settings.autoMod.ignoreRoles.has(x))) {
 			return;
 		}
+
+		return true;
 	}
 
 	private async invites(guild: Guild, message: Message, settings: BaseSettings): Promise<boolean> {

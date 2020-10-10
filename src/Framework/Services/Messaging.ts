@@ -49,10 +49,10 @@ export class MessagingService extends BaseService {
 				return resolve(m);
 			}
 
+			resolve(null);
+
 			setTimeout(() => {
 				m.delete().catch(() => undefined);
-
-				resolve(null);
 			}, ttl);
 		});
 	}

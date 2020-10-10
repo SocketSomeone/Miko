@@ -5,9 +5,6 @@ import { MemberResolver } from '../../../../Framework/Resolvers';
 import { BasePunishment } from '../../../../Entity/Punishment';
 import { Images } from '../../../../Misc/Enums/Images';
 import { BaseModule } from '../../../../Framework/Module';
-import { Service } from '../../../../Framework/Decorators/Service';
-import { ModerationService } from '../../Services/Moderation';
-import { PunishmentService } from '../../Services/Punishment';
 import moment from 'moment';
 
 const PUNISHMENT_PER_PAGE = 5;
@@ -21,7 +18,7 @@ export default class extends BaseCommand {
 				{
 					name: 'user',
 					resolver: MemberResolver,
-					required: true
+					required: false
 				}
 			],
 			guildOnly: true,

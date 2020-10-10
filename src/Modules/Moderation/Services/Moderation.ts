@@ -26,12 +26,11 @@ export class ModerationService extends BaseService {
 	public async addWarnAndPunish(
 		guild: Guild,
 		{ member }: Message,
-		type: Violation,
 		settings: BaseSettings,
 		moderator?: { user: Member; reason: string },
 		extra?: EmbedField[]
 	) {
-		const { warnsBefore, warnsAfter } = await this.warnService.addWarn(member, type);
+		const { warnsBefore, warnsAfter } = await this.warnService.addWarn(member);
 
 		const punishmentConfigs = settings.autoMod.config;
 		const punishmentConfig = punishmentConfigs.find((c) => c.amount > warnsBefore && c.amount <= warnsAfter);
@@ -44,19 +43,17 @@ export class ModerationService extends BaseService {
 	public async sendWarnMessage(message: Message, type: Violation, settings: BaseSettings) {
 		const t: TranslateFunc = (phrase, replace) => i18n.__({ locale: settings.locale, phrase }, replace);
 
-		await this.messages.sendReply(
-			message,
-			{
-				color: Color.YELLOW,
-				timestamp: null,
-				footer: null,
-				author: {
-					name: t('automod.desc', { type: t(`automod.violations.${type.toString()}`) }),
-					icon_url: Images.WARN
-				}
-			},
-			15 * 1000
-		);
+		const embed = this.messages.createEmbed({
+			color: Color.YELLOW,
+			timestamp: null,
+			footer: null,
+			author: {
+				name: t('automod.desc', { type: t(`automod.violations.${type.toString()}`) }),
+				icon_url: Images.WARN
+			}
+		});
+
+		await this.messages.sendReply(message, embed, 15 * 1000);
 	}
 
 	public async logModAction(

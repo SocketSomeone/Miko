@@ -167,7 +167,7 @@ export class MessagingService extends BaseService {
 			author = prevMsg.author;
 			prevMsg = await this.sendEmbed(prevMsg.channel, embed);
 
-			if (maxPage !== 1 && doPaginate) {
+			if ((page > 0 || page < maxPage - 1) && doPaginate) {
 				await prevMsg.addReaction(upSymbol);
 				await prevMsg.addReaction(downSymbol);
 			}

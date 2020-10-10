@@ -6,6 +6,7 @@ import { BasePunishment } from '../../../../Entity/Punishment';
 import { Images } from '../../../../Misc/Enums/Images';
 import { BaseModule } from '../../../../Framework/Module';
 import moment from 'moment';
+import { ExecuteError } from '../../../../Framework/Errors/ExecuteError';
 
 const PUNISHMENT_PER_PAGE = 5;
 
@@ -40,6 +41,8 @@ export default class extends BaseCommand {
 				createdAt: 'DESC'
 			}
 		});
+
+		if (punishments.length < 1) throw new ExecuteError(t('moderation.punishs.empty'));
 
 		const maxPage = Math.ceil(punishments.length / PUNISHMENT_PER_PAGE);
 		const startPage = 0;

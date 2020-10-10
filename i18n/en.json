@@ -395,7 +395,8 @@
 			"index": "moderation.punishs.index",
 			"moderator": "moderation.punishs.moderator",
 			"type": "moderation.punishs.type",
-			"date": "moderation.punishs.date"
+			"date": "moderation.punishs.date",
+			"empty": "moderation.punishs.empty"
 		},
 		"warns": "moderation.warns"
 	},

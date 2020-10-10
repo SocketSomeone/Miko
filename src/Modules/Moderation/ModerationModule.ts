@@ -5,6 +5,7 @@ import automodIgnore from './Commands/automod/automod ignore';
 import automodInfo from './Commands/automod/automod info';
 import disable from './Commands/automod/disable';
 import enable from './Commands/automod/enable';
+import punishments from './Commands/info/punishments';
 import ban from './Commands/mod/ban';
 import kick from './Commands/mod/kick';
 import mute from './Commands/mod/mute';
@@ -46,5 +47,7 @@ export class ModerationModule extends BaseModule {
 		this.registerCommand(unmute);
 
 		this.registerCommand(purge);
+
+		this.registerCommand(punishments);
 	}
 }

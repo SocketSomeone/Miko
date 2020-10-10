@@ -192,7 +192,11 @@
 				"title": "error.missed.userpermissions.title",
 				"desc": "error.missed.userpermissions.desc"
 			},
-			"permissions": "error.missed.permissions"
+			"permissions": "error.missed.permissions",
+			"botpermissions": {
+				"title": "error.missed.botpermissions.title",
+				"desc": "error.missed.botpermissions.desc"
+			}
 		},
 		"ratelimit": {
 			"title": "error.ratelimit.title",
@@ -386,6 +390,12 @@
 		"unmute": {
 			"title": "moderation.unmute.title",
 			"done": "moderation.unmute.done"
+		},
+		"punishs": {
+			"index": "moderation.punishs.index",
+			"moderator": "moderation.punishs.moderator",
+			"type": "moderation.punishs.type",
+			"date": "moderation.punishs.date"
 		}
 	},
 	"configure": {
@@ -1006,7 +1016,8 @@
 				"welcome channel": "utilities.help.cmdDesc.welcome channel",
 				"avatar": "utilities.help.cmdDesc.avatar",
 				"invite": "utilities.help.cmdDesc.invite",
-				"casino": "utilities.help.cmdDesc.casino"
+				"casino": "utilities.help.cmdDesc.casino",
+				"punishments": "utilities.help.cmdDesc.punishments"
 			},
 			"title": "utilities.help.title",
 			"desc": "utilities.help.desc",
@@ -1015,6 +1026,11 @@
 		"invite": {
 			"title": "utilities.invite.title",
 			"desc": "utilities.invite.desc"
+		}
+	},
+	"modeartion": {
+		"punishs": {
+			"type": "modeartion.punishs.type"
 		}
 	}
 }

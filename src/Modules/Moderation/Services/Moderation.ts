@@ -48,14 +48,12 @@ export class ModerationService extends BaseService {
 	}
 
 	public async sendWarnMessage(message: Message, type: Violation, settings: BaseSettings) {
-		const t: TranslateFunc = (phrase, replace) => i18n.__({ locale: settings.locale, phrase }, replace);
-
 		const embed = this.messages.createEmbed({
 			color: Color.YELLOW,
 			timestamp: null,
 			footer: null,
 			author: {
-				name: t('automod.desc', { type: t(`automod.violations.${type.toString()}`) }),
+				name: 'Message warn',
 				icon_url: Images.WARN
 			}
 		});

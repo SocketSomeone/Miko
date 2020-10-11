@@ -1,10 +1,10 @@
 import { BaseClient } from '../../Client';
 import { BaseModule } from '../../Framework/Module';
 import { Lang } from '../../Misc/Enums/Languages';
-import automodIgnore from './Commands/automod/automod ignore';
-import automodInfo from './Commands/automod/automod info';
-import disable from './Commands/automod/disable';
-import enable from './Commands/automod/enable';
+import { ModerationService } from './Services/Moderation';
+import { PunishmentService } from './Services/Punishment';
+import { WarnService } from './Services/WarnService';
+
 import punishments from './Commands/info/punishments';
 import warns from './Commands/info/warns';
 import ban from './Commands/mod/ban';
@@ -15,10 +15,6 @@ import tempmute from './Commands/mod/tempmute';
 import unmute from './Commands/mod/unmute';
 import warn from './Commands/mod/warn';
 import purge from './Commands/purge/purge';
-import { AutoModerationService } from './Services/AutoModeration';
-import { ModerationService } from './Services/Moderation';
-import { PunishmentService } from './Services/Punishment';
-import { WarnService } from './Services/WarnService';
 
 export class ModerationModule extends BaseModule {
 	public names = {
@@ -31,15 +27,13 @@ export class ModerationModule extends BaseModule {
 
 		// Services
 		this.registerService(ModerationService);
-		this.registerService(AutoModerationService);
 		this.registerService(PunishmentService);
 		this.registerService(WarnService);
 
+		// TODO: До лучший времен
+		// this.registerService(AutoModerationService);
+
 		// Commands
-		this.registerCommand(automodInfo);
-		this.registerCommand(automodIgnore);
-		this.registerCommand(enable);
-		this.registerCommand(disable);
 
 		this.registerCommand(ban);
 		this.registerCommand(kick);

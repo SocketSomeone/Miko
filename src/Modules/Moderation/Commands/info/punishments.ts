@@ -36,7 +36,7 @@ export default class extends BaseCommand {
 				guild: { id: guild.id },
 				member: member.id
 			},
-			take: 100,
+			take: 50,
 			order: {
 				createdAt: 'DESC'
 			}
@@ -72,7 +72,7 @@ export default class extends BaseCommand {
 				);
 			});
 
-			const embed = this.createEmbed({
+			return this.createEmbed({
 				color: Color.DARK,
 				author: { name: member.tag, icon_url: Images.MODERATION },
 				thumbnail: { url: member.avatarURL },
@@ -80,8 +80,6 @@ export default class extends BaseCommand {
 				footer: null,
 				timestamp: null
 			});
-
-			return embed;
 		});
 	}
 }

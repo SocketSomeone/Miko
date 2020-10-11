@@ -32,11 +32,7 @@ export default class extends BaseCommand {
 		});
 	}
 
-	public async execute(
-		message: Message,
-		[target, reason]: [Member, string],
-		{ funcs: { t, e }, guild, me, settings }: Context
-	) {
+	public async execute(message: Message, [target]: [Member], { funcs: { t, e }, guild, me, settings }: Context) {
 		const embed = this.createEmbed({
 			color: Color.DARK,
 			title: t('moderation.unmute.title'),

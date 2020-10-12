@@ -1,5 +1,4 @@
 import { BaseCache } from '../../../Framework/Cache';
-import { BaseReactionRole } from '../../../Entity/ReactionRole';
 import { Guild } from 'eris';
 import { BaseShopRole } from '../../../Entity/ShopRole';
 

@@ -2,10 +2,8 @@ import { BaseCommand, Context } from '../../../../Framework/Commands/Command';
 import { Message, Member, EmbedField } from 'eris';
 import { Color } from '../../../../Misc/Enums/Colors';
 import { MemberResolver } from '../../../../Framework/Resolvers';
-import { BasePunishment } from '../../../../Entity/Punishment';
 import { Images } from '../../../../Misc/Enums/Images';
 import { BaseModule } from '../../../../Framework/Module';
-import moment from 'moment';
 import { BaseMember } from '../../../../Entity/Member';
 
 const PUNISHMENT_PER_PAGE = 5;

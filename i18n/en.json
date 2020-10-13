@@ -80,10 +80,37 @@
 			"title": "utilities.help.title",
 			"desc": "utilities.help.desc",
 			"arrows": "utilities.help.arrows",
-			"footer": "utilities.help.footer"
+			"footer": "utilities.help.footer",
+			"cmd": {
+				"ex": "utilities.help.cmd.ex",
+				"aliases": "utilities.help.cmd.aliases"
+			}
 		}
 	},
 	"moderation": {
 		"warns": "moderation.warns"
+	},
+	"perms": {
+		"cleared": "perms.cleared",
+		"title": "perms.title",
+		"allModules": "perms.allModules",
+		"[TextChannel 740914024493088770]": "perms.[TextChannel 740914024493088770]",
+		"item": "perms.item",
+		"add": "perms.add",
+		"false": "perms.false"
+	},
+	"resolvers": {
+		"member": {
+			"notFound": "resolvers.member.notFound"
+		},
+		"command": {
+			"notFound": "resolvers.command.notFound"
+		},
+		"channel": {
+			"notFound": "resolvers.channel.notFound"
+		},
+		"module": {
+			"notFound": "resolvers.module.notFound"
+		}
 	}
 }

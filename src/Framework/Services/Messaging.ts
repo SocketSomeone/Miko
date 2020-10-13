@@ -65,33 +65,41 @@ export class MessagingService extends BaseService {
 				return x;
 			});
 
-		if (target instanceof GuildChannel) {
-			if (!target.permissionsOf(this.client.user.id).has(GuildPermission.SEND_MESSAGES)) {
-				throw new SendError(`I don't have permission to send messages in this channel.`);
-			}
-
-			if (!target.permissionsOf(this.client.user.id).has(GuildPermission.EMBED_LINKS)) {
-				throw new SendError(
-					`I don't have permission to send embeds.\nEnable "Embed Links" permission for Miko in this channel.`
-				);
-			}
-		}
-
-		try {
-			return target.createMessage({ embed: e });
-		} catch (err) {
-			withScope((scope) => {
-				if (target instanceof GuildChannel) {
-					scope.setUser({ id: target.guild.id });
-					scope.setExtra('permissions', target.permissionsOf(this.client.user.id).json);
+		return new Promise<Message>(async (resolve, reject) => {
+			if (target instanceof GuildChannel) {
+				if (!target.permissionsOf(this.client.user.id).has(GuildPermission.SEND_MESSAGES)) {
+					return reject(new SendError(`I don't have permission to send messages in this channel.`));
 				}
-				scope.setExtra('channel', target.id);
-				scope.setExtra('message', embed);
-				captureException(err);
-			});
 
-			throw new SendError('An error occured while sending a message.');
-		}
+				if (!target.permissionsOf(this.client.user.id).has(GuildPermission.EMBED_LINKS)) {
+					return reject(
+						new SendError(
+							`I don't have permission to send embeds.\nEnable "Embed Links" permission for Miko in this channel.`
+						)
+					);
+				}
+			}
+
+			try {
+				return resolve(await target.createMessage({ embed: e }));
+			} catch (err) {
+				if (err.code === 50007) {
+					return;
+				}
+
+				withScope((scope) => {
+					if (target instanceof GuildChannel) {
+						scope.setUser({ id: target.guild.id });
+						scope.setExtra('permissions', target.permissionsOf(this.client.user.id).json);
+					}
+					scope.setExtra('channel', target.id);
+					scope.setExtra('message', embed);
+					captureException(err);
+				});
+
+				return reject(new SendError('An error occured while sending a message.'));
+			}
+		});
 	}
 
 	public fillTemplate(msg: string, strings?: { [x: string]: string | number }): string | Embed {

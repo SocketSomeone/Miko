@@ -121,21 +121,19 @@ export class CommandService extends BaseService {
 				);
 
 				if (!answer) {
-					await this.msg
-						.sendReply(
-							message,
-							{
-								author: {
-									name: t('error.missed.permissions', { index: String(permission.index) }),
-									icon_url: Images.CRITICAL
-								},
-								color: Color.RED,
-								footer: null,
-								timestamp: null
+					await this.msg.sendReply(
+						message,
+						{
+							author: {
+								name: t('error.missed.permissions', { index: String(permission.index) }),
+								icon_url: Images.CRITICAL
 							},
-							15000
-						)
-						.catch(() => undefined);
+							color: Color.RED,
+							footer: null,
+							timestamp: null
+						},
+						15000
+					);
 
 					return;
 				} else if (permission === null) {
@@ -149,15 +147,13 @@ export class CommandService extends BaseService {
 							.map(([s]) => `\`${s}\``)
 							.join(', ');
 
-						await this.msg
-							.sendReply(message, {
-								color: Color.RED,
-								author: { name: t('error.missed.userpermissions.title'), icon_url: Images.CRITICAL },
-								description: t('error.missed.userpermissions.desc', { missed }),
-								footer: null,
-								timestamp: null
-							})
-							.catch(() => undefined);
+						await this.msg.sendReply(message, {
+							color: Color.RED,
+							author: { name: t('error.missed.userpermissions.title'), icon_url: Images.CRITICAL },
+							description: t('error.missed.userpermissions.desc', { missed }),
+							footer: null,
+							timestamp: null
+						});
 
 						return;
 					}
@@ -180,15 +176,13 @@ export class CommandService extends BaseService {
 					.map(([s]) => `\`${s}\``)
 					.join(', ');
 
-				await this.msg
-					.sendReply(message, {
-						color: Color.RED,
-						author: { name: t('error.missed.botpermissions.title'), icon_url: Images.CRITICAL },
-						description: t('error.missed.botpermissions.desc', { missed }),
-						footer: null,
-						timestamp: null
-					})
-					.catch(() => undefined);
+				await this.msg.sendReply(message, {
+					color: Color.RED,
+					author: { name: t('error.missed.botpermissions.title'), icon_url: Images.CRITICAL },
+					description: t('error.missed.botpermissions.desc', { missed }),
+					footer: null,
+					timestamp: null
+				});
 
 				return;
 			}
@@ -395,15 +389,13 @@ export class CommandService extends BaseService {
 				lastCall.warned = true;
 				lastCall.last = now + COOLDOWN;
 
-				await this.msg
-					.sendReply(message, {
-						color: Color.RED,
-						author: { name: t('error.ratelimit.title'), icon_url: Images.CRITICAL },
-						description: t('error.ratelimit.desc'),
-						footer: null,
-						timestamp: null
-					})
-					.catch(() => undefined);
+				await this.msg.sendReply(message, {
+					color: Color.RED,
+					author: { name: t('error.ratelimit.title'), icon_url: Images.CRITICAL },
+					description: t('error.ratelimit.desc'),
+					footer: null,
+					timestamp: null
+				});
 			}
 
 			return true;

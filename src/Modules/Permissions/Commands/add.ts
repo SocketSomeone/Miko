@@ -53,7 +53,7 @@ export default class extends BaseCommand {
 
 	public async execute(
 		message: Message,
-		[allow, from, target]: [boolean, Role | Member | GuildChannel, PermissionsTarget],
+		[from, allow, target]: [Role | Member | GuildChannel, boolean, PermissionsTarget],
 		{ funcs: { t }, guild, settings }: Context
 	) {
 		const permissions = settings.permissions;

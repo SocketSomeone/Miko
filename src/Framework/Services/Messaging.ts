@@ -41,20 +41,18 @@ export class MessagingService extends BaseService {
 		};
 	}
 
-	public sendReply(message: Message, reply: BaseEmbedOptions | string, ttl: number = null) {
-		return new Promise<Message>(async (resolve, reject) => {
-			const m = await this.sendEmbed(message.channel, reply);
+	public async sendReply(message: Message, reply: BaseEmbedOptions | string, ttl: number = null) {
+		const m = await this.sendEmbed(message.channel, reply);
 
-			if (!ttl) {
-				return resolve(m);
-			}
+		if (!ttl) {
+			return m;
+		}
 
-			resolve(null);
+		setTimeout(() => {
+			m.delete().catch(() => undefined);
+		}, ttl);
 
-			setTimeout(() => {
-				m.delete().catch(() => undefined);
-			}, ttl);
-		});
+		return null;
 	}
 
 	public sendEmbed(target: TextableChannel, embed: BaseEmbedOptions | string) {

@@ -17,7 +17,7 @@ import { Images } from './Misc/Enums/Images';
 import { BaseModule } from './Framework/Module';
 import { Service, serviceInjections } from './Framework/Decorators/Service';
 import { Cache, cacheInjections } from './Framework/Decorators/Cache';
-import { RabbitMQService as RabbitMqService } from './Framework/Services/RabbitMQ';
+import { RabbitMQService as RabbitMqService } from './Framework/Services/RabbitMQ/RabbitMQ';
 import { ConfigureModule } from './Modules/Configure/ConfigureModule';
 import { LogModule } from './Modules/Log/LogModule';
 import { FrameworkModule } from './Framework/FrameworkModule';

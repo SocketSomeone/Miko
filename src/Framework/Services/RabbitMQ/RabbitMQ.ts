@@ -2,10 +2,10 @@ import { captureException } from '@sentry/node';
 import { Channel, connect, Connection, Message as MQMessage } from 'amqplib';
 import chalk from 'chalk';
 import moment from 'moment';
-import { GuildSettingsCache } from '../Cache';
+import { GuildSettingsCache } from '../../Cache';
 
-import { Cache } from '../Decorators/Cache';
-import { BaseService } from './Service';
+import { Cache } from '../../Decorators/Cache';
+import { BaseService } from '../Service';
 
 const RETRY_INTERVAL = 10000;
 

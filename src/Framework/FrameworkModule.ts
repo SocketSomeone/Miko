@@ -4,7 +4,7 @@ import { BaseModule } from './Module';
 import { CommandService } from './Services/Commands';
 import { MessagingService } from './Services/Messaging';
 import { SchedulerService } from './Services/Scheduler';
-import { RabbitMQService } from './Services/RabbitMQ';
+import { RabbitMQService } from './Services/RabbitMQ/RabbitMQ';
 import { Lang } from '../Misc/Enums/Languages';
 
 export class FrameworkModule extends BaseModule {

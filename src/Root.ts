@@ -65,12 +65,6 @@ const main = async () => {
 	await client.init();
 
 	console.log(chalk.green('-------------------------------------'));
-	console.log(chalk.green('Waiting for start ticket...'));
-	console.log(chalk.green('-------------------------------------'));
-
-	await client.waitForStartupTicket();
-
-	console.log(chalk.green('-------------------------------------'));
 	console.log(chalk.green('Connecting to discord...'));
 	console.log(chalk.green('-------------------------------------'));
 	await client.connect();

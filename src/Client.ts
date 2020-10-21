@@ -187,16 +187,6 @@ export class BaseClient extends Client {
 		this.on('rawWS', this.onRawWS);
 	}
 
-	public async waitForStartupTicket() {
-		const start = process.uptime();
-		const interval = setInterval(
-			() => console.log(`Waiting for ticket since ${chalk.blue(Math.floor(process.uptime() - start))} seconds...`),
-			10000
-		);
-		await this.rabbitMqService.waitForStartupTicket();
-		clearInterval(interval);
-	}
-
 	private async onClientReady() {
 		if (this.hasStarted) {
 			console.error('BOT HAS ALREADY STARTED, IGNORING EXTRA READY EVENT');
@@ -229,7 +219,6 @@ export class BaseClient extends Client {
 
 		if (this.startingServices.length === 0) {
 			console.log(chalk.green(`All services ready`));
-			this.rabbitMqService.endStartup().catch((err) => console.error(err));
 		}
 	}
 

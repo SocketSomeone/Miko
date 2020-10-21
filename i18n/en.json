@@ -112,5 +112,13 @@
 		"module": {
 			"notFound": "resolvers.module.notFound"
 		}
+	},
+	"others": {
+		"onBotAdd": {
+			"title": "others.onBotAdd.title",
+			"desc": "others.onBotAdd.desc",
+			"field": "others.onBotAdd.field",
+			"footer": "others.onBotAdd.footer"
+		}
 	}
 }

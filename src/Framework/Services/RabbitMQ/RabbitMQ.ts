@@ -32,6 +32,8 @@ export class RabbitMQService extends RabbtMQConnection {
 
 			this.channel.ack(msg, false);
 
+			console.log('message', content);
+
 			if (!cmd) {
 				return console.error(`UNKNOWN COMMAND: ${cmd}`);
 			}
@@ -74,6 +76,8 @@ export class RabbitMQService extends RabbtMQConnection {
 		this.registerCommand(FlushCache);
 		this.registerCommand(GuildInfo);
 		this.registerCommand(ShardStatus);
+
+		this.cmds.forEach((c) => this.client.setupInjections(c));
 	}
 
 	private registerCommand<T extends ShardCommand>(module: new (rabbit: this, client: BaseClient) => T) {

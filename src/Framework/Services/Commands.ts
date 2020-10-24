@@ -3,12 +3,10 @@ import i18n from 'i18n';
 
 import { BaseService } from './Service';
 import { BaseCommand, Context, TranslateFunc } from '../Commands/Command';
-import { Precondition } from '../../Modules/Permissions/Misc/Precondition';
 import { Message, GuildChannel, Guild } from 'eris';
 import { GuildPermission } from '../../Misc/Models/GuildPermissions';
 import EmojiResolver from '../../Misc/Utils/EmojiResolver';
 import { withScope, captureException } from '@sentry/node';
-import { ExecuteError } from '../Errors/ExecuteError';
 import { Color } from '../../Misc/Enums/Colors';
 import { BaseSettings } from '../../Entity/GuildSettings';
 import { Images } from '../../Misc/Enums/Images';
@@ -19,6 +17,7 @@ import { Service } from '../Decorators/Service';
 import { MessagingService } from './Messaging';
 import { InternalError } from '../Errors/InternalError';
 import { SendError } from '../Errors/SendError';
+import { AutomodSettings } from '../../Modules/Moderation/Models/AutomodSettings';
 
 const RATE_LIMIT = 1;
 const COOLDOWN = 5;
@@ -115,48 +114,25 @@ export class CommandService extends BaseService {
 					this.client.config.ownerID === member.id
 				)
 			) {
-				const { answer, permission } = Precondition.checkPermissions(
-					{ context, command: cmd, message },
-					sets.permissions
+				const missingPerms = cmd.userPermissions.filter(
+					(p) => !(channel as GuildChannel).permissionsOf(member.id).has(p)
 				);
 
-				if (!answer) {
-					await this.msg.sendReply(
-						message,
-						{
-							author: {
-								name: t('error.missed.permissions', { index: String(permission.index) }),
-								icon_url: Images.CRITICAL
-							},
-							color: Color.RED,
-							footer: null,
-							timestamp: null
-						},
-						15000
-					);
+				if (missingPerms.length > 0) {
+					const missed = Object.entries(GuildPermission)
+						.filter(([s, v]) => missingPerms.some((x) => x === v))
+						.map(([s]) => `\`${s}\``)
+						.join(', ');
+
+					await this.msg.sendReply(message, {
+						color: Color.RED,
+						author: { name: t('error.missed.userpermissions.title'), icon_url: Images.CRITICAL },
+						description: t('error.missed.userpermissions.desc', { missed }),
+						footer: null,
+						timestamp: null
+					});
 
 					return;
-				} else if (permission === null) {
-					const missingPerms = cmd.userPermissions.filter(
-						(p) => !(channel as GuildChannel).permissionsOf(member.id).has(p)
-					);
-
-					if (missingPerms.length > 0) {
-						const missed = Object.entries(GuildPermission)
-							.filter(([s, v]) => missingPerms.some((x) => x === v))
-							.map(([s]) => `\`${s}\``)
-							.join(', ');
-
-						await this.msg.sendReply(message, {
-							color: Color.RED,
-							author: { name: t('error.missed.userpermissions.title'), icon_url: Images.CRITICAL },
-							description: t('error.missed.userpermissions.desc', { missed }),
-							footer: null,
-							timestamp: null
-						});
-
-						return;
-					}
 				}
 			}
 

@@ -21,7 +21,7 @@ export default class onVoiceLeaveEvent extends BaseEventLog {
 		const guild = member.guild;
 		const rooms = await this.rooms.get(guild);
 
-		if (rooms.has(channel.id)) return;
+		if (rooms.has(channel.id) && channel.voiceMembers.size <= 1) return;
 
 		await super.handleEvent(guild, member, channel);
 	}

@@ -26,7 +26,6 @@ import { EmotionsModule } from './Modules/Emotions/EmotionsModule';
 import { VoiceModule } from './Modules/Voice/VoiceModule';
 import { ModerationModule } from './Modules/Moderation/ModerationModule';
 import { GamblingModule } from './Modules/Gambling/GamblingModule';
-import { PermissionsModule } from './Modules/Permissions/PermissionModule';
 import { WelcomeModule } from './Modules/Welcome/WelcomeModule';
 import { UtilitiesModule } from './Modules/Utilities/UtilitiesModule';
 
@@ -152,7 +151,6 @@ export class BaseClient extends Client {
 		this.registerModule(GamblingModule);
 		this.registerModule(LogModule);
 		this.registerModule(ModerationModule);
-		this.registerModule(PermissionsModule);
 		this.registerModule(UtilitiesModule);
 		this.registerModule(VoiceModule);
 		this.registerModule(WelcomeModule);

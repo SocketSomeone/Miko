@@ -1,6 +1,4 @@
 import { BaseEntity, Entity, Column, PrimaryColumn } from 'typeorm';
-import { Permission } from '../Misc/Models/Permisson';
-import { PermissionTransformer } from './Transformers';
 import { Lang } from '../Misc/Enums/Languages';
 import { WelcomeSettings } from '../Modules/Welcome/Models/WelcomeSettings';
 import { LoggerSettings } from '../Modules/Log/Models/LoggerSettings';
@@ -15,17 +13,13 @@ export class BaseSettings extends BaseEntity {
 	public id: string;
 
 	@Column({ type: 'varchar', default: '!' })
-	public prefix: string = '!';
+	public prefix = '!';
 
 	@Column({ type: 'varchar' })
 	public locale: Lang = Lang.ru;
 
-	@Column({
-		type: 'json',
-		default: [],
-		transformer: PermissionTransformer
-	})
-	public permissions: Permission[] = [];
+	@Column({ type: 'integer', default: 0 })
+	public deleteMessageAfter = 0;
 
 	@Column((type) => ModerationSettings)
 	public moderation = new ModerationSettings();

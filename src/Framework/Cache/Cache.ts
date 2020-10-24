@@ -24,7 +24,7 @@ export abstract class BaseCache<T> {
 
 	public abstract async init(): Promise<void>;
 
-	public async get(item: { id: string }): Promise<T> {
+	public async get(item: { id: string }) {
 		const { id: key } = item;
 
 		const cached = this.cache.get(key);

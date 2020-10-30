@@ -2,6 +2,7 @@ import { BaseClient } from '../../Client';
 import { BaseModule } from '../../Framework/Module';
 import { RoomService } from './Services/RoomService';
 import { RoomCache } from './Cache/RoomCache';
+
 import admin from './Commands/admin';
 import disable from './Commands/disable';
 import enable from './Commands/enable';
@@ -13,12 +14,11 @@ import name from './Commands/name';
 import owner from './Commands/owner';
 import show from './Commands/show';
 import unlock from './Commands/unlock';
-import { Lang } from '../../Misc/Enums/Languages';
 
 export class VoiceModule extends BaseModule {
 	public names = {
-		[Lang.en]: 'Private Channels',
-		[Lang.ru]: 'Приватные комнаты'
+		en: 'Private Channels',
+		ru: 'Приватные комнаты'
 	};
 
 	public constructor(client: BaseClient) {

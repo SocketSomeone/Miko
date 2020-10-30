@@ -11,15 +11,17 @@ export default class extends ShardCommand {
 
 	public cmd = ShardCommandType.GUILD_INFO;
 
-	public async execute({ guildId }: ShardMessage, sendResponse: responseFunc) {
-		let guild = this.client.guilds.get(guildId);
+	public async execute({ guildId, extended }: ShardMessage, sendResponse: responseFunc) {
+		let guild: any = this.client.guilds.get(guildId);
 
 		if (!guild) {
 			guild = await this.client.getRESTGuild(guildId).catch(() => null);
 		}
 
+		guild = extended ? await this.getGuildDto(guild) : { bot: !!guild };
+
 		return sendResponse({
-			guild: await this.getGuildDto(guild)
+			guild
 		});
 	}
 

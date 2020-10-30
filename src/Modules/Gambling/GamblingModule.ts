@@ -1,6 +1,6 @@
 import { BaseClient } from '../../Client';
 import { BaseModule } from '../../Framework/Module';
-import { Lang } from '../../Misc/Enums/Languages';
+
 import br from './Commands/br';
 import casino from './Commands/casino';
 import fortune from './Commands/fortune';
@@ -10,8 +10,8 @@ import whereischicken from './Commands/whereischicken';
 
 export class GamblingModule extends BaseModule {
 	public names = {
-		[Lang.en]: 'Gambling',
-		[Lang.ru]: 'Азартные игры'
+		en: 'Gambling',
+		ru: 'Азартные игры'
 	};
 
 	public constructor(client: BaseClient) {

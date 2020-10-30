@@ -1,14 +1,13 @@
 import { BaseClient } from '../../Client';
 import { BaseModule } from '../../Framework/Module';
-import { Lang } from '../../Misc/Enums/Languages';
 import avatar from './Commands/avatar';
 import help from './Commands/help';
 import invite from './Commands/invite';
 
 export class UtilitiesModule extends BaseModule {
 	public names = {
-		[Lang.en]: 'Utilities',
-		[Lang.ru]: 'Утилиты'
+		en: 'Utilities',
+		ru: 'Утилиты'
 	};
 
 	public constructor(client: BaseClient) {

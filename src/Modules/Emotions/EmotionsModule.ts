@@ -1,6 +1,6 @@
 import { BaseClient } from '../../Client';
 import { BaseModule } from '../../Framework/Module';
-import { Lang } from '../../Misc/Enums/Languages';
+
 import angry from './Commands/angry';
 import bite from './Commands/bite';
 import cry from './Commands/cry';
@@ -16,8 +16,8 @@ import sleep from './Commands/sleep';
 
 export class EmotionsModule extends BaseModule {
 	public names = {
-		[Lang.en]: 'Emotions',
-		[Lang.ru]: 'Эмоции'
+		en: 'Emotions',
+		ru: 'Эмоции'
 	};
 
 	public constructor(client: BaseClient) {

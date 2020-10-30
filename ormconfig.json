@@ -11,7 +11,6 @@
 	"entities": ["bin/Entity/**/*.js"],
 	"migrations": ["bin/Migration/**/*.js"],
 	"cli": {
-		"entitiesDir": "src/Entity",
 		"migrationsDir": "src/Migration"
 	}
 }

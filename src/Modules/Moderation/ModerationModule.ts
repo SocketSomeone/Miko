@@ -1,6 +1,5 @@
 import { BaseClient } from '../../Client';
 import { BaseModule } from '../../Framework/Module';
-import { Lang } from '../../Misc/Enums/Languages';
 import { ModerationService } from './Services/Moderation';
 import { PunishmentService } from './Services/Punishment';
 import { WarnService } from './Services/WarnService';
@@ -18,8 +17,8 @@ import purge from './Commands/purge/purge';
 
 export class ModerationModule extends BaseModule {
 	public names = {
-		[Lang.en]: 'Moderation',
-		[Lang.ru]: 'Модерация'
+		en: 'Moderation',
+		ru: 'Модерация'
 	};
 
 	public constructor(client: BaseClient) {

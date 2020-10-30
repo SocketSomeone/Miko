@@ -1,6 +1,5 @@
 import { BaseClient } from '../../Client';
 import { BaseModule } from '../../Framework/Module';
-import { Lang } from '../../Misc/Enums/Languages';
 import { ReactionRoleCache } from './Cache/ReactionRole';
 import { ShopRolesCache } from './Cache/ShopRole';
 import addshop from './Commands/addshop';
@@ -16,8 +15,8 @@ import { ReactionRoleService } from './Services/ReactionRoles';
 
 export class ConfigureModule extends BaseModule {
 	public names = {
-		[Lang.en]: 'Configure',
-		[Lang.ru]: 'Конфигурация'
+		en: 'Configure',
+		ru: 'Конфигурация'
 	};
 
 	public constructor(client: BaseClient) {

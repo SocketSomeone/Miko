@@ -1,6 +1,5 @@
 import { BaseClient } from '../../Client';
 import { BaseModule } from '../../Framework/Module';
-import { Lang } from '../../Misc/Enums/Languages';
 import award from './Commands/award';
 import bal from './Commands/bal';
 import buyshop from './Commands/buyshop';
@@ -12,8 +11,8 @@ import top from './Commands/top';
 
 export class EconomyModule extends BaseModule {
 	public names = {
-		[Lang.en]: 'Economy',
-		[Lang.ru]: 'Экономика'
+		en: 'Economy',
+		ru: 'Экономика'
 	};
 
 	public constructor(client: BaseClient) {

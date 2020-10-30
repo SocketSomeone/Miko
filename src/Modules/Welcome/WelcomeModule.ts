@@ -1,19 +1,19 @@
 import { BaseClient } from '../../Client';
 import { BaseModule } from '../../Framework/Module';
-import { Lang } from '../../Misc/Enums/Languages';
+import { WelcomeRolesService } from './Services/WelcomeRolesService';
+import { WelcomeService } from './Services/WelcomeService';
+
 import autoassignrole from './Commands/autoassignrole';
 import autosave from './Commands/autosave';
 import channel from './Commands/channel';
 import disable from './Commands/disable';
 import enable from './Commands/enable';
 import message from './Commands/message';
-import { WelcomeRolesService } from './Services/WelcomeRolesService';
-import { WelcomeService } from './Services/WelcomeService';
 
 export class WelcomeModule extends BaseModule {
 	public names = {
-		[Lang.en]: 'Welcome',
-		[Lang.ru]: 'Приветствие'
+		en: 'Welcome',
+		ru: 'Приветствие'
 	};
 
 	public constructor(client: BaseClient) {

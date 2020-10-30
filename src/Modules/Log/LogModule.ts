@@ -1,18 +1,17 @@
 import { BaseClient } from '../../Client';
 import { BasePunishment } from '../../Entity/Punishment';
+import { LoggingService } from './Services/LoggerService';
 import { BaseModule } from '../../Framework/Module';
-import { MessagingService } from '../../Framework/Services/Messaging';
-import { Lang } from '../../Misc/Enums/Languages';
+
 import disable from './Commands/disable';
 import enable from './Commands/enable';
 import set from './Commands/set';
 import unset from './Commands/unset';
-import { LoggingService } from './Services/LoggerService';
 
 export class LogModule extends BaseModule {
 	public names = {
-		[Lang.en]: 'Logs',
-		[Lang.ru]: 'Логирование'
+		en: 'Logs',
+		ru: 'Логирование'
 	};
 
 	public constructor(client: BaseClient) {

@@ -6,14 +6,11 @@ import { Images } from '../../../Misc/Enums/Images';
 import { BaseModule } from '../../../Framework/Module';
 import { ModuleResolver } from '../../../Framework/Resolvers/ModuleResolver';
 import { FrameworkModule } from '../../../Framework/FrameworkModule';
-import { Lang } from '../../../Misc/Enums/Languages';
-import { Color } from '../../../Misc/Enums/Colors';
-
 interface ModuleContext {
 	module: BaseModule;
 	guild: Guild;
 	t: TranslateFunc;
-	locale: Lang;
+	locale: 'ru' | 'en';
 	prefix: string;
 }
 

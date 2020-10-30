@@ -1,5 +1,4 @@
 import { BaseEntity, Entity, Column, PrimaryColumn } from 'typeorm';
-import { Lang } from '../Misc/Enums/Languages';
 import { WelcomeSettings } from '../Modules/Welcome/Models/WelcomeSettings';
 import { LoggerSettings } from '../Modules/Log/Models/LoggerSettings';
 import { AutomodSettings } from '../Modules/Moderation/Models/AutomodSettings';
@@ -16,7 +15,7 @@ export class BaseSettings extends BaseEntity {
 	public prefix = '!';
 
 	@Column({ type: 'varchar' })
-	public locale: Lang = Lang.ru;
+	public locale: 'ru' | 'en' = 'ru';
 
 	@Column({ type: 'integer', default: 0 })
 	public deleteMessageAfter = 0;

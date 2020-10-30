@@ -102,7 +102,7 @@ export class PunishmentService extends BaseService {
 
 	private async ban(guild: Guild, member: Member, settings: BaseSettings) {
 		try {
-			await member.ban(7, 'automod');
+			await member.ban(7);
 			return true;
 		} catch (error) {
 			return false;
@@ -111,7 +111,7 @@ export class PunishmentService extends BaseService {
 
 	private async kick(guild: Guild, member: Member, settings: BaseSettings) {
 		try {
-			await member.kick('automod');
+			await member.kick();
 			return true;
 		} catch (error) {
 			return false;
@@ -120,7 +120,7 @@ export class PunishmentService extends BaseService {
 
 	private async softban(guild: Guild, member: Member, settings: BaseSettings) {
 		try {
-			await member.ban(7, 'automod');
+			await member.ban(7);
 			await member.unban('softban');
 			return true;
 		} catch (error) {
@@ -135,7 +135,7 @@ export class PunishmentService extends BaseService {
 		}
 
 		try {
-			await member.addRole(mutedRole, 'AutoMod muted');
+			await member.addRole(mutedRole);
 			return true;
 		} catch (error) {
 			return false;

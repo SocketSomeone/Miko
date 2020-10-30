@@ -32,8 +32,6 @@ export class RabbitMQService extends RabbtMQConnection {
 
 			this.channel.ack(msg, false);
 
-			console.log('message', content);
-
 			if (!cmd) {
 				return console.error(`UNKNOWN COMMAND: ${cmd}`);
 			}

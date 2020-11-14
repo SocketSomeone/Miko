@@ -36,10 +36,9 @@ export default class extends ShardCommand {
 			me = await guild.getRESTMember(this.client.user.id);
 		}
 
-		const roles = JSON.parse(JSON.stringify([...guild.roles.values()]));
-		const editableRoles = this.moder.editableRoles(
+		const roles = this.moder.editableRoles(
 			guild,
-			roles.map((r: Role) => r.id),
+			guild.roles.map((r: Role) => r.id),
 			me
 		);
 
@@ -47,11 +46,7 @@ export default class extends ShardCommand {
 			id: guild.id,
 			name: guild.name,
 			iconURL: guild.dynamicIconURL('png', 4096),
-			roles: roles.map((r: any) =>
-				Object.assign(r, {
-					access: editableRoles.some((role) => role.id === r.id)
-				})
-			),
+			roles,
 			channels: [...guild.channels.values()],
 			emojis: [...guild.emojis.values()]
 		};

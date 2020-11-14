@@ -31,8 +31,6 @@ export class WelcomeService extends BaseService {
 			mention
 		});
 
-		const t: TranslateFunc = (phrase, replace) => i18n.__({ locale: sets.locale, phrase }, replace);
-
 		switch (sets.welcome.channelType) {
 			case WelcomeChannelType.DM: {
 				const channel = await user.getDMChannel();

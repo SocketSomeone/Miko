@@ -136,19 +136,12 @@ export class ModerationService extends BaseService {
 			} as Role);
 	}
 
-	public getHoistRole(guild: Guild, roles: string[]): Role {
-		return roles
-			.map((role) => guild.roles.get(role))
-			.filter((role) => !!role)
-			.reduce((prev, role) => (role.position < prev.position ? role : prev), {
-				position: -1
-			} as Role);
-	}
-
 	public editableRoles(guild: Guild, roles: string[], me: Member) {
 		const highestBotRole = this.getHighestRole(guild, me.roles);
 
-		return roles.map((r) => guild.roles.get(r)).filter((r) => !!r && highestBotRole.position > r.position);
+		return roles
+			.map((r) => guild.roles.get(r))
+			.filter((r) => !!r && !r.managed && r.id !== guild.id && highestBotRole.position > r.position);
 	}
 
 	public isPunishable(guild: Guild, targetMember: Member, authorMember: Member, me: Member) {

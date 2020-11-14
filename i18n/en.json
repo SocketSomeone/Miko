@@ -120,5 +120,27 @@
 			"field": "others.onBotAdd.field",
 			"footer": "others.onBotAdd.footer"
 		}
+	},
+	"economy": {
+		"bal": {
+			"title": "economy.bal.title",
+			"desc": "economy.bal.desc"
+		},
+		"daily": {
+			"title": "economy.daily.title",
+			"desc": "economy.daily.desc"
+		}
+	},
+	"gambling": {
+		"casino": {
+			"title": "gambling.casino.title",
+			"lose": "gambling.casino.lose"
+		}
+	},
+	"emotions": {
+		"title": "emotions.title",
+		"sex": {
+			"multi": "emotions.sex.multi"
+		}
 	}
 }

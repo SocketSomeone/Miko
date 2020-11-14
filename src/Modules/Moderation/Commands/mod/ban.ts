@@ -1,11 +1,10 @@
 import { BaseCommand, Context } from '../../../../Framework/Commands/Command';
 import { Message, Member } from 'eris';
-import { BaseMember } from '../../../../Entity/Member';
 import { ExecuteError } from '../../../../Framework/Errors/ExecuteError';
 import { Color } from '../../../../Misc/Enums/Colors';
 import { MemberResolver, StringResolver } from '../../../../Framework/Resolvers';
 import { GuildPermission } from '../../../../Misc/Models/GuildPermissions';
-import { Punishment, BasePunishment } from '../../../../Entity/Punishment';
+import { Punishment } from '../../../../Entity/Punishment';
 import { Images } from '../../../../Misc/Enums/Images';
 import { BaseModule } from '../../../../Framework/Module';
 import { Service } from '../../../../Framework/Decorators/Service';

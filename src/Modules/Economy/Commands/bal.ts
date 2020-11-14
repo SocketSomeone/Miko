@@ -28,7 +28,6 @@ export default class extends BaseCommand {
 		[user]: [Member],
 		{
 			funcs: { t, e },
-			guild,
 			settings: {
 				economy: { currency }
 			}

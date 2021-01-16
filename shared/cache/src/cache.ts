@@ -21,20 +21,18 @@ export class Cache<V = unknown, K = string> extends EventEmitter {
 
     public constructor({
         maxSize = 100,
-        checkInterval,
         expireAfter = duration(6, 'hours'),
-        refreshAfter,
-        load
+        ...opts
     }: ICacheOptions<K, V> = {}) {
         super();
 
         this.maxSize = maxSize;
         this.expireAfter = expireAfter;
-        this.refreshAfter = refreshAfter;
-        this.loadFunc = load;
+        this.refreshAfter = opts.refreshAfter;
+        this.loadFunc = opts.load;
 
-        if (checkInterval) {
-            setInterval(this.checkCache.bind(this), checkInterval);
+        if (opts.checkInterval) {
+            setInterval(this.checkCache.bind(this), opts.checkInterval);
         }
     }
 

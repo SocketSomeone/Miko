@@ -1,13 +1,16 @@
 {
-	"extends": "./tsconfig.base.json",
-	"compilerOptions": {
-		"noEmit": true,
-		"baseUrl": ".",
-		"paths": {
-			"@template/*": [
-				"./shared/*/src",
-				"./services/*/src"
-			]
-		}
-	}
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+        "noEmit": true,
+        "baseUrl": ".",
+        "composite": true,
+        "paths": {
+            "@miko/bot": [
+                "./services/bot/src"
+            ],
+            "@miko/cache": [
+                "./shared/cache/src"
+            ]
+        }
+    }
 }

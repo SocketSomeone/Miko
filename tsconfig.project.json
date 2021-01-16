@@ -1,12 +1,10 @@
 // File generated automatically, use yarn update:tsconfig for update
 {
+    "extends": "./tsconfig.base.json",
 	"files": [],
 	"references": [
 		{
-			"path": "services\\service-template\\tsconfig.package.json"
-		},
-		{
-			"path": "shared\\shared-template\\tsconfig.package.json"
+			"path": "shared\\cache\\tsconfig.package.json"
 		}
 	]
 }

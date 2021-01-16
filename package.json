@@ -1,9 +1,13 @@
 {
+    "name": "miko-monorepo",
 	"private": true,
 	"workspaces": [
 		"services/*",
 		"shared/*"
-	],
+    ],
+	"engines": {
+		"node": ">=12.0.0"
+	},
 	"devDependencies": {
 		"@types/node": "^14.14.20",
 		"@typescript-eslint/eslint-plugin": "^4.12.0",
@@ -18,7 +22,8 @@
         "build": "tsc --build ./tsconfig.project.json",
 		"watch": "yarn run typescript:build --watch",
         "clean": "rimraf -rf ./{services,shared}/*/{lib,*.tsbuildinfo}",
-		"test:eslint": "eslint --ignore-path .gitignore {services,shared}/*/src/**/*.ts",
+		"eslint": "eslint --ignore-path .gitignore {services,shared}/*/src/**/*.ts",
+		"eslint:fix": "eslint --fix --ignore-path .gitignore {services,shared}/*/src/**/*.ts",
 		"update:tsconfig": "ts-node scripts/update-package-tsconfig.ts"
 	}
 }

@@ -20,11 +20,11 @@ export class Cache<V = unknown, K = string> extends EventEmitter {
     private loadFunc: ICacheOptions<K, V>['load'];
 
     public constructor({
-        maxSize = 1000,
-        // checkInterval = 250,
+        maxSize = 100,
+        checkInterval,
         expireAfter = duration(6, 'hours'),
-        refreshAfter = duration(6, 'hours'),
-        load = undefined
+        refreshAfter,
+        load
     }: ICacheOptions<K, V> = {}) {
         super();
 
@@ -33,8 +33,9 @@ export class Cache<V = unknown, K = string> extends EventEmitter {
         this.refreshAfter = refreshAfter;
         this.loadFunc = load;
 
-        // TODO: Added interval check expiring keys
-        // setInterval(this.checkCache.bind(this), checkInterval);
+        if (checkInterval) {
+            setInterval(this.checkCache.bind(this), checkInterval);
+        }
     }
 
     public async set(
@@ -58,8 +59,8 @@ export class Cache<V = unknown, K = string> extends EventEmitter {
         this.storage.set(key, {
             data: value,
             addedAt: moment(),
-            expires: typeof ttl === 'undefined' ? null : moment().add(ttl),
-            refresh: typeof ref === 'undefined' ? null : moment().add(ref)
+            expires: ttl ? moment().add(ttl) : null,
+            refresh: ref ? moment().add(ref) : null
         });
     }
 
@@ -71,15 +72,15 @@ export class Cache<V = unknown, K = string> extends EventEmitter {
 
             this.metrics.hits += 1;
 
-            if (entry.refresh && curTime.isAfter(entry.refresh)
-                ||
-                entry.expires && curTime.isAfter(entry.expires)
-            ) return this.load(key);
+            if (
+                (entry.refresh && curTime.isAfter(entry.refresh))
+                || (entry.expires && curTime.isAfter(entry.expires))
+            ) return this.tryLoad(key);
 
             return entry.data;
         }
 
-        return this.load(key);
+        return this.tryLoad(key);
     }
 
     public async delete(key: K): Promise<boolean> {
@@ -94,7 +95,7 @@ export class Cache<V = unknown, K = string> extends EventEmitter {
         return this.storage.clear();
     }
 
-    private async load(key: K) {
+    private async tryLoad(key: K) {
         if (typeof this.loadFunc === 'undefined') {
             this.metrics.misses += 1;
 
@@ -127,7 +128,21 @@ export class Cache<V = unknown, K = string> extends EventEmitter {
         }
     }
 
-    // private async checkCache() {
-    // sconsole.log('NO-OP')
-    // }
+    private checkCache() {
+        for (const [key, entry] of this.storage.entries()) {
+            const curTime = moment();
+
+            if (
+                (entry.refresh && curTime.isBefore(entry.refresh))
+                && (entry.expires && curTime.isBefore(entry.expires))
+            ) continue;
+
+            if (typeof this.loadFunc === 'undefined') {
+                this.delete(key);
+                continue;
+            }
+
+            this.tryLoad(key);
+        }
+    }
 }

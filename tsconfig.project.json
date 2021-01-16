@@ -1,6 +1,5 @@
 // File generated automatically, use yarn update:tsconfig for update
 {
-    "extends": "./tsconfig.base.json",
 	"files": [],
 	"references": [
 		{

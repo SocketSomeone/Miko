@@ -1,15 +1,16 @@
 {
-	"name": "@miko/cache",
-	"version": "0.0.0",
-	"main": "./lib/index.js",
-	"types": "./lib/index.d.ts",
-	"dependencies": {
-		"@types/moment": "^2.13.0",
-		"moment": "^2.29.1"
-	},
-	"devDependencies": {},
-	"peerDependencies": {},
-	"scripts": {
-		"build": "tsc --build ./tsconfig.package.json"
-	}
+    "name": "@miko/cache",
+    "version": "0.0.0",
+    "main": "./lib/index.js",
+    "types": "./lib/index.d.ts",
+    "dependencies": {
+        "moment": "^2.29.1"
+    },
+    "devDependencies": {
+        "@types/moment": "^2.13.0"
+    },
+    "peerDependencies": {},
+    "scripts": {
+        "build": "tsc --build ./tsconfig.package.json"
+    }
 }

@@ -4,6 +4,9 @@
 	"references": [
 		{
 			"path": "shared\\cache\\tsconfig.package.json"
+		},
+		{
+			"path": "shared\\framework\\tsconfig.package.json"
 		}
 	]
 }

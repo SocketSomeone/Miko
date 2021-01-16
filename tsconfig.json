@@ -5,11 +5,17 @@
         "baseUrl": ".",
         "composite": true,
         "paths": {
-            "@miko/bot": [
-                "./services/bot/src"
+            "@miko/database": [
+                "./shared/database/src"
             ],
             "@miko/cache": [
                 "./shared/cache/src"
+            ],
+            "@miko/framework": [
+                "./shared/framework/src"
+            ],
+            "@miko/logger": [
+                "./shared/logger/src"
             ]
         }
     }

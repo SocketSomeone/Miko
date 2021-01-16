@@ -12,13 +12,6 @@ export interface ICacheOptions<K, V> {
 export interface ICacheEntry<V> {
 	data: V;
 	addedAt: Moment;
-	expires: Moment;
-	refresh: Moment;
-}
-
-export interface ICacheEvents<K, V> {
-	outdated: [K, V];
-	update: [K, V];
-	deleted: [K];
-	cleared: [];
+	expires: Moment | null;
+	refresh: Moment | null;
 }

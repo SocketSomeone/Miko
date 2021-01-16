@@ -32,7 +32,7 @@
 		"@typescript-eslint/ban-ts-comment": ["error", {
 			"ts-ignore": false
 		}],
-		"@typescript-eslint/indent": ["error", "tab"],
+		"@typescript-eslint/indent": ["error", "space"],
 		"@typescript-eslint/semi": ["error"],
 		"import/extensions": ["error", "ignorePackages", {
 			"js": "never",
@@ -52,10 +52,11 @@
 		"no-continue": "off",
 		"no-tabs": ["error", {
 			"allowIndentationTabs": true
-		}],
+        }],
 		"indent": "off",
         "semi": "off",
         "eol-last": "off"
+        
 	},
 	"overrides": [
 		{

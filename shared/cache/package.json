@@ -1,0 +1,14 @@
+{
+	"name": "@miko/cache",
+	"version": "0.0.0",
+	"main": "./lib/index.js",
+	"types": "./lib/index.d.ts",
+	"dependencies": {
+		"moment": "^2.29.1"
+	},
+	"devDependencies": {},
+	"peerDependencies": {},
+	"scripts": {
+		"build": "tsc --build ./tsconfig.package.json"
+	}
+}

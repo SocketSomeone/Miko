@@ -37,8 +37,6 @@ class Cache<V = any, K = string> extends EventEmitter {
         value: V,
         ttl  : ICacheOptions<K, V>['expireAfter'] = this.expireAfter
     ): Promise<void> {
-        this.metrics.hits++;
-
         this.emit('update', key, value);
 
         if (this.storage.size >= this.maxSize) {
@@ -49,7 +47,7 @@ class Cache<V = any, K = string> extends EventEmitter {
             const [key] = sort[0];
 
             this.delete(key);
-        }
+        } 
 
         this.storage.set(key, {
             data: value,
@@ -79,16 +77,12 @@ class Cache<V = any, K = string> extends EventEmitter {
     }
 
     public async delete(key: K): Promise<boolean> {
-        this.metrics.hits++;
-
         this.emit('deleted', key);
 
         return this.storage.delete(key);
     }
 
     public async clear(): Promise<void> {
-        this.metrics.hits++;
-
         this.emit('cleared');
 
         return this.storage.clear();

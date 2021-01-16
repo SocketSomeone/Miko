@@ -1,12 +1,10 @@
 import { Duration, Moment } from 'moment';
 
-export interface ICacheOptions<K, V> {
+export interface ICacheOptions {
     maxSize?: number;
     expireAfter?: Duration;
     refreshAfter?: Duration;
     checkInterval?: number;
-
-    load?: (key: K) => Promise<V>;
 }
 
 export interface ICacheEntry<V> {

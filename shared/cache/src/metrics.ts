@@ -76,8 +76,8 @@ export class CacheMetrics implements ICacheMetrics {
     }
 
     public toString(): string {
-        return JSON.stringify(
-            this.toJSON()
-        );
+        return Object.entries(this.toJSON())
+            .map(([key, value]) => `${key}=${value}`)
+            .join('\n');
     }
 }

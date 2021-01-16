@@ -1,46 +1,43 @@
-import * as moment from 'moment';
 import { EventEmitter } from 'events';
-import { duration } from 'moment';
+import moment, { duration } from 'moment';
 import { CacheMetrics } from './metrics';
 import { ICacheEntry, ICacheOptions } from './types';
 
-export class Cache<V = unknown, K = string> extends EventEmitter {
+export abstract class Cache<V = unknown, K = string> extends EventEmitter {
     protected readonly storage: Map<K, ICacheEntry<V>> = new Map();
 
     protected readonly pending: Map<K, Promise<V>> = new Map();
 
     public metrics = new CacheMetrics();
 
-    private maxSize: ICacheOptions<K, V>['maxSize'];
+    private maxSize: ICacheOptions['maxSize'];
 
-    private expireAfter: ICacheOptions<K, V>['expireAfter'];
+    private expireAfter: ICacheOptions['expireAfter'];
 
-    private refreshAfter: ICacheOptions<K, V>['refreshAfter'];
-
-    private loadFunc: ICacheOptions<K, V>['load'];
+    private refreshAfter: ICacheOptions['refreshAfter'];
 
     public constructor({
         maxSize = 100,
         expireAfter = duration(6, 'hours'),
-        ...opts
-    }: ICacheOptions<K, V> = {}) {
+        refreshAfter = undefined,
+        checkInterval = 250
+    }: ICacheOptions = {}) {
         super();
 
         this.maxSize = maxSize;
         this.expireAfter = expireAfter;
-        this.refreshAfter = opts.refreshAfter;
-        this.loadFunc = opts.load;
+        this.refreshAfter = refreshAfter;
 
-        if (opts.checkInterval) {
-            setInterval(this.checkCache.bind(this), opts.checkInterval);
+        if (checkInterval) {
+            setInterval(this.checkCache.bind(this), checkInterval);
         }
     }
 
     public async set(
         key: K,
         value: V,
-        ttl: ICacheOptions<K, V>['expireAfter'] = this.expireAfter,
-        ref: ICacheOptions<K, V>['refreshAfter'] = this.refreshAfter
+        ttl: ICacheOptions['expireAfter'] = this.expireAfter,
+        ref: ICacheOptions['refreshAfter'] = this.refreshAfter
     ): Promise<void> {
         this.emit('update', key, value);
 
@@ -93,13 +90,9 @@ export class Cache<V = unknown, K = string> extends EventEmitter {
         return this.storage.clear();
     }
 
+    protected abstract load(key: K): Promise<V>;
+
     private async tryLoad(key: K) {
-        if (typeof this.loadFunc === 'undefined') {
-            this.metrics.misses += 1;
-
-            return undefined;
-        }
-
         try {
             const res = this.pending.get(key);
 
@@ -107,7 +100,7 @@ export class Cache<V = unknown, K = string> extends EventEmitter {
                 return res;
             }
 
-            const promise = this.loadFunc(key)
+            const promise = this.load(key)
                 .finally(() => this.pending.delete(key));
 
             this.pending.set(key, promise);
@@ -127,20 +120,16 @@ export class Cache<V = unknown, K = string> extends EventEmitter {
     }
 
     private checkCache() {
-        for (const [key, entry] of this.storage.entries()) {
+        for (const [key, entry] of this.storage) {
             const curTime = moment();
 
-            if (
-                (entry.refresh && curTime.isBefore(entry.refresh))
-                && (entry.expires && curTime.isBefore(entry.expires))
-            ) continue;
-
-            if (typeof this.loadFunc === 'undefined') {
-                this.delete(key);
-                continue;
+            if (entry.refresh && curTime.isBefore(entry.refresh)) {
+                this.tryLoad(key);
             }
 
-            this.tryLoad(key);
+            if (entry.expires && curTime.isBefore(entry.expires)) {
+                this.delete(key);
+            }
         }
     }
 }

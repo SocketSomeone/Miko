@@ -55,7 +55,8 @@
         }],
 		"indent": "off",
         "semi": "off",
-        "eol-last": "off"
+        "eol-last": "off",
+        "max-len": ["error", { "code": 150 }]
 	},
 	"overrides": [
 		{

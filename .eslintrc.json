@@ -39,7 +39,8 @@
 			"ts": "never"
 		}],
 		"import/prefer-default-export": "off",
-		"import/no-default-export": ["error"],
+        "import/no-default-export": ["error"],
+        "import/no-cycle": "off",
 		"no-restricted-syntax": ["error", "WithStatement"],
 		"linebreak-style": ["error", "windows"],
 		"comma-dangle": ["error", "never"],

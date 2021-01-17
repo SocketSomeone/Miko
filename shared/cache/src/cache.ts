@@ -3,7 +3,7 @@ import moment, { duration } from 'moment';
 import { CacheMetrics } from './metrics';
 import { ICacheEntry, ICacheOptions } from './types';
 
-export abstract class Cache<V = unknown, K = string> extends EventEmitter {
+export abstract class MiCache<V = unknown, K = string> extends EventEmitter {
     protected readonly storage: Map<K, ICacheEntry<V>> = new Map();
 
     protected readonly pending: Map<K, Promise<V>> = new Map();

@@ -21,8 +21,8 @@ export class Logger implements ILogger {
         this.context = context;
     }
 
-    error(message: any, trace = '', context?: string): void {
-        Logger.error.call(Logger, message, trace, context || this.context);
+    error(message: any, context?: string): void {
+        Logger.error.call(Logger, message, context || this.context);
     }
 
     log(message: any, context?: string): void {
@@ -47,11 +47,9 @@ export class Logger implements ILogger {
 
     static error(
         message: any,
-        trace = '',
         context = ''
     ): void {
         this.printMessage(message, clc.red, context, 'stderr');
-        this.printStackTrace(trace);
     }
 
     static warn(message: any, context = ''): void {
@@ -99,22 +97,15 @@ export class Logger implements ILogger {
         context = '',
         writeStreamType?: 'stdout' | 'stderr'
     ) {
-        const output = typeof message === 'object'
+        const output = typeof message === 'object' && !(message instanceof Error)
             ? `${color('Object:')}\n${JSON.stringify(message, null, 2)}\n`
             : color(message);
 
-        const pidMessage = color(`[LOGGER] ${process.pid}   - `);
+        const pidMessage = color(`[MIKO] ${process.pid}   - `);
         const contextMessage = context ? clc.yellow(`[${context}] `) : '';
-        const instance = (this.instance as typeof Logger) ?? Logger;
+        const instance = (this.instance as typeof Logger) || Logger;
         const computedMessage = `${pidMessage}${instance.getTimestamp()}   ${contextMessage}${output}\n`;
 
-        process[writeStreamType ?? 'stdout'].write(computedMessage);
-    }
-
-    private static printStackTrace(trace: string) {
-        if (!trace) {
-            return;
-        }
-        process.stderr.write(`${trace}\n`);
+        process[writeStreamType || 'stdout'].write(computedMessage);
     }
 }

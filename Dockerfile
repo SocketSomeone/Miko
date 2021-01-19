@@ -10,10 +10,13 @@ WORKDIR /app
 COPY ["package.json", "yarn.lock", "./"]
 
 # Shared
-COPY shared/shared-template/package.json shared/shared-template/
+COPY shared/cache/package.json shared/cache/
+COPY shared/databse/package.json shared/databse/
+COPY shared/framework/package.json shared/framework/
+COPY shared/logger/package.json shared/logger/
 
 # Services
-COPY services/service-template/package.json services/service-template/
+COPY services/bot/package.json services/bot/
 
 RUN yarn install --pure-lockfile
 

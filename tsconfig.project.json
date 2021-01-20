@@ -3,16 +3,19 @@
 	"files": [],
 	"references": [
 		{
-			"path": "shared\\database\\tsconfig.package.json"
+			"path": "shared\\cache\\tsconfig.package.json"
 		},
 		{
 			"path": "shared\\logger\\tsconfig.package.json"
 		},
 		{
-			"path": "shared\\cache\\tsconfig.package.json"
+			"path": "shared\\database\\tsconfig.package.json"
 		},
 		{
 			"path": "shared\\framework\\tsconfig.package.json"
+		},
+		{
+			"path": "services\\bot\\tsconfig.package.json"
 		}
 	]
 }

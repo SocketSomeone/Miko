@@ -21,7 +21,8 @@ node_modules/
 # dotenv environment variables file  / configures
 .env
 .env.test
-ormconfig.json
+.docker
+docker-compose.yml
 
 # IDEs and editors
 /.idea

@@ -1,8 +1,7 @@
-/* eslint-disable import/no-cycle */
-export * from './decorators';
+import 'reflect-metadata';
+
+export * from './common';
 export * from './resolvers';
 
-export { MiCommand } from './command';
-export { MiService } from './service';
-export { MiModule } from './module';
+export { MiService } from './services';
 export { MiClient } from './client';

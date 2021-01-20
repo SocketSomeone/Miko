@@ -1,5 +1,5 @@
 import { ClientOptions } from 'discord.js';
-import { MiResolver, MiModule } from '.';
+import { MiResolver } from '.';
 
 export type AllowArray<T> = T | T[];
 
@@ -7,11 +7,7 @@ export type Constructor<T> = new (...args: unknown[]) => T;
 
 export type ResolverOrConstructor<T> = MiResolver<T> | Constructor<MiResolver<T>>;
 
-export interface IClientOptionsExtend {
-    modules: Constructor<MiModule>[]
-}
-
-export type MikoClientOptions = ClientOptions & IClientOptionsExtend;
+export type MikoClientOptions = ClientOptions;
 
 export interface IMikoMetrics {
     shardConnects: number;
@@ -20,5 +16,5 @@ export interface IMikoMetrics {
     wsWarnings: number;
     wsErrors: number;
     ratelimits: number;
-    startedAt: Date | null;
+    startedAt?: Date;
 }

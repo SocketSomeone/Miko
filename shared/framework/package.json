@@ -11,7 +11,6 @@
 	"devDependencies": {},
 	"peerDependencies": {
 		"@miko/cache": "^0.0.0",
-		"@miko/database": "^0.0.0",
 		"@miko/logger": "^0.0.0"
 	},
 	"scripts": {

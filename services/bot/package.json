@@ -1,19 +1,20 @@
 {
-	"name": "@miko/bot",
-	"version": "0.0.0",
-	"main": "./lib/index.js",
-	"types": "./lib/index.d.ts",
-	"dependencies": {
-		"reflect-metadata": "^0.1.13"
-	},
-	"devDependencies": {},
-	"peerDependencies": {
+    "name": "@miko/bot",
+    "version": "0.0.0",
+    "main": "./lib/index.js",
+    "types": "./lib/index.d.ts",
+    "dependencies": {
+        "dotenv": "^8.2.0",
+        "reflect-metadata": "^0.1.13"
+    },
+    "devDependencies": {},
+    "peerDependencies": {
         "@miko/cache": "^0.0.0",
-        "@miko/framework": "^0.0.0",
         "@miko/database": "^0.0.0",
-		"@miko/logger": "^0.0.0"
-	},
-	"scripts": {
-		"build": "tsc --build ./tsconfig.package.json"
-	}
+        "@miko/framework": "^0.0.0",
+        "@miko/logger": "^0.0.0"
+    },
+    "scripts": {
+        "build": "tsc --build ./tsconfig.package.json"
+    }
 }

@@ -50,6 +50,7 @@ export class Logger implements ILogger {
         context = ''
     ): void {
         this.printMessage(message, clc.red, context, 'stderr');
+        this.printStackTrace(message);
     }
 
     static warn(message: any, context = ''): void {
@@ -107,5 +108,14 @@ export class Logger implements ILogger {
         const computedMessage = `${pidMessage}${instance.getTimestamp()}   ${contextMessage}${output}\n`;
 
         process[writeStreamType || 'stdout'].write(computedMessage);
+    }
+
+    private static printStackTrace(trace: Error) {
+        if (!trace) {
+            return;
+        }
+
+        // eslint-disable-next-line no-console
+        console.error(trace);
     }
 }

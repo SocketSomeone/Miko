@@ -1,10 +1,11 @@
 import { Client, CloseEvent, Guild } from 'discord.js';
 import { Logger } from '@miko/logger';
-import { IMikoMetrics, MikoClientOptions } from './types';
-import { metaStorage } from './common';
+import { IMikoMetrics } from './types';
+import { metaStorage } from './metadata';
+import { ModuleBuilder } from './utils/moduleBuilder';
 
 export class MiClient extends Client {
-    protected logger = new Logger('CLIENT');
+    protected readonly logger = new Logger('CLIENT');
 
     public metrics: IMikoMetrics = {
         ratelimits: 0,
@@ -15,14 +16,47 @@ export class MiClient extends Client {
         wsWarnings: 0
     };
 
-    public constructor(opts: MikoClientOptions = {}) {
-        super(opts);
+    public constructor(...modules: ModuleBuilder[]) {
+        super({
+            disableMentions: 'everyone',
+            messageEditHistoryMaxSize: 50,
+            messageCacheMaxSize: 100,
+            messageCacheLifetime: 240,
+            messageSweepInterval: 250,
+            fetchAllMembers: true,
+            shards: 'auto',
+            presence: {
+                activity: {
+                    name: 'mikoapp.xyz | !help',
+                    type: 'WATCHING',
+                    url: 'https://mikoapp.xyz'
+                },
+                status: 'online'
+            },
+            ws: {
+                compress: false,
+                intents: [
+                    'DIRECT_MESSAGES',
+                    'DIRECT_MESSAGE_REACTIONS',
+                    'GUILDS',
+                    'GUILD_BANS',
+                    'GUILD_EMOJIS',
+                    'GUILD_VOICE_STATES',
+                    'GUILD_EMOJIS',
+                    'GUILD_MEMBERS',
+                    'GUILD_MESSAGES',
+                    'GUILD_MESSAGE_REACTIONS'
+                ]
+            }
+        });
 
-        this.logger.log('Added client instance...', 'META');
-        metaStorage.client = this;
+        metaStorage.addModules(this, modules);
     }
 
     public async login(token?: string): Promise<string> {
+        this.logger.log('Initializing provider services');
+        await metaStorage.init();
+
         this.logger.log('Setting up events...');
         this.once('ready', this.onClientReady);
         this.once('shardReady', this.onShardReady);

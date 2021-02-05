@@ -9,7 +9,9 @@
     "devDependencies": {
         "@types/moment": "^2.13.0"
     },
-    "peerDependencies": {},
+    "peerDependencies": {
+        "@miko/logger": "^0.0.0"
+    },
     "scripts": {
         "build": "tsc --build ./tsconfig.package.json"
     }

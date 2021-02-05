@@ -1,9 +1,11 @@
-import { EventEmitter } from 'events';
+import { Logger } from '@miko/logger';
 import moment, { duration } from 'moment';
 import { CacheMetrics } from './metrics';
 import { ICacheEntry, ICacheOptions } from './types';
 
-export abstract class MiCache<V = unknown, K = string> extends EventEmitter {
+export abstract class MiCache<V = unknown, K = string> {
+    protected readonly logger: Logger = new Logger(this.constructor.name);
+
     protected readonly storage: Map<K, ICacheEntry<V>> = new Map();
 
     protected readonly pending: Map<K, Promise<V>> = new Map();
@@ -17,13 +19,11 @@ export abstract class MiCache<V = unknown, K = string> extends EventEmitter {
     private refreshAfter: ICacheOptions['refreshAfter'];
 
     public constructor({
-        maxSize = 100,
+        maxSize = 50,
         expireAfter = duration(6, 'hours'),
         refreshAfter = undefined,
-        checkInterval = 250
+        checkInterval = 1000
     }: ICacheOptions = {}) {
-        super();
-
         this.maxSize = maxSize;
         this.expireAfter = expireAfter;
         this.refreshAfter = refreshAfter;
@@ -33,22 +33,45 @@ export abstract class MiCache<V = unknown, K = string> extends EventEmitter {
         }
     }
 
+    public async init(): Promise<void> {
+        this.logger.log('Cache initialized..');
+    }
+
     public async set(
         key: K,
         value: V,
         ttl: ICacheOptions['expireAfter'] = this.expireAfter,
         ref: ICacheOptions['refreshAfter'] = this.refreshAfter
     ): Promise<void> {
-        this.emit('update', key, value);
-
         if (this.maxSize && this.storage.size >= this.maxSize) {
             this.metrics.evictions += 1;
 
-            const iter = [...this.storage.entries()];
-            const sort = iter.sort(([, a], [, b]) => a.addedAt.unix() - b.addedAt.unix());
-            const [iterKey] = sort[0];
+            let olderTime;
+            let olderKey;
 
-            this.delete(iterKey);
+            for (const [iterKey, iterVal] of this.storage) {
+                if (!olderKey) {
+                    olderKey = iterKey;
+                    olderTime = iterVal.addedAt;
+
+                    continue;
+                }
+
+                if (
+                    !iterVal.addedAt
+                    || (
+                        olderTime
+                        && olderTime.isBefore(iterVal.addedAt)
+                    )
+                ) continue;
+
+                olderKey = iterKey;
+                olderTime = iterVal.addedAt;
+            }
+
+            if (typeof olderKey === 'string') {
+                this.delete(olderKey);
+            }
         }
 
         this.storage.set(key, {
@@ -67,10 +90,9 @@ export abstract class MiCache<V = unknown, K = string> extends EventEmitter {
 
             this.metrics.hits += 1;
 
-            if (
-                (entry.refresh && curTime.isAfter(entry.refresh))
-                || (entry.expires && curTime.isAfter(entry.expires))
-            ) return this.tryLoad(key);
+            if ((entry.refresh && curTime.isAfter(entry.refresh)) || (entry.expires && curTime.isAfter(entry.expires))) {
+                return this.tryLoad(key);
+            }
 
             return entry.data;
         }
@@ -79,14 +101,10 @@ export abstract class MiCache<V = unknown, K = string> extends EventEmitter {
     }
 
     public async delete(key: K): Promise<boolean> {
-        this.emit('deleted', key);
-
         return this.storage.delete(key);
     }
 
     public async clear(): Promise<void> {
-        this.emit('cleared');
-
         return this.storage.clear();
     }
 
@@ -120,9 +138,9 @@ export abstract class MiCache<V = unknown, K = string> extends EventEmitter {
     }
 
     private checkCache() {
-        for (const [key, entry] of this.storage) {
-            const curTime = moment();
+        const curTime = moment();
 
+        for (const [key, entry] of this.storage) {
             if (entry.refresh && curTime.isBefore(entry.refresh)) {
                 this.tryLoad(key);
             }

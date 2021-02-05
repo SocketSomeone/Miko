@@ -15,6 +15,7 @@
         "@miko/logger": "^0.0.0"
     },
     "scripts": {
-        "build": "tsc --build ./tsconfig.package.json"
+        "build": "tsc --build ./tsconfig.package.json",
+        "start": "node ./lib"
     }
 }

@@ -1,8 +1,11 @@
 import dotenv from 'dotenv';
+import { join } from 'path';
+
 import { Logger } from '@miko/logger';
 import { MiClient } from '@miko/framework';
 import { createDatabase } from '@miko/database';
-import { join } from 'path';
+
+import * as modules from './modules';
 
 if (process.env.NODE_ENV !== 'production') {
     dotenv.config({
@@ -14,38 +17,7 @@ const logger = new Logger('ROOT');
 
 const main = async () => {
     logger.log('Starting Miko instance!');
-    const client = new MiClient({
-        disableMentions: 'everyone',
-        messageEditHistoryMaxSize: 50,
-        messageCacheMaxSize: 100,
-        messageCacheLifetime: 240,
-        messageSweepInterval: 250,
-        fetchAllMembers: true,
-        shards: 'auto',
-        presence: {
-            activity: {
-                name: 'mikoapp.xyz | !help',
-                type: 'WATCHING',
-                url: 'https://mikoapp.xyz'
-            },
-            status: 'online'
-        },
-        ws: {
-            compress: false,
-            intents: [
-                'DIRECT_MESSAGES',
-                'DIRECT_MESSAGE_REACTIONS',
-                'GUILDS',
-                'GUILD_BANS',
-                'GUILD_EMOJIS',
-                'GUILD_VOICE_STATES',
-                'GUILD_EMOJIS',
-                'GUILD_MEMBERS',
-                'GUILD_MESSAGES',
-                'GUILD_MESSAGE_REACTIONS'
-            ]
-        }
-    });
+    const client = new MiClient(modules);
 
     logger.log('Connection to Database...');
     await createDatabase();

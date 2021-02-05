@@ -1,13 +1,12 @@
 {
     "name": "@miko/bot",
-    "version": "0.0.0",
+    "version": "1.0.0-alpha.0",
     "main": "./lib/index.js",
     "types": "./lib/index.d.ts",
     "dependencies": {
         "dotenv": "^8.2.0",
         "reflect-metadata": "^0.1.13"
     },
-    "devDependencies": {},
     "peerDependencies": {
         "@miko/cache": "^0.0.0",
         "@miko/database": "^0.0.0",

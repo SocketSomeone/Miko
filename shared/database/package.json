@@ -1,6 +1,6 @@
 {
 	"name": "@miko/database",
-	"version": "0.0.0",
+	"version": "1.0.0-alpha.0",
 	"main": "./lib/index.js",
 	"types": "./lib/index.d.ts",
 	"dependencies": {
@@ -11,7 +11,6 @@
 	"devDependencies": {
 		"@types/node": "^14.14.21"
 	},
-	"peerDependencies": {},
 	"scripts": {
 		"build": "tsc --build ./tsconfig.package.json"
 	}

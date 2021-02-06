@@ -32,7 +32,7 @@
         "test:jest": "jest --config jest.config.json --no-cache",
         "test:eslint": "eslint --ignore-path .gitignore {services,shared}/*/src/**/*.ts",
         "update:tsconfig": "ts-node scripts/update-package-tsconfig.ts",
-        "update:version": "lerna version --no-push"
+        "update:version": "lerna version --no-push --no-changelog"
     },
     "config": {
         "commitizen": {

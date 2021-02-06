@@ -19,9 +19,7 @@ node_modules/
 *.tsbuildinfo
 
 # dotenv environment variables file  / configures
-.env
-.env.test
-.docker
+config
 docker-compose.yml
 
 # IDEs and editors

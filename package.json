@@ -1,37 +1,43 @@
 {
-	"name": "miko-monorepo",
-	"private": true,
-	"workspaces": [
-		"services/*",
-		"shared/*"
-	],
-	"engines": {
-		"node": ">=12.0.0"
-	},
-	"devDependencies": {
-		"@sentry/node": "^5.30.0",
-		"@types/jest": "^26.0.20",
-		"@types/node": "^14.14.20",
-		"@typescript-eslint/eslint-plugin": "^4.12.0",
-		"@typescript-eslint/parser": "^4.12.0",
-		"eslint": "^7.17.0",
-		"eslint-config-airbnb-base": "^14.2.1",
-		"eslint-plugin-import": "^2.22.1",
-		"jest": "^26.6.3",
-		"lerna": "^3.22.1",
-		"ts-jest": "^26.4.4",
-		"ts-node": "^9.1.1",
-		"typescript": "^4.1.3"
-	},
-	"scripts": {
-		"build": "tsc --build ./tsconfig.project.json",
-		"watch": "yarn run typescript:build --watch",
-		"clean": "rimraf -rf ./{services,shared}/*/{lib,*.tsbuildinfo}",
-		"test": "yarn run test:eslint && yarn run test:jest",
-		"test:jest": "jest --config jest.config.json --no-cache",
-		"test:eslint": "eslint --ignore-path .gitignore {services,shared}/*/src/**/*.ts",
-		"test:eslint:fix": "eslint --fix --ignore-path .gitignore {services,shared}/*/src/**/*.ts",
-		"update:tsconfig": "ts-node scripts/update-package-tsconfig.ts",
+    "name": "miko-monorepo",
+    "private": true,
+    "workspaces": [
+        "services/*",
+        "shared/*"
+    ],
+    "engines": {
+        "node": ">=12.0.0"
+    },
+    "devDependencies": {
+        "@sentry/node": "^5.30.0",
+        "@types/jest": "^26.0.20",
+        "@types/node": "^14.14.20",
+        "@typescript-eslint/eslint-plugin": "^4.12.0",
+        "@typescript-eslint/parser": "^4.12.0",
+        "cz-lerna-changelog": "^2.0.3",
+        "eslint": "^7.17.0",
+        "eslint-config-airbnb-base": "^14.2.1",
+        "eslint-plugin-import": "^2.22.1",
+        "jest": "^26.6.3",
+        "lerna": "^3.22.1",
+        "ts-jest": "^26.4.4",
+        "ts-node": "^9.1.1",
+        "typescript": "^4.1.3"
+    },
+    "scripts": {
+        "build": "tsc --build ./tsconfig.project.json",
+        "watch": "yarn run typescript:build --watch",
+        "clean": "rimraf -rf ./{services,shared}/*/{lib,*.tsbuildinfo}",
+        "test": "yarn run test:eslint && yarn run test:jest",
+        "test:jest": "jest --config jest.config.json --no-cache",
+        "test:eslint": "eslint --ignore-path .gitignore {services,shared}/*/src/**/*.ts",
+        "test:eslint:fix": "eslint --fix --ignore-path .gitignore {services,shared}/*/src/**/*.ts",
+        "update:tsconfig": "ts-node scripts/update-package-tsconfig.ts",
         "update:version": "lerna version --no-push"
-	}
+    },
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-lerna-changelog"
+        }
+    }
 }

@@ -1,5 +1,13 @@
 {
-  "version": "1.0.0-alpha.0",
-  "npmClient": "yarn",
-  "useWorkspaces": true
+    "version": "1.0.0-alpha.0",
+    "npmClient": "yarn",
+    "useWorkspaces": true,
+    "command": {
+        "version": {
+            "allowBranch": "main",
+            "conventionalCommits": true,
+            "exact": true,
+            "message": "chore(release): %s"
+        }
+    }
 }

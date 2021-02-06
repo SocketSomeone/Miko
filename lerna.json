@@ -3,9 +3,6 @@
     "npmClient": "yarn",
     "useWorkspaces": true,
     "command": {
-        "publish": {
-
-        },
         "version": {
             "allowBranch": "main",
             "conventionalCommits": true,

@@ -9,7 +9,7 @@ import * as modules from './modules';
 
 if (process.env.NODE_ENV !== 'production') {
     dotenv.config({
-        path: join(__dirname, '../../../.docker/.env-develop')
+        path: join(__dirname, '../../../config/.env-develop')
     });
 }
 

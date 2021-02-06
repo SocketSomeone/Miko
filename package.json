@@ -34,6 +34,7 @@
         "test:eslint:fix": "eslint --fix --ignore-path .gitignore {services,shared}/*/src/**/*.ts",
         "update:tsconfig": "ts-node scripts/update-package-tsconfig.ts",
         "update:version": "lerna version --no-push"
+
     },
     "config": {
         "commitizen": {

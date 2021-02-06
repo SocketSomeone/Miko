@@ -1,8 +1,11 @@
 {
-    "version": "1.0.0-alpha.1",
+    "version": "independent",
     "npmClient": "yarn",
     "useWorkspaces": true,
     "command": {
+        "publish": {
+
+        },
         "version": {
             "allowBranch": "main",
             "conventionalCommits": true,

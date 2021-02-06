@@ -4,13 +4,13 @@
 	"main": "./lib/index.js",
 	"types": "./lib/index.d.ts",
 	"dependencies": {
-		"@types/ws": "^7.4.0",
-		"discord.js": "^12.5.1",
-		"reflect-metadata": "^0.1.13"
+		"@types/ws": "7.4.0",
+		"discord.js": "12.5.1",
+		"reflect-metadata": "0.1.13"
 	},
 	"peerDependencies": {
-		"@miko/cache": "^0.0.0",
-		"@miko/logger": "^0.0.0"
+		"@miko/cache": "*",
+		"@miko/logger": "*"
 	},
 	"scripts": {
 		"build": "tsc --build ./tsconfig.package.json"

@@ -11,8 +11,6 @@ export interface ILogger {
 }
 
 export class Logger implements ILogger {
-    private static lastTimestamp?: number;
-
     protected static instance?: typeof Logger = Logger;
 
     private context: string;

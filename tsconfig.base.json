@@ -1,6 +1,6 @@
 {
-	"compilerOptions": {
-		"target": "ESNext",
+    "compilerOptions": {
+        "target": "ESNext",
 		"module": "CommonJS",
 		"moduleResolution": "Node",
 		"emitDecoratorMetadata": true,
@@ -10,6 +10,6 @@
 		"declaration": true,
 		"declarationMap": true,
 		"strict": true,
-		"forceConsistentCasingInFileNames": true
-	}
+		"forceConsistentCasingInFileNames": true,
+    }
 }

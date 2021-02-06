@@ -4,10 +4,10 @@
     "useWorkspaces": true,
     "command": {
         "version": {
-            "allowBranch": "main",
+            "allowBranch": ["main", "feature/*"],
             "conventionalCommits": true,
             "exact": true,
-            "message": "chore(release): %s"
+            "message": "chore(release): publish update!"
         }
     }
 }

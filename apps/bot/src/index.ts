@@ -1,6 +1,6 @@
 import { Logger } from '@miko/logger';
 import { MiClient } from '@miko/framework';
-import { createDatabase } from '@miko/database';
+import { createConnection } from '@miko/database';
 
 import * as modules from './modules';
 
@@ -11,7 +11,7 @@ const main = async () => {
     const client = new MiClient(modules);
 
     logger.log('Connection to Database...');
-    await createDatabase();
+    await createConnection();
 
     logger.log('Initializing BOT login...');
     await client.login(process.env.TOKEN);

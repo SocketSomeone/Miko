@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { MiClient } from '..';
-import { metaStorage } from '../metadata';
+import { metaStorage } from '../utils/metaStorage';
 
 export function Client(): PropertyDecorator {
     return (target: Object, key: string | symbol): void => {

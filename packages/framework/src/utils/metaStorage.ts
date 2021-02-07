@@ -2,7 +2,7 @@ import { MiCache } from '@miko/cache';
 import { Logger } from '@miko/logger';
 import { MiClient, MiService } from '..';
 import { Constructor } from '../types';
-import { ModuleBuilder } from '../utils/moduleBuilder';
+import { ModuleBuilder } from './moduleBuilder';
 
 class MetadataStorage {
     protected readonly logger = new Logger('META');

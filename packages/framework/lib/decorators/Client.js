@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Client = void 0;
 /* eslint-disable @typescript-eslint/ban-types */
 const __1 = require("..");
-const metadata_1 = require("../metadata");
+const metaStorage_1 = require("../utils/metaStorage");
 function Client() {
     return (target, key) => {
         const implicitCache = Reflect.getMetadata('design:type', target, key);
@@ -13,7 +13,7 @@ function Client() {
         Object.defineProperty(target, key, {
             configurable: true,
             enumerable: true,
-            get() { return metadata_1.metaStorage.client; }
+            get() { return metaStorage_1.metaStorage.client; }
         });
     };
 }

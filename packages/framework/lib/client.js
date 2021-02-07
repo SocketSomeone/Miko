@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MiClient = void 0;
 const discord_js_1 = require("discord.js");
 const logger_1 = require("@miko/logger");
-const metadata_1 = require("./metadata");
+const metaStorage_1 = require("./utils/metaStorage");
 class MiClient extends discord_js_1.Client {
     constructor(...modules) {
         super({
@@ -47,11 +47,11 @@ class MiClient extends discord_js_1.Client {
             wsErrors: 0,
             wsWarnings: 0
         };
-        metadata_1.metaStorage.addModules(this, modules);
+        metaStorage_1.metaStorage.addModules(this, modules);
     }
     async login(token) {
         this.logger.log('Initializing provider services');
-        await metadata_1.metaStorage.init();
+        await metaStorage_1.metaStorage.init();
         this.logger.log('Setting up events...');
         this.once('ready', this.onClientReady);
         this.once('shardReady', this.onShardReady);

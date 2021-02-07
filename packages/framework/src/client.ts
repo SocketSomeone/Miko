@@ -1,7 +1,7 @@
 import { Client, CloseEvent, Guild } from 'discord.js';
 import { Logger } from '@miko/logger';
 import { IMikoMetrics } from './types';
-import { metaStorage } from './metadata';
+import { metaStorage } from './utils/metaStorage';
 import { ModuleBuilder } from './utils/moduleBuilder';
 
 export class MiClient extends Client {

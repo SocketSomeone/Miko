@@ -12,7 +12,7 @@
 	],
 	"parser": "@typescript-eslint/parser",
 	"parserOptions": {
-		"project": "../**/tsconfig.eslint.json",
+		"project": ["./tsconfig.eslint.json", "../../tsconfig.eslint.json"],
 		"sourceType": "module"
 	},
 	"plugins": [
@@ -42,7 +42,7 @@
         "import/no-default-export": ["error"],
         "import/no-cycle": "off",
 		"no-restricted-syntax": ["error", "WithStatement"],
-		"linebreak-style": ["error", "windows"],
+		"linebreak-style": ["error", "ubuntu"],
 		"comma-dangle": ["error", "never"],
 		"no-param-reassign": ["error", {
 			"props": false

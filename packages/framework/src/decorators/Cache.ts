@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { MiCache } from '@miko/cache';
-import { metaStorage } from '../metadata';
+import { metaStorage } from '../utils/metaStorage';
 import { Constructor } from '../types';
 
 export function Cache<T extends MiCache>(explicitCache?: Constructor<T>): PropertyDecorator {

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { Constructor } from '../types';
 import { MiService } from '../index';
-import { metaStorage } from '../metadata';
+import { metaStorage } from '../utils/metaStorage';
 
 export function Service<T extends MiService>(ExplicitService?: Constructor<T>): PropertyDecorator {
     return (target: Object, key: string | symbol): void => {

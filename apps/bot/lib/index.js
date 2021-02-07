@@ -28,6 +28,7 @@ const logger_1 = require("@miko/logger");
 const framework_1 = require("@miko/framework");
 const database_1 = require("@miko/database");
 const modules = __importStar(require("./modules"));
+console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV !== 'production') {
     dotenv_1.default.config({
         path: path_1.join(__dirname, '../../../config/.env-develop')
@@ -35,7 +36,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 const logger = new logger_1.Logger('ROOT');
 const main = async () => {
-    logger.log('Starting Miko instance!');
+    logger.log('Starting Miko instance!!');
     const client = new framework_1.MiClient(modules);
     logger.log('Connection to Database...');
     await database_1.createDatabase();

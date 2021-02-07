@@ -5,18 +5,20 @@ RUN ln -s /lib/libc.musl-x86_64.so.1 /lib/ld-linux-x86-64.so.2 \
 	&& apk add --no-cache git \
 	&& yarn global add pm2
 
-WORKDIR /app
+WORKDIR /miko
 
-COPY ["package.json", "yarn.lock", "./"]
+COPY ["package.json", "yarn.lock", "miko.config.yml", "./"]
 
-# Shared
-COPY shared/cache/package.json shared/cache/
-COPY shared/database/package.json shared/database/
-COPY shared/framework/package.json shared/framework/
-COPY shared/logger/package.json shared/logger/
+# Tools
+COPY tools/logger/package.json tools/logger/
 
-# Services
-COPY services/bot/package.json services/bot/
+# Packages
+COPY packages/cache/package.json packages/cache/
+COPY packages/database/package.json packages/database/
+COPY packages/framework/package.json packages/framework/
+
+# Apps
+COPY apps/bot/package.json apps/bot/
 
 RUN yarn install --pure-lockfile
 

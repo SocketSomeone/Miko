@@ -18,24 +18,10 @@ node_modules/
 # TypeScript cache
 *.tsbuildinfo
 
-# dotenv environment variables file  / configures
-config
-docker-compose.yml
-
-# IDEs and editors
-/.idea
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+# dotenv environment variables file  / resources
+miko.config.yml
 
 # Build
-services/*/lib
-shared/*/lib
+apps/*/lib
+resource/*/lib
+tools/*/lib

@@ -1,0 +1,9 @@
+version: "3.7"
+services:
+  bot:
+    build: 
+      dockerfile: ./Dockerfile
+      context: .
+    restart: unless-stopped
+    command:
+      pm2-runtime start ./miko.config.yml --only bot --env production

@@ -1,10 +1,13 @@
 {
-    "version": "1.1.1",
+    "version": "1.2.0",
     "npmClient": "yarn",
     "useWorkspaces": true,
     "command": {
         "version": {
-            "allowBranch": ["main", "feature/*"],
+            "allowBranch": [
+                "main",
+                "feature/*"
+            ],
             "conventionalCommits": true,
             "exact": true,
             "message": "chore(release): publish update 🎉"

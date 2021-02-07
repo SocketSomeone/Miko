@@ -1,3 +1,3 @@
-import { Connection } from 'typeorm';
-export declare const createDatabase: () => Promise<Connection>;
+export { Connection, createConnection } from 'typeorm';
+export * from './entity';
 //# sourceMappingURL=index.d.ts.map

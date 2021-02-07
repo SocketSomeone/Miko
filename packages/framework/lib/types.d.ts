@@ -12,5 +12,4 @@ export interface IMikoMetrics {
     ratelimits: number;
     startedAt?: Date;
 }
-export declare const arrarify: <T>(value: AllowArray<T>) => T[];
 //# sourceMappingURL=types.d.ts.map

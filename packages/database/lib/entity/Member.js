@@ -9,29 +9,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MiUser = void 0;
+exports.MiMember = void 0;
 const typeorm_1 = require("typeorm");
-const UserEntity_1 = require("./base/UserEntity");
-let MiUser = class MiUser extends UserEntity_1.UserEntity {
+const GuildEntity_1 = require("./base/GuildEntity");
+const User_1 = require("./User");
+let MiMember = class MiMember extends GuildEntity_1.GuildEntity {
 };
 __decorate([
-    typeorm_1.Column(),
-    __metadata("design:type", String)
-], MiUser.prototype, "username", void 0);
+    typeorm_1.ManyToOne(() => User_1.MiUser, user => user.userId),
+    typeorm_1.JoinColumn({ name: 'user_id' }),
+    __metadata("design:type", User_1.MiUser)
+], MiMember.prototype, "user", void 0);
 __decorate([
-    typeorm_1.Column(),
+    typeorm_1.Column('varchar', { nullable: true }),
     __metadata("design:type", String)
-], MiUser.prototype, "discriminator", void 0);
-__decorate([
-    typeorm_1.Column(),
-    __metadata("design:type", String)
-], MiUser.prototype, "avatarUrl", void 0);
-__decorate([
-    typeorm_1.UpdateDateColumn(),
-    __metadata("design:type", Date)
-], MiUser.prototype, "lastUpdate", void 0);
-MiUser = __decorate([
-    typeorm_1.Entity({ name: 'users' })
-], MiUser);
-exports.MiUser = MiUser;
-//# sourceMappingURL=User.js.map
+], MiMember.prototype, "displayName", void 0);
+MiMember = __decorate([
+    typeorm_1.Entity({ name: "members" })
+], MiMember);
+exports.MiMember = MiMember;
+//# sourceMappingURL=Member.js.map

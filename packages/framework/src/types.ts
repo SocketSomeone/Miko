@@ -17,4 +17,3 @@ export interface IMikoMetrics {
     startedAt?: Date;
 }
 
-export const arrarify = <T>(value: AllowArray<T>): T[] => (Array.isArray(value) ? value : [value]);

@@ -9,29 +9,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MiUser = void 0;
+exports.ChannelEntity = void 0;
 const typeorm_1 = require("typeorm");
-const UserEntity_1 = require("./base/UserEntity");
-let MiUser = class MiUser extends UserEntity_1.UserEntity {
-};
+const GuildEntity_1 = require("./GuildEntity");
+class ChannelEntity extends GuildEntity_1.GuildEntity {
+}
 __decorate([
-    typeorm_1.Column(),
+    typeorm_1.Column("bigint", { name: 'channel_id' }),
     __metadata("design:type", String)
-], MiUser.prototype, "username", void 0);
-__decorate([
-    typeorm_1.Column(),
-    __metadata("design:type", String)
-], MiUser.prototype, "discriminator", void 0);
-__decorate([
-    typeorm_1.Column(),
-    __metadata("design:type", String)
-], MiUser.prototype, "avatarUrl", void 0);
-__decorate([
-    typeorm_1.UpdateDateColumn(),
-    __metadata("design:type", Date)
-], MiUser.prototype, "lastUpdate", void 0);
-MiUser = __decorate([
-    typeorm_1.Entity({ name: 'users' })
-], MiUser);
-exports.MiUser = MiUser;
-//# sourceMappingURL=User.js.map
+], ChannelEntity.prototype, "channelId", void 0);
+exports.ChannelEntity = ChannelEntity;
+//# sourceMappingURL=ChannelEntity.js.map

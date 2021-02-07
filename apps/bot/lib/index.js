@@ -25,10 +25,11 @@ const database_1 = require("@miko/database");
 const modules = __importStar(require("./modules"));
 const logger = new logger_1.Logger('ROOT');
 const main = async () => {
-    logger.log('Starting Miko instance!!');
+    console.log(process.env.NODE_ENV);
+    logger.log('Starting Miko instance!');
     const client = new framework_1.MiClient(modules);
     logger.log('Connection to Database...');
-    await database_1.createDatabase();
+    await database_1.createConnection(String(process.env.NODE_ENV));
     logger.log('Initializing BOT login...');
     await client.login(process.env.TOKEN);
 };

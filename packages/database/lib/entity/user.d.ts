@@ -1,5 +1,8 @@
-import { BaseEntity } from 'typeorm';
-export declare class Community extends BaseEntity {
-    id: string;
+import { UserEntity } from './base/UserEntity';
+export declare class MiUser extends UserEntity<MiUser> {
+    username: string;
+    discriminator: string;
+    avatarUrl: string;
+    private lastUpdate;
 }
-//# sourceMappingURL=user.d.ts.map
+//# sourceMappingURL=User.d.ts.map

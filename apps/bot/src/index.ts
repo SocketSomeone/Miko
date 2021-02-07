@@ -7,11 +7,11 @@ import * as modules from './modules';
 const logger = new Logger('ROOT');
 
 const main = async () => {
-    logger.log('Starting Miko instance!!');
+    logger.log('Starting Miko instance!');
     const client = new MiClient(modules);
 
     logger.log('Connection to Database...');
-    await createConnection();
+    await createConnection(String(process.env.NODE_ENV));
 
     logger.log('Initializing BOT login...');
     await client.login(process.env.TOKEN);

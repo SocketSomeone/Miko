@@ -2,8 +2,9 @@
     "name": "miko-monorepo",
     "private": true,
     "workspaces": [
-        "services/*",
-        "shared/*"
+        "apps/*",
+        "packages/*",
+        "tools/*"
     ],
     "engines": {
         "node": ">=12.0.0"
@@ -27,10 +28,10 @@
     "scripts": {
         "build": "tsc --build ./tsconfig.project.json",
         "watch": "yarn run typescript:build --watch",
-        "clean": "rimraf -rf ./{services,shared}/*/{lib,*.tsbuildinfo}",
+        "clean": "rimraf -rf ./{apps,packages,tools}/*/{lib,*.tsbuildinfo}",
         "test": "yarn run test:eslint && yarn run test:jest",
         "test:jest": "jest --config jest.config.json --no-cache",
-        "test:eslint": "eslint --ignore-path .gitignore {services,shared}/*/src/**/*.ts",
+        "test:eslint": "eslint --ignore-path .gitignore {apps,packages,tools}/*/src/**/*.ts",
         "update:tsconfig": "ts-node scripts/update-package-tsconfig.ts",
         "update:version": "lerna version --no-push --no-changelog"
     },

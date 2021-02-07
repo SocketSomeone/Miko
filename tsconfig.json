@@ -6,16 +6,16 @@
         "composite": true,
         "paths": {
             "@miko/database": [
-                "./shared/database/src"
+                "packages/database/src"
             ],
             "@miko/cache": [
-                "./shared/cache/src"
+                "packages/cache/src"
             ],
             "@miko/framework": [
-                "./shared/framework/src"
+                "packages/framework/src"
             ],
             "@miko/logger": [
-                "./shared/logger/src"
+                "tools/logger/src"
             ]
         }
     }

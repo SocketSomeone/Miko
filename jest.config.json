@@ -3,5 +3,5 @@
 	"verbose": true,
 	"preset": "ts-jest",
 	"testEnvironment": "node",
-    "testMatch": ["<rootDir>/{services,shared}/*/test/**/*.test.ts"]
+    "testMatch": ["<rootDir>/{apps,packages,tools}/*/test/**/*.test.ts"]
 }

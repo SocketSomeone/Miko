@@ -7,7 +7,7 @@
             "allowBranch": ["main", "feature/*"],
             "conventionalCommits": true,
             "exact": true,
-            "message": "chore(release): publish update!"
+            "message": "chore(release): publish update 🎉"
         }
     }
 }

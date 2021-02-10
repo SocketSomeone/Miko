@@ -1,14 +1,11 @@
 {
     "name": "@miko/common",
-    "version": "1.0.0",
+    "version": "1.2.1-alpha.0",
     "main": "./lib/index.js",
     "types": "./lib/index.d.ts",
-    "dependencies": {
-
-    },
     "devDependencies": {
-        "@miko/database": "*",
-        "@miko/di": "*"
+        "@miko/database": "1.2.1-alpha.0",
+        "@miko/di": "1.2.1-alpha.0"
     },
     "scripts": {
         "build": "tsc --build ./tsconfig.package.json"

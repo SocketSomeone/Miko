@@ -1,6 +1,6 @@
 /* eslint-disable max-classes-per-file */
 /* eslint-disable no-useless-constructor */
-import { Autowired, Injectable } from '../src';
+import { Autowired, Service } from '../src';
 
 describe('DI Service', (): void => {
     it('should inject to property', (): void => {
@@ -19,7 +19,7 @@ describe('DI Service', (): void => {
     it('should inject into constructor', () => {
         class Foo { }
 
-        @Injectable()
+        @Service()
         class Bar {
             constructor(
                 public readonly fooService: Foo

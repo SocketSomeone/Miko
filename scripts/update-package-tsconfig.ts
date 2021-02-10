@@ -1,4 +1,3 @@
-/* eslint-disable no-shadow */
 import {
     join as pathJoin,
     relative as pathRelative

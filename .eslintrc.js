@@ -58,7 +58,8 @@ module.exports = {
         }],
 		"indent": "off",
         "eol-last": "off",
-        "max-len": ["error", { "code": 150 }]
+        "max-len": ["error", { "code": 150 }],
+        "no-shadow": "off"
 	},
 	overrides: [
 		{

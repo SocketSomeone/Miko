@@ -1,0 +1,36 @@
+// File generated automatically, use yarn update:tsconfig for update
+{
+	"extends": "..\\..\\tsconfig.base.json",
+	"compilerOptions": {
+		"outDir": "./lib",
+		"rootDir": "./src",
+		"composite": true
+	},
+	"include": [
+		"src"
+	],
+	"exclude": [
+		"test",
+		"lib"
+	],
+	"references": [
+		{
+			"path": "..\\..\\tools\\logger\\tsconfig.package.json"
+		},
+		{
+			"path": "..\\..\\packages\\database\\tsconfig.package.json"
+		},
+		{
+			"path": "..\\..\\tools\\di\\tsconfig.package.json"
+		},
+		{
+			"path": "..\\..\\packages\\cache\\tsconfig.package.json"
+		},
+		{
+			"path": "..\\..\\packages\\common\\tsconfig.package.json"
+		},
+		{
+			"path": "..\\..\\packages\\framework\\tsconfig.package.json"
+		}
+	]
+}

@@ -1,0 +1,28 @@
+{
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+        "noEmit": true,
+        "baseUrl": ".",
+        "composite": true,
+        "paths": {
+            "@miko/cache": [
+                "./packages/cache/src"
+            ],
+            "@miko/common": [
+                "./packages/common/src"
+            ],
+            "@miko/database": [
+                "./packages/database/src"
+            ],
+            "@miko/framework": [
+                "./packages/framework/src"
+            ],
+            "@miko/logger": [
+                "./tools/logger/src"
+            ],
+            "@miko/di": [
+                "./tools/di/src"
+            ]
+        }
+    }
+}

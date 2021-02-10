@@ -1,9 +1,0 @@
-{
-    "name": "miko-monorepo",
-    "verbose": true,
-    "preset": "ts-jest",
-    "testEnvironment": "node",
-    "testMatch": [
-        "<rootDir>/{apps,packages,tools}/*/test/**/*.test.ts"
-    ]
-}

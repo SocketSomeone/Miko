@@ -5,7 +5,7 @@ import { Constructor } from '../types';
 import { getDIKey } from './helpers';
 import storage from '../storage';
 
-export function resolveService<T extends object>(
+export function resolveService<T = unknown>(
     inConstructor: Constructor<T>,
     inOptions?: IAutowiredOptions,
     caller?: object,

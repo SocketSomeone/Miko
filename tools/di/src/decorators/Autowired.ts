@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 
-import { IAutowiredOptions } from '../models/autoware-options';
+import { IAutowiredOptions } from '../models';
 import { Constructor } from '../types';
 import { resolveService } from '../utils/resolver';
 

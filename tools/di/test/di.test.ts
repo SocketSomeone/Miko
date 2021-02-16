@@ -4,6 +4,7 @@ import { Autowired, Service } from '../src';
 
 describe('DI Service', (): void => {
     it('should inject to property', (): void => {
+        @Service()
         class Foo { }
 
         class Bar {

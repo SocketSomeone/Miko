@@ -1,5 +1,8 @@
 {
     "conventionalCommits.scopes": [
-        "folders"
+        "app",
+        "bot",
+        "tools",
+        "packages"
     ]
 }

@@ -46,7 +46,6 @@ module.exports = {
 		"import/prefer-default-export": "off",
         "import/no-default-export": ["error"],
         "import/no-cycle": "off",
-        "import/no-unresolved": "off",
 		"no-restricted-syntax": ["error", "WithStatement"],
 		"linebreak-style": ["error", "unix"],
 		"comma-dangle": ["error", "never"],

@@ -9,9 +9,6 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
-# VS code folder
-.vscode
-
 # Runtime data
 pids
 *.pid

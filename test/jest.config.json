@@ -1,16 +1,6 @@
 {
     "name": "miko-monorepo",
     "clearMocks": true,
-    "coverageDirectory": "coverage",
-    "collectCoverageFrom": [
-        "{apps,packages,tools}/src/**/*.ts"
-    ],
-    "coveragePathIgnorePatterns": [
-        "/node_modules/",
-        "types\\.ts",
-        "index\\.ts",
-        ".+\\.d\\.ts"
-    ],
     "verbose": true,
     "preset": "ts-jest",
     "testEnvironment": "node",

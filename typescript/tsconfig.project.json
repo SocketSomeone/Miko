@@ -3,22 +3,22 @@
 	"files": [],
 	"references": [
 		{
-			"path": "tools\\logger\\tsconfig.package.json"
+			"path": "..\\tools\\logger\\tsconfig.package.json"
 		},
 		{
-			"path": "packages\\database\\tsconfig.package.json"
+			"path": "..\\packages\\database\\tsconfig.package.json"
 		},
 		{
-			"path": "packages\\cache\\tsconfig.package.json"
+			"path": "..\\packages\\cache\\tsconfig.package.json"
 		},
 		{
-			"path": "packages\\common\\tsconfig.package.json"
+			"path": "..\\packages\\common\\tsconfig.package.json"
 		},
 		{
-			"path": "packages\\framework\\tsconfig.package.json"
+			"path": "..\\packages\\framework\\tsconfig.package.json"
 		},
 		{
-			"path": "apps\\bot\\tsconfig.package.json"
+			"path": "..\\apps\\bot\\tsconfig.package.json"
 		}
 	]
 }

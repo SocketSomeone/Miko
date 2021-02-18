@@ -8,7 +8,7 @@
         "tools/*"
     ],
     "scripts": {
-        "build": "yarn run clean && tsc --build ./tsconfig.project.json",
+        "build": "yarn run clean && tsc --build ./typescript/tsconfig.project.json",
         "start": "pm2 start ./miko.config.yml",
         "clean": "rimraf -rf ./{apps,packages,tools}/*/{lib,*.tsbuildinfo}",
         "test": "yarn run lint && jest --config /test/jest.config.json --no-cache",
@@ -51,11 +51,6 @@
             "path": "./node_modules/cz-lerna-changelog"
         }
     },
-	"husky": {
-		"hooks": {
-			"pre-push": "yarn run test"
-		}
-	},
     "devDependencies": {
         "@sentry/node": "5.30.0",
         "@types/jest": "26.0.20",

@@ -146,6 +146,7 @@ const tsconfigProjectData = {
 
             return {
                 path: pathJoin(
+                    '..',
                     pathRelative(rootPath, dependencyPath),
                     ConfigFilename.PACKAGE_TSCONFIG
                 )

@@ -1,7 +1,0 @@
-{
-    "name": "miko-monorepo",
-    "verbose": true,
-    "preset": "ts-jest",
-    "testEnvironment": "node",
-    "testMatch": ["**/{apps,packages,tools}/*/test/**/*.test.ts"]
-}

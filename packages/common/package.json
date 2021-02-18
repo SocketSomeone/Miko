@@ -4,10 +4,12 @@
     "main": "./lib/index.js",
     "types": "./lib/index.d.ts",
     "devDependencies": {
-        "@miko/database": "1.2.1-alpha.0",
-        "@miko/di": "1.2.1-alpha.0"
+        "@miko/database": "1.2.1-alpha.0"
     },
     "scripts": {
         "build": "tsc --build ./tsconfig.package.json"
+    },
+    "dependencies": {
+        "tsyringe": "4.4.0"
     }
 }

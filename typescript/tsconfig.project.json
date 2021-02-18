@@ -9,9 +9,6 @@
 			"path": "packages\\database\\tsconfig.package.json"
 		},
 		{
-			"path": "tools\\di\\tsconfig.package.json"
-		},
-		{
 			"path": "packages\\cache\\tsconfig.package.json"
 		},
 		{

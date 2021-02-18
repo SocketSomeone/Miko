@@ -1,3 +1,1 @@
-export class ModuleBuilder {
-
-}
+export class ModuleBuilder {}

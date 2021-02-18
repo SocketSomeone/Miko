@@ -1,1 +1,0 @@
-export const getDIKey: (propertyKey?: string | symbol) => string = (propertyKey?: string | symbol) => `$_di_${String(propertyKey)}`;

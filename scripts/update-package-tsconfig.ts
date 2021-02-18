@@ -11,9 +11,9 @@ import {
 
 enum ConfigFilename {
     PACKAGE = 'package.json',
-    BASE_TSCONFIG = 'tsconfig.base.json',
     PACKAGE_TSCONFIG = 'tsconfig.package.json',
-    PROJECT_TSCONFIG = 'tsconfig.project.json'
+    BASE_TSCONFIG = './typescript/tsconfig.base.json',
+    PROJECT_TSCONFIG = './typescript/tsconfig.project.json'
 }
 
 const TSCONFIG_HEADER = '// File generated automatically, use yarn update:tsconfig for update\n';

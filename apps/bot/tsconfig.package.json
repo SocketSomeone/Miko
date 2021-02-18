@@ -1,6 +1,6 @@
 // File generated automatically, use yarn update:tsconfig for update
 {
-	"extends": "..\\..\\tsconfig.base.json",
+	"extends": "..\\..\\typescript\\tsconfig.base.json",
 	"compilerOptions": {
 		"outDir": "./lib",
 		"rootDir": "./src",
@@ -19,9 +19,6 @@
 		},
 		{
 			"path": "..\\..\\packages\\database\\tsconfig.package.json"
-		},
-		{
-			"path": "..\\..\\tools\\di\\tsconfig.package.json"
 		},
 		{
 			"path": "..\\..\\packages\\cache\\tsconfig.package.json"

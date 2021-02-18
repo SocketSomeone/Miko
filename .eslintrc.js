@@ -9,17 +9,20 @@ module.exports = {
 		"plugin:import/errors",
 		"plugin:import/warnings",
 		"plugin:import/typescript",
-		"plugin:@typescript-eslint/recommended"
+		"plugin:@typescript-eslint/recommended",
+        "prettier/@typescript-eslint",
+        "plugin:prettier/recommended"
 	],
 	parser: "@typescript-eslint/parser",
 	parserOptions: {
-		project: './tsconfig.eslint.json',
+		project: ['./typescript/tsconfig.eslint.json'],
 		sourceType: "module",
         tsconfigRootDir: __dirname
 	},
 	plugins: [
 		"import",
-		"@typescript-eslint"
+		"@typescript-eslint",
+        "prettier"
 	],
 	rules: {
 		"@typescript-eslint/no-non-null-assertion": "off",
@@ -34,7 +37,7 @@ module.exports = {
 		"@typescript-eslint/ban-ts-comment": ["error", {
 			"ts-ignore": false
 		}],
-		"@typescript-eslint/indent": ["error"],
+		"@typescript-eslint/indent": ["off"],
 		"@typescript-eslint/semi": ["error"],
 		"import/extensions": ["error", "ignorePackages", {
 			"js": "never",

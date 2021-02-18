@@ -1,17 +1,17 @@
-import { Column, Entity, UpdateDateColumn } from 'typeorm';
-import { UserEntity } from './base/UserEntity';
+import {Column, Entity, UpdateDateColumn} from 'typeorm';
+import {UserEntity} from './base/UserEntity';
 
-@Entity({ name: 'users' })
+@Entity({name: 'users'})
 export class MiUser extends UserEntity {
-    @Column()
-    public username!: string;
+	@Column()
+	public username!: string;
 
-    @Column()
-    public discriminator!: string;
+	@Column()
+	public discriminator!: string;
 
-    @Column()
-    public avatarUrl!: string;
+	@Column()
+	public avatarUrl!: string;
 
-    @UpdateDateColumn()
-    private lastUpdate!: Date;
+	@UpdateDateColumn()
+	private lastUpdate!: Date;
 }

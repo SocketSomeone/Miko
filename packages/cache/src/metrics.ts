@@ -25,7 +25,7 @@ export class CacheMetrics implements ICacheMetrics {
 
 	public loadError: number;
 
-	public constructor({hits = 0, misses = 0, evictions = 0, loadSuccess = 0, loadError = 0}: ICacheMetrics = {}) {
+	public constructor({ hits = 0, misses = 0, evictions = 0, loadSuccess = 0, loadError = 0 }: ICacheMetrics = {}) {
 		this.hits = hits;
 		this.misses = misses;
 		this.evictions = evictions;

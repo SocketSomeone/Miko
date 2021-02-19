@@ -1,20 +1,18 @@
 {
-    "name": "@miko/bot",
-    "version": "1.2.1-alpha.0",
-    "main": "./lib/index.js",
-    "types": "./lib/index.d.ts",
-    "dependencies": {
-        "reflect-metadata": "0.1.13"
-    },
-    "peerDependencies": {
-        "@miko/cache": "*",
-        "@miko/database": "*",
-        "@miko/framework": "*",
-        "@miko/logger": "*"
-    },
-    "scripts": {
-        "build": "tsc --build ./tsconfig.package.json",
-        "start": "pm2 start ./application.yml --only bot",
-        "poststart": "pm2 logs"
-    }
+	"name": "@miko/bot",
+	"version": "1.2.1-alpha.0",
+	"main": "./lib/index.js",
+	"types": "./lib/index.d.ts",
+	"dependencies": {},
+	"peerDependencies": {
+		"@miko/cache": "*",
+		"@miko/common": "*",
+		"@miko/database": "*"
+	},
+	"scripts": {
+		"build": "tsc --build ./tsconfig.package.json",
+		"watch": "yarn run build --watch",
+		"start": "pm2 start ./application.yml --only bot",
+		"poststart": "pm2 logs"
+	}
 }

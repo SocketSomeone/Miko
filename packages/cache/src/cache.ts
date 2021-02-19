@@ -1,10 +1,10 @@
-import {Logger} from '@miko/logger';
-import moment, {duration} from 'moment';
-import {CacheMetrics} from './metrics';
-import {ICacheEntry, ICacheOptions} from './types';
+import { Logger } from 'tslog';
+import moment, { duration } from 'moment';
+import { CacheMetrics } from './metrics';
+import { ICacheEntry, ICacheOptions } from './types';
 
 export abstract class MiCache<V = unknown, K = string> {
-	protected readonly logger: Logger = new Logger(this.constructor.name);
+	protected readonly logger: Logger = new Logger({ name: this.constructor.name });
 
 	protected readonly storage: Map<K, ICacheEntry<V>> = new Map();
 
@@ -34,7 +34,7 @@ export abstract class MiCache<V = unknown, K = string> {
 	}
 
 	public async init(): Promise<void> {
-		this.logger.log('Cache initialized..');
+		this.logger.silly('Cache initialized..');
 	}
 
 	public async set(

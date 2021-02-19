@@ -1,6 +1,6 @@
-import {Permissions} from 'discord.js';
-import {MiResolver} from '../resolvers';
-import {GuardFunction, ResolverOrConstructor} from '../types';
+import { Permissions } from 'discord.js';
+import { MiResolver } from '../resolvers';
+import { GuardFunction, ResolverOrConstructor } from '../types';
 
 interface IArg {
 	name: string;
@@ -34,11 +34,11 @@ export abstract class MiCommand {
 
 	private userPermissions: Permissions[] = [];
 
-	public constructor({args, ...opts}: ICommandOptions) {
+	public constructor({ args, ...opts }: ICommandOptions) {
 		Object.assign(this, opts);
 
 		if (args) {
-			args.map((arg) => {
+			args.map(arg => {
 				if (arg.Resolver instanceof MiResolver) {
 					this.resolvers.push(arg.Resolver);
 				} else {

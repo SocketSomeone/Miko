@@ -1,9 +1,9 @@
-import {Client, CloseEvent, Guild} from 'discord.js';
-import {Logger} from '@miko/logger';
-import {IMikoMetrics} from './types';
+import { Client, CloseEvent, Guild } from 'discord.js';
+import { Logger } from 'tslog';
+import { IMikoMetrics } from './types';
 
 export class MiClient extends Client {
-	protected readonly logger = new Logger('CLIENT');
+	protected readonly logger = new Logger({ name: 'CLIENT' });
 
 	public metrics: IMikoMetrics = {
 		ratelimits: 0,
@@ -50,7 +50,7 @@ export class MiClient extends Client {
 	}
 
 	public async login(token?: string): Promise<string> {
-		this.logger.log('Setting up events...');
+		this.logger.silly('Setting up events...');
 		this.once('ready', this.onClientReady);
 		this.once('shardReady', this.onShardReady);
 
@@ -65,26 +65,26 @@ export class MiClient extends Client {
 		this.on('shardError', this.onError);
 		this.on('rateLimit', this.onRatelimit);
 
-		this.logger.log('Connecting to Discord...');
+		this.logger.silly('Connecting to Discord...');
 		return super.login(token);
 	}
 
 	private async onClientReady() {
 		this.metrics.startedAt = new Date();
-		this.logger.log(`Ready to work! Serving ${this.guilds.cache.size} guilds...`);
+		this.logger.silly(`Ready to work! Serving ${this.guilds.cache.size} guilds...`);
 	}
 
 	private onShardReady(shardId: number) {
-		this.logger.log('Ready to work!', `SHARD ${shardId + 1}`);
+		this.logger.silly('Ready to work!', `SHARD ${shardId + 1}`);
 	}
 
 	private onShardReconnecting(shardId: number) {
-		this.logger.log('Connected to Discord!', `SHARD ${shardId + 1}`);
+		this.logger.silly('Connected to Discord!', `SHARD ${shardId + 1}`);
 		this.metrics.shardConnects += 1;
 	}
 
 	private onShardResume(shardId: number) {
-		this.logger.verbose('Connection resumed...', `SHARD ${shardId + 1}`);
+		this.logger.debug('Connection resumed...', `SHARD ${shardId + 1}`);
 		this.metrics.shardResumes += 1;
 	}
 
@@ -108,6 +108,6 @@ export class MiClient extends Client {
 	}
 
 	private onGuildUnavailable(guild: Guild) {
-		this.logger.log(`${guild.name || guild.id} is currently dead...`, 'GUILD_UNAVAILABLE');
+		this.logger.warn(`${guild.name || guild.id} is currently dead...`, 'GUILD_UNAVAILABLE');
 	}
 }

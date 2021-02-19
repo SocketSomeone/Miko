@@ -1,3 +1,3 @@
-import {ModuleBuilder} from '@miko/framework';
+import { ModuleBuilder } from '@miko/common';
 
 export const CommonModule = new ModuleBuilder();

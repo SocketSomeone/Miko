@@ -1,15 +1,17 @@
 {
-    "name": "@miko/common",
-    "version": "1.2.1-alpha.0",
-    "main": "./lib/index.js",
-    "types": "./lib/index.d.ts",
-    "devDependencies": {
-        "@miko/database": "1.2.1-alpha.0"
-    },
-    "scripts": {
-        "build": "tsc --build ./tsconfig.package.json"
-    },
-    "dependencies": {
-        "tsyringe": "4.4.0"
-    }
+	"name": "@miko/common",
+	"version": "1.2.1-alpha.0",
+	"main": "./lib/index.js",
+	"types": "./lib/index.d.ts",
+	"dependencies": {
+		"@types/ws": "7.4.0",
+		"discord.js": "12.5.1"
+	},
+	"peerDependencies": {
+		"@miko/cache": "*",
+		"@miko/core": "*"
+	},
+	"scripts": {
+		"build": "tsc --build ./tsconfig.package.json"
+	}
 }

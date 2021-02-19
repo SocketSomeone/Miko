@@ -1,7 +1,7 @@
-import {Column, Entity, UpdateDateColumn} from 'typeorm';
-import {UserEntity} from './base/UserEntity';
+import { Column, Entity, UpdateDateColumn } from 'typeorm';
+import { UserEntity } from './base/UserEntity';
 
-@Entity({name: 'users'})
+@Entity({ name: 'users' })
 export class MiUser extends UserEntity {
 	@Column()
 	public username!: string;

@@ -1,4 +1,4 @@
-import {Duration, Moment} from 'moment';
+import { Duration, Moment } from 'moment';
 
 export interface ICacheOptions {
 	maxSize?: number;

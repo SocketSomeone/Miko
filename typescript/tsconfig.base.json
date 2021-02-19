@@ -10,6 +10,9 @@
 		"declaration": true,
 		"declarationMap": true,
 		"strict": true,
-		"forceConsistentCasingInFileNames": true,
+        "allowJs": true,
+        "importHelpers": true,
+        "noEmitHelpers": true,
+		"forceConsistentCasingInFileNames": true
     }
 }

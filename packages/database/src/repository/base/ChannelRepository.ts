@@ -1,5 +1,5 @@
-import {Repository} from 'typeorm';
-import {ChannelEntity} from '../../entity/base/ChannelEntity';
+import { Repository } from 'typeorm';
+import { ChannelEntity } from '../../entity/base/ChannelEntity';
 
 export abstract class ChannelRepository<T extends ChannelEntity> extends Repository<T> {
 	abstract findByGuildAndChannelId(guildId: string, channelId: string): Promise<T[]>;

@@ -1,4 +1,4 @@
-import {MiResolver} from '.';
+import { MiResolver } from '.';
 
 export type AllowArray<T> = T | T[];
 

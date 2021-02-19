@@ -1,18 +1,18 @@
-import {Logger} from '@miko/logger';
-import {MiClient} from '@miko/framework';
-import {createConnection} from '@miko/database';
+import { Logger } from 'tslog';
+import { MiClient } from '@miko/common';
+import { createConnection } from '@miko/database';
 
-const logger = new Logger('ROOT');
+const logger = new Logger({ name: 'ROOT' });
 
 const main = async () => {
-	logger.log('Starting Miko instance!');
+	logger.debug('Starting Miko instance!');
 	const client = new MiClient();
 
-	logger.log('Connection to Database...');
+	logger.debug('Connection to Database...');
 	await createConnection(String(process.env.NODE_ENV));
 
-	logger.log('Initializing BOT login...');
+	logger.debug('Initializing BOT login...');
 	await client.login(process.env.TOKEN);
 };
 
-main().catch((err) => logger.error(err));
+main().catch(err => logger.error(err));

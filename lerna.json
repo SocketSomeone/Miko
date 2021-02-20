@@ -10,7 +10,7 @@
 			],
 			"conventionalCommits": true,
 			"exact": true,
-			"message": "chore(@miko): publish %v 🎉"
+			"message": "chore(miko): publish %v 🎉"
 		}
 	}
 }

@@ -1,12 +1,15 @@
 version: 2
 updates:
-  - package-ecosystem: 'github-actions'
-    directory: '/'
+  - directory: '/'
+    package-ecosystem: 'github-actions'
     schedule:
       interval: 'daily'
+    labels:
+      - 'dependencies'
+      - '⚒️ infrastructure'
 
-  - package-ecosystem: 'yarn'
-    directory: '/'
+  - directory: '/'
+    package-ecosystem: 'npm'
     schedule:
       interval: 'daily'
     assignees:
@@ -15,5 +18,16 @@ updates:
       prefix: '🔼'
       prefix-development: '🔼'
     labels:
+      - '🎂 @miko'
       - 'dependencies'
     open-pull-requests-limit: 15
+
+  - directory: '/apps/bot'
+    package-ecosystem: 'npm'
+    schedule:
+      interval: 'daily'
+    assignees:
+      - 'SocketSomeone'
+    labels:
+      - '⚙ p:bot'
+      - 'dependencies'

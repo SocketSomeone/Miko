@@ -3,7 +3,6 @@
 	"name": "miko-monorepo",
 	"rootDir": "../",
 	"clearMocks": true,
-	"collectCoverage": true,
 	"coverageDirectory": "coverage",
 	"collectCoverageFrom": [
 		"{apps,packages,tools}/*/src/**/*.ts"

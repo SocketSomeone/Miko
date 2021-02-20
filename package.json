@@ -11,7 +11,7 @@
 		"build": "yarn run clean && tsc --build ./typescript/tsconfig.project.json",
 		"start": "pm2 start ./miko.config.yml",
 		"clean": "rimraf -rf ./{apps,packages,tools}/*/{lib,*.tsbuildinfo}",
-		"test": "yarn run lint && jest --no-cache --config test/jest.config.json",
+		"test": "yarn run lint && jest --no-cache --passWithNoTests --config test/jest.config.json",
 		"test:inspect": "yarn lint && node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand --config test/jest.config.json",
 		"test:coverage": "jest --config test/jest.config.json --coverage",
 		"lint": "eslint --ignore-path .gitignore {apps,packages,tools}/*/src/**/*.ts",

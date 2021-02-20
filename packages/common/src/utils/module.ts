@@ -9,7 +9,7 @@ interface IModuleOpts {
 }
 export class Module {
 	public constructor(
-		{ services, commands }: IModuleOpts = {
+		{ services }: IModuleOpts = {
 			services: {},
 			commands: {}
 		}

@@ -5,7 +5,7 @@
     "types": "./lib/index.d.ts",
     "dependencies": {
         "pg": "8.5.1",
-        "typeorm": "0.2.30"
+        "typeorm": "0.2.31"
     },
     "devDependencies": {
         "@types/node": "14.14.21"

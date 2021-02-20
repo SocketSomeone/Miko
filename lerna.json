@@ -1,16 +1,16 @@
 {
-    "version": "1.3.0",
-    "npmClient": "yarn",
-    "useWorkspaces": true,
-    "command": {
-        "version": {
-            "allowBranch": [
-                "main",
-                "feature/*"
-            ],
-            "conventionalCommits": true,
-            "exact": true,
-            "message": "chore(release): publish %v 🎉"
-        }
-    }
+	"version": "1.3.0",
+	"npmClient": "yarn",
+	"useWorkspaces": true,
+	"command": {
+		"version": {
+			"allowBranch": [
+				"main",
+				"feature/*"
+			],
+			"conventionalCommits": true,
+			"exact": true,
+			"message": "chore(@miko): publish %v 🎉"
+		}
+	}
 }

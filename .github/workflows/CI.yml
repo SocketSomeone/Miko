@@ -45,10 +45,8 @@ jobs:
         env:
           CI: true
 
-      - run: yarn run test:coverage
-
       - name: Report coverage to Codacy
         uses: codacy/codacy-coverage-reporter-action@master
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          coverage-reports: clover.xml
+          coverage-reports: coverage/lcov.info

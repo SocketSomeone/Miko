@@ -2,6 +2,9 @@ language: node_js
 before_script:
   - yarn
   - yarn build
+branches:
+  only:
+    - main
 node_js:
   - 14
   - 12

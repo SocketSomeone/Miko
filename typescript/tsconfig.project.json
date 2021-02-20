@@ -12,6 +12,9 @@
 			"path": "..\\packages\\core\\tsconfig.package.json"
 		},
 		{
+			"path": "..\\tools\\utils\\tsconfig.package.json"
+		},
+		{
 			"path": "..\\packages\\common\\tsconfig.package.json"
 		},
 		{

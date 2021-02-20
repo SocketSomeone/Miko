@@ -15,7 +15,10 @@
 				"./packages/database/src"
 			],
 			"@miko/common": [
-				"@miko/common"
+				"./packages/common/src"
+			],
+			"@miko/utils": [
+				"./tools/utils/src"
 			]
 		}
 	}

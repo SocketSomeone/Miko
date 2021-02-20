@@ -1,3 +1,3 @@
-import { ModuleBuilder } from '@miko/common';
+import { Module } from '@miko/common';
 
-export const CommonModule = new ModuleBuilder();
+export default new Module();

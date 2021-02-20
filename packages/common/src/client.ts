@@ -1,18 +1,10 @@
 import { Client, CloseEvent, Guild } from 'discord.js';
 import { Logger } from 'tslog';
-import { IMikoMetrics } from './types';
+import { singleton } from 'tsyringe';
 
+@singleton()
 export class MiClient extends Client {
 	protected readonly logger = new Logger({ name: 'CLIENT' });
-
-	public metrics: IMikoMetrics = {
-		ratelimits: 0,
-		shardConnects: 0,
-		shardDisconnects: 0,
-		shardResumes: 0,
-		wsErrors: 0,
-		wsWarnings: 0
-	};
 
 	public constructor() {
 		super({
@@ -70,7 +62,6 @@ export class MiClient extends Client {
 	}
 
 	private async onClientReady() {
-		this.metrics.startedAt = new Date();
 		this.logger.silly(`Ready to work! Serving ${this.guilds.cache.size} guilds...`);
 	}
 
@@ -80,31 +71,26 @@ export class MiClient extends Client {
 
 	private onShardReconnecting(shardId: number) {
 		this.logger.silly('Connected to Discord!', `SHARD ${shardId + 1}`);
-		this.metrics.shardConnects += 1;
 	}
 
 	private onShardResume(shardId: number) {
 		this.logger.debug('Connection resumed...', `SHARD ${shardId + 1}`);
-		this.metrics.shardResumes += 1;
 	}
 
 	private onShardDisconnect(err: CloseEvent, shardId: number) {
 		this.logger.warn(`Disconnected by Discord: ${err}`, `SHARD ${shardId + 1}`);
-		this.metrics.shardDisconnects += 1;
 	}
 
 	private onWarn(warn: string) {
 		this.logger.warn(warn, 'DISCORD WARNING');
-		this.metrics.wsWarnings += 1;
 	}
 
 	private onError(error: Error) {
 		this.logger.error(error, 'DISCORD ERROR');
-		this.metrics.wsErrors += 1;
 	}
 
 	private onRatelimit() {
-		this.metrics.ratelimits += 1;
+		this.logger.warn('Rate limit exceed', 'DISCORD WARNING');
 	}
 
 	private onGuildUnavailable(guild: Guild) {

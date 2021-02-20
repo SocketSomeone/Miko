@@ -9,7 +9,8 @@
 	},
 	"peerDependencies": {
 		"@miko/cache": "*",
-		"@miko/core": "*"
+		"@miko/core": "*",
+		"@miko/utils": "*"
 	},
 	"scripts": {
 		"build": "tsc --build ./tsconfig.package.json"

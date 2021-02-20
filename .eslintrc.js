@@ -69,6 +69,7 @@ module.exports = {
 		"eol-last": ["off"],
 		"max-len": ["error", { "code": 150 }],
 		"no-shadow": "off",
+		"function-paren-newline": "off"
 		"prettier/prettier": ["error", {
 			"parser": "typescript",
 			"trailingComma": "none",

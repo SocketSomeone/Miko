@@ -13,7 +13,7 @@
 		"clean": "rimraf -rf ./{apps,packages,tools}/*/{lib,*.tsbuildinfo}",
 		"test": "yarn run lint && jest --no-cache --passWithNoTests --config test/jest.config.json",
 		"test:inspect": "yarn lint && node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand --config test/jest.config.json",
-		"test:coverage": "jest --config test/jest.config.json --coverage",
+		"test:coverage": "jest --config test/jest.config.json --passWithNoTests --coverage",
 		"lint": "eslint --ignore-path .gitignore {apps,packages,tools}/*/src/**/*.ts",
 		"lint:fix": "eslint --fix --ignore-path .gitignore {apps,packages,tools}/*/src/**/*.ts",
 		"update:tsconfig": "ts-node scripts/update-package-tsconfig.ts",
@@ -24,13 +24,16 @@
 		"url": "git+https://github.com/SocketSomeone/Miko.git"
 	},
 	"keywords": [
-		"miko",
-		"discord.js",
 		"discord",
+		"discord-js",
+		"react",
+		"nodejs",
 		"javascript",
 		"typescript",
-		"bot",
-		"ts"
+		"typeorm",
+		"rabbitmq",
+		"postgresql",
+		"nestjs-backend"
 	],
 	"engines": {
 		"node": ">=12.0.0"

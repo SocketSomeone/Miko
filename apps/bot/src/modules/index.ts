@@ -1,1 +1,1 @@
-export * from './common';
+export const anything = 'test';

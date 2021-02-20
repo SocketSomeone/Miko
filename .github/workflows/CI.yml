@@ -23,6 +23,7 @@ jobs:
     strategy:
       matrix:
         node-version: [12.x, 14.x]
+      fail-fast: true
 
     steps:
       - uses: actions/checkout@v2
@@ -43,6 +44,8 @@ jobs:
           yarn test
         env:
           CI: true
+
+      - run: yarn run test:coverage
 
       - name: Report coverage to Codacy
         uses: codacy/codacy-coverage-reporter-action@master

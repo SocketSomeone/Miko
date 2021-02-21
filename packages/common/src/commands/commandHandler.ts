@@ -53,28 +53,38 @@ export class CommandService {
 				return false;
 			}
 
+			if (message.guild && !message.member && !message.webhookID) {
+				await message.guild.members.fetch(message.author);
+			}
+
 			const parsed = await this.parseCommand(message);
 
 			if (!parsed.command) {
 				return false;
 			}
 
-			return this.handleCommand(message, parsed.command);
+			return this.handleCommand(message, parsed.command, parsed.content);
 		} catch (err) {
 			this.logger.error('Error caused in handle command', err);
 			return false;
 		}
 	}
 
-	private async handleCommand(message: Message, command: MiCommand): Promise<void> {
-		return this.runCommand(message, command);
+	private async handleCommand(message: Message, command: MiCommand, content?: string): Promise<boolean | void> {
+		if (!command.checkGuards(message)) return false;
+
+		const args = await command.parse(message, content);
+
+		if (typeof args === 'undefined') return false;
+
+		return this.runCommand(message, command, args);
 	}
 
-	private async runCommand(message: Message, command: MiCommand): Promise<void> {
+	private async runCommand(message: Message, command: MiCommand, args?: unknown[]): Promise<void> {
 		message.channel.startTyping();
 
 		try {
-			await command.execute(message);
+			await command.execute(message, args);
 		} finally {
 			message.channel.stopTyping();
 		}

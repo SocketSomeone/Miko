@@ -12,6 +12,6 @@ export class PingCommand extends MiCommand {
 	}
 
 	public async execute(message: Message): Promise<void> {
-		message.channel.send('Pong!');
+		message.reply('Pong!');
 	}
 }

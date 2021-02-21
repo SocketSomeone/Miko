@@ -15,7 +15,7 @@ export class GuildConfigRepository extends GuildRepository<GuildConfig> {
 
 	public async findLocaleByGuildId(guildId: string): Promise<string> {
 		const { locale } = await this.findOne({
-			select: ['prefix'],
+			select: ['locale'],
 			where: {
 				guildId
 			}

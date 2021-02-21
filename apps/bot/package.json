@@ -13,5 +13,8 @@
 		"watch": "yarn run build --watch",
 		"start": "pm2 start ./application.yml --only bot",
 		"poststart": "pm2 logs"
+	},
+	"dependencies": {
+		"discord.js": "12.5.1"
 	}
 }

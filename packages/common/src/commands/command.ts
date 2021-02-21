@@ -1,4 +1,4 @@
-import { Permissions } from 'discord.js';
+import { Message, Permissions } from 'discord.js';
 import { MiResolver } from '../resolvers';
 import { GuardFunction, ResolverOrConstructor } from '../types';
 
@@ -22,9 +22,9 @@ export abstract class MiCommand {
 
 	public group!: string;
 
-	private guards: GuardFunction[] = [];
+	public guards: GuardFunction[] = [];
 
-	private resolvers: MiResolver<unknown>[] = [];
+	public resolvers: MiResolver<unknown>[] = [];
 
 	private guildOnly = true;
 
@@ -50,5 +50,5 @@ export abstract class MiCommand {
 		}
 	}
 
-	protected abstract execute(): Promise<void>;
+	public abstract execute(message: Message): Promise<void>;
 }

@@ -1,1 +1,1 @@
-export const anything = 'test';
+export * from './information';

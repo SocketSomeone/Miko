@@ -42,7 +42,7 @@ export class MiClient extends Client {
 	}
 
 	public async login(token?: string): Promise<string> {
-		this.logger.silly('Setting up events...');
+		this.logger.debug('Setting up events...');
 		this.once('ready', this.onClientReady);
 		this.once('shardReady', this.onShardReady);
 
@@ -57,24 +57,24 @@ export class MiClient extends Client {
 		this.on('shardError', this.onError);
 		this.on('rateLimit', this.onRatelimit);
 
-		this.logger.silly('Connecting to Discord...');
+		this.logger.debug('Connecting to Discord...');
 		return super.login(token);
 	}
 
 	private async onClientReady() {
-		this.logger.silly(`Ready to work! Serving ${this.guilds.cache.size} guilds...`);
+		this.logger.info(`Ready to work! Serving ${this.guilds.cache.size} guilds...`);
 	}
 
 	private onShardReady(shardId: number) {
-		this.logger.silly('Ready to work!', `SHARD ${shardId + 1}`);
+		this.logger.info('Ready to work!', `SHARD ${shardId + 1}`);
 	}
 
 	private onShardReconnecting(shardId: number) {
-		this.logger.silly('Connected to Discord!', `SHARD ${shardId + 1}`);
+		this.logger.info('Connected to Discord!', `SHARD ${shardId + 1}`);
 	}
 
 	private onShardResume(shardId: number) {
-		this.logger.debug('Connection resumed...', `SHARD ${shardId + 1}`);
+		this.logger.info('Connection resumed...', `SHARD ${shardId + 1}`);
 	}
 
 	private onShardDisconnect(err: CloseEvent, shardId: number) {

@@ -14,6 +14,7 @@ on:
   pull_request:
     branches:
       - main
+      - develop
 
 jobs:
   build:
@@ -22,6 +23,7 @@ jobs:
     strategy:
       matrix:
         node-version: [12.x, 14.x]
+      fail-fast: true
 
     steps:
       - uses: actions/checkout@v2

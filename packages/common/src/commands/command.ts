@@ -3,10 +3,16 @@ import { Message, PermissionResolvable } from 'discord.js';
 import { MiResolver } from '../resolvers';
 import { GuardFunction, ICommandArgument, ICommandOptions } from '../types';
 
-export abstract class MiCommand {
+export abstract class MiCommand implements ICommandOptions {
 	public name!: string;
 
 	public group = 'default';
+
+	public typing = false;
+
+	public cooldown = 5;
+
+	public ratelimit = 2;
 
 	public guards: GuardFunction[] = [];
 
@@ -14,15 +20,15 @@ export abstract class MiCommand {
 
 	public userPermissions: PermissionResolvable[] = [];
 
-	private arguments: ICommandArgument[] = [];
+	public arguments: ICommandArgument[] = [];
 
 	public constructor(opts: ICommandOptions) {
 		Object.assign(this, opts);
 
-		for (const argument of this.arguments) {
+		this.arguments.forEach(argument => {
 			// eslint-disable-next-line new-cap
 			argument.resolver = argument.resolver instanceof MiResolver ? argument.resolver : new argument.resolver();
-		}
+		});
 	}
 
 	public abstract execute(message: Message, args?: unknown[]): Promise<void>;

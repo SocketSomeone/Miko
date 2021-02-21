@@ -20,7 +20,7 @@ export interface ICommandOptions {
 	arguments?: ICommandArgument[];
 	guards?: GuardFunction[];
 
-	botPermissions?: PermissionResolvable[];
+	clientPermissions?: PermissionResolvable[];
 	userPermissions?: PermissionResolvable[];
 
 	cooldown?: number;

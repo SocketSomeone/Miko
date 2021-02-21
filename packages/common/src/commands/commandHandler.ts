@@ -3,7 +3,8 @@ import { Logger } from 'tslog';
 import { singleton } from 'tsyringe';
 import { MiClient } from '../client';
 import { MiCommand } from './command';
-import { Throttler } from './services/throttler';
+import { PermissionSecurity } from './security/permissions';
+import { Throttler } from './security/throttler';
 
 interface IParsedCommandData {
 	afterPrefix?: string;
@@ -19,7 +20,11 @@ export class CommandService {
 
 	private logger: Logger = new Logger({ name: 'CommandHandler' });
 
-	public constructor(private readonly client: MiClient, private readonly throttler: Throttler) {
+	public constructor(
+		private readonly client: MiClient,
+		private readonly throttler: Throttler,
+		private readonly permissionSecurity: PermissionSecurity
+	) {
 		this.client.on('message', async message => {
 			if (message.partial) await message.fetch();
 
@@ -71,22 +76,33 @@ export class CommandService {
 	}
 
 	private async handleCommand(message: Message, command: MiCommand, content?: string): Promise<boolean | void> {
-		if (!command.checkGuards(message)) return false;
+		if (
+			!command.checkGuards(message) ||
+			this.permissionSecurity.isSuccess(message, command) ||
+			this.throttler.isThrottling(message, command)
+		)
+			return false;
 
 		const args = await command.parse(message, content);
 
-		if (typeof args === 'undefined') return false;
+		if (!args && !Array.isArray(args)) {
+			return false;
+		}
 
 		return this.runCommand(message, command, args);
 	}
 
 	private async runCommand(message: Message, command: MiCommand, args?: unknown[]): Promise<void> {
-		message.channel.startTyping();
+		if (command.typing) {
+			message.channel.startTyping();
+		}
 
 		try {
 			await command.execute(message, args);
 		} finally {
-			message.channel.stopTyping();
+			if (command.typing) {
+				message.channel.stopTyping();
+			}
 		}
 	}
 

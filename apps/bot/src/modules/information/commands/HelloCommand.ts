@@ -8,7 +8,7 @@ export class HelloCommand extends MiCommand {
 		super({
 			name: 'hello',
 			group: 'info',
-			arguments: [{ name: 'word', resolver: StringResolver }]
+			arguments: [{ name: 'word', resolver: StringResolver, optional: true }]
 		});
 	}
 

@@ -54,11 +54,6 @@
 			"path": "./node_modules/cz-lerna-changelog"
 		}
 	},
-	"husky": {
-		"hooks": {
-			"pre-push": "yarn run test"
-		}
-	},
 	"devDependencies": {
 		"@sentry/node": "6.2.0",
 		"@types/jest": "26.0.20",

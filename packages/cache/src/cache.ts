@@ -1,21 +1,22 @@
 import moment, { duration, Moment } from 'moment';
+import { TypeSafeEmitter } from '@miko/utils';
 import { MetricsCache } from './meta/metrics';
-import { ICacheEntry, ICacheOptions } from './types';
+import { ICacheEntry, ICacheEvents, ICacheOptions } from './types';
 
-export class MiCache<K = string, V = unknown> {
+export class MiCache<K = string, V = unknown> extends TypeSafeEmitter<ICacheEvents<K, V>> {
 	protected readonly storage: Map<K, ICacheEntry<V>> = new Map();
 
 	protected readonly pending: Map<K, Promise<V>> = new Map();
 
 	public metrics = new MetricsCache();
 
-	private maxSize: ICacheOptions<V>['maxSize'];
+	private maxSize: ICacheOptions<K, V>['maxSize'];
 
-	private expireAfter: ICacheOptions<V>['expireAfter'];
+	private expireAfter: ICacheOptions<K, V>['expireAfter'];
 
-	private refreshAfter: ICacheOptions<V>['refreshAfter'];
+	private refreshAfter: ICacheOptions<K, V>['refreshAfter'];
 
-	private load: ICacheOptions<V>['load'];
+	private load: ICacheOptions<K, V>['load'];
 
 	public constructor({
 		maxSize = 50,
@@ -23,7 +24,9 @@ export class MiCache<K = string, V = unknown> {
 		refreshAfter = undefined,
 		checkInterval = 1000,
 		load = undefined
-	}: ICacheOptions<V> = {}) {
+	}: ICacheOptions<K, V> = {}) {
+		super();
+
 		this.maxSize = maxSize;
 		this.expireAfter = expireAfter;
 		this.refreshAfter = refreshAfter;
@@ -37,8 +40,8 @@ export class MiCache<K = string, V = unknown> {
 	public async set(
 		key: K,
 		value: V,
-		ttl: ICacheOptions<V>['expireAfter'] = this.expireAfter,
-		ref: ICacheOptions<V>['refreshAfter'] = this.refreshAfter
+		ttl: ICacheOptions<K, V>['expireAfter'] = this.expireAfter,
+		ref: ICacheOptions<K, V>['refreshAfter'] = this.refreshAfter
 	): Promise<void> {
 		if (this.maxSize && this.storage.size >= this.maxSize) {
 			this.metrics.evictions += 1;

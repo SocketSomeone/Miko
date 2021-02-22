@@ -1,146 +1,189 @@
-import { Logger } from 'tslog';
-import moment, { duration, Moment } from 'moment';
-import { CacheMetrics } from './metrics';
-import { ICacheEntry, ICacheOptions } from './types';
+import { duration } from 'moment';
+import { AllowArray, arrarify, TypeSafeEmitter } from '@miko/utils';
+import { MetricsCache } from './meta/metrics';
+import { ICacheEntry, ICacheEvents, ICacheOptions } from './types';
+import { MetadataCache } from './meta/metadata';
 
-export abstract class MiCache<V = unknown, K = string> {
-	protected readonly logger: Logger = new Logger({ name: this.constructor.name });
+export class MiCache<K = string, V = unknown> extends TypeSafeEmitter<ICacheEvents<K, V>> {
+	public readonly metrics = new MetricsCache();
 
-	protected readonly storage: Map<K, ICacheEntry<V>> = new Map();
+	private readonly pending: Map<K, Promise<V>> = new Map();
 
-	protected readonly pending: Map<K, Promise<V>> = new Map();
+	private readonly maxSize: number;
 
-	public metrics = new CacheMetrics();
+	private readonly expireAfter: number;
 
-	private maxSize: ICacheOptions['maxSize'];
+	private readonly refreshAfter: number;
 
-	private expireAfter: ICacheOptions['expireAfter'];
+	private readonly load: ICacheOptions<K, V>['load'];
 
-	private refreshAfter: ICacheOptions['refreshAfter'];
+	private storage: Map<K, ICacheEntry<V>> = new Map();
 
 	public constructor({
-		maxSize = 50,
+		maxSize = 100,
 		expireAfter = duration(6, 'hours'),
-		refreshAfter = undefined,
-		checkInterval = 1000
-	}: ICacheOptions = {}) {
+		refreshAfter = duration(10, 'hours'),
+		cleanupInterval = 1000,
+		refreshInterval = 15000,
+		load = undefined
+	}: ICacheOptions<K, V> = {}) {
+		super();
+
+		this.load = load;
 		this.maxSize = maxSize;
-		this.expireAfter = expireAfter;
-		this.refreshAfter = refreshAfter;
+		this.expireAfter = expireAfter.asMilliseconds();
+		this.refreshAfter = refreshAfter.asMilliseconds();
 
-		if (checkInterval) {
-			setInterval(this.checkCache.bind(this), checkInterval);
+		if (cleanupInterval) {
+			setInterval(this.cleanup.bind(this), cleanupInterval);
+		}
+
+		if (refreshInterval) {
+			setInterval(this.refreshAll.bind(this), refreshInterval);
 		}
 	}
 
-	public async init(): Promise<void> {
-		this.logger.silly('Cache initialized..');
-	}
-
-	public async set(
-		key: K,
-		value: V,
-		ttl: ICacheOptions['expireAfter'] = this.expireAfter,
-		ref: ICacheOptions['refreshAfter'] = this.refreshAfter
-	): Promise<void> {
-		if (this.maxSize && this.storage.size >= this.maxSize) {
-			this.metrics.evictions += 1;
-
-			let olderTime: Moment;
-			let olderKey: K;
-
-			for (const [iterKey, iterVal] of this.storage) {
-				if (!olderKey) {
-					olderKey = iterKey;
-					olderTime = iterVal.addedAt;
-
-					continue;
-				}
-
-				if (!iterVal.addedAt || (olderTime && olderTime.isBefore(iterVal.addedAt))) continue;
-
-				olderKey = iterKey;
-				olderTime = iterVal.addedAt;
-			}
-
-			if (olderKey) {
-				this.delete(olderKey);
-			}
-		}
-
+	public set(key: K, value: V): void {
 		this.storage.set(key, {
 			data: value,
-			addedAt: moment(),
-			expires: ttl ? moment().add(ttl) : null,
-			refresh: ref ? moment().add(ref) : null
+			meta: new MetadataCache()
 		});
+
+		this.emit('set', key, value);
+		this.evictBySize();
 	}
 
-	public async get(key: K): Promise<V | undefined> {
-		const entry = this.storage.get(key);
+	public async get(key: K, loader?: ICacheOptions<K, V>['load']): Promise<null | V> {
+		if (this.has(key)) {
+			const { meta, data } = this.storage.get(key);
 
-		if (entry) {
-			const curTime = moment();
+			if (meta.diff() <= this.expireAfter) {
+				this.metrics.hits += 1;
+				meta.use();
 
-			this.metrics.hits += 1;
-
-			if ((entry.refresh && curTime.isAfter(entry.refresh)) || (entry.expires && curTime.isAfter(entry.expires))) {
-				return this.tryLoad(key);
+				return data;
 			}
 
-			return entry.data;
+			this.remove(key, 'expiry');
 		}
 
-		return this.tryLoad(key);
+		this.metrics.misses += 1;
+		return this.refresh(key, loader);
 	}
 
-	public async delete(key: K): Promise<boolean> {
-		return this.storage.delete(key);
-	}
+	public async refresh(key: K, loader?: ICacheOptions<K, V>['load']): Promise<null | V> {
+		const load: ICacheOptions<K, V>['load'] = loader || this.load;
 
-	public async clear(): Promise<void> {
-		return this.storage.clear();
-	}
+		if (typeof load !== 'function') {
+			return null;
+		}
 
-	protected abstract load(key: K): Promise<V>;
-
-	private async tryLoad(key: K) {
 		try {
-			const res = this.pending.get(key);
+			const resolve = this.pending.get(key);
 
-			if (res) {
-				return res;
+			if (resolve) {
+				return await resolve;
 			}
 
 			const promise = this.load(key).finally(() => this.pending.delete(key));
-
 			this.pending.set(key, promise);
-			const obj = await promise;
 
-			this.set(key, obj);
+			const value = await promise;
 
-			this.metrics.loadSuccess += 1;
-
-			return obj;
+			this.set(key, value);
+			return value;
 		} catch (err) {
 			this.metrics.loadError += 1;
-			this.metrics.misses += 1;
+			this.emit('error', key, err);
+		}
 
-			return undefined;
+		return null;
+	}
+
+	public delete(rawKeys: AllowArray<K>): void {
+		const keys = arrarify(rawKeys);
+
+		for (const key of keys) {
+			this.remove(key, 'explicit');
 		}
 	}
 
-	private checkCache() {
-		const curTime = moment();
-
-		for (const [key, entry] of this.storage) {
-			if (entry.refresh && curTime.isBefore(entry.refresh)) {
-				this.tryLoad(key);
-			}
-
-			if (entry.expires && curTime.isBefore(entry.expires)) {
-				this.delete(key);
-			}
+	private remove(key: K, reason: string): void {
+		if (!this.has(key)) {
+			return;
 		}
+
+		this.storage.delete(key);
+		this.emit('delete', key, reason);
+	}
+
+	public find(fn: (v: ICacheEntry<V>, k: K) => boolean): V {
+		const array = [...this.storage.entries()];
+		const [, item] = array.find(([key, value]) => fn(value, key));
+
+		return item.data;
+	}
+
+	public filter(fn: (v: ICacheEntry<V>, k: K) => boolean): Map<K, ICacheEntry<V>> {
+		const array = [...this.storage.entries()];
+		const filtred = array.filter(([key, value]) => fn(value, key));
+
+		return new Map(filtred);
+	}
+
+	public has(key: K): boolean {
+		return this.storage.has(key);
+	}
+
+	public cleanup(): void {
+		this.evictByTime();
+		this.evictBySize();
+	}
+
+	public flush(): void {
+		this.storage = new Map();
+	}
+
+	private evictByTime() {
+		const expired = this.filter(({ meta }) => meta.diff() > this.expireAfter);
+
+		for (const [key] of expired) {
+			this.remove(key, 'expiry');
+			this.metrics.evictions += 1;
+		}
+	}
+
+	private evictBySize() {
+		if (this.size <= this.maxSize) {
+			return;
+		}
+
+		const count = this.size - this.maxSize - 1;
+		const keys = [...this.storage.keys()].slice(0, count);
+
+		for (const key of keys) {
+			this.remove(key, 'size');
+			this.metrics.evictions += 1;
+		}
+	}
+
+	private refreshAll() {
+		const expired = this.filter(({ meta }) => meta.diff() > this.refreshAfter);
+
+		for (const [key] of expired) {
+			this.refresh(key);
+		}
+	}
+
+	public get size(): number {
+		return this.storage.size;
+	}
+
+	public toJSON(): unknown {
+		return this.metrics.toJSON();
+	}
+
+	public toString(): string {
+		return this.metrics.toString();
 	}
 }

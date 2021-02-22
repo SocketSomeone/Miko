@@ -1,13 +1,17 @@
 {
 	"name": "@miko/cache",
-	"version": "1.4.0",
+	"version": "1.4.1",
 	"main": "./lib/index.js",
 	"types": "./lib/index.d.ts",
 	"dependencies": {
 		"moment": "2.29.1"
 	},
 	"devDependencies": {
-		"@types/moment": "2.13.0"
+		"@types/moment": "2.13.0",
+		"mockdate": "3.0.2"
+	},
+	"peerDependencies": {
+		"@miko/utils": "*"
 	},
 	"scripts": {
 		"build": "tsc --build ./tsconfig.package.json"

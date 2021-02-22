@@ -1,47 +1,44 @@
-import { Logger } from 'tslog';
 import moment, { duration, Moment } from 'moment';
-import { CacheMetrics } from './metrics';
+import { MetricsCache } from './meta/metrics';
 import { ICacheEntry, ICacheOptions } from './types';
 
-export abstract class MiCache<V = unknown, K = string> {
-	protected readonly logger: Logger = new Logger({ name: this.constructor.name });
-
+export class MiCache<K = string, V = unknown> {
 	protected readonly storage: Map<K, ICacheEntry<V>> = new Map();
 
 	protected readonly pending: Map<K, Promise<V>> = new Map();
 
-	public metrics = new CacheMetrics();
+	public metrics = new MetricsCache();
 
-	private maxSize: ICacheOptions['maxSize'];
+	private maxSize: ICacheOptions<V>['maxSize'];
 
-	private expireAfter: ICacheOptions['expireAfter'];
+	private expireAfter: ICacheOptions<V>['expireAfter'];
 
-	private refreshAfter: ICacheOptions['refreshAfter'];
+	private refreshAfter: ICacheOptions<V>['refreshAfter'];
+
+	private load: ICacheOptions<V>['load'];
 
 	public constructor({
 		maxSize = 50,
 		expireAfter = duration(6, 'hours'),
 		refreshAfter = undefined,
-		checkInterval = 1000
-	}: ICacheOptions = {}) {
+		checkInterval = 1000,
+		load = undefined
+	}: ICacheOptions<V> = {}) {
 		this.maxSize = maxSize;
 		this.expireAfter = expireAfter;
 		this.refreshAfter = refreshAfter;
+		this.load = load;
 
 		if (checkInterval) {
 			setInterval(this.checkCache.bind(this), checkInterval);
 		}
 	}
 
-	public async init(): Promise<void> {
-		this.logger.silly('Cache initialized..');
-	}
-
 	public async set(
 		key: K,
 		value: V,
-		ttl: ICacheOptions['expireAfter'] = this.expireAfter,
-		ref: ICacheOptions['refreshAfter'] = this.refreshAfter
+		ttl: ICacheOptions<V>['expireAfter'] = this.expireAfter,
+		ref: ICacheOptions<V>['refreshAfter'] = this.refreshAfter
 	): Promise<void> {
 		if (this.maxSize && this.storage.size >= this.maxSize) {
 			this.metrics.evictions += 1;
@@ -101,8 +98,6 @@ export abstract class MiCache<V = unknown, K = string> {
 	public async clear(): Promise<void> {
 		return this.storage.clear();
 	}
-
-	protected abstract load(key: K): Promise<V>;
 
 	private async tryLoad(key: K) {
 		try {

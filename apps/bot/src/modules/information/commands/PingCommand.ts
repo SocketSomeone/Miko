@@ -7,7 +7,8 @@ export class PingCommand extends MiCommand {
 	public constructor() {
 		super({
 			name: 'ping',
-			group: 'info'
+			group: 'info',
+			typing: true
 		});
 	}
 

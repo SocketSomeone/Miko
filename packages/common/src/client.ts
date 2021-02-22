@@ -41,7 +41,7 @@ export class MiClient extends Client {
 		});
 	}
 
-	public async login(token?: string): Promise<string> {
+	public async login(token: string): Promise<string> {
 		this.logger.debug('Setting up events...');
 		this.once('ready', this.onClientReady);
 		this.once('shardReady', this.onShardReady);

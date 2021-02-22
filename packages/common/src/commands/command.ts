@@ -16,11 +16,11 @@ export abstract class MiCommand implements ICommandOptions {
 
 	public guards: GuardFunction[] = [];
 
+	public arguments: ICommandArgument[] = [];
+
 	public clientPermissions: PermissionResolvable[] = [];
 
 	public userPermissions: PermissionResolvable[] = [];
-
-	public arguments: ICommandArgument[] = [];
 
 	public constructor(opts: ICommandOptions) {
 		Object.assign(this, opts);
@@ -31,12 +31,13 @@ export abstract class MiCommand implements ICommandOptions {
 		});
 	}
 
-	public abstract execute(message: Message, args?: unknown[]): Promise<void>;
+	public abstract execute(message: Message, args: unknown[]): Promise<void>;
 
 	public checkGuards(message: Message): boolean {
 		return this.guards.every(guard => guard(message) === true);
 	}
 
+	// TODO: Refactor this or KYS :)
 	public async parse(message: Message, content = ''): Promise<unknown[] | undefined> {
 		const rawArgs = this.rawArgs(content.split(' '));
 		const args: unknown[] = [];
@@ -53,7 +54,7 @@ export abstract class MiCommand implements ICommandOptions {
 					return;
 				}
 
-				args.push(val);
+				args.concat(val);
 			} catch (err) {
 				return;
 			}

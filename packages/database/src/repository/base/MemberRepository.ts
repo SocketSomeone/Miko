@@ -1,5 +1,5 @@
 import { DeleteResult, Repository } from 'typeorm';
-import { MemberEntity } from '../../entity/base/MemberEntity';
+import { MemberEntity } from '../..';
 
 export abstract class MemberRepository<T extends MemberEntity> extends Repository<T> {
 	public findByGuildIdAndUserId(guildId: string, userId: string): Promise<T> {

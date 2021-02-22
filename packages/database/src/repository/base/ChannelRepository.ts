@@ -1,5 +1,5 @@
 import { DeleteResult, Repository } from 'typeorm';
-import { ChannelEntity } from '../../entity/base/ChannelEntity';
+import { ChannelEntity } from '../..';
 
 export abstract class ChannelRepository<T extends ChannelEntity> extends Repository<T> {
 	public findByGuildAndChannelId(guildId: string, channelId: string): Promise<T> {

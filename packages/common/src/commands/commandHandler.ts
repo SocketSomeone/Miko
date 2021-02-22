@@ -75,7 +75,7 @@ export class CommandService {
 		}
 	}
 
-	private async handleCommand(message: Message, command: MiCommand, content?: string): Promise<boolean | void> {
+	private async handleCommand(message: Message, command: MiCommand, content: string): Promise<boolean | void> {
 		if (
 			!command.checkGuards(message) ||
 			this.permissionSecurity.isSuccess(message, command) ||
@@ -85,14 +85,14 @@ export class CommandService {
 
 		const args = await command.parse(message, content);
 
-		if (!args && !Array.isArray(args)) {
+		if (!args) {
 			return false;
 		}
 
 		return this.runCommand(message, command, args);
 	}
 
-	private async runCommand(message: Message, command: MiCommand, args?: unknown[]): Promise<void> {
+	private async runCommand(message: Message, command: MiCommand, args: unknown[]): Promise<void> {
 		if (command.typing) {
 			message.channel.startTyping();
 		}

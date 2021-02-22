@@ -1,5 +1,5 @@
 import { Logger } from 'tslog';
-import moment, { duration } from 'moment';
+import moment, { duration, Moment } from 'moment';
 import { CacheMetrics } from './metrics';
 import { ICacheEntry, ICacheOptions } from './types';
 
@@ -46,8 +46,8 @@ export abstract class MiCache<V = unknown, K = string> {
 		if (this.maxSize && this.storage.size >= this.maxSize) {
 			this.metrics.evictions += 1;
 
-			let olderTime;
-			let olderKey;
+			let olderTime: Moment;
+			let olderKey: K;
 
 			for (const [iterKey, iterVal] of this.storage) {
 				if (!olderKey) {
@@ -63,7 +63,7 @@ export abstract class MiCache<V = unknown, K = string> {
 				olderTime = iterVal.addedAt;
 			}
 
-			if (typeof olderKey === 'string') {
+			if (olderKey) {
 				this.delete(olderKey);
 			}
 		}

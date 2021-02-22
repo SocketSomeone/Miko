@@ -1,5 +1,5 @@
 import { GuildConfig } from '../entity';
-import { GuildRepository } from './base/GuildRepository';
+import { GuildRepository } from './base';
 
 export class GuildConfigRepository extends GuildRepository<GuildConfig> {
 	public async findPrefixByGuildId(guildId: string): Promise<string> {

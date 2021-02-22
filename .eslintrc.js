@@ -71,6 +71,7 @@ module.exports = {
 		"max-len": ["error", { "code": 150 }],
 		"no-shadow": "off",
 		"function-paren-newline": "off",
+		"no-useless-return": "off",
 		"prettier/prettier": ["error", {
 			"parser": "typescript",
 			"trailingComma": "none",

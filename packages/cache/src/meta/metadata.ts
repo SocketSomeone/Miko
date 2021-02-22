@@ -1,4 +1,4 @@
-import moment, { Moment } from 'moment';
+import moment from 'moment';
 
 export class MetadataCache {
 	private insertedAt = moment();
@@ -7,8 +7,8 @@ export class MetadataCache {
 
 	private useCount = 0;
 
-	public diff(now: Moment): number {
-		return now.diff(this.insertedAt);
+	public diff(): number {
+		return moment().diff(this.insertedAt);
 	}
 
 	public use(): void {

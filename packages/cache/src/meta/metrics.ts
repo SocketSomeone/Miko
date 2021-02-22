@@ -45,7 +45,7 @@ export class MetricsCache {
 		this.loadError = 0;
 	}
 
-	public toJSON(): { [key: string]: number | {} } {
+	public toJSON(): { [key: string]: unknown } {
 		return {
 			hits: this.hits,
 			misses: this.misses,

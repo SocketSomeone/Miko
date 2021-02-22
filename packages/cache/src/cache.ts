@@ -5,7 +5,7 @@ import { ICacheEntry, ICacheEvents, ICacheOptions } from './types';
 import { MetadataCache } from './meta/metadata';
 
 export class MiCache<K = string, V = unknown> extends TypeSafeEmitter<ICacheEvents<K, V>> {
-	private readonly storage: Map<K, ICacheEntry<V>> = new Map();
+	public readonly metrics = new MetricsCache();
 
 	private readonly pending: Map<K, Promise<V>> = new Map();
 
@@ -17,12 +17,12 @@ export class MiCache<K = string, V = unknown> extends TypeSafeEmitter<ICacheEven
 
 	private readonly load: ICacheOptions<K, V>['load'];
 
-	public readonly metrics = new MetricsCache();
+	private storage: Map<K, ICacheEntry<V>> = new Map();
 
 	public constructor({
-		maxSize = 50,
+		maxSize = 100,
 		expireAfter = duration(6, 'hours'),
-		refreshAfter = undefined,
+		refreshAfter = duration(10, 'hours'),
 		cleanupInterval = 1000,
 		refreshInterval = 15000,
 		load = undefined
@@ -35,11 +35,11 @@ export class MiCache<K = string, V = unknown> extends TypeSafeEmitter<ICacheEven
 		this.refreshAfter = refreshAfter.asMilliseconds();
 
 		if (cleanupInterval) {
-			setInterval(this.cleanup, cleanupInterval);
+			setInterval(this.cleanup.bind(this), cleanupInterval);
 		}
 
 		if (refreshInterval) {
-			setInterval(this.refreshAll, refreshInterval);
+			setInterval(this.refreshAll.bind(this), refreshInterval);
 		}
 	}
 
@@ -103,11 +103,13 @@ export class MiCache<K = string, V = unknown> extends TypeSafeEmitter<ICacheEven
 	public delete(rawKeys: AllowArray<K>): void {
 		const keys = arrarify(rawKeys);
 
-		keys.forEach(key => this.remove(key, 'explicit'));
+		for (const key of keys) {
+			this.remove(key, 'explicit');
+		}
 	}
 
 	private remove(key: K, reason: string): void {
-		if (this.has(key)) {
+		if (!this.has(key)) {
 			return;
 		}
 
@@ -136,6 +138,10 @@ export class MiCache<K = string, V = unknown> extends TypeSafeEmitter<ICacheEven
 	public cleanup(): void {
 		this.evictByTime();
 		this.evictBySize();
+	}
+
+	public flush(): void {
+		this.storage = new Map();
 	}
 
 	private evictByTime() {

@@ -1,18 +1,12 @@
+import { ConfigService } from '@miko/core';
 import { Message } from 'discord.js';
 import { Logger } from 'tslog';
 import { singleton } from 'tsyringe';
 import { MiClient } from '../client';
+import { IParsedCommandData } from '../types';
 import { MiCommand } from './command';
 import { PermissionSecurity } from './security/permissions';
 import { Throttler } from './security/throttler';
-
-interface IParsedCommandData {
-	afterPrefix?: string;
-	alias?: string;
-	command?: MiCommand;
-	content?: string;
-	prefix?: string;
-}
 
 @singleton()
 export class CommandService {
@@ -23,7 +17,8 @@ export class CommandService {
 	public constructor(
 		private readonly client: MiClient,
 		private readonly throttler: Throttler,
-		private readonly permissionSecurity: PermissionSecurity
+		private readonly permissionSecurity: PermissionSecurity,
+		private readonly configService: ConfigService
 	) {
 		this.client.on('message', async message => {
 			if (message.partial) await message.fetch();
@@ -108,7 +103,7 @@ export class CommandService {
 
 	private async parseCommand(message: Message): Promise<IParsedCommandData> {
 		const mentions = [`<@${this.client.user?.id}>`, `<@!${this.client.user?.id}>`];
-		const prefixes = [...mentions, await this.prefix()];
+		const prefixes = [...mentions, await this.configService.getPrefix(message.guild.id)];
 
 		const parses = prefixes.map(prefix => this.parseWithPrefix(message, prefix));
 		const result = parses.find(parsed => parsed.command);
@@ -118,11 +113,6 @@ export class CommandService {
 		}
 
 		return {};
-	}
-
-	// TODO: CUSTOM SETTING
-	private async prefix(): Promise<string> {
-		return '!';
 	}
 
 	private parseWithPrefix(message: Message, prefix: string): IParsedCommandData {

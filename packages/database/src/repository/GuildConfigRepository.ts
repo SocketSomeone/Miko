@@ -1,26 +1,28 @@
+import { EntityRepository } from 'typeorm';
 import { GuildConfig } from '../entity';
 import { GuildRepository } from './base';
 
+@EntityRepository(GuildConfig)
 export class GuildConfigRepository extends GuildRepository<GuildConfig> {
 	public async findPrefixByGuildId(guildId: string): Promise<string> {
-		const { prefix } = await this.findOne({
+		const data = await this.findOne({
 			select: ['prefix'],
 			where: {
 				guildId
 			}
 		});
 
-		return prefix || '!';
+		return (data && data.prefix) || '!';
 	}
 
 	public async findLocaleByGuildId(guildId: string): Promise<string> {
-		const { locale } = await this.findOne({
+		const data = await this.findOne({
 			select: ['locale'],
 			where: {
 				guildId
 			}
 		});
 
-		return locale || 'en';
+		return (data && data.locale) || 'en';
 	}
 }

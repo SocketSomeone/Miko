@@ -1,5 +1,6 @@
 import { Constructor } from '@miko/utils';
 import { Message, PermissionResolvable } from 'discord.js';
+import { MiCommand } from './commands';
 import { MiResolver } from './resolvers/resolver';
 
 export type ResolverOrConstructor<T> = MiResolver<T> | Constructor<MiResolver<T>>;
@@ -27,4 +28,11 @@ export interface ICommandOptions {
 	ratelimit?: number;
 
 	typing?: boolean;
+}
+export interface IParsedCommandData {
+	afterPrefix?: string;
+	alias?: string;
+	command?: MiCommand;
+	content?: string;
+	prefix?: string;
 }

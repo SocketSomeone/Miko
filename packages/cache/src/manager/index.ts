@@ -20,7 +20,7 @@ export class CacheManager {
 		return value as T;
 	}
 
-	public delete<T, K>(clazz: Constructor<T>, key: K): void {
+	public delete<T, K>(clazz: Constructor<T> | string, key: K): void {
 		const cache = this.getCache(clazz);
 
 		if (cache !== null) {
@@ -28,8 +28,8 @@ export class CacheManager {
 		}
 	}
 
-	private getCache<T>(clazz: T) {
-		const cacheName = clazz.constructor.name;
+	private getCache<T>(clazz: Constructor<T> | string) {
+		const cacheName = typeof clazz === 'string' ? clazz : clazz.name;
 
 		let cache = this.storage.get(cacheName);
 

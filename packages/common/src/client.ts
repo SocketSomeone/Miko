@@ -14,7 +14,6 @@ export class MiClient extends Client {
 			messageCacheLifetime: 240,
 			messageSweepInterval: 250,
 			fetchAllMembers: true,
-			shards: 'auto',
 			presence: {
 				activity: {
 					name: 'mikoapp.xyz | !help',
@@ -44,8 +43,8 @@ export class MiClient extends Client {
 	public async login(token: string): Promise<string> {
 		this.logger.debug('Setting up events...');
 		this.once('ready', this.onClientReady);
-		this.once('shardReady', this.onShardReady);
 
+		this.once('shardReady', this.onShardReady);
 		this.on('shardResume', this.onShardResume);
 		this.on('shardReconnecting', this.onShardReconnecting);
 		this.on('shardDisconnect', this.onShardDisconnect);

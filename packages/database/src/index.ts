@@ -1,2 +1,4 @@
-export { Connection, createConnection } from 'typeorm';
+export * from 'typeorm';
+
 export * from './entity';
+export * from './repository';

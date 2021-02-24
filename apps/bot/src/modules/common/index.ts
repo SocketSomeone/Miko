@@ -1,3 +1,7 @@
-import { ModuleBuilder } from '@miko/common';
+import { Module } from '@miko/common';
 
-export const CommonModule = new ModuleBuilder();
+import * as services from './services/GatewayListner';
+
+export const CommonModule = new Module({
+	services
+});

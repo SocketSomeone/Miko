@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 
-export * from './resolvers';
-export * from './utils/helpers';
-export * from './utils/moduleBuilder';
+export * from './client';
 
-export { MiClient } from './client';
+export * from './commands';
+export * from './resolvers';
+export * from './utils';

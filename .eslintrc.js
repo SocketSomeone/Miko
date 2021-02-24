@@ -53,6 +53,7 @@ module.exports = {
 		"import/no-cycle": "off",
 		"import/no-extraneous-dependencies": ["off"],
 		"no-restricted-syntax": ["error", "WithStatement"],
+		"class-methods-use-this": "off",
 		"linebreak-style": ["error", "unix"],
 		"comma-dangle": ["error", "never"],
 		"no-param-reassign": ["error", {
@@ -69,6 +70,10 @@ module.exports = {
 		"eol-last": ["off"],
 		"max-len": ["error", { "code": 150 }],
 		"no-shadow": "off",
+		"function-paren-newline": "off",
+		"consistent-return": "off",
+		"no-useless-return": "off",
+		"no-useless-constructor": "off",
 		"prettier/prettier": ["error", {
 			"parser": "typescript",
 			"trailingComma": "none",
@@ -84,7 +89,7 @@ module.exports = {
 	},
 	overrides: [
 		{
-			files: ["{apps,packages,tools}/*/test/**/*.test.ts"],
+			files: ["{apps,packages}/*/test/**/*.test.ts"],
 			env: {
 				jest: true
 			}

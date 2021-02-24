@@ -1,4 +1,5 @@
 /* eslint-disable consistent-return */
+import { Lexer } from 'lexure';
 import { Message, PermissionResolvable } from 'discord.js';
 import { MiResolver } from '../resolvers';
 import { GuardFunction, ICommandArgument, ICommandOptions } from '../types';
@@ -25,9 +26,9 @@ export abstract class MiCommand implements ICommandOptions {
 	public constructor(opts: ICommandOptions) {
 		Object.assign(this, opts);
 
-		this.arguments.forEach(argument => {
+		opts?.arguments?.forEach(({ resolver }, i) => {
 			// eslint-disable-next-line new-cap
-			argument.resolver = argument.resolver instanceof MiResolver ? argument.resolver : new argument.resolver();
+			this.arguments[i].resolver = resolver instanceof MiResolver ? resolver : new resolver();
 		});
 	}
 
@@ -37,70 +38,26 @@ export abstract class MiCommand implements ICommandOptions {
 		return this.guards.every(guard => guard(message) === true);
 	}
 
-	// TODO: Refactor this or KYS :)
-	public async parse(message: Message, content = ''): Promise<unknown[] | undefined> {
-		const rawArgs = this.rawArgs(content.split(' '));
-		const args: unknown[] = [];
+	public async parse(message: Message, input = ''): Promise<unknown[] | undefined> {
+		const args: Set<unknown> = new Set();
+		const tokens = new Lexer(input)
+			.setQuotes([
+				['"', '"'],
+				['“', '”']
+			])
+			.lex();
 
-		let i = 0;
+		for (let i = 0; i < this.arguments.length; i += 1) {
+			const { resolver, optional } = this.arguments[i];
+			const resolved = await resolver.resolve(tokens[i]?.value, message.guild);
 
-		for (const { resolver, afterContain, optional } of this.arguments) {
-			const rawVal = rawArgs[i] && afterContain ? rawArgs.slice(i, rawArgs.length).join(' ') : rawArgs[i];
-
-			try {
-				const val = await (resolver as MiResolver<unknown>).resolve(rawVal, message.guild);
-
-				if (typeof val === typeof undefined && !optional) {
-					return;
-				}
-
-				args.concat(val);
-			} catch (err) {
+			if (!resolved && !optional) {
 				return;
 			}
 
-			i += 1;
+			args.add(resolved);
 		}
 
-		return args;
-	}
-
-	private rawArgs(splits: string[]): string[] {
-		const rawArgs: string[] = [];
-
-		let quote = false;
-		let acc = '';
-
-		for (let j = 0; j < splits.length; j += 1) {
-			const split = splits[j];
-
-			if (split.length === 0) {
-				continue;
-			}
-
-			if (!quote && split.startsWith(`"`)) {
-				quote = true;
-				acc = split;
-
-				continue;
-			}
-
-			if (split.endsWith(`"`)) {
-				quote = false;
-				acc += ` ${split}`;
-
-				rawArgs.push(acc);
-
-				continue;
-			}
-
-			if (quote) {
-				acc += ` ${split}`;
-			} else {
-				rawArgs.push(split);
-			}
-		}
-
-		return acc.length < 1 ? rawArgs : rawArgs.concat(acc);
+		return [...args];
 	}
 }

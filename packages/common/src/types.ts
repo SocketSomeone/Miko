@@ -9,16 +9,21 @@ export type GuardFunction = (message: Message) => boolean;
 
 export interface ICommandArgument {
 	name: string;
+	resolver: MiResolver<unknown>;
+	optional?: boolean;
+}
+
+export interface ICommandOptionsArgument {
+	name: string;
 	resolver: ResolverOrConstructor<unknown>;
 	optional?: boolean;
-	afterContain?: boolean;
 }
 
 export interface ICommandOptions {
 	name: string;
 	group?: string;
 
-	arguments?: ICommandArgument[];
+	arguments?: ICommandOptionsArgument[];
 	guards?: GuardFunction[];
 
 	clientPermissions?: PermissionResolvable[];

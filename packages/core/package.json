@@ -1,11 +1,11 @@
 {
 	"name": "@miko/core",
-	"version": "1.4.1",
+	"version": "1.5.0",
 	"main": "./lib/index.js",
 	"types": "./lib/index.d.ts",
 	"devDependencies": {
-		"@miko/database": "1.4.1",
-		"@miko/utils": "*"
+		"@miko/database": "1.5.0",
+		"@miko/utils": "1.5.0"
 	},
 	"scripts": {
 		"build": "tsc --build ./tsconfig.package.json"

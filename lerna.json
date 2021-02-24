@@ -6,7 +6,8 @@
 		"version": {
 			"allowBranch": [
 				"main",
-				"feature/*"
+				"feature/*",
+				"release/*"
 			],
 			"conventionalCommits": true,
 			"exact": true,

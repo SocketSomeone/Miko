@@ -6,19 +6,19 @@
 		"composite": true,
 		"paths": {
 			"@miko/cache": [
-				"./packages/cache/src"
+				"packages/cache/src"
 			],
 			"@miko/core": [
 				"packages/core/src"
 			],
 			"@miko/database": [
-				"./packages/database/src"
+				"packages/database/src"
 			],
 			"@miko/common": [
-				"./packages/common/src"
+				"packages/common/src"
 			],
 			"@miko/utils": [
-				"./packages/utils/src"
+				"packages/utils/src"
 			]
 		}
 	}

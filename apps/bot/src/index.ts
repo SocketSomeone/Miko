@@ -4,7 +4,7 @@ import { Logger } from 'tslog';
 const logger = new Logger({ name: 'ShardingManager' });
 
 const shards = new ShardingManager('./lib/main.js', {
-	token: process.env.TOKEN,
+	token: process.env.SHARDS_TOKEN,
 	totalShards: Number(process.env.SHARDS_COUNT) || 'auto'
 });
 

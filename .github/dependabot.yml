@@ -18,7 +18,6 @@ updates:
       prefix: '🔼'
       prefix-development: '🔼'
     labels:
-      - '🎂 @miko'
       - 'dependencies'
     open-pull-requests-limit: 15
 
@@ -29,5 +28,4 @@ updates:
     assignees:
       - 'SocketSomeone'
     labels:
-      - '⚙ p:bot'
       - 'dependencies'

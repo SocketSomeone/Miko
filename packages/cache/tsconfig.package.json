@@ -15,7 +15,7 @@
 	],
 	"references": [
 		{
-			"path": "..\\..\\tools\\utils\\tsconfig.package.json"
+			"path": "..\\utils\\tsconfig.package.json"
 		}
 	]
 }

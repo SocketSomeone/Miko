@@ -60,4 +60,3 @@ ormconfig.json
 # Build
 apps/*/lib
 packages/*/lib
-tools/*/lib

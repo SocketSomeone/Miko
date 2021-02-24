@@ -9,9 +9,7 @@ export class ConfigService extends MiService<GuildConfig, GuildConfigRepository>
 	}
 
 	public async getPrefix(guildId: string): Promise<string> {
-		const prefix = await this.repository.findPrefixByGuildId(guildId);
-
-		return prefix;
+		return this.repository.findPrefixByGuildId(guildId);
 	}
 
 	public async getLocale(guildId: string): Promise<string> {

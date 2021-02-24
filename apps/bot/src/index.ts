@@ -1,18 +1,13 @@
+import { ShardingManager } from 'discord.js';
 import { Logger } from 'tslog';
-import { MiClient } from '@miko/common';
-import { createConnection } from '@miko/database';
 
-const logger = new Logger({ name: 'ROOT' });
+const logger = new Logger({ name: 'ShardingManager' });
 
-const main = async () => {
-	logger.debug('Starting Miko instance!');
-	const client = new MiClient();
+const shards = new ShardingManager('./lib/main.js', {
+	token: process.env.SHARDS_TOKEN,
+	totalShards: Number(process.env.SHARDS_COUNT) || 'auto'
+});
 
-	logger.debug('Connection to Database...');
-	await createConnection(String(process.env.NODE_ENV));
+shards.spawn().catch(err => logger.error(`Shard failed to spawn, ${err}`));
 
-	logger.debug('Initializing BOT login...');
-	await client.login(process.env.TOKEN);
-};
-
-main().catch(err => logger.error(err));
+shards.on('shardCreate', shard => logger.debug(`Shard #${shard.id} created!`));

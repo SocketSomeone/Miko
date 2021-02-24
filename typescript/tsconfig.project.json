@@ -3,6 +3,9 @@
 	"files": [],
 	"references": [
 		{
+			"path": "..\\packages\\utils\\tsconfig.package.json"
+		},
+		{
 			"path": "..\\packages\\database\\tsconfig.package.json"
 		},
 		{

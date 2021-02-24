@@ -1,9 +1,14 @@
 .git
 
+.vscode
+
+.github
+
+coverage
+
 node_modules
 
 scripts
 
 test
 
-coverage

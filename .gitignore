@@ -9,6 +9,9 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+#IDE
+.vscode
+
 # Runtime data
 pids
 *.pid
@@ -57,4 +60,3 @@ ormconfig.json
 # Build
 apps/*/lib
 packages/*/lib
-tools/*/lib

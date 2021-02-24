@@ -1,10 +1,30 @@
 import { Repository } from 'typeorm';
-import { GuildEntity } from '../../entity/base/GuildEntity';
+import { GuildEntity } from '../..';
 
 export abstract class GuildRepository<T extends GuildEntity> extends Repository<T> {
-	abstract findByGuildId(guildId: string): Promise<T>;
+	public findByGuildId(guildId: string): Promise<T> {
+		return this.findOne({
+			where: {
+				guildId
+			}
+		});
+	}
 
-	abstract findAllByGuildId(guildId: string): Promise<T[]>;
+	public findAllByGuildId(guildId: string): Promise<T[]> {
+		return this.find({
+			where: {
+				guildId
+			}
+		});
+	}
 
-	abstract existsByGuildId(guildId: string): Promise<boolean>;
+	public async existsByGuildId(guildId: string): Promise<boolean> {
+		const countOfGuilds = await this.count({
+			where: {
+				guildId
+			}
+		});
+
+		return countOfGuilds > 0;
+	}
 }

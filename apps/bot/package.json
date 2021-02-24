@@ -1,6 +1,6 @@
 {
 	"name": "@miko/bot",
-	"version": "1.3.0",
+	"version": "1.5.0",
 	"main": "./lib/index.js",
 	"types": "./lib/index.d.ts",
 	"peerDependencies": {
@@ -13,5 +13,8 @@
 		"watch": "yarn run build --watch",
 		"start": "pm2 start ./application.yml --only bot",
 		"poststart": "pm2 logs"
+	},
+	"dependencies": {
+		"discord.js": "12.5.1"
 	}
 }

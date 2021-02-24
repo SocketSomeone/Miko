@@ -16,7 +16,7 @@
 		"lint": "eslint --fix --ignore-path .gitignore {apps,packages}/*/src/**/*.ts",
 		"lint:fix": "eslint --fix --ignore-path .gitignore {apps,packages,scripts}/*/src/**/*.ts",
 		"update:tsconfig": "ts-node scripts/update-package-tsconfig.ts",
-		"update:version": "lerna version --no-push --no-changelog"
+		"update:version": "lerna version --no-push --no-changelog --no-git-tag-version"
 	},
 	"repository": {
 		"type": "git",

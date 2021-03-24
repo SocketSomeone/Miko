@@ -8,14 +8,11 @@
 			"@miko/cache": [
 				"packages/cache/src"
 			],
-			"@miko/core": [
-				"packages/core/src"
+			"@miko/common": [
+				"packages/common/src"
 			],
 			"@miko/database": [
 				"packages/database/src"
-			],
-			"@miko/common": [
-				"packages/common/src"
 			],
 			"@miko/utils": [
 				"packages/utils/src"

@@ -8,7 +8,11 @@
 		"typeorm": "0.2.31"
 	},
 	"devDependencies": {
-		"@types/node": "14.14.31"
+		"@types/node": "14.14.35"
+	},
+	"peerDependencies": {
+		"@miko/cache": "*",
+		"@miko/utils": "*"
 	},
 	"scripts": {
 		"build": "tsc --build ./tsconfig.package.json",

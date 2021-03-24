@@ -13,7 +13,7 @@
 	},
 	"peerDependencies": {
 		"@miko/cache": "*",
-		"@miko/core": "*",
+		"@miko/database": "*",
 		"@miko/utils": "*"
 	},
 	"scripts": {

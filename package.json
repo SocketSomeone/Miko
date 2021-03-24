@@ -13,8 +13,7 @@
 		"test": "yarn run lint && jest --no-cache --config test/jest.config.json",
 		"test:inspect": "yarn lint && node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand --config test/jest.config.json",
 		"test:coverage": "jest --config test/jest.config.json --coverage",
-		"lint": "eslint --fix --ignore-path .gitignore {apps,packages}/*/src/**/*.ts",
-		"lint:fix": "eslint --fix --ignore-path .gitignore {apps,packages,scripts}/*/src/**/*.ts",
+		"lint": "eslint --fix --ignore-path .gitignore {apps,packages,scripts}/*/src/**/*.ts",
 		"update:tsconfig": "ts-node scripts/update-package-tsconfig.ts",
 		"update:version": "lerna version --no-push --no-changelog --no-git-tag-version"
 	},
@@ -39,7 +38,7 @@
 	},
 	"author": {
 		"email": "socket.someone@gmail.com",
-		"name": "Alex | someone#6191",
+		"name": "Alexey | someone#6191",
 		"url": "https://github.com/SocketSomeone"
 	},
 	"license": "MIT",

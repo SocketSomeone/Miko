@@ -1,7 +1,7 @@
 import { Column } from 'typeorm';
-import { MiEntity } from './BaseEntity';
+import { BaseEntity } from './BaseEntity';
 
-export abstract class UserEntity extends MiEntity {
+export abstract class UserEntity extends BaseEntity {
 	@Column('bigint', { name: 'user_id' })
 	public userId!: string;
 }

@@ -3,15 +3,10 @@
 	"version": "1.5.0",
 	"main": "./lib/index.js",
 	"types": "./lib/index.d.ts",
-	"peerDependencies": {
-		"@miko/cache": "*",
-		"@miko/common": "*",
-		"@miko/database": "*"
-	},
 	"scripts": {
 		"build": "tsc --build ./tsconfig.package.json",
 		"watch": "yarn run build --watch",
-		"start": "pm2 start ./application.yml --only bot",
+		"start": "pm2 start ./application.yml",
 		"poststart": "pm2 logs"
 	},
 	"dependencies": {
@@ -19,5 +14,10 @@
 	},
 	"devDependencies": {
 		"lexure": "0.17.0"
+	},
+	"peerDependencies": {
+		"@miko/cache": "*",
+		"@miko/common": "*",
+		"@miko/database": "*"
 	}
 }

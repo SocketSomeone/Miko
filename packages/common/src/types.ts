@@ -1,15 +1,14 @@
 import { Constructor } from '@miko/utils';
 import { Message, PermissionResolvable } from 'discord.js';
-import { MiCommand } from './commands';
-import { MiResolver } from './resolvers/resolver';
+import { Command, Resolver } from './framework';
 
-export type ResolverOrConstructor<T> = MiResolver<T> | Constructor<MiResolver<T>>;
+export type ResolverOrConstructor<T> = Resolver<T> | Constructor<Resolver<T>>;
 
 export type GuardFunction = (message: Message) => boolean;
 
 export interface ICommandArgument {
 	name: string;
-	resolver: MiResolver<unknown>;
+	resolver: Resolver<unknown>;
 	optional?: boolean;
 }
 
@@ -37,7 +36,7 @@ export interface ICommandOptions {
 export interface IParsedCommandData {
 	afterPrefix?: string;
 	alias?: string;
-	command?: MiCommand;
+	command?: Command;
 	content?: string;
 	prefix?: string;
 }

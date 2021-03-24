@@ -1,4 +1,3 @@
-
 import { createConnection } from '@miko/database';
 import { Client } from '@miko/common';
 import { Logger } from 'tslog';

@@ -12,8 +12,9 @@ export class CacheManager {
 
 		let value = await cache.get(key);
 
-		if (value === null) {
+		if (value === null && !!supplier) {
 			value = await supplier(key);
+
 			cache.set(key, value);
 		}
 

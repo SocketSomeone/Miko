@@ -1,6 +1,7 @@
 import RabbitManager from 'rabbitmq-event-manager';
 import { singleton } from 'tsyringe';
-import { RabbitQueues, ICacheDeleteRequest } from '../../models';
+import type { ICacheDeleteRequest } from '../../models';
+import { RabbitQueues } from '../../models';
 
 @singleton()
 export class GatewaySender extends RabbitManager {

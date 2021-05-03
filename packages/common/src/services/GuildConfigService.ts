@@ -1,9 +1,10 @@
-import { DeepPartial, GuildConfig, GuildConfigRepository } from '@miko/database';
+import type { DeepPartial } from '@miko/database';
+import { GuildConfig, GuildConfigRepository } from '@miko/database';
 import { singleton } from 'tsyringe';
-import { DatabaseService } from './base';
+import { BaseService } from './base';
 
 @singleton()
-export class GuildConfigService extends DatabaseService<GuildConfig, GuildConfigRepository> {
+export class GuildConfigService extends BaseService<GuildConfig, GuildConfigRepository> {
 	public constructor() {
 		super(GuildConfig, GuildConfigRepository);
 	}

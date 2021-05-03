@@ -46,14 +46,15 @@ jspm_packages/
 # dotenv environment variables file
 .env
 
-
 # TypeScript cache
 *.tsbuildinfo
 
 # dotenv environment variables file  / resources
 application.yml
 ormconfig.json
+config.json
 
 # Build
 apps/*/lib
 packages/*/lib
+.nuxt

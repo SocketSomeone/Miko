@@ -43,13 +43,14 @@ module.exports = {
 		"@typescript-eslint/ban-types": ["off"],
 		"@typescript-eslint/indent": ["off"],
 		"@typescript-eslint/semi": ["error"],
+		"@typescript-eslint/consistent-type-imports": ["warn"],
 		"import/extensions": ["error", "ignorePackages", {
 			"js": "never",
 			"ts": "never"
 		}],
 		"import/prefer-default-export": "off",
-		"import/no-default-export": ["error"],
 		"import/no-cycle": "off",
+		"import/export": "off",
 		"import/no-extraneous-dependencies": ["off"],
 		"no-restricted-syntax": ["error", "WithStatement"],
 		"class-methods-use-this": "off",

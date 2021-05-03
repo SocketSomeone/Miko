@@ -1,7 +1,8 @@
-import { DMChannel, Message } from 'discord.js';
+import type { Message } from 'discord.js';
+import { DMChannel } from 'discord.js';
 import { injectable } from 'tsyringe';
 import { Client } from '../../framework/client';
-import { Command } from '../../framework/commands/command';
+import type { Command } from '../../framework/commands/command';
 
 @injectable()
 export class PermissionSecurity {

@@ -2,7 +2,8 @@ import RabbitManager from 'rabbitmq-event-manager';
 
 import { singleton } from 'tsyringe';
 import { CacheManager } from '@miko/cache';
-import { RabbitQueues, ICacheDeleteRequest } from '../../models';
+import type { ICacheDeleteRequest } from '../../models';
+import { RabbitQueues } from '../../models';
 import { Client } from '../../framework';
 
 @singleton()

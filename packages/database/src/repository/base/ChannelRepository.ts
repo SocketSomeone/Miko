@@ -1,27 +1,25 @@
-import { DeleteResult, Repository } from 'typeorm';
-import { ChannelEntity } from '../..';
+import type { DeleteResult, FindConditions } from 'typeorm';
+import { Repository } from 'typeorm';
+import type { ChannelEntity } from '../..';
 
 export abstract class ChannelRepository<T extends ChannelEntity> extends Repository<T> {
-	public findByGuildAndChannelId(guildId: string, channelId: string): Promise<T> {
+	public findByChannelId(channelId: string): Promise<T> {
 		return this.findOne({
 			where: {
-				channelId,
-				guildId
+				channelId
 			}
 		});
 	}
 
-	public deleteByGuildIdAndChannelId(guildId: string, channelId: string): Promise<DeleteResult> {
-		return this.createQueryBuilder()
-			.where('guildId = :guildId AND channelId = :channelId', { guildId, channelId })
-			.delete()
-			.execute();
+	public deleteByChannelId(channelId: string): Promise<DeleteResult> {
+		return this.delete(<FindConditions<T | unknown>>{
+			channelId
+		});
 	}
 
-	public async exists(guildId: string, channelId: string): Promise<boolean> {
+	public async exists(channelId: string): Promise<boolean> {
 		const countOfChannels = await this.count({
 			where: {
-				guildId,
 				channelId
 			}
 		});

@@ -1,6 +1,6 @@
-import { Constructor } from '@miko/utils';
-import { Message, PermissionResolvable } from 'discord.js';
-import { Command, Resolver } from './framework';
+import type { Constructor } from '@miko/utils';
+import type { Message, PermissionResolvable } from 'discord.js';
+import type { Command, Resolver } from './framework';
 
 export type ResolverOrConstructor<T> = Resolver<T> | Constructor<Resolver<T>>;
 

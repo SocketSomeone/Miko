@@ -6,13 +6,13 @@ export class GuildConfig extends GuildEntity {
 	@Column('varchar')
 	public name!: string;
 
-	@Column('varchar', { name: 'icon_url' })
+	@Column('varchar', { name: 'icon_url', nullable: true })
 	public iconURL!: string;
 
-	@Column('varchar')
+	@Column('varchar', { default: '!' })
 	public prefix = '!';
 
-	@Column('varchar', { nullable: false })
+	@Column('varchar', { nullable: false, default: 'en' })
 	public locale = 'en';
 
 	public constructor(guildId: string) {

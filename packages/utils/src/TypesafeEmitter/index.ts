@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-import { Arguments } from '../types';
+import type { Arguments } from '../types';
 
 interface ITypedEventEmitter<Events> {
 	addListener<E extends keyof Events>(event: E, listener: Events[E]): this;

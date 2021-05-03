@@ -1,5 +1,5 @@
-import { Duration } from 'moment';
-import { MetadataCache } from './meta/metadata';
+import type { Duration } from 'moment';
+import type { MetadataCache } from './meta/metadata';
 
 export interface ICacheOptions<K, V> {
 	maxSize?: number;

@@ -1,10 +1,11 @@
 import { duration } from 'moment';
-import { AllowArray, arrarify, TypeSafeEmitter } from '@miko/utils';
+import type { AllowArray } from '@miko/utils';
+import { arrarify, TypeSafeEmitter } from '@miko/utils';
 import { MetricsCache } from './meta/metrics';
-import { ICacheEntry, ICacheEvents, ICacheOptions } from './types';
+import type { ICacheEntry, ICacheEvents, ICacheOptions } from './types';
 import { MetadataCache } from './meta/metadata';
 
-export class MiCache<K = string, V = unknown> extends TypeSafeEmitter<ICacheEvents<K, V>> {
+export class BaseCache<K = string, V = unknown> extends TypeSafeEmitter<ICacheEvents<K, V>> {
 	public readonly metrics = new MetricsCache();
 
 	private readonly pending: Map<K, Promise<V>> = new Map();
@@ -72,7 +73,7 @@ export class MiCache<K = string, V = unknown> extends TypeSafeEmitter<ICacheEven
 	}
 
 	public async refresh(key: K, loader?: ICacheOptions<K, V>['load']): Promise<null | V> {
-		const load: ICacheOptions<K, V>['load'] = loader || this.load;
+		const load: ICacheOptions<K, V>['load'] = loader ?? this.load;
 
 		if (typeof load !== 'function') {
 			return null;
@@ -126,9 +127,9 @@ export class MiCache<K = string, V = unknown> extends TypeSafeEmitter<ICacheEven
 
 	public filter(fn: (v: ICacheEntry<V>, k: K) => boolean): Map<K, ICacheEntry<V>> {
 		const array = [...this.storage.entries()];
-		const filtred = array.filter(([key, value]) => fn(value, key));
+		const filtered = array.filter(([key, value]) => fn(value, key));
 
-		return new Map(filtred);
+		return new Map(filtered);
 	}
 
 	public has(key: K): boolean {

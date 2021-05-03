@@ -1,9 +1,9 @@
-import { Message } from 'discord.js';
+import type { Message } from 'discord.js';
 import { Logger } from 'tslog';
 import { singleton } from 'tsyringe';
 import { Client } from '../../framework/client';
-import { Command } from '../../framework/commands/command';
-import { IParsedCommandData } from '../../types';
+import type { Command } from '../../framework/commands/command';
+import type { IParsedCommandData } from '../../types';
 import { GuildConfigService } from '../GuildConfigService';
 import { PermissionSecurity } from './PermissionSecurity';
 import { ThrottlerSecurity } from './ThrottlerSecurity';

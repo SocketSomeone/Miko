@@ -1,5 +1,6 @@
-import { DeleteResult, Repository } from 'typeorm';
-import { MemberEntity } from '../..';
+import type { DeleteResult, FindConditions } from 'typeorm';
+import { Repository } from 'typeorm';
+import type { MemberEntity } from '../..';
 
 export abstract class MemberRepository<T extends MemberEntity> extends Repository<T> {
 	public findByGuildIdAndUserId(guildId: string, userId: string): Promise<T> {
@@ -21,9 +22,9 @@ export abstract class MemberRepository<T extends MemberEntity> extends Repositor
 	}
 
 	public deleteByGuildIdAndUserId(guildId: string, userId: string): Promise<DeleteResult> {
-		return this.createQueryBuilder()
-			.where('guildId = :guildId AND userId = :userId', { guildId, userId })
-			.delete()
-			.execute();
+		return this.delete(<FindConditions<T | unknown>>{
+			userId,
+			guildId
+		});
 	}
 }

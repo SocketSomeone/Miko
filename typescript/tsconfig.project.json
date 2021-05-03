@@ -19,6 +19,9 @@
 		},
 		{
 			"path": "..\\apps\\bot\\tsconfig.package.json"
+		},
+		{
+			"path": "..\\apps\\web\\tsconfig.package.json"
 		}
 	]
 }

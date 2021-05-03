@@ -1,5 +1,5 @@
 import { Repository } from 'typeorm';
-import { GuildEntity } from '../..';
+import type { GuildEntity } from '../..';
 
 export abstract class GuildRepository<T extends GuildEntity> extends Repository<T> {
 	public findByGuildId(guildId: string): Promise<T> {

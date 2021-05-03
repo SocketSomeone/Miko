@@ -1,9 +1,9 @@
 /* eslint-disable consistent-return */
 import { Lexer } from 'lexure';
-import { Message, PermissionResolvable } from 'discord.js';
-import { Awaited } from '@miko/utils/src';
+import type { Message, PermissionResolvable } from 'discord.js';
+import type { Awaited } from '@miko/utils/src';
 import { Resolver } from '../resolvers';
-import { GuardFunction, ICommandArgument, ICommandOptions } from '../../types';
+import type { GuardFunction, ICommandArgument, ICommandOptions } from '../../types';
 
 export abstract class Command implements ICommandOptions {
 	public name!: string;

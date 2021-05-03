@@ -12,7 +12,7 @@ export class GuildConfigRepository extends GuildRepository<GuildConfig> {
 			}
 		});
 
-		return (data && data.prefix) || '!';
+		return data?.prefix || '!';
 	}
 
 	public async findLocaleByGuildId(guildId: string): Promise<string> {
@@ -23,6 +23,6 @@ export class GuildConfigRepository extends GuildRepository<GuildConfig> {
 			}
 		});
 
-		return (data && data.locale) || 'en';
+		return data?.locale || 'en';
 	}
 }

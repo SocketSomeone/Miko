@@ -1,11 +1,11 @@
-import { Constructor } from '@miko/utils';
+import type { Constructor } from '@miko/utils';
 import { singleton } from 'tsyringe';
-import { MiCache } from '../cache';
-import { ICacheOptions } from '../types';
+import { BaseCache } from '../cache';
+import type { ICacheOptions } from '../types';
 
 @singleton()
 export class CacheManager {
-	private storage: Map<string, MiCache<unknown, unknown>> = new Map();
+	private storage: Map<string, BaseCache<unknown, unknown>> = new Map();
 
 	public async get<T, K>(clazz: Constructor<T>, key: K, supplier?: ICacheOptions<K, T>['load']): Promise<T> {
 		const cache = this.getCache(clazz);
@@ -35,7 +35,7 @@ export class CacheManager {
 		let cache = this.storage.get(cacheName);
 
 		if (!cache) {
-			cache = new MiCache();
+			cache = new BaseCache();
 			this.storage.set(cacheName, cache);
 		}
 

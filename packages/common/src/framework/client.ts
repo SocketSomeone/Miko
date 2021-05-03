@@ -1,6 +1,7 @@
-import { Client as DClient, CloseEvent, Guild } from 'discord.js';
+import type { CloseEvent, Guild } from 'discord.js';
+import { Client as DClient } from 'discord.js';
 import { Logger } from 'tslog';
-import { container, singleton } from 'tsyringe';
+import { singleton } from 'tsyringe';
 
 @singleton()
 export class Client extends DClient {

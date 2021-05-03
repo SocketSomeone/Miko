@@ -1,9 +1,11 @@
 import { CacheManager } from '@miko/cache';
-import { DeepPartial, getCustomRepository, GuildEntity, GuildRepository, ObjectType } from '@miko/database';
-import { AutoWired, Constructor } from '@miko/utils';
+import type { DeepPartial, GuildEntity, GuildRepository, ObjectType } from '@miko/database';
+import { getCustomRepository } from '@miko/database';
+import type { Constructor } from '@miko/utils';
+import { AutoWired } from '@miko/utils';
 import { GatewaySender } from '../gateway';
 
-export abstract class DatabaseService<T extends GuildEntity, R extends GuildRepository<T>> {
+export abstract class BaseService<T extends GuildEntity, R extends GuildRepository<T>> {
 	@AutoWired()
 	protected readonly cacheManager: CacheManager;
 

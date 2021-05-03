@@ -1,7 +1,7 @@
 import moment from 'moment';
-import { Message } from 'discord.js';
+import type { Message } from 'discord.js';
 import { singleton } from 'tsyringe';
-import { Command } from '../../framework';
+import type { Command } from '../../framework';
 
 @singleton()
 export class ThrottlerSecurity {

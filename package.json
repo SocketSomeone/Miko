@@ -1,5 +1,6 @@
 {
 	"private": true,
+	"license": "MIT",
 	"name": "miko-monorepo",
 	"description": "Miko is simple, multipurpose bot that will help you with your server, which you can manage using the dashboard on our website.",
 	"workspaces": [
@@ -69,7 +70,7 @@
 		"glob": "7.1.6",
 		"husky": "5",
 		"jest": "26.6.3",
-		"lerna": "3.22.1",
+		"lerna": "^3.22.1",
 		"prettier": "2.2.1",
 		"rabbitmq-event-manager": "1.2.0",
 		"ts-jest": "26.5.4",

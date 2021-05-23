@@ -7,34 +7,55 @@
 			elevation="6"
 			color="background"
 		>
-			<v-avatar
-				color="accent"
-				max-width="98px"
-				max-height="98px"
-				size="98px"
-				rounded="circle"
-			>
-				S
+			<v-avatar color="accent" size="98px" rounded="circle">
+				<img
+					v-if="useAvatar"
+					:src="contributor.avatarUrl"
+					@error="useAvatar = false"
+					style="object-fit: cover"
+				/>
+
+				<span
+					v-else
+					v-text="contributor.username.slice(0, 1).toUpperCase()"
+				></span>
 			</v-avatar>
 
-			<h4 class="primary--text font-weight-medium pt-2">Name</h4>
+			<h4
+				class="primary--text font-weight-medium pt-2"
+				v-text="contributor.username"
+			></h4>
 
-			<p class="font-weight-regular caption">Specialization</p>
+			<p
+				class="font-weight-regular caption"
+				v-text="contributor.specialization"
+			></p>
 
 			<v-row justify="space-around" align="center" class="pt-1">
-				<v-btn icon link><v-icon size="20">mdi-discord</v-icon></v-btn>
-				<v-btn icon link><v-icon size="20">mdi-vk</v-icon></v-btn>
-				<v-btn icon link><v-icon size="20">mdi-email</v-icon></v-btn>
+				<v-btn
+					v-for="(l, i) in contributor.links"
+					:key="i"
+					icon
+					link
+					:href="l.url"
+				>
+					<v-icon size="20" v-text="'mdi-' + l.emoji"> </v-icon>
+				</v-btn>
 			</v-row>
 		</v-card>
 	</v-slide-item>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "nuxt-property-decorator";
+import { Component, Prop, Vue } from "nuxt-property-decorator";
 
 @Component({
 	name: "Contributor"
 })
-export default class extends Vue {}
+export default class extends Vue {
+	@Prop()
+	public contributor!: Object;
+
+	public useAvatar = true;
+}
 </script>

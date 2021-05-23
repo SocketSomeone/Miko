@@ -1,7 +1,7 @@
 import moment, { duration } from 'moment';
 import MockDate from 'mockdate';
-import { BaseCache } from '../src/cache';
-import { ICacheOptions } from '../src/types';
+import { LoadingCache } from '../src/cache';
+import type { ICacheOptions } from '../src/types';
 
 const defaultTestConfig: ICacheOptions<string, string> = {
 	refreshInterval: null,
@@ -10,7 +10,7 @@ const defaultTestConfig: ICacheOptions<string, string> = {
 	maxSize: 2
 };
 
-let cache: BaseCache<string, string> = new BaseCache<string, string>(defaultTestConfig);
+let cache: LoadingCache<string, string> = new LoadingCache<string, string>(defaultTestConfig);
 
 afterEach(() => cache.flush());
 
@@ -55,7 +55,7 @@ test('[Cache] Evict by time', async () => {
 });
 
 test('[Cache] Refreshing', async () => {
-	cache = new BaseCache<string, string>({
+	cache = new LoadingCache<string, string>({
 		...defaultTestConfig,
 		load: async () => {
 			return 'Loaded';

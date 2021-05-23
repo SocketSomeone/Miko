@@ -4,7 +4,6 @@
 	"main": "./lib/index.js",
 	"types": "./lib/index.d.ts",
 	"dependencies": {
-		"discord.js": "12.5.1",
 		"moment": "2.29.1"
 	},
 	"devDependencies": {
@@ -14,7 +13,7 @@
 	"peerDependencies": {
 		"@miko/cache": "*",
 		"@miko/database": "*",
-		"@miko/utils": "*"
+		"@miko/types": "*"
 	},
 	"scripts": {
 		"build": "tsc --build ./tsconfig.package.json"

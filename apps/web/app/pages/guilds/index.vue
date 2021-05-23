@@ -12,7 +12,7 @@
 import { Component, Vue } from "nuxt-property-decorator";
 
 @Component({
-	name: "My servers",
+	name: "Guilds",
 	head: {
 		title: "My servers"
 	}

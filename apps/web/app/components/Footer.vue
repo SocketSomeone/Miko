@@ -49,7 +49,7 @@
 
 			<v-divider class="mx-auto mt-5 mb-2"></v-divider>
 
-			<v-col cols="12" class="caption text-center">
+			<v-col cols="12" class="caption text-center copyright">
 				©&nbsp;{{ new Date().getFullYear() }} — Miko by&nbsp;
 				<span class="text-highlight">SocketSomeone</span>
 			</v-col>
@@ -147,7 +147,9 @@ export default class extends Vue {
 	}
 }
 
-.vote-cion {
-	height: 15px;
+.copyright {
+	@media only screen and (max-width: 960px) {
+		margin-bottom: 60px;
+	}
 }
 </style>

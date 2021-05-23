@@ -7,9 +7,13 @@ export default {
 			href: '/favicon.ico'
 		},
 		{
+			rel: 'preconnect',
+			href: 'https://fonts.gstatic.com'
+		},
+		{
 			rel: 'stylesheet',
 			type: 'text/css',
-			href: 'https://cdn.jsdelivr.net/npm/inter-ui@3.11.0/inter.min.css'
+			href: 'https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap'
 		}
 	],
 	meta: [

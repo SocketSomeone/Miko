@@ -10,12 +10,12 @@
 				</p>
 
 				<div class="group-btns flex-column flex-sm-row mb-5">
-					<v-btn large color="primary">
+					<v-btn large color="primary" :href="$config.inviteUrl">
 						<v-icon size="18" class="mr-3">mdi-discord</v-icon>
 						{{ $t("home.introduction.button.invite") }}
 					</v-btn>
 
-					<v-btn large outlined color="primary">
+					<v-btn large outlined color="primary" :href="$config.supportUrl">
 						<v-icon size="18" class="mr-3">mdi-link-variant</v-icon>
 						{{ $t("home.introduction.button.support") }}
 					</v-btn>
@@ -27,9 +27,11 @@
 			<WaveDivider />
 
 			<v-container class="flex-column">
-				<h1 class="section-header" v-text="$t('home.features.heading')"></h1>
+				<v-row class="flex-column">
+					<h1 class="section-header" v-text="$t('home.features.heading')"></h1>
 
-				<hr class="section-divider" />
+					<hr class="section-divider" />
+				</v-row>
 
 				<v-row class="my-3" justify="center" align="center">
 					<Feature
@@ -38,8 +40,6 @@
 						:feature="feature"
 					/>
 				</v-row>
-
-				<hr class="section-divider" />
 			</v-container>
 
 			<v-row class="ready-container flex-column">
@@ -47,7 +47,7 @@
 
 				<h2 class="section-header" v-text="$t('home.start.heading')"></h2>
 
-				<v-btn color="primary" rounded large>
+				<v-btn color="primary" large link :href="$config.inviteUrl">
 					<v-icon size="18" class="mr-3">mdi-discord</v-icon>
 					{{ $t("home.start.button.invite") }}
 				</v-btn>
@@ -130,14 +130,28 @@ export default class extends Vue {
 	background: var(--v-body-base);
 	overflow: hidden;
 
+	.section-header {
+		margin: 40px 0;
+		margin-bottom: 20px;
+		font-weight: 500;
+		text-align: center !important;
+	}
+
+	.section-divider {
+		border: 2px solid #fefefe;
+		height: 1px;
+		width: 220px;
+		border-radius: 360px;
+
+		margin: 20px auto 40px;
+
+		display: flex;
+	}
+
 	.ready-container {
-		margin: 90px auto 120px;
+		margin: 20px auto 120px;
 		width: fit-content;
 		position: relative;
-
-		.section-header {
-			margin-bottom: 15px !important;
-		}
 
 		.v-btn {
 			width: fit-content;

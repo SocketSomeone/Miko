@@ -46,7 +46,7 @@ export default class extends Vue {
 	align-items: center;
 
 	.feature-title {
-		margin-top: 30px;
+		margin-top: 10px;
 		margin-bottom: 10px;
 
 		font-weight: bold;

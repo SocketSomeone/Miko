@@ -1,13 +1,13 @@
-import type { Constructor } from '@miko/utils';
+import type { Constructor } from '@miko/types';
 import { singleton } from 'tsyringe';
-import { BaseCache } from '../cache';
+import { LoadingCache } from '../cache';
 import type { ICacheOptions } from '../types';
 
 @singleton()
 export class CacheManager {
-	private storage: Map<string, BaseCache<unknown, unknown>> = new Map();
+	private storage: Map<string, LoadingCache<unknown, unknown>> = new Map();
 
-	public async get<T, K>(clazz: Constructor<T>, key: K, supplier?: ICacheOptions<K, T>['load']): Promise<T> {
+	public async get<V, K>(clazz: Constructor<V>, key: K, supplier?: ICacheOptions<K, V>['load']): Promise<V> {
 		const cache = this.getCache(clazz);
 
 		let value = await cache.get(key);
@@ -18,10 +18,10 @@ export class CacheManager {
 			cache.set(key, value);
 		}
 
-		return value as T;
+		return value as V;
 	}
 
-	public delete<T, K>(clazz: Constructor<T> | string, key: K): void {
+	public delete<V, K>(clazz: Constructor<V> | string, key: K): void {
 		const cache = this.getCache(clazz);
 
 		if (cache !== null) {
@@ -29,13 +29,13 @@ export class CacheManager {
 		}
 	}
 
-	private getCache<T>(clazz: Constructor<T> | string) {
+	private getCache<V>(clazz: Constructor<V> | string) {
 		const cacheName = typeof clazz === 'string' ? clazz : clazz.name;
 
 		let cache = this.storage.get(cacheName);
 
 		if (!cache) {
-			cache = new BaseCache();
+			cache = new LoadingCache();
 			this.storage.set(cacheName, cache);
 		}
 

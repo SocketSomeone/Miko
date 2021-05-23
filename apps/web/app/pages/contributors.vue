@@ -3,16 +3,16 @@
 		<div class="page-container pattern">
 			<v-container class="contributors pt-5">
 				<h1
-					class="section-header mx-2 my-5"
+					class="section-header mx-2"
 					v-text="$t('contributors.developers')"
 				></h1>
 
 				<v-slide-group center-active show-arrows>
 					<Contributor
-						:class="{ 'mx-sm-auto': 2 <= 3 }"
-						v-for="n in 3"
-						:value="n"
-						:key="n"
+						:class="{ 'mx-auto': contributors.length <= 3 }"
+						v-for="(c, i) in contributors"
+						:contributor="c"
+						:key="i"
 					/>
 				</v-slide-group>
 			</v-container>
@@ -21,10 +21,7 @@
 		</div>
 
 		<v-row class="help-container mt-5 mx-auto">
-			<h1
-				class="section-header my-0"
-				v-text="$t('contributors.start.heading')"
-			></h1>
+			<h1 class="section-header" v-text="$t('contributors.start.heading')"></h1>
 
 			<div class="group-btns flex-column flex-sm-row">
 				<v-btn color="primary" link to="premium">
@@ -41,7 +38,7 @@
 	</v-layout>
 </template>
 
-<script lang="ts">
+<script>
 import { Component, Vue } from "nuxt-property-decorator";
 
 @Component({
@@ -51,7 +48,13 @@ import { Component, Vue } from "nuxt-property-decorator";
 		title: "Contributors"
 	}
 })
-export default class extends Vue {}
+export default class extends Vue {
+	async asyncData({ $axios, $config }) {
+		const contributors = await $axios.$get("/contributors");
+
+		return { contributors };
+	}
+}
 </script>
 
 <style scoped lang="scss">
@@ -72,6 +75,6 @@ h1 {
 
 .contributors {
 	max-width: 705px;
-	padding-bottom: 80px;
+	padding-bottom: 40px;
 }
 </style>

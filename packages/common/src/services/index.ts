@@ -1,4 +1,2 @@
-export * from './commands';
-export * from './gateway';
-
-export * from './GuildConfigService';
+export * from './GatewayService';
+export * from './ConfigService';

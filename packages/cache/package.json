@@ -11,7 +11,7 @@
 		"mockdate": "3.0.4"
 	},
 	"peerDependencies": {
-		"@miko/utils": "*"
+		"@miko/types": "*"
 	},
 	"scripts": {
 		"build": "tsc --build ./tsconfig.package.json"

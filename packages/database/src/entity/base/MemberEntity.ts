@@ -1,7 +1,7 @@
 import { Column } from 'typeorm';
-import { GuildEntity } from './GuildEntity';
+import { BaseGuildEntity } from './GuildEntity';
 
-export abstract class MemberEntity extends GuildEntity {
+export abstract class BaseMemberEntity extends BaseGuildEntity {
 	@Column('bigint', { name: 'user_id' })
 	public userId!: string;
 }

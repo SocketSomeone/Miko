@@ -1,6 +1,6 @@
 <template>
-	<v-overlay v-if="loading" :value="loading" opacity="1" color="background">
-		<div class="loader">
+	<v-overlay v-if="loading" :value="loading" class="loader">
+		<div class="container">
 			<v-progress-circular :size="84" indeterminate></v-progress-circular>
 
 			{{ randomLoadingString() }}
@@ -10,15 +10,12 @@
 
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
-import Logo from "~/assets/images/logo.svg";
 
 @Component({
 	name: "Loader"
 })
 export default class extends Vue {
 	loading = false;
-
-	logo = Logo;
 
 	start() {
 		this.loading = true;
@@ -37,20 +34,27 @@ export default class extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .loader {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-
-	.v-progress-circular {
-		color: var(--v-primary-base);
-		margin-bottom: 30px;
+	> .v-overlay__scrim {
+		background-color: var(--v-background-base) !important;
+		border-color: var(--v-background-base) !important;
 	}
 
-	font-weight: 400;
-	font-size: 22px;
-	text-align: center;
+	.container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+
+		.v-progress-circular {
+			color: var(--v-primary-base);
+			margin-bottom: 30px;
+		}
+
+		font-weight: 400;
+		font-size: 22px;
+		text-align: center;
+	}
 }
 </style>

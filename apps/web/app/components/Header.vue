@@ -1,28 +1,32 @@
 <template>
-	<v-container>
-		<v-app-bar color="background" flat>
-			<v-row align="center">
-				<nuxt-link to="/">
-					<v-toolbar-title class="primary--text nav-logo">
-						Miko
-					</v-toolbar-title>
-				</nuxt-link>
+	<header>
+		<v-container>
+			<v-app-bar color="background" flat>
+				<v-row align="center">
+					<nuxt-link to="/">
+						<v-toolbar-title class="primary--text nav-logo">
+							Miko
+						</v-toolbar-title>
+					</nuxt-link>
 
-				<div class="nav-links hidden-sm-and-down">
-					<SafeLink
-						v-for="(category, i) of categories"
-						v-text="$t(category.string)"
-						:key="i"
-						:link="category.route"
-					/>
-				</div>
+					<div class="nav-links hidden-sm-and-down">
+						<SafeLink
+							v-for="(link, i) of links"
+							v-text="$t(link.string)"
+							:key="i"
+							:link="link.route"
+						/>
+					</div>
 
-				<v-spacer />
+					<v-spacer />
 
-				<NavMenu />
-			</v-row>
-		</v-app-bar>
-	</v-container>
+					<NavMenu />
+				</v-row>
+			</v-app-bar>
+		</v-container>
+
+		<NavBottom class="hidden-md-and-up" />
+	</header>
 </template>
 
 <script lang="ts">
@@ -32,7 +36,7 @@ import { Component, Vue } from "nuxt-property-decorator";
 	name: "Header"
 })
 export default class extends Vue {
-	categories = [
+	links = [
 		// {
 		// 	route: "https://docs.mikoapp.xyz/",
 		// 	string: "header.docs"
@@ -46,11 +50,11 @@ export default class extends Vue {
 			string: "header.commands"
 		},
 		{
-			route: "https://invite.mikoapp.xyz/",
+			route: this.$config.inviteUrl,
 			string: "header.invite"
 		},
 		{
-			route: "https://discord.mikoapp.xyz/",
+			route: this.$config.supportUrl,
 			string: "header.support"
 		},
 		// {

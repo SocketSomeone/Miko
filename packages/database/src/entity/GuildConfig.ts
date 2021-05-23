@@ -1,8 +1,8 @@
 import { Column, Entity } from 'typeorm';
-import { GuildEntity } from './base/GuildEntity';
+import { BaseGuildEntity } from './base/GuildEntity';
 
 @Entity({ name: 'guild_config' })
-export class GuildConfig extends GuildEntity {
+export class GuildConfig extends BaseGuildEntity {
 	@Column('varchar')
 	public name!: string;
 
@@ -14,10 +14,4 @@ export class GuildConfig extends GuildEntity {
 
 	@Column('varchar', { nullable: false, default: 'en' })
 	public locale = 'en';
-
-	public constructor(guildId: string) {
-		super();
-
-		this.guildId = guildId;
-	}
 }

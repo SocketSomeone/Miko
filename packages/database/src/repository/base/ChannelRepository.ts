@@ -1,8 +1,8 @@
 import type { DeleteResult, FindConditions } from 'typeorm';
 import { Repository } from 'typeorm';
-import type { ChannelEntity } from '../..';
+import type { BaseChannelEntity } from '../..';
 
-export abstract class ChannelRepository<T extends ChannelEntity> extends Repository<T> {
+export abstract class BaseChannelRepository<T extends BaseChannelEntity> extends Repository<T> {
 	public findByChannelId(channelId: string): Promise<T> {
 		return this.findOne({
 			where: {

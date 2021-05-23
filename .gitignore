@@ -54,6 +54,9 @@ application.yml
 ormconfig.json
 config.json
 
+# Service workers
+sw.*
+
 # Build
 apps/*/lib
 packages/*/lib

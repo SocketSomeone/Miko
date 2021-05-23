@@ -1,11 +1,11 @@
 import { duration } from 'moment';
-import type { AllowArray } from '@miko/utils';
-import { arrarify, TypeSafeEmitter } from '@miko/utils';
+import type { AllowArray } from '@miko/types';
+import { arrarify } from '@miko/types';
 import { MetricsCache } from './meta/metrics';
-import type { ICacheEntry, ICacheEvents, ICacheOptions } from './types';
+import type { ICacheEntry, ICacheOptions } from './types';
 import { MetadataCache } from './meta/metadata';
 
-export class BaseCache<K = string, V = unknown> extends TypeSafeEmitter<ICacheEvents<K, V>> {
+export class LoadingCache<V = unknown, K = string> {
 	public readonly metrics = new MetricsCache();
 
 	private readonly pending: Map<K, Promise<V>> = new Map();
@@ -28,8 +28,6 @@ export class BaseCache<K = string, V = unknown> extends TypeSafeEmitter<ICacheEv
 		refreshInterval = 15000,
 		load = undefined
 	}: ICacheOptions<K, V> = {}) {
-		super();
-
 		this.load = load;
 		this.maxSize = maxSize;
 		this.expireAfter = expireAfter.asMilliseconds();
@@ -50,7 +48,6 @@ export class BaseCache<K = string, V = unknown> extends TypeSafeEmitter<ICacheEv
 			meta: new MetadataCache()
 		});
 
-		this.emit('set', key, value);
 		this.evictBySize();
 	}
 
@@ -95,7 +92,6 @@ export class BaseCache<K = string, V = unknown> extends TypeSafeEmitter<ICacheEv
 			return value;
 		} catch (err) {
 			this.metrics.loadError += 1;
-			this.emit('error', key, err);
 		}
 
 		return null;
@@ -115,7 +111,6 @@ export class BaseCache<K = string, V = unknown> extends TypeSafeEmitter<ICacheEv
 		}
 
 		this.storage.delete(key);
-		this.emit('delete', key, reason);
 	}
 
 	public find(fn: (v: ICacheEntry<V>, k: K) => boolean): V {

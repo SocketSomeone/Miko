@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"name": "miko-monorepo",
-	"description": "",
+	"description": "Miko is simple, multipurpose bot that will help you with your server, which you can manage using the dashboard on our website.",
 	"workspaces": [
 		"apps/*",
 		"packages/*"
@@ -77,6 +77,7 @@
 		"typescript": "4.2.3"
 	},
 	"dependencies": {
+		"discord.js": "12.5.3",
 		"extract-zip": "2.0.1",
 		"reflect-metadata": "0.1.13",
 		"tslib": "2.1.0",

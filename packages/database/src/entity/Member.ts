@@ -1,12 +1,12 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
-import { GuildEntity } from './base/GuildEntity';
-import { BaseUser } from './User';
+import { BaseGuildEntity } from './base/GuildEntity';
+import { User } from './User';
 
 @Entity({ name: 'members' })
-export class BaseMember extends GuildEntity {
-	@ManyToOne(() => BaseUser, user => user.userId)
+export class Member extends BaseGuildEntity {
+	@ManyToOne(() => User, user => user.userId)
 	@JoinColumn({ name: 'user_id' })
-	public user!: BaseUser;
+	public user!: User;
 
 	@Column('varchar', { nullable: true })
 	public displayName?: string;

@@ -1,6 +1,6 @@
 export const axios = {
-	baseURL: process.env.BASE_URL || 'http://localhost:3000/api',
+	baseURL: process.env.API_URL || 'http://localhost:1337/api',
 	retry: { retries: 3 },
-	credentials: false,
-	proxy: true
+	credentials: true,
+	proxy: false
 };

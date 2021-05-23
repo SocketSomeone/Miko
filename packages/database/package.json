@@ -10,10 +10,7 @@
 	"devDependencies": {
 		"@types/node": "14.14.35"
 	},
-	"peerDependencies": {
-		"@miko/cache": "*",
-		"@miko/utils": "*"
-	},
+	"peerDependencies": {},
 	"scripts": {
 		"build": "tsc --build ./tsconfig.package.json",
 		"typeorm": "node --require ts-node/register ../../node_modules/typeorm/cli.js",

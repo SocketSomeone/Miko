@@ -1,8 +1,8 @@
-import { Column, Entity, UpdateDateColumn } from 'typeorm';
-import { UserEntity } from './base/UserEntity';
+import { Column, Entity } from 'typeorm';
+import { BaseUserEntity } from './base/UserEntity';
 
 @Entity({ name: 'users' })
-export class BaseUser extends UserEntity {
+export class User extends BaseUserEntity {
 	@Column()
 	public username!: string;
 
@@ -11,7 +11,4 @@ export class BaseUser extends UserEntity {
 
 	@Column()
 	public avatarUrl!: string;
-
-	@UpdateDateColumn()
-	private lastUpdate!: Date;
 }

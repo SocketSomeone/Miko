@@ -1,10 +1,11 @@
 export const auth = {
 	redirect: {
-		login: '/',
 		callback: '/callback',
+		logout: '/',
+		login: '/',
 		home: '/'
 	},
-	localStorage: undefined,
+	cookie: undefined,
 	strategies: {
 		discord: {
 			scheme: 'oauth2',

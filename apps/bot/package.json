@@ -9,15 +9,12 @@
 		"start": "pm2 start ./application.yml",
 		"poststart": "pm2 logs"
 	},
-	"dependencies": {
-		"discord.js": "12.5.1"
-	},
 	"devDependencies": {
 		"lexure": "0.17.0"
 	},
 	"peerDependencies": {
 		"@miko/cache": "*",
-		"@miko/common": "*",
+		"@miko/framework": "*",
 		"@miko/database": "*"
 	}
 }

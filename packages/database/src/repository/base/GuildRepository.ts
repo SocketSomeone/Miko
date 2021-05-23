@@ -1,7 +1,7 @@
 import { Repository } from 'typeorm';
-import type { GuildEntity } from '../..';
+import type { BaseGuildEntity } from '../..';
 
-export abstract class GuildRepository<T extends GuildEntity> extends Repository<T> {
+export abstract class BaseGuildRepository<T extends BaseGuildEntity> extends Repository<T> {
 	public findByGuildId(guildId: string): Promise<T> {
 		return this.findOne({
 			where: {

@@ -1,8 +1,8 @@
 import type { DeleteResult, FindConditions } from 'typeorm';
 import { Repository } from 'typeorm';
-import type { MemberEntity } from '../..';
+import type { BaseMemberEntity } from '../..';
 
-export abstract class MemberRepository<T extends MemberEntity> extends Repository<T> {
+export abstract class BaseMemberRepository<T extends BaseMemberEntity> extends Repository<T> {
 	public findByGuildIdAndUserId(guildId: string, userId: string): Promise<T> {
 		return this.findOne({
 			where: {

@@ -1,4 +1,5 @@
 export default [
+	'@nuxtjs/pwa',
 	'@nuxt/typescript-build',
 	[
 		'@nuxtjs/vuetify',

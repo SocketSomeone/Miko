@@ -1,9 +1,9 @@
 import { EntityRepository } from 'typeorm';
 import { GuildConfig } from '../entity';
-import { GuildRepository } from './base';
+import { BaseGuildRepository } from './base';
 
 @EntityRepository(GuildConfig)
-export class GuildConfigRepository extends GuildRepository<GuildConfig> {
+export class GuildConfigRepository extends BaseGuildRepository<GuildConfig> {
 	public async findPrefixByGuildId(guildId: string): Promise<string> {
 		const data = await this.findOne({
 			select: ['prefix'],

@@ -3,7 +3,7 @@
 	"files": [],
 	"references": [
 		{
-			"path": "..\\packages\\utils\\tsconfig.package.json"
+			"path": "..\\packages\\@types\\tsconfig.package.json"
 		},
 		{
 			"path": "..\\packages\\cache\\tsconfig.package.json"
@@ -13,6 +13,9 @@
 		},
 		{
 			"path": "..\\packages\\common\\tsconfig.package.json"
+		},
+		{
+			"path": "..\\packages\\framework\\tsconfig.package.json"
 		},
 		{
 			"path": "..\\apps\\api\\tsconfig.package.json"

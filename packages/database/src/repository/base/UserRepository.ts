@@ -1,7 +1,7 @@
 import { Repository } from 'typeorm';
-import type { UserEntity } from '../..';
+import type { BaseUserEntity } from '../..';
 
-export abstract class UserRepository<T extends UserEntity> extends Repository<T> {
+export abstract class BaseUserRepository<T extends BaseUserEntity> extends Repository<T> {
 	public findByUserId(userId: string): Promise<T> {
 		return this.findOne({
 			where: { userId }

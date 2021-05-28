@@ -1,32 +1,29 @@
 <template>
-	<header>
-		<v-container>
-			<v-app-bar color="background" flat>
-				<v-row align="center">
-					<nuxt-link to="/">
-						<v-toolbar-title class="primary--text nav-logo">
-							Miko
-						</v-toolbar-title>
-					</nuxt-link>
+	<div class="header-container">
+		<v-app-bar color="background" app absolute height="84" flat>
+			<nuxt-link class="animated fadeInLeft" to="/">
+				<v-toolbar-title  class="primary--text nav-logo"> Miko </v-toolbar-title>
+			</nuxt-link>
 
-					<div class="nav-links hidden-sm-and-down">
-						<SafeLink
-							v-for="(link, i) of links"
-							v-text="$t(link.string)"
-							:key="i"
-							:link="link.route"
-						/>
-					</div>
+			<v-spacer />
 
-					<v-spacer />
+			<ul class="header-nav hidden-sm-and-down">
+				<SafeLink
+					:class="`animated fadeInDown ${i === 0 ? '' : `wait-p${i}s`}`"
+					v-for="(link, i) of links"
+					v-text="$t(link.string)"
+					:key="i"
+					:link="link.route"
+				/>
+			</ul>
 
-					<NavMenu />
-				</v-row>
-			</v-app-bar>
-		</v-container>
+			<v-spacer class="hidden-sm-and-down" />
+
+			<NavMenu />
+		</v-app-bar>
 
 		<NavBottom class="hidden-md-and-up" />
-	</header>
+	</div>
 </template>
 
 <script lang="ts">
@@ -81,16 +78,21 @@ export default class extends Vue {
 	font-size: 36px !important;
 }
 
-.nav-links {
-	font-size: 14px;
+.header-nav {
+	font-size: 15px;
 	font-weight: bold;
 	text-transform: uppercase;
-	position: absolute;
-	left: 50%;
-	transform: translateX(-50%);
 
 	display: flex;
 	align-items: center;
+	justify-content: center;
+
+	list-style-type: none;
+	padding: 0;
+
+	a + a {
+		margin-left: 30px;
+	}
 
 	a {
 		transition: 0.25s margin ease-out;
@@ -98,7 +100,6 @@ export default class extends Vue {
 		white-space: nowrap;
 		display: inline-block;
 		align-items: center;
-		margin: 0 1.3em;
 		color: white;
 
 		&:after {
@@ -116,14 +117,9 @@ export default class extends Vue {
 			transition: transform 250ms ease-in-out;
 		}
 
-		&.nuxt-link-active::after {
+		&.nuxt-link-active::after,
+		&:hover::after {
 			transform: scaleX(1);
-		}
-
-		&:hover {
-			&:after {
-				transform: scaleX(1);
-			}
 		}
 	}
 }

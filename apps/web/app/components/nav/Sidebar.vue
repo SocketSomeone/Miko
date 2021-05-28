@@ -1,10 +1,18 @@
 <template>
 	<v-col cols="12" sm="5" md="4" lg="3" xl="2" class="sidebar">
-		<v-card color="body" rounded="lg" class="px-4">
-			<v-list color="body" flat>
+		<v-navigation-drawer
+			floating
+			permanent
+			clipped
+			height="auto"
+			width="100%"
+			color="body"
+			class="px-4 rounded-lg"
+		>
+			<v-list color="body" dense flat>
 				<slot></slot>
 			</v-list>
-		</v-card>
+		</v-navigation-drawer>
 	</v-col>
 </template>
 
@@ -25,10 +33,11 @@ export default class extends Vue {}
 
 		background: transparent !important;
 
+		transition: all 0.2s ease-out;
+
 		.v-list-item__icon > i,
 		.v-list-item__title {
 			color: var(--v-primary-base) !important;
-			transition: color 0.2s ease-in;
 		}
 
 		&.v-item--active {
@@ -37,7 +46,6 @@ export default class extends Vue {}
 			.v-list-item__icon > i,
 			.v-list-item__title {
 				color: white !important;
-				transition: color 0.2s ease-in;
 			}
 		}
 	}

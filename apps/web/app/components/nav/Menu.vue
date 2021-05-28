@@ -1,15 +1,15 @@
 <template>
-	<div>
+	<div class="animated fadeInRight appButton">
 		<v-btn
+			class="mx-0"
 			v-if="!$auth.loggedIn"
 			color="primary"
 			block
-			rounded
+			height="40"
+			outlined
 			@click="$auth.loginWith('discord')"
+			v-text="$t('header.login')"
 		>
-			<v-icon small class="mr-1">mdi-login-variant</v-icon>
-			<!-- {{ $t("header.login") }} -->
-			Login
 		</v-btn>
 
 		<v-menu v-model="menu" offset-y v-else>
@@ -25,12 +25,7 @@
 					class="d-flex align-center justify-center"
 				>
 					<v-list-item-avatar color="accent" size="28">
-						<img
-							data-not-lazy
-							:src="`https://cdn.discordapp.com/avatars/${$auth.user.id}/${
-								$auth.user.avatar
-							}.${$auth.user.premium_type >= 1 ? 'gif' : 'png'}`"
-						/>
+						<img data-not-lazy :src="avatarUrl($auth.user)" />
 					</v-list-item-avatar>
 
 					<v-list-item-content
@@ -80,11 +75,23 @@
 
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
+import CDN from "~/components/mixins/CDN";
 
 @Component({
-	name: "NavMenu"
+	name: "NavMenu",
+	mixins: [CDN]
 })
 export default class extends Vue {
 	public menu = false;
 }
 </script>
+
+<style lang="scss">
+.appButton {
+	flex: 0 0 auto;
+	max-width: 89px;
+	text-align: end;
+	display: flex;
+	flex-flow: row-reverse;
+}
+</style>

@@ -1,13 +1,7 @@
-import { ShardingManager } from 'discord.js';
-import { Logger } from 'tslog';
+import { Client } from '@miko/framework';
+import { container } from 'tsyringe';
 
-const logger = new Logger({ name: 'ShardingManager' });
+import './gateway';
+import './modules';
 
-const shards = new ShardingManager('./lib/main.js', {
-	token: process.env.SHARDS_TOKEN,
-	totalShards: Number(process.env.SHARDS_COUNT) || 'auto'
-});
-
-shards.spawn().catch(err => logger.error(`Shard failed to spawn, ${err}`));
-
-shards.on('shardCreate', shard => logger.debug(`Shard #${shard.id} created!`));
+container.resolve(Client);

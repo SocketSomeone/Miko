@@ -1,3 +1,9 @@
+@for $i from 1 through 20 {
+	.wait-p#{$i}s {
+		animation-delay: $i * 0.1s;
+	}
+}
+
 .page-enter-active,
 .page-leave-active {
 	transition: opacity 0.25s;

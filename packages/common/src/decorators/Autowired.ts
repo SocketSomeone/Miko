@@ -9,10 +9,10 @@ export function AutoWired(): PropertyDecorator {
 				throw new Error(`failed to get design type of ${target.constructor.name}:${String(propertyKey)}`);
 			}
 
+			const clazz = container.resolve(type);
+
 			Object.defineProperty(target, propertyKey, {
-				get: () => {
-					return container.resolve(type);
-				}
+				get: () => clazz
 			});
 		}
 	};

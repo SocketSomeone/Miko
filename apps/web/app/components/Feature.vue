@@ -3,9 +3,9 @@
 		cols="12"
 		sm="6"
 		md="4"
-		class="feature flex-column justify-start align-center d-flex"
+		class="animated fadeIn flex-column feature justify-center align-center d-flex"
 	>
-		<v-icon color="primary" dense size="60">
+		<v-icon class="mb-4" color="primary" dense size="60">
 			{{ `mdi-${feature.icon}` }}
 		</v-icon>
 
@@ -13,6 +13,15 @@
 			class="feature-title"
 			v-text="$t(`home.features.${feature.name}.heading`)"
 		></h3>
+
+		<v-chip
+			small
+			color="info"
+			text-color="white"
+			outlined
+			class="mt-2 mb-3"
+			v-text="'Coming Soon'"
+		></v-chip>
 
 		<p
 			class="feature-description"
@@ -35,20 +44,11 @@ export default class extends Vue {
 
 <style lang="scss">
 .feature {
-	width: 100%;
-	height: 250px;
-	padding: 30px;
+	min-height: 250px;
 	text-align: center;
-	border-radius: 20px;
-
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	border-radius: 10px;
 
 	.feature-title {
-		margin-top: 10px;
-		margin-bottom: 10px;
-
 		font-weight: bold;
 		font-size: 20px;
 		line-height: 24px;

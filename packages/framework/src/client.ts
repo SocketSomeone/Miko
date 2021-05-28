@@ -17,6 +17,7 @@ export class Client extends DClient {
 			messageCacheLifetime: 240,
 			messageSweepInterval: 250,
 			fetchAllMembers: true,
+			shards: 'auto',
 			presence: {
 				activity: {
 					name: 'mikoapp.xyz | !help',

@@ -1,8 +1,7 @@
-import type { Guild, GuildPreview } from 'discord.js';
+import type { Guild } from 'discord.js';
 
 export interface IGuildInfoRequest {
 	guildId: string;
-	preview: boolean;
 }
 
-export type GuildInfoDTO = Guild | GuildPreview | { id: null };
+export type GuildInfoDTO = Guild | { id: null };

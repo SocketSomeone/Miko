@@ -11,7 +11,7 @@ import privateRuntimeConfig from './config/privateRuntimeConfig';
 
 import * as configs from './config/modules/index';
 
-const config = {
+export default {
 	...constants,
 
 	...configs,
@@ -32,5 +32,3 @@ const config = {
 
 	privateRuntimeConfig
 };
-
-export default config;

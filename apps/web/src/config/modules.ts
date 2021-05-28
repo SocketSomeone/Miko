@@ -42,4 +42,17 @@ export default [
 			}
 		}
 	]
+	// [
+	// 	'@nuxtjs/robots',
+	// 	[
+	// 		{
+	// 			UserAgent: '*',
+	// 			Disallow: '/guilds'
+	// 		},
+	// 		{
+	// 			UserAgent: '*',
+	// 			Disallow: '/admin'
+	// 		}
+	// 	]
+	// ]
 ];

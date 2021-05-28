@@ -5,7 +5,6 @@ export const pwa = {
 		short_name: 'Miko',
 		description:
 			'Miko is simple, multipurpose bot that will help you with your server, which you can manage using the dashboard on our website.',
-		start_url: '/',
 		display: 'minimal-ui',
 		orientation: 'portrait',
 		background_color: '#313948',

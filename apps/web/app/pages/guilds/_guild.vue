@@ -1,13 +1,13 @@
-<template>
+<template >
 	<v-container>
 		<v-row align="center">
 			<NavSidebar>
 				<v-list-item-group class="mt-3">
-					<v-layout d-flex align-center class="primary--text title">
+					<v-row d-flex align="center" class="primary--text title">
 						<v-avatar size="32" color="primary" class="mr-2"> </v-avatar>
 
 						Miko Support
-					</v-layout>
+					</v-row>
 				</v-list-item-group>
 
 				<v-divider class="my-3" />

@@ -5,7 +5,7 @@ export const auth = {
 		login: '/',
 		home: '/'
 	},
-	cookie: undefined,
+	localStorage: false,
 	strategies: {
 		discord: {
 			scheme: 'oauth2',

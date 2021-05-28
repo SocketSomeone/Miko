@@ -1,5 +1,5 @@
 <template>
-	<v-layout d-block class="text-center">
+	<v-row class="d-block text-center">
 		<div class="page-container pattern">
 			<v-container class="contributors pt-5">
 				<h1
@@ -35,11 +35,12 @@
 				</v-btn>
 			</div>
 		</v-row>
-	</v-layout>
+	</v-row>
 </template>
 
-<script>
+<script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
+import { Context } from "@nuxt/types";
 
 @Component({
 	name: "Contributors",
@@ -49,7 +50,7 @@ import { Component, Vue } from "nuxt-property-decorator";
 	}
 })
 export default class extends Vue {
-	async asyncData({ $axios, $config }) {
+	async asyncData({ $axios }: Context) {
 		const contributors = await $axios.$get("/contributors");
 
 		return { contributors };

@@ -36,7 +36,7 @@ async function bootstrap() {
 	app.useGlobalPipes(new ValidationPipe({ transform: true }));
 	app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
-	await app.listen(1337);
+	await app.listen(8888);
 }
 
 bootstrap().catch(err => logger.error(err));

@@ -8,6 +8,6 @@ export class CommandsService {
 	private gatewayService: GatewayService;
 
 	public async findAll(): Promise<CommandsGetDTO> {
-		return this.gatewayService.get('COMMANDS_GET');
+		return this.gatewayService.emit<CommandsGetDTO>('COMMANDS_GET');
 	}
 }

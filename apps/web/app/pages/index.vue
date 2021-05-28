@@ -1,39 +1,48 @@
 <template>
-	<v-layout d-block>
-		<v-container class="pt-2 justify-center align-center">
-			<div class="hero-container">
-				<img data-not-lazy class="miko px-1" src="~/assets/images/logo.svg" />
+	<v-layout class="d-block">
+		<v-container
+			class="hero-container d-flex justify-center align-center flex-column"
+		>
+			<img
+				data-not-lazy
+				class="animated fadeIn miko px-1"
+				src="~/assets/images/logo.svg"
+			/>
 
-				<p class="hero-text pt-2 px-1">
-					<strong><span class="text-highlight">Miko</span></strong
-					>&nbsp;{{ $t("home.introduction.paragraph") }}
-				</p>
+			<p class="animated fadeIn wait-p1s hero-text pt-2 px-1">
+				<strong><span class="text-highlight">Miko</span></strong
+				>&nbsp;{{ $t("home.introduction.paragraph") }}
+			</p>
 
-				<div class="group-btns flex-column flex-sm-row mb-5">
-					<v-btn large color="primary" :href="$config.inviteUrl">
-						<v-icon size="18" class="mr-3">mdi-discord</v-icon>
-						{{ $t("home.introduction.button.invite") }}
-					</v-btn>
+			<div
+				class="animated fadeIn wait-p2s group-btns flex-column flex-sm-row mb-5"
+			>
+				<v-btn large color="primary" :href="$config.inviteUrl">
+					<v-icon size="18" class="mr-3">mdi-discord</v-icon>
+					{{ $t("home.introduction.button.invite") }}
+				</v-btn>
 
-					<v-btn large outlined color="primary" :href="$config.supportUrl">
-						<v-icon size="18" class="mr-3">mdi-link-variant</v-icon>
-						{{ $t("home.introduction.button.support") }}
-					</v-btn>
-				</div>
+				<v-btn large outlined color="primary" :href="$config.supportUrl">
+					<v-icon size="18" class="mr-3">mdi-link-variant</v-icon>
+					{{ $t("home.introduction.button.support") }}
+				</v-btn>
 			</div>
 		</v-container>
 
 		<div class="features mt-5">
 			<WaveDivider />
 
-			<v-container class="flex-column">
-				<v-row class="flex-column">
-					<h1 class="section-header" v-text="$t('home.features.heading')"></h1>
+			<v-container class="flex-column animated fadeIn wait-p3s">
+				<h1 class="section-header" v-text="$t('home.features.heading')"></h1>
 
-					<hr class="section-divider" />
-				</v-row>
+				<hr class="section-divider" />
 
-				<v-row class="my-3" justify="center" align="center">
+				<v-row
+					class="animated fadeIn wait-p4s my-5"
+					justify="center"
+					align="center"
+					no-gutters
+				>
 					<Feature
 						v-for="(feature, i) in features"
 						:key="i"
@@ -42,8 +51,12 @@
 				</v-row>
 			</v-container>
 
-			<v-row class="ready-container flex-column">
-				<img class="stars mx-auto" src="~/assets/images/stars.svg" />
+			<v-row class="ready-container flex-column animated fadeIn wait-p5s">
+				<img
+					data-not-lazy
+					class="stars mx-auto"
+					src="~/assets/images/stars.svg"
+				/>
 
 				<h2 class="section-header" v-text="$t('home.start.heading')"></h2>
 
@@ -101,13 +114,7 @@ export default class extends Vue {
 
 <style lang="scss" scoped>
 .hero-container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-
-	margin: 0 auto;
-	position: relative;
+	padding: 40px 0 20px 0;
 	width: fit-content;
 
 	.hero-text {

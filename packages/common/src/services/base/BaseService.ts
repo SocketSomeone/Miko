@@ -2,11 +2,14 @@ import type { DeepPartial, BaseGuildEntity, BaseGuildRepository, ObjectType } fr
 import type { Constructor } from '@miko/types';
 import { CacheManager } from '@miko/cache';
 import { getCustomRepository } from '@miko/database';
+import { Logger } from 'tslog';
 import { AutoWired } from '../../decorators';
 import { GatewayService } from '../GatewayService';
 
 // Domain Service
 export abstract class BaseService<T extends BaseGuildEntity, R extends BaseGuildRepository<T>> {
+	protected readonly logger = new Logger({ name: this.constructor.name });
+
 	@AutoWired()
 	protected readonly cacheManager: CacheManager;
 
@@ -45,7 +48,7 @@ export abstract class BaseService<T extends BaseGuildEntity, R extends BaseGuild
 	}
 
 	public delete(guildId: string): void {
-		this.gateway.request('CACHE_DELETE', {
+		this.gateway.emit('CACHE_DELETE', {
 			cacheName: this.entity.name,
 			guildId
 		});

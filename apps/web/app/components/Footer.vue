@@ -6,7 +6,7 @@
 					<h3 class="primary--text" v-text="$t('footer.infoBox.heading')"></h3>
 					<p v-text="$t('footer.infoBox.paragraph')"></p>
 
-					<div class="controls">
+					<div class="footer-controls">
 						<v-btn block color="primary" large>
 							<v-icon size="18" class="mr-3">mdi-discord</v-icon>
 							{{ $t("footer.infoBox.button.invite") }}
@@ -27,7 +27,7 @@
 					lg="1"
 					v-for="[category, items] in links()"
 					:key="category"
-					class="text-center text-sm-left d-flex flex-column"
+					class="footer-links text-center text-sm-left d-flex flex-column"
 				>
 					<h3 class="primary--text" v-text="category"></h3>
 
@@ -138,12 +138,16 @@ export default class extends Vue {
 .footer-container {
 	padding: 20px 0 0;
 
-	.controls {
+	.footer-controls {
 		max-width: 350px;
 
 		@media (max-width: 599px) {
 			max-width: none;
 		}
+	}
+
+	.footer-links > div {
+		margin-bottom: 2px;
 	}
 }
 

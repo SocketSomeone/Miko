@@ -1,6 +1,9 @@
 export default [
 	'@nuxtjs/pwa',
+	'@nuxtjs/web-vitals',
 	'@nuxt/typescript-build',
+	'@nuxtjs/google-fonts',
+	['@nuxtjs/google-analytics', { id: 'UA-178774480-1' }],
 	[
 		'@nuxtjs/vuetify',
 		{
@@ -37,7 +40,6 @@ export default [
 			}
 		}
 	],
-	['@nuxtjs/google-analytics', { id: 'UA-178774480-1' }],
 	[
 		'@nuxtjs/moment',
 		{

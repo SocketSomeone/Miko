@@ -26,13 +26,13 @@
 		},
 		"types": [
 			"@types/node",
-			"nuxt-i18n",
 			"@nuxt/types",
 			"@nuxtjs/axios",
 			"@nuxtjs/toast",
 			"@nuxtjs/moment",
 			"@nuxtjs/auth-next",
 			"@nuxtjs/sentry",
+			"nuxt-i18n"
 		]
 	},
 	"exclude": [

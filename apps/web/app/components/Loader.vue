@@ -1,11 +1,13 @@
 <template>
-	<v-overlay v-if="loading" :value="loading" class="loader">
-		<div class="container">
-			<v-progress-circular :size="84" indeterminate></v-progress-circular>
+	<transition name="loader">
+		<v-overlay v-if="loading" :value="loading" opacity="1" class="loader">
+			<div class="container">
+				<v-progress-circular :size="84" indeterminate></v-progress-circular>
 
-			{{ randomLoadingString() }}
-		</div>
-	</v-overlay>
+				{{ randomLoadingString() }}
+			</div>
+		</v-overlay>
+	</transition>
 </template>
 
 <script lang="ts">
@@ -36,6 +38,8 @@ export default class extends Vue {
 
 <style lang="scss">
 .loader {
+	overflow: hidden !important;
+
 	> .v-overlay__scrim {
 		background-color: var(--v-background-base) !important;
 		border-color: var(--v-background-base) !important;

@@ -5,17 +5,11 @@
 		"baseUrl": ".",
 		"composite": true,
 		"paths": {
-			"@miko/types": [
-				"packages/@types/src"
-			],
-			"@miko/cache": [
-				"packages/cache/src"
+			"@miko/config": [
+				"packages/config/src"
 			],
 			"@miko/common": [
 				"packages/common/src"
-			],
-			"@miko/database": [
-				"packages/database/src"
 			],
 			"@miko/framework": [
 				"packages/framework/src"

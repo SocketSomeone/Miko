@@ -50,9 +50,7 @@ jspm_packages/
 *.tsbuildinfo
 
 # dotenv environment variables file  / resources
-application.yml
 ormconfig.json
-config.json
 
 # Service workers
 sw.*

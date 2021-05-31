@@ -1,4 +1,4 @@
 export * from './BaseCommand';
-export * from './BaseResolver';
+export * from './BaseArgument';
 export * from './BaseQueueListner';
 export * from './ModuleBuilder';

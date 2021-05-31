@@ -15,13 +15,7 @@
 	],
 	"references": [
 		{
-			"path": "..\\@types\\tsconfig.package.json"
-		},
-		{
-			"path": "..\\cache\\tsconfig.package.json"
-		},
-		{
-			"path": "..\\database\\tsconfig.package.json"
+			"path": "..\\config\\tsconfig.package.json"
 		}
 	]
 }

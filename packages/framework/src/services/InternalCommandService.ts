@@ -1,5 +1,5 @@
 import { singleton } from 'tsyringe';
-import type { GuildConfig } from '@miko/database';
+import type { GuildConfig } from '@miko/common';
 import type { Guild, Message } from 'discord.js';
 import type { BaseCommand } from '../models';
 import type { IParsedMessageData } from '../types';
@@ -50,8 +50,8 @@ export class InternalCommandsService extends BaseCommandsService {
 		const tokens = this.lexer.setInput(input).lex();
 
 		for (let i = 0; i < command.arguments.length; i += 1) {
-			const { resolver, optional, remaining } = command.arguments[i];
-			const resolved = await resolver.resolve(
+			const { argument, optional, remaining } = command.arguments[i];
+			const resolved = await argument.resolve(
 				remaining ? tokens.slice(i, tokens.length).join(' ') : tokens[i]?.value,
 				guild
 			);

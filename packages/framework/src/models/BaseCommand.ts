@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { Message, PermissionResolvable } from 'discord.js';
-import type { Awaited } from '@miko/types';
+import type { Awaited } from '@miko/common';
 import { AutoWired, GatewayService } from '@miko/common';
 import type { ICommandArgument, ICommandOptions } from '../types';
-import { BaseResolver } from './BaseResolver';
+import { BaseArgument } from './BaseArgument';
 
 export abstract class BaseCommand implements ICommandOptions {
 	@AutoWired()
@@ -26,8 +26,8 @@ export abstract class BaseCommand implements ICommandOptions {
 	public constructor(opts: ICommandOptions) {
 		Object.assign(this, opts);
 
-		opts?.arguments?.forEach(({ resolver: Resolver }, i) => {
-			this.arguments[i].resolver = Resolver instanceof BaseResolver ? Resolver : new Resolver();
+		opts?.arguments?.forEach(({ argument: Argument }, i) => {
+			this.arguments[i].argument = Argument instanceof BaseArgument ? Argument : new Argument();
 		});
 	}
 

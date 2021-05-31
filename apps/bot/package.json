@@ -9,12 +9,8 @@
 		"start": "pm2 start ./application.yml",
 		"poststart": "pm2 logs"
 	},
-	"devDependencies": {
-		"lexure": "0.17.0"
-	},
+	"devDependencies": {},
 	"peerDependencies": {
-		"@miko/cache": "*",
-		"@miko/framework": "*",
-		"@miko/database": "*"
+		"@miko/framework": "*"
 	}
 }

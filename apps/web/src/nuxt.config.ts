@@ -1,7 +1,7 @@
 // Import base config
+import root from './config';
 import build from './config/build';
 import buildModules from './config/buildModules';
-import constants from './config/constants';
 import head from './config/head';
 import modules from './config/modules';
 import plugins from './config/plugins';
@@ -11,8 +11,8 @@ import privateRuntimeConfig from './config/privateRuntimeConfig';
 
 import * as configs from './config/modules/index';
 
-export default {
-	...constants,
+const config = {
+	...root,
 
 	...configs,
 
@@ -32,3 +32,5 @@ export default {
 
 	privateRuntimeConfig
 };
+
+export default config;

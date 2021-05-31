@@ -4,17 +4,11 @@
 	"main": "./lib/index.js",
 	"types": "./lib/index.d.ts",
 	"dependencies": {
-		"moment": "2.29.1"
+		"lexure": "0.17.0"
 	},
-	"devDependencies": {
-		"@types/moment": "2.13.0",
-		"@types/ws": "7.4.0"
-	},
+	"devDependencies": {},
 	"peerDependencies": {
-		"@miko/cache": "*",
-		"@miko/common": "*",
-		"@miko/database": "*",
-		"@miko/types": "*"
+		"@miko/common": "*"
 	},
 	"scripts": {
 		"build": "tsc --build ./tsconfig.package.json"

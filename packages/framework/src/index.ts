@@ -1,6 +1,5 @@
-import 'reflect-metadata';
+export * from './arguments';
+export * from './decorators';
+export * from './models';
 
 export * from './client';
-export * from './resolvers';
-export * from './models';
-export * from './decorators';

@@ -18,21 +18,21 @@ export default {
 	meta: [
 		{ charset: 'utf-8' },
 		{ name: 'viewport', content: 'width=device-width, initial-scale=1' },
-		// {
-		// 	hid: 'application-name',
-		// 	name: 'application-name',
-		// 	content: 'Miko'
-		// },
-		// {
-		// 	hid: 'author',
-		// 	name: 'author',
-		// 	content: 'https://mikoapp.xyz'
-		// },
-		// {
-		// 	hid: 'publisher',
-		// 	name: 'publisher',
-		// 	content: 'https://mikoapp.xyz'
-		// },
+		{
+			hid: 'application-name',
+			name: 'application-name',
+			content: 'Miko'
+		},
+		{
+			hid: 'author',
+			name: 'author',
+			content: 'https://mikoapp.xyz'
+		},
+		{
+			hid: 'publisher',
+			name: 'publisher',
+			content: 'https://mikoapp.xyz'
+		},
 		{
 			hid: 'theme-color',
 			name: 'theme-color',
@@ -107,27 +107,27 @@ export default {
 			hid: 'og:image',
 			property: 'og:image',
 			content: 'https://mikoapp.xyz/assets/images/logo.png'
-		}
+		},
 		/* Mobiles */
-		// {
-		// 	hid: 'apple-mobile-web-app-capable',
-		// 	name: 'apple-mobile-web-app-capable',
-		// 	content: 'yes'
-		// },
-		// {
-		// 	hid: 'apple-mobile-web-app-status-bar-style',
-		// 	name: 'apple-mobile-web-app-status-bar-style',
-		// 	content: 'black-translucent'
-		// },
-		// {
-		// 	hid: 'apple-mobile-web-app-title',
-		// 	name: 'apple-mobile-web-app-title',
-		// 	content: 'Miko'
-		// },
-		// {
-		// 	hid: 'mobile-web-app-capable',
-		// 	name: 'mobile-web-app-capable',
-		// 	content: 'yes'
-		// }
+		{
+			hid: 'apple-mobile-web-app-capable',
+			name: 'apple-mobile-web-app-capable',
+			content: 'yes'
+		},
+		{
+			hid: 'apple-mobile-web-app-status-bar-style',
+			name: 'apple-mobile-web-app-status-bar-style',
+			content: 'black-translucent'
+		},
+		{
+			hid: 'apple-mobile-web-app-title',
+			name: 'apple-mobile-web-app-title',
+			content: 'Miko'
+		},
+		{
+			hid: 'mobile-web-app-capable',
+			name: 'mobile-web-app-capable',
+			content: 'yes'
+		}
 	]
 };

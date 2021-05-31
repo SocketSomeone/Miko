@@ -1,10 +1,11 @@
-import type { DeepPartial, BaseGuildEntity, BaseGuildRepository, ObjectType } from '@miko/database';
-import type { Constructor } from '@miko/types';
-import { CacheManager } from '@miko/cache';
-import { getCustomRepository } from '@miko/database';
 import { Logger } from 'tslog';
+import type { ObjectType, DeepPartial } from 'typeorm';
+import { getCustomRepository } from 'typeorm';
+import { CacheManager } from '../../cache';
 import { AutoWired } from '../../decorators';
 import { GatewayService } from '../GatewayService';
+import type { Constructor } from '../../types';
+import type { BaseGuildEntity, BaseGuildRepository } from '../..';
 
 // Domain Service
 export abstract class BaseService<T extends BaseGuildEntity, R extends BaseGuildRepository<T>> {

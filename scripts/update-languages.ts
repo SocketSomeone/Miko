@@ -1,4 +1,3 @@
-/* eslint-disable no-async-promise-executor */
 import https from 'https';
 import fs from 'fs';
 import os from 'os';
@@ -8,32 +7,32 @@ import { resolve } from 'path';
 import { Logger } from 'tslog';
 import { Translations } from '@crowdin/crowdin-api-client';
 import { glob } from 'glob';
+import { Config } from '@miko/config';
 
-import { crowdin } from '../config.json';
-
-const logger = new Logger({ name: 'Localiztion' });
+const logger = new Logger({ name: 'Localization' });
 
 const tempPath = os.tmpdir();
 const zipFilePath = resolve(tempPath, './translations.zip');
 const extractPath = resolve(tempPath, './translations');
 
-const PROJECT_ID = crowdin.projectId;
+const { PROJECT_ID, TOKEN } = Config.crowdin;
 const API = new Translations({
-	token: crowdin.token
+	token: TOKEN
 });
 
-const downloadTranslations = () =>
-	new Promise(async (res, rej) => {
-		const build = await API.listProjectBuilds(PROJECT_ID);
+const downloadTranslations = async () => {
+	const build = await API.listProjectBuilds(PROJECT_ID);
 
-		const download = await API.downloadTranslations(PROJECT_ID, build.data[0].data.id);
-		const stream = fs.createWriteStream(zipFilePath);
+	const download = await API.downloadTranslations(PROJECT_ID, build.data[0].data.id);
+	const stream = fs.createWriteStream(zipFilePath);
 
+	return new Promise((res, rej) => {
 		stream.on('finish', res);
 		stream.on('error', rej);
 
 		https.get(download.data.url, response => response.pipe(stream));
 	});
+};
 
 const getJson = (languagePath: string, service: string) => {
 	const jsons = glob.sync(`${resolve(languagePath, service)}/**/*.json`);

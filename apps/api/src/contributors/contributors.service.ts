@@ -1,7 +1,6 @@
-import { Repository } from '@miko/common';
+import { Repository, ContributorRepository } from '@miko/common';
 import { Injectable } from '@nestjs/common';
-import type { Contributor } from '@miko/database';
-import { ContributorRepository } from '@miko/database';
+import type { Contributor } from '@miko/common';
 
 @Injectable()
 export class ContributorsService {

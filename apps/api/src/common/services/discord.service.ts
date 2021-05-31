@@ -1,4 +1,4 @@
-import { LoadingCache } from '@miko/cache';
+import { LoadingCache } from '@miko/common';
 import { HttpService, Injectable } from '@nestjs/common';
 import { Permissions } from 'discord.js';
 import moment from 'moment';

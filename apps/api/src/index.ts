@@ -1,4 +1,4 @@
-import { createConnection } from '@miko/database';
+import { createConnection } from '@miko/common';
 import { ValidationPipe, ClassSerializerInterceptor } from '@nestjs/common';
 import { NestFactory, Reflector } from '@nestjs/core';
 import type { NestFastifyApplication } from '@nestjs/platform-fastify';
@@ -36,7 +36,7 @@ async function bootstrap() {
 	app.useGlobalPipes(new ValidationPipe({ transform: true }));
 	app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
-	await app.listen(8888);
+	await app.listen(4000);
 }
 
 bootstrap().catch(err => logger.error(err));

@@ -1,4 +1,4 @@
-import { getCustomRepository } from '@miko/database';
+import { getCustomRepository } from 'typeorm';
 
 export function Repository(): PropertyDecorator {
 	return (target: unknown, propertyKey: string | symbol): void => {

@@ -1,4 +1,4 @@
-import type { Constructor } from '@miko/types';
+import type { Constructor } from '@miko/common';
 import type { ICommandOptions } from '../types';
 
 export function Command(opts: ICommandOptions) {

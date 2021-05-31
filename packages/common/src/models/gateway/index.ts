@@ -9,3 +9,4 @@ export interface IRabbitEvents {
 }
 
 export { GuildInfoDTO, CommandsGetDTO };
+export * from './GatewayCallback';

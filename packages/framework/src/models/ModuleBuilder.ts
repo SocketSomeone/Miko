@@ -1,6 +1,6 @@
-import { AutoWired } from '@miko/common';
-import type { AllowArray, Constructor } from '@miko/types';
-import { arrarify } from '@miko/types';
+import { AutoWired, arrarify } from '@miko/common';
+import type { AllowArray, Constructor } from '@miko/common';
+
 import { container } from 'tsyringe';
 import { CommandHolderService } from '../services/CommandHolderService';
 import type { BaseCommand } from './BaseCommand';

@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { injectable, singleton } from 'tsyringe';
-import type { Connection, Channel, Message as MQMessage } from 'amqplib';
+import { singleton } from 'tsyringe';
 import { connect } from 'amqplib';
 import { v4 } from 'uuid';
-import type { Awaited } from '@miko/types';
+import type { Connection, Channel, Message as MQMessage } from 'amqplib';
+import type { Awaited } from '../types';
 import type { GatewayCallback, IRabbitEvents } from '../models';
 import { PostConstruct } from '../decorators';
 
@@ -16,11 +14,9 @@ export class GatewayService {
 
 	private channel!: Channel;
 
-	private queue = process.env.IS_API ? `MIKO.GATEWAY.MANAGER` : `MIKO.GATEWAY.CLUSTER.${process.pid}`;
+	private queueService = `MIKO.GATEWAY.SERVICE.${process.pid}`;
 
-	private callbacks: Map<keyof IRabbitEvents, GatewayCallback[]> = new Map();
-
-	private promises: Map<string, (value: any) => void> = new Map();
+	private promises: Map<string, (value: unknown) => void> = new Map();
 
 	@PostConstruct
 	public async init(): Promise<void> {
@@ -58,20 +54,13 @@ export class GatewayService {
 	}
 
 	private async assertQueues() {
-		await this.channel.assertQueue(this.queue, { durable: false, autoDelete: true });
-		await this.channel.assertExchange('MIKO.GATEWAY.RESPONSES', 'fanout', { durable: false, autoDelete: true });
-		await this.channel.bindQueue(this.queue, 'MIKO.GATEWAY.RESPONSES', '');
+		await this.channel.assertQueue(this.queueService, { durable: false, autoDelete: true });
 
-		if (!process.env.IS_API) {
-			await this.channel.assertExchange('MIKO.GATEWAY.CLUSTERS', 'fanout', { durable: true });
-			await this.channel.bindQueue(this.queue, 'MIKO.GATEWAY.CLUSTERS', '');
-		}
-
-		await this.channel.prefetch(5);
-		await this.channel.consume(this.queue, this.onMessage.bind(this), { noAck: false });
+		await this.channel.prefetch(10, true);
+		await this.channel.consume(this.queueService, this.onResponse.bind(this), { noAck: false });
 	}
 
-	private async onMessage(rawMessage: MQMessage) {
+	private async onResponse(rawMessage: MQMessage) {
 		if (!rawMessage) {
 			return this.assertQueues();
 		}
@@ -85,15 +74,6 @@ export class GatewayService {
 				this.promises.delete(message.correlationId);
 
 				promise(message.data);
-			} else if (!message.isResponse && this.callbacks.has(message.event)) {
-				const callbacks = this.callbacks.get(message.event);
-
-				callbacks.forEach(async func => {
-					const result = await func(message.data);
-
-					if (result !== false && typeof result !== 'undefined')
-						this.emit(message.event, result, message.correlationId);
-				});
 			}
 
 			this.channel.ack(rawMessage, false);
@@ -110,33 +90,53 @@ export class GatewayService {
 		responseId?: string
 	): Promise<T>;
 
-	public emit(event: string, payload: Object = null, responseId: string = null): Awaited<unknown> {
+	public emit(event: string, payload: Object = null, responseId?: string): Awaited<unknown> {
 		return new Promise((res, rej) => {
 			const correlationId = responseId || v4();
 			const content = Buffer.from(
 				JSON.stringify({
 					correlationId,
-					isResponse: !!responseId,
-					event,
+					replyTo: this.queueService,
 					data: payload
 				})
 			);
 
-			if (responseId) {
-				this.channel.publish('MIKO.GATEWAY.RESPONSES', '', content);
-			} else if (process.env.IS_API) {
-				this.channel.publish('MIKO.GATEWAY.CLUSTERS', '', content);
-			} else {
-				this.channel.sendToQueue('MIKO.GATEWAY.MANAGER', content);
-			}
+			this.channel.sendToQueue(event, content);
 
-			this.promises.set(correlationId, res);
+			if (!responseId) {
+				this.promises.set(correlationId, res);
+			}
 		});
 	}
 
-	public on<Q extends keyof IRabbitEvents = keyof IRabbitEvents>(key: Q, listener: GatewayCallback): void {
-		const list = this.callbacks.get(key) || [];
+	public async on<Q extends keyof IRabbitEvents = keyof IRabbitEvents>(
+		key: Q,
+		listener: GatewayCallback
+	): Promise<void> {
+		if (!this.connection) {
+			await this.init();
+		}
 
-		this.callbacks.set(key, list.concat(listener));
+		await this.channel.assertQueue(key, { durable: false, autoDelete: true });
+
+		this.channel.consume(key, async (rawMessage: MQMessage) => {
+			if (!rawMessage) {
+				return this.assertQueues();
+			}
+
+			try {
+				const message = JSON.parse(rawMessage.content.toString());
+
+				const result = await listener(message.data);
+
+				if (result !== false && typeof result !== 'undefined') {
+					this.emit(message.replyTo, result, message.correlationId);
+				}
+
+				this.channel.ack(rawMessage, false);
+			} catch (err) {
+				this.channel.nack(rawMessage, false, false);
+			}
+		});
 	}
 }

@@ -1,4 +1,4 @@
-import type { Contributor } from '@miko/database';
+import type { Contributor } from '@miko/common';
 import { Controller, Get } from '@nestjs/common';
 import { Public } from '../common/decorators';
 import { ContributorsService } from './contributors.service';

@@ -1,7 +1,6 @@
 import { AutoWired, GatewayService } from '@miko/common';
-import type { IRabbitEvents } from '@miko/common';
+import type { IRabbitEvents, Awaited } from '@miko/common';
 
-import type { Awaited } from '@miko/types';
 import { Client } from '../client';
 
 export abstract class BaseQueueListner<Q extends keyof IRabbitEvents> {

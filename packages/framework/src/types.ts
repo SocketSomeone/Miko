@@ -1,19 +1,19 @@
-import type { Constructor } from '@miko/types';
+import type { Constructor } from '@miko/common';
 import type { PermissionResolvable } from 'discord.js';
-import type { BaseResolver } from './models';
+import type { BaseArgument } from './models';
 
-export type ResolverOrConstructor<T> = BaseResolver<T> | Constructor<BaseResolver<T>>;
+export type ArgumentOrConstructor<T> = BaseArgument<T> | Constructor<BaseArgument<T>>;
 
 export interface ICommandArgument {
 	name: string;
-	resolver: BaseResolver<unknown>;
+	argument: BaseArgument<unknown>;
 	optional?: boolean;
 	remaining?: boolean;
 }
 
 export interface ICommandOptionsArgument {
 	name: string;
-	resolver: ResolverOrConstructor<unknown>;
+	argument: ArgumentOrConstructor<unknown>;
 	optional?: boolean;
 	remaining?: boolean;
 }

@@ -22,7 +22,7 @@
 					depressed
 					v-bind="attrs"
 					v-on="on"
-					class="d-flex align-center justify-center"
+					class="animated fadeInRight d-flex align-center justify-center"
 				>
 					<v-list-item-avatar color="accent" size="28">
 						<img data-not-lazy :src="avatarUrl($auth.user)" />

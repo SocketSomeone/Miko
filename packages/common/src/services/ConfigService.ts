@@ -1,6 +1,6 @@
-import type { DeepPartial } from '@miko/database';
-import { GuildConfig, GuildConfigRepository } from '@miko/database';
 import { singleton } from 'tsyringe';
+import type { DeepPartial } from 'typeorm';
+import { GuildConfig, GuildConfigRepository } from '../database';
 import { BaseService } from './base';
 
 @singleton()

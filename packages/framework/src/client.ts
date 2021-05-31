@@ -2,8 +2,7 @@ import type { CloseEvent, Guild } from 'discord.js';
 import { Client as DClient } from 'discord.js';
 import { Logger } from 'tslog';
 import { singleton } from 'tsyringe';
-import { PostConstruct } from '@miko/common';
-import { createConnection } from '@miko/database';
+import { PostConstruct, createConnection } from '@miko/common';
 
 @singleton()
 export class Client extends DClient {

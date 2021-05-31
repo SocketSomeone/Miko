@@ -3,7 +3,7 @@ import type { Message } from 'discord.js';
 import { Logger } from 'tslog';
 import { Lexer } from 'lexure';
 import { AutoWired, ConfigService } from '@miko/common';
-import type { GuildConfig } from '@miko/database';
+import type { GuildConfig } from '@miko/common';
 import moment from 'moment';
 import { Client } from '../../client';
 import type { IParsedMessageData } from '../../types';

@@ -6,8 +6,7 @@
 	"scripts": {
 		"build": "tsc --build ./tsconfig.package.json",
 		"watch": "yarn run build --watch",
-		"start": "pm2 start ./application.yml",
-		"poststart": "pm2 logs"
+		"start": "node ./lib"
 	},
 	"devDependencies": {},
 	"peerDependencies": {

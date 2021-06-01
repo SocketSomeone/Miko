@@ -1,0 +1,18 @@
+version: '3.7'
+services:
+  	web:
+		build:
+		dockerfile: ./.docker/Dockerfile
+		context: ..
+		restart: unless-stopped
+		environment:
+		NODE_ENV: production
+		command: pm2-runtime start apps/web/lib/index.js
+	api:
+		build:
+		  	dockerfile: ./.docker/Dockerfile
+		  	context: ..
+		restart: unless-stopped
+		environment:
+		  	NODE_ENV: production
+		command: pm2-runtime start apps/api/lib/index.js

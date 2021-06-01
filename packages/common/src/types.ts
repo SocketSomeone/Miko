@@ -10,7 +10,6 @@ export type ObjectOfItems<T> = { [key: string]: T };
 export type Arguments<T> = [T] extends [(...args: infer U) => unknown] ? U : [T] extends [void] ? [] : [T];
 
 export type Awaited<T> = PromiseLike<T> | T;
-
 export interface ICacheOptions<K, V> {
 	maxSize?: number;
 	expireAfter?: Duration;
@@ -19,7 +18,6 @@ export interface ICacheOptions<K, V> {
 	refreshInterval?: number;
 	load?: (key: K) => Promise<V>;
 }
-
 export interface ICacheEntry<V> {
 	data: V;
 	meta: MetadataCache;

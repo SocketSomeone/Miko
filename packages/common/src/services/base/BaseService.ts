@@ -6,6 +6,7 @@ import { AutoWired } from '../../decorators';
 import { GatewayService } from '../GatewayService';
 import type { Constructor } from '../../types';
 import type { BaseGuildEntity, BaseGuildRepository } from '../..';
+import { EmergencyService } from '../EmergencyService';
 
 // Domain Service
 export abstract class BaseService<T extends BaseGuildEntity, R extends BaseGuildRepository<T>> {
@@ -16,6 +17,9 @@ export abstract class BaseService<T extends BaseGuildEntity, R extends BaseGuild
 
 	@AutoWired()
 	protected readonly gateway: GatewayService;
+
+	@AutoWired()
+	protected readonly emergency: EmergencyService;
 
 	protected readonly repository: R;
 

@@ -1,9 +1,0 @@
-apps:
-  - script: ./lib/index.js
-    name: 'api'
-    watch: true
-    env:
-      NODE_ENV: development
-
-      RABBIT_URL: amqp://localhost
-      IS_API: true

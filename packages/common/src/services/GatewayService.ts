@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { singleton } from 'tsyringe';
 import { connect } from 'amqplib';
 import { v4 } from 'uuid';
@@ -36,7 +37,7 @@ export class GatewayService {
 	private async reconnect() {
 		await this.destroy();
 
-		setTimeout(this.init, RETRY_INTERVAL);
+		setTimeout(this.init.bind(this), RETRY_INTERVAL);
 	}
 
 	private async destroy() {
@@ -56,8 +57,8 @@ export class GatewayService {
 	private async assertQueues() {
 		await this.channel.assertQueue(this.queueService, { durable: false, autoDelete: true });
 
-		await this.channel.prefetch(10, true);
-		await this.channel.consume(this.queueService, this.onResponse.bind(this), { noAck: false });
+		await this.channel.prefetch(5);
+		await this.channel.consume(this.queueService, this.onResponse.bind(this));
 	}
 
 	private async onResponse(rawMessage: MQMessage) {
@@ -90,8 +91,8 @@ export class GatewayService {
 		responseId?: string
 	): Promise<T>;
 
-	public emit(event: string, payload: Object = null, responseId?: string): Awaited<unknown> {
-		return new Promise((res, rej) => {
+	public emit(event: string, payload: Object = null, responseId?: string): Promise<unknown> {
+		return new Promise(res => {
 			const correlationId = responseId || v4();
 			const content = Buffer.from(
 				JSON.stringify({
@@ -119,7 +120,7 @@ export class GatewayService {
 
 		await this.channel.assertQueue(key, { durable: false, autoDelete: true });
 
-		this.channel.consume(key, async (rawMessage: MQMessage) => {
+		await this.channel.consume(key, async (rawMessage: MQMessage) => {
 			if (!rawMessage) {
 				return this.assertQueues();
 			}

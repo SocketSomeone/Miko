@@ -63,38 +63,38 @@ export class Client extends DClient {
 	}
 
 	// private onClientReady() {
-	// 	this.logger.info(`Ready to work! Serving ${this.guilds.cache.size} guilds...`);
+	// this.logger.info(`Ready to work! Serving ${this.guilds.cache.size} guilds...`);
 	// }
 
 	// private onShardReady(shardId: number) {
-	// 	this.logger.info('Ready to work!', `SHARD ${shardId + 1}`);
+	// this.logger.info('Ready to work!', `SHARD ${shardId + 1}`);
 	// }
 
 	// private onShardReconnecting(shardId: number) {
-	// 	this.logger.info('Connected to Discord!', `SHARD ${shardId + 1}`);
+	// this.logger.info('Connected to Discord!', `SHARD ${shardId + 1}`);
 	// }
 
 	// private onShardResume(shardId: number) {
-	// 	this.logger.info('Connection resumed...', `SHARD ${shardId + 1}`);
+	// this.logger.info('Connection resumed...', `SHARD ${shardId + 1}`);
 	// }
 
 	// private onShardDisconnect(err: CloseEvent, shardId: number) {
-	// 	this.logger.warn(`Disconnected by Discord: ${err}`, `SHARD ${shardId + 1}`);
+	// this.logger.warn(`Disconnected by Discord: ${err}`, `SHARD ${shardId + 1}`);
 	// }
 
 	// private onWarn(warn: string) {
-	// 	this.logger.warn(warn, 'DISCORD WARNING');
+	// this.logger.warn(warn, 'DISCORD WARNING');
 	// }
 
 	// private onError(error: Error) {
-	// 	this.logger.error(error, 'DISCORD ERROR');
+	// this.logger.error(error, 'DISCORD ERROR');
 	// }
 
 	// private onRatelimit() {
-	// 	this.logger.warn('Rate limit exceed', 'DISCORD WARNING');
+	// this.logger.warn('Rate limit exceed', 'DISCORD WARNING');
 	// }
 
 	// private onGuildUnavailable(guild: Guild) {
-	// 	this.logger.warn(`${guild.name || guild.id} is currently dead...`, 'GUILD_UNAVAILABLE');
+	// this.logger.warn(`${guild.name || guild.id} is currently dead...`, 'GUILD_UNAVAILABLE');
 	// }
 }

@@ -1,15 +1,18 @@
-export default {
-	srcDir: './app',
+import { config } from '@miko/config';
+import { join } from 'path';
 
-	rootDir: '.',
+const rootDir = join(__dirname, '../..');
+
+export default {
+	srcDir: join(rootDir, './app'),
+
+	rootDir,
 
 	components: ['~/components'],
 
 	telemetry: false,
 
-	dev: process.env.NODE_ENV !== 'production',
-
-	target: 'server',
+	dev: config.isDev,
 
 	css: ['~/assets/scss/root'],
 
@@ -17,5 +20,9 @@ export default {
 
 	router: {
 		middleware: ['auth']
+	},
+
+	build: {
+		transpile: ['vue-i18n']
 	}
 };

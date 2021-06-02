@@ -1,18 +1,41 @@
 version: '3.7'
 services:
-  	web:
-		build:
-		dockerfile: ./.docker/Dockerfile
-		context: ..
-		restart: unless-stopped
-		environment:
-		NODE_ENV: production
-		command: pm2-runtime start apps/web/lib/index.js
-	api:
-		build:
-		  	dockerfile: ./.docker/Dockerfile
-		  	context: ..
-		restart: unless-stopped
-		environment:
-		  	NODE_ENV: production
-		command: pm2-runtime start apps/api/lib/index.js
+  nginx:
+    image: nginx:1.21.0-alpine
+    restart: unless-stopped
+    depends_on:
+      - api
+      - web
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    networks:
+      - app-network
+
+  web:
+    build:
+      dockerfile: ./.docker/Dockerfile
+      context: ..
+    restart: unless-stopped
+    container_name: web
+    environment:
+      NODE_ENV: production
+    networks:
+      - app-network
+    command: pm2-runtime start apps/web/lib/index.js
+
+  api:
+    build:
+      dockerfile: ./.docker/Dockerfile
+      context: ..
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+    networks:
+      - app-network
+    command: pm2-runtime start apps/api/lib/index.js
+
+networks:
+  app-network:
+    driver: bridge

@@ -5,23 +5,26 @@
 		height="46"
 		background-color="body"
 		prepend-inner-icon="mdi-translate"
-		class="mt-2 control-item"
+		class="mt-2"
 		item-value="code"
 		item-text="name"
-		:value="$i18n.locale"
+		v-model="locale"
 		:items="$i18n.locales"
-		@input="e => $i18n.setLocale(e)"
 	></v-select>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "nuxt-property-decorator";
+import { Component, Vue, Watch } from "nuxt-property-decorator";
 
 @Component({
 	name: "LanguageSwitcher"
 })
-export default class extends Vue {}
-</script>
+export default class extends Vue {
+	locale = this.$i18n.locale;
 
-<style lang="scss">
-</style>
+	@Watch("locale")
+	async onLocaleChanged(val: string) {
+		this.$i18n.setLocale(val);
+	}
+}
+</script>

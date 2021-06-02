@@ -1,4 +1,5 @@
 export default [
+	'nuxt-i18n',
 	[
 		'nuxt-lazy-load',
 		{
@@ -13,6 +14,5 @@ export default [
 	'@nuxtjs/auth-next',
 	'@nuxtjs/sentry',
 	'@nuxtjs/sitemap',
-	'@nuxtjs/robots',
-	'nuxt-i18n'
+	'@nuxtjs/robots'
 ];

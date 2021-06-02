@@ -1,5 +1,5 @@
 <template>
-	<v-container class="commands">
+	<v-container class="commands px-5">
 		<v-row justify="center">
 			<NavSidebar class="animated fadeIn">
 				<v-list-item-group>

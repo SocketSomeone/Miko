@@ -8,8 +8,8 @@
 			height="40"
 			outlined
 			@click="$auth.loginWith('discord')"
-			v-text="$t('header.login')"
 		>
+			{{ $t("header.login") }}
 		</v-btn>
 
 		<v-menu v-model="menu" offset-y v-else>

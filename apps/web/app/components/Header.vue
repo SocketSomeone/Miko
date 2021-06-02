@@ -2,7 +2,7 @@
 	<div class="header-container">
 		<v-app-bar color="background" app absolute height="84" flat>
 			<nuxt-link class="animated fadeInLeft" to="/">
-				<v-toolbar-title  class="primary--text nav-logo"> Miko </v-toolbar-title>
+				<v-toolbar-title class="primary--text nav-logo"> Miko </v-toolbar-title>
 			</nuxt-link>
 
 			<v-spacer />

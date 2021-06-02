@@ -15,6 +15,7 @@
 		"noEmit": true,
 		"experimentalDecorators": true,
 		"suppressImplicitAnyIndexErrors": true,
+		"resolveJsonModule": true,
 		"baseUrl": ".",
 		"paths": {
 			"~/*": [
@@ -32,12 +33,13 @@
 			"@nuxtjs/moment",
 			"@nuxtjs/auth-next",
 			"@nuxtjs/sentry",
+			"@nuxtjs/vuetify",
 			"nuxt-i18n"
 		]
 	},
 	"exclude": [
 		"node_modules",
 		".nuxt",
-		"dist"
+		"lib"
 	]
 }

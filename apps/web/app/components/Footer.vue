@@ -25,11 +25,11 @@
 					sm="3"
 					md="2"
 					lg="1"
-					v-for="[category, items] in links()"
+					v-for="[category, items] in links"
 					:key="category"
 					class="footer-links text-center text-sm-left d-flex flex-column"
 				>
-					<h3 class="primary--text" v-text="category"></h3>
+					<h3 class="primary--text" v-text="$t(category)"></h3>
 
 					<div
 						class="d-flex flex-row justify-center align-center justify-sm-start font-weight-regular"
@@ -41,7 +41,7 @@
 						<SafeLink
 							class="white--text"
 							:link="item.route"
-							v-text="item.name"
+							v-text="$t(item.name)"
 						/>
 					</div>
 				</v-col>
@@ -69,68 +69,75 @@ import BotsVote from "../assets/images/BotsVote.svg";
 	components: { BodVote, TopVote, BotsVote }
 })
 export default class extends Vue {
-	links() {
-		return new Map([
+	links = [
+		[
+			"footer.links.find.heading",
 			[
-				this.$t("footer.links.find.heading"),
-				[
-					{
-						icon: TopVote,
-						route: "https://vk.com",
-						name: "Top.gg"
-					},
-					{ icon: BotsVote, route: "/", name: "Bots.gg" },
-					{ icon: BodVote, route: "/", name: "BoD.gg" }
-				]
-			],
-			[
-				this.$t("footer.links.product.heading"),
-				[
-					{
-						route: "https://ivnite.mikoapp.xyz",
-						name: this.$t("footer.links.product.invite")
-					},
-					{
-						route: "https://discord.mikoapp.xyz",
-						name: this.$t("footer.links.product.support")
-					},
-					{
-						route: "/commands",
-						name: this.$t("footer.links.product.commands")
-					},
-					{
-						route: "/contributors",
-						name: this.$t("footer.links.product.contributors")
-					}
-				]
-			],
-			[
-				this.$t("footer.links.support.heading"),
-				[
-					{
-						route: "https://translate.mikoapp.xyz",
-						name: this.$t("footer.links.support.translate")
-					},
-					{
-						route: "/premium",
-						name: this.$t("footer.links.support.premium")
-					},
-					{
-						route: "mailto: support@mikoapp.xyz",
-						name: this.$t("footer.links.support.jobs")
-					}
-				]
-			],
-			[
-				this.$t("footer.links.policies.heading"),
-				[
-					{ route: "/cookies", name: this.$t("footer.links.policies.cookies") },
-					{ route: "/tos", name: this.$t("footer.links.policies.tos") },
-					{ route: "/privacy", name: this.$t("footer.links.policies.privacy") }
-				]
+				{
+					icon: TopVote,
+					route: "https://vk.com",
+					name: "Top.gg"
+				},
+				{ icon: BotsVote, route: "/", name: "Bots.gg" },
+				{ icon: BodVote, route: "/", name: "BoD.gg" }
 			]
-		]).entries();
-	}
+		],
+		[
+			"footer.links.product.heading",
+			[
+				{
+					route: "https://invite.mikoapp.xyz",
+					name: "footer.links.product.invite"
+				},
+				{
+					route: "https://discord.mikoapp.xyz",
+					name: "footer.links.product.support"
+				},
+				{
+					route: "/commands",
+					name: "footer.links.product.commands"
+				},
+				{
+					route: "/contributors",
+					name: "footer.links.product.contributors"
+				}
+			]
+		],
+		[
+			"footer.links.support.heading",
+			[
+				{
+					route: "https://translate.mikoapp.xyz",
+					name: "footer.links.support.translate"
+				},
+				{
+					route: "/premium",
+					name: "footer.links.support.premium"
+				},
+				{
+					route: "mailto: support@mikoapp.xyz",
+					name: "footer.links.support.jobs"
+				}
+			]
+		],
+		[
+			"footer.links.policies.heading",
+			[
+				{
+					route: "/cookies",
+					name: "footer.links.policies.cookies"
+				},
+				{
+					route: "/tos",
+					name: "footer.links.policies.tos"
+				},
+				{
+					route: "/privacy",
+					name: "footer.links.policies.privacy"
+				}
+			]
+		]
+	];
 }
 </script>
 
@@ -146,8 +153,12 @@ export default class extends Vue {
 		}
 	}
 
-	.footer-links > div {
-		margin-bottom: 2px;
+	.footer-links {
+		white-space: nowrap;
+
+		> div {
+			margin-bottom: 2px;
+		}
 	}
 }
 

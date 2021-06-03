@@ -6,8 +6,7 @@
 	"scripts": {
 		"build": "tsc --build ./tsconfig.package.json",
 		"watch": "yarn run build --watch",
-		"start": "pm2 start ./application.yml",
-		"poststart": "pm2 logs"
+		"start": "nest start --watch"
 	},
 	"dependencies": {
 		"@nestjs/common": "^7.0.0",
@@ -15,7 +14,7 @@
 		"@nestjs/platform-fastify": "7.6.15",
 		"class-transformer": "0.4.0",
 		"class-validator": "0.13.1",
-		"fastify-compress": "3.4.2",
+		"fastify-compress": "3.5.0",
 		"fastify-cookie": "5.3.1",
 		"fastify-csrf": "3.1.0",
 		"fastify-helmet": "5.3.1",

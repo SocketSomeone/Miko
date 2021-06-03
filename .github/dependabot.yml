@@ -11,8 +11,6 @@ updates:
       - 'SocketSomeone'
     labels:
       - 'dependencies'
-    commit-message:
-      include: scope
     open-pull-requests-limit: 10
 
   - directory: '/'
@@ -24,8 +22,6 @@ updates:
       - 'SocketSomeone'
     assignees:
       - 'SocketSomeone'
-    commit-message:
-      include: scope
     labels:
       - 'dependencies'
     open-pull-requests-limit: 10

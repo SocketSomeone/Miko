@@ -57,7 +57,7 @@
 		}
 	},
 	"devDependencies": {
-		"@crowdin/crowdin-api-client": "1.10.6",
+		"@crowdin/crowdin-api-client": "1.11.0",
 		"@types/amqplib": "0.5.17",
 		"@types/jest": "26.0.23",
 		"@types/moment": "2.13.0",

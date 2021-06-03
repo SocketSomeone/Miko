@@ -1180,10 +1180,10 @@
   dependencies:
     chalk "^4.0.0"
 
-"@crowdin/crowdin-api-client@1.10.6":
-  version "1.10.6"
-  resolved "https://registry.yarnpkg.com/@crowdin/crowdin-api-client/-/crowdin-api-client-1.10.6.tgz#d9cd6f340ced065b8020865b9ded69f86e8d5b30"
-  integrity sha512-6bT9WF1yJFgUCuP9q+7RH//vcULmMxmZhhmKaWLlPPRdkTEasQFednb6ITIPX0UnBvSd5r0CBSa6UqEXbBQPUQ==
+"@crowdin/crowdin-api-client@1.11.0":
+  version "1.11.0"
+  resolved "https://registry.yarnpkg.com/@crowdin/crowdin-api-client/-/crowdin-api-client-1.11.0.tgz#524b8b2b44fa66f2172146194ad065b59b02c595"
+  integrity sha512-Y+SGJ4ENIW7q0kx8EbRZaMV54dNuE9bYuMMd6qe6EEQ1/piKKRzJvKD/Kt3pm6eJpTI5grlOU8rGBejLEudYxA==
   dependencies:
     axios "^0.21.1"
 

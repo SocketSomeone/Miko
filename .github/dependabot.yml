@@ -12,8 +12,6 @@ updates:
     labels:
       - 'dependencies'
     commit-message:
-      prefix: 'chore(deps):'
-      prefix-development: 'chore(deps):'
       include: scope
     open-pull-requests-limit: 10
 
@@ -27,8 +25,6 @@ updates:
     assignees:
       - 'SocketSomeone'
     commit-message:
-      prefix: 'chore(deps):'
-      prefix-development: 'chore(deps):'
       include: scope
     labels:
       - 'dependencies'

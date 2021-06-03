@@ -84,7 +84,7 @@
 		"tsconfig-paths": "3.9.0"
 	},
 	"dependencies": {
-		"@sentry/node": "6.4.1",
+		"@sentry/node": "6.5.1",
 		"@sentry/tracing": "6.4.1",
 		"amqplib": "0.8.0",
 		"discord.js": "12.5.3",

@@ -6,13 +6,12 @@
 	"scripts": {
 		"build": "tsc --build ./tsconfig.package.json",
 		"watch": "yarn run build --watch",
-		"start": "pm2 start ./application.yml",
-		"poststart": "pm2 logs"
+		"start": "nest start --watch"
 	},
 	"dependencies": {
 		"@nestjs/common": "^7.0.0",
 		"@nestjs/core": "^7.0.0",
-		"@nestjs/platform-fastify": "7.6.15",
+		"@nestjs/platform-fastify": "7.6.17",
 		"class-transformer": "0.4.0",
 		"class-validator": "0.13.1",
 		"fastify-compress": "3.4.2",

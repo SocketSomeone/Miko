@@ -4,7 +4,7 @@
 	"main": "./lib/index.js",
 	"types": "./lib/index.d.ts",
 	"dependencies": {
-		"pg": "8.5.1",
+		"pg": "8.6.0",
 		"typeorm": "0.2.33"
 	},
 	"devDependencies": {},

@@ -20,8 +20,5 @@
 		"importsNotUsedAsValues": "error",
 		"resolveJsonModule": true,
 		"sourceRoot": ".."
-	},
-	"include": [
-		"../**/*.json"
-	]
+	}
 }

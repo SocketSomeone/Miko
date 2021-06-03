@@ -8,6 +8,7 @@
 		"watch": "yarn run build --watch",
 		"start": "node ./lib"
 	},
+	"dependencies": {},
 	"devDependencies": {},
 	"peerDependencies": {
 		"@miko/config": "*",

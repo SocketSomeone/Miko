@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - release/*
     paths-ignore:
       - '.dockerignore'
       - '.github/**'
@@ -14,6 +15,7 @@ on:
   pull_request:
     branches:
       - main
+      - release/*
       - develop
 
 jobs:
@@ -26,7 +28,7 @@ jobs:
       fail-fast: true
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.4
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2.1.5

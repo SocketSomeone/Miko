@@ -3,7 +3,7 @@ import type { GuildConfig } from '@miko/common';
 import type { Guild, Message } from 'discord.js';
 import type { BaseCommand } from '../models';
 import type { IParsedMessageData } from '../types';
-import { BaseCommandsService } from './base/BaseCommandsService';
+import { BaseCommandsService } from './base';
 
 @singleton()
 export class InternalCommandsService extends BaseCommandsService {

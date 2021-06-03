@@ -50,6 +50,7 @@ module.exports = {
 		}],
 		"import/prefer-default-export": "off",
 		"import/no-extraneous-dependencies": ["off"],
+		"import/no-cycle": ["off"],
 		"no-restricted-syntax": ["error", "WithStatement"],
 		"class-methods-use-this": "off",
 		"linebreak-style": ["error", "unix"],

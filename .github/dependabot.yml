@@ -3,29 +3,33 @@ updates:
   - directory: '/'
     package-ecosystem: 'github-actions'
     schedule:
-      interval: 'daily'
+      interval: daily
+      time: '00:00'
+    reviewers:
+      - 'SocketSomeone'
+    assignees:
+      - 'SocketSomeone'
     labels:
       - 'dependencies'
-      - '⚒️ infrastructure'
+    commit-message:
+      prefix: 'chore(deps):'
+      prefix-development: 'chore(deps):'
+      include: scope
+    open-pull-requests-limit: 10
 
   - directory: '/'
     package-ecosystem: 'npm'
     schedule:
-      interval: 'daily'
+      interval: daily
+      time: '00:00'
+    reviewers:
+      - 'SocketSomeone'
     assignees:
       - 'SocketSomeone'
     commit-message:
-      prefix: '🔼'
-      prefix-development: '🔼'
+      prefix: 'chore(deps):'
+      prefix-development: 'chore(deps):'
+      include: scope
     labels:
       - 'dependencies'
-    open-pull-requests-limit: 15
-
-  - directory: '/apps/bot'
-    package-ecosystem: 'npm'
-    schedule:
-      interval: 'daily'
-    assignees:
-      - 'SocketSomeone'
-    labels:
-      - 'dependencies'
+    open-pull-requests-limit: 10

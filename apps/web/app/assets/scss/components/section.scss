@@ -1,0 +1,35 @@
+.pattern {
+	background-image: url("../images/pattern.png");
+	background-size: 270px 212.55px;
+	background-repeat: repeat;
+}
+
+.policy {
+	padding-bottom: 30px;
+
+	h1 {
+		padding-top: 20px;
+		font-weight: bolder;
+	}
+
+	h2 {
+		margin: 20px auto;
+		font-weight: 700;
+		text-transform: uppercase;
+	}
+
+	h3 {
+		color: var(--v-primary-base);
+		margin-bottom: 20px;
+	}
+
+	p,
+	li {
+		font-weight: normal;
+		opacity: 0.9;
+	}
+
+	ul {
+		margin-bottom: 20px;
+	}
+}

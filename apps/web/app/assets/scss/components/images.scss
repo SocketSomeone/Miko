@@ -1,0 +1,11 @@
+.miko {
+	display: inline-block;
+	margin: 1.5em 0;
+	object-fit: contain;
+	height: auto;
+
+	@media only screen and (max-width: 599px) {
+		width: 80vw !important;
+		max-width: 100%;
+	}
+}

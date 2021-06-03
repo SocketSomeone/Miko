@@ -1,21 +1,24 @@
 {
 	"private": true,
+	"license": "MIT",
 	"name": "miko-monorepo",
-	"description": "",
+	"description": "Miko is simple, multipurpose bot that will help you with your server, which you can manage using the dashboard on our website.",
 	"workspaces": [
 		"apps/*",
 		"packages/*"
 	],
 	"scripts": {
-		"build": "yarn run clean && tsc --build ./typescript/tsconfig.project.json",
-		"start": "pm2 start ./miko.config.yml",
-		"clean": "rimraf -rf ./{apps,packages}/*/{lib,*.tsbuildinfo}",
-		"test": "yarn run lint && jest --no-cache --config test/jest.config.json",
-		"test:inspect": "yarn lint && node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand --config test/jest.config.json",
-		"test:coverage": "jest --config test/jest.config.json --coverage",
-		"lint": "eslint --fix --ignore-path .gitignore {apps,packages,scripts}/*/src/**/*.ts",
+		"build": "yarn run typescript:build",
+		"watch": "yarn run typescript:watch",
+		"clean": "yarn run typescript:clean",
+		"test": "yarn run test:eslint && yarn run test:jest",
+		"test:jest": "jest --no-cache --config test/jest.config.json",
+		"test:eslint": "eslint --fix --ignore-path .gitignore {apps,packages,scripts}/*/src/**/*.ts",
+		"typescript:build": "tsc --build ./typescript/tsconfig.project.json",
+		"typescript:watch": "yarn run typescript:build --watch",
+		"typescript:clean": "rimraf -rf ./{apps,packages}/*/{lib,*.tsbuildinfo}",
 		"update:tsconfig": "ts-node scripts/update-package-tsconfig.ts",
-		"update:version": "lerna version --no-push --no-changelog --no-git-tag-version"
+		"update:languages": "ts-node scripts/update-languages.ts"
 	},
 	"repository": {
 		"type": "git",
@@ -24,14 +27,16 @@
 	"keywords": [
 		"discord",
 		"discord-js",
-		"react",
+		"nuxt",
 		"nodejs",
 		"javascript",
 		"typescript",
 		"typeorm",
 		"rabbitmq",
 		"postgresql",
-		"nestjs-backend"
+		"nestjs-backend",
+		"prometheus",
+		"grafana"
 	],
 	"engines": {
 		"node": ">=12.0.0"
@@ -41,7 +46,6 @@
 		"name": "Alexey | someone#6191",
 		"url": "https://github.com/SocketSomeone"
 	},
-	"license": "MIT",
 	"bugs": {
 		"email": "socket.someone@gmail.com",
 		"url": "https://github.com/SocketSomeone/Miko/issues"
@@ -49,34 +53,46 @@
 	"homepage": "https://mikoapp.xyz/",
 	"config": {
 		"commitizen": {
-			"path": "./node_modules/cz-lerna-changelog"
+			"path": "cz-conventional-changelog"
 		}
 	},
 	"devDependencies": {
-		"@sentry/node": "6.2.3",
-		"@types/jest": "26.0.21",
+		"@crowdin/crowdin-api-client": "1.10.6",
+		"@types/amqplib": "0.5.17",
+		"@types/jest": "26.0.20",
+		"@types/moment": "2.13.0",
 		"@types/node": "14.14.35",
-		"@typescript-eslint/eslint-plugin": "4.19.0",
+		"@types/uuid": "8.3.0",
+		"@types/ws": "7.4.4",
+		"@typescript-eslint/eslint-plugin": "4.15.2",
 		"@typescript-eslint/parser": "4.19.0",
-		"cz-lerna-changelog": "2.0.3",
+		"cz-conventional-changelog": "3.3.0",
 		"eslint": "7.22.0",
 		"eslint-config-airbnb-base": "14.2.1",
 		"eslint-config-prettier": "8.1.0",
 		"eslint-plugin-import": "2.22.1",
 		"eslint-plugin-prettier": "3.3.1",
+		"extract-zip": "2.0.1",
+		"glob": "7.1.6",
 		"husky": "5",
 		"jest": "26.6.3",
-		"lerna": "3.22.1",
+		"mockdate": "3.0.4",
 		"prettier": "2.2.1",
+		"rimraf": "3.0.2",
 		"ts-jest": "26.5.4",
-		"rabbitmq-event-manager": "1.2.0",
 		"ts-node": "9.1.1",
-		"typescript": "4.2.3"
+		"tsconfig-paths": "3.9.0"
 	},
 	"dependencies": {
+		"@sentry/node": "6.4.1",
+		"@sentry/tracing": "6.4.1",
+		"amqplib": "0.8.0",
+		"discord.js": "12.5.3",
+		"moment": "2.29.1",
 		"reflect-metadata": "0.1.13",
 		"tslib": "2.1.0",
-		"tslog": "3.1.2",
-		"tsyringe": "4.5.0"
+		"tslog": "3.1.1",
+		"tsyringe": "4.5.0",
+		"uuid": "8.3.2"
 	}
 }

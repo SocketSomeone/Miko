@@ -1,0 +1,45 @@
+{
+	"compilerOptions": {
+		"target": "ES2018",
+		"module": "ESNext",
+		"moduleResolution": "Node",
+		"lib": [
+			"ESNext",
+			"ESNext.AsyncIterable",
+			"DOM"
+		],
+		"esModuleInterop": true,
+		"allowJs": true,
+		"sourceMap": true,
+		"strict": true,
+		"noEmit": true,
+		"experimentalDecorators": true,
+		"suppressImplicitAnyIndexErrors": true,
+		"resolveJsonModule": true,
+		"baseUrl": ".",
+		"paths": {
+			"~/*": [
+				"app/*"
+			],
+			"@/*": [
+				"app/*"
+			]
+		},
+		"types": [
+			"@types/node",
+			"@nuxt/types",
+			"@nuxtjs/axios",
+			"@nuxtjs/toast",
+			"@nuxtjs/moment",
+			"@nuxtjs/auth-next",
+			"@nuxtjs/sentry",
+			"@nuxtjs/vuetify",
+			"nuxt-i18n"
+		]
+	},
+	"exclude": [
+		"node_modules",
+		".nuxt",
+		"lib"
+	]
+}

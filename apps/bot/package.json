@@ -1,23 +1,16 @@
 {
 	"name": "@miko/bot",
-	"version": "1.5.0",
+	"version": "1.0.0",
 	"main": "./lib/index.js",
 	"types": "./lib/index.d.ts",
 	"scripts": {
 		"build": "tsc --build ./tsconfig.package.json",
 		"watch": "yarn run build --watch",
-		"start": "pm2 start ./application.yml",
-		"poststart": "pm2 logs"
+		"start": "node ./lib"
 	},
-	"dependencies": {
-		"discord.js": "12.5.1"
-	},
-	"devDependencies": {
-		"lexure": "0.17.0"
-	},
+	"devDependencies": {},
 	"peerDependencies": {
-		"@miko/cache": "*",
-		"@miko/common": "*",
-		"@miko/database": "*"
+		"@miko/config": "*",
+		"@miko/framework": "*"
 	}
 }

@@ -1,0 +1,110 @@
+{
+    "commands": {
+        "sidebar": {
+            "search": "Search commands",
+            "modules": {
+                "heading": "Modules"
+            }
+        }
+    },
+    "contributors": {
+        "developers": "Our kitty team!",
+        "patrons": "Patrons",
+        "start": {
+            "heading": "Make Miko better today!",
+            "button": {
+                "premium": "Buy Premium",
+                "jobs": "Work at Miko"
+            }
+        }
+    },
+    "footer": {
+        "infoBox": {
+            "heading": "Ready to use Miko?",
+            "paragraph": "Upgrade your Discord server today!",
+            "button": {
+                "invite": "Invite"
+            }
+        },
+        "links": {
+            "find": {
+                "heading": "Find us"
+            },
+            "product": {
+                "heading": "Product",
+                "invite": "Invite",
+                "support": "Support",
+                "commands": "Commands",
+                "contributors": "Contributors"
+            },
+            "support": {
+                "heading": "Support",
+                "translate": "Translate",
+                "premium": "Premium",
+                "jobs": "Jobs"
+            },
+            "policies": {
+                "heading": "Policies",
+                "cookies": "Cookies",
+                "tos": "Terms",
+                "privacy": "Privacy"
+            }
+        }
+    },
+    "header": {
+        "home": "Home",
+        "docs": "Documentation",
+        "commands": "Commands",
+        "invite": "Invite",
+        "support": "Support",
+        "contributors": "Contributors",
+        "login": "Login",
+        "menu": {
+            "premium": "Premium",
+            "servers": "My Servers",
+            "logout": "Logout"
+        }
+    },
+    "home": {
+        "introduction": {
+            "paragraph": "is simple, multipurpose bot that will help you with your server, which you can manage using the dashboard on our website.",
+            "button": {
+                "invite": "Invite",
+                "support": "Support"
+            }
+        },
+        "features": {
+            "heading": "You will love these features!",
+            "actions": {
+                "heading": "Actions",
+                "description": "If you want to nicely convey your emotions, I'm at your service"
+            },
+            "game": {
+                "heading": "Game",
+                "description": "Games, games, GAMES! My games will not let you get bored!"
+            },
+            "ranking": {
+                "heading": "Ranking",
+                "description": "The level system will help motivate the participants"
+            },
+            "moderation": {
+                "heading": "Moderation",
+                "description": "Together we will protect our sweet and cozy home"
+            },
+            "privates": {
+                "heading": "Temp Channels",
+                "description": "Cozy temp rooms, that provide privacy when needed"
+            },
+            "notifications": {
+                "heading": "Notifications",
+                "description": "Let me remind you about your friend's videos and streams"
+            }
+        },
+        "start": {
+            "heading": "Ready to become our kitten?",
+            "button": {
+                "invite": "ADD TO MY DISCORD SERVER"
+            }
+        }
+    }
+}

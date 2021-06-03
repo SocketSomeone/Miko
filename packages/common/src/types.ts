@@ -1,42 +1,24 @@
-import { Constructor } from '@miko/utils';
-import { Message, PermissionResolvable } from 'discord.js';
-import { Command, Resolver } from './framework';
+import type { Duration } from 'moment';
+import type { MetadataCache } from './models';
 
-export type ResolverOrConstructor<T> = Resolver<T> | Constructor<Resolver<T>>;
+export type AllowArray<T> = T | T[];
 
-export type GuardFunction = (message: Message) => boolean;
+export type Constructor<T extends Object = {}> = new (...args: unknown[]) => T;
 
-export interface ICommandArgument {
-	name: string;
-	resolver: Resolver<unknown>;
-	optional?: boolean;
+export type ObjectOfItems<T> = { [key: string]: T };
+
+export type Arguments<T> = [T] extends [(...args: infer U) => unknown] ? U : [T] extends [void] ? [] : [T];
+
+export type Awaited<T> = PromiseLike<T> | T;
+export interface ICacheOptions<K, V> {
+	maxSize?: number;
+	expireAfter?: Duration;
+	refreshAfter?: Duration;
+	cleanupInterval?: number;
+	refreshInterval?: number;
+	load?: (key: K) => Promise<V>;
 }
-
-export interface ICommandOptionsArgument {
-	name: string;
-	resolver: ResolverOrConstructor<unknown>;
-	optional?: boolean;
-}
-
-export interface ICommandOptions {
-	name: string;
-	group?: string;
-
-	arguments?: ICommandOptionsArgument[];
-	guards?: GuardFunction[];
-
-	clientPermissions?: PermissionResolvable[];
-	userPermissions?: PermissionResolvable[];
-
-	cooldown?: number;
-	ratelimit?: number;
-
-	typing?: boolean;
-}
-export interface IParsedCommandData {
-	afterPrefix?: string;
-	alias?: string;
-	command?: Command;
-	content?: string;
-	prefix?: string;
+export interface ICacheEntry<V> {
+	data: V;
+	meta: MetadataCache;
 }

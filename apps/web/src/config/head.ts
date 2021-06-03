@@ -17,7 +17,7 @@ export default {
 	],
 	meta: [
 		{ charset: 'utf-8' },
-		{ name: 'viewport', content: 'width=device-width, initial-scale=1' },
+		{ name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' },
 		{
 			hid: 'application-name',
 			name: 'application-name',
@@ -26,12 +26,12 @@ export default {
 		{
 			hid: 'author',
 			name: 'author',
-			content: 'https://mikoapp.xyz'
+			content: 'Miko'
 		},
 		{
 			hid: 'publisher',
 			name: 'publisher',
-			content: 'https://mikoapp.xyz'
+			content: 'Miko'
 		},
 		{
 			hid: 'theme-color',
@@ -76,6 +76,16 @@ export default {
 			hid: 'og:site_name',
 			property: 'og:site_name',
 			content: 'Miko'
+		},
+		{
+			hid: 'og:site',
+			property: 'og:site',
+			content: 'https://mikoapp.xyz'
+		},
+		{
+			hid: 'og:url',
+			property: 'og:url',
+			content: 'https://mikoapp.xyz'
 		},
 		{
 			hid: 'og:title',

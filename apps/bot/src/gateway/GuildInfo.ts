@@ -1,6 +1,7 @@
 import { injectable } from 'tsyringe';
 import { BaseQueueListner } from '@miko/framework';
 import type { IRabbitEvents, GuildInfoDTO } from '@miko/common';
+
 @injectable()
 export class GuildInfo extends BaseQueueListner<'GUILD_INFO'> {
 	public constructor() {

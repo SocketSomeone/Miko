@@ -60,7 +60,7 @@
 		"@crowdin/crowdin-api-client": "1.11.0",
 		"@types/jest": "26.0.23",
 		"@types/moment": "2.13.0",
-		"@types/node": "14.14.35",
+		"@types/node": "15.12.0",
 		"@types/uuid": "8.3.0",
 		"@types/ws": "7.4.4",
 		"@typescript-eslint/eslint-plugin": "4.26.0",

@@ -10,7 +10,7 @@
 			/>
 
 			<p class="animated fadeIn wait-p1s hero-text pt-2 px-1">
-				<strong><span class="text-highlight">Miko</span></strong
+				<strong><span class="text-highlight">test</span></strong
 				>&nbsp;{{ $t("home.introduction.paragraph") }}
 			</p>
 

@@ -1,3 +1,4 @@
+import type { Context } from '@nuxt/types';
 import { config } from '@miko/config';
 import { join } from 'path';
 
@@ -23,6 +24,10 @@ export default {
 	},
 
 	build: {
-		transpile: ['vue-i18n']
+		extend(config: any, ctx: Context): void {
+			if (ctx.isDev) {
+				config.devtool = 'inline-source-map';
+			}
+		}
 	}
 };

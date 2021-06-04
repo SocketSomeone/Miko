@@ -1,0 +1,39 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "[MIKO] Web",
+			"type": "node",
+			"request": "launch",
+			"protocol": "inspector",
+			"outputCapture": "std",
+			"restart": true,
+			"cwd": "${workspaceFolder}/apps/web",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"sourceMaps": false,
+			"runtimeExecutable": "npm",
+			"runtimeArgs": [
+				"run-script",
+				"start"
+			],
+			"env": {
+				"NODE_ENV": "development",
+				"DEBUG": "nuxt:*"
+			}
+		}
+	],
+	"compounds": [
+		{
+			"name": "[MIKO] Project",
+			"preLaunchTask": "npm: watch",
+			"configurations": [
+				"[MIKO] Web"
+			]
+		}
+	]
+}

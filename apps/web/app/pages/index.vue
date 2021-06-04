@@ -109,6 +109,10 @@ export default class extends Vue {
 			name: "ranking"
 		}
 	];
+
+	mounted() {
+		console.log(123);
+	}
 }
 </script>
 

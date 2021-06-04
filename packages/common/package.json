@@ -4,10 +4,16 @@
 	"main": "./lib/index.js",
 	"types": "./lib/index.d.ts",
 	"dependencies": {
-		"pg": "8.5.1",
-		"typeorm": "0.2.31"
+		"@sentry/node": "6.5.1",
+		"@sentry/tracing": "6.5.1",
+		"amqplib": "0.8.0",
+		"pg": "8.6.0",
+		"tslog": "3.2.0",
+		"typeorm": "0.2.33"
 	},
-	"devDependencies": {},
+	"devDependencies": {
+		"@types/amqplib": "0.5.17"
+	},
 	"peerDependencies": {
 		"@miko/config": "*"
 	},

@@ -9,18 +9,23 @@
 			"type": "node",
 			"request": "launch",
 			"protocol": "inspector",
-			"outputCapture": "std",
+			"console": "integratedTerminal",
 			"restart": true,
-			"cwd": "${workspaceFolder}/apps/web",
-			"skipFiles": [
-				"<node_internals>/**"
-			],
+			"program": "${workspaceFolder}/apps/web/lib",
+			"stopOnEntry": false,
 			"sourceMaps": false,
-			"runtimeExecutable": "npm",
-			"runtimeArgs": [
-				"run-script",
-				"start"
-			],
+			"env": {
+				"NODE_ENV": "development",
+				"DEBUG": "nuxt:*"
+			}
+		},
+		{
+			"name": "[MIKO] API",
+			"type": "node",
+			"request": "launch",
+			"protocol": "inspector",
+			"restart": true,
+			"program": "${workspaceFolder}/apps/api/lib",
 			"env": {
 				"NODE_ENV": "development",
 				"DEBUG": "nuxt:*"
@@ -32,7 +37,8 @@
 			"name": "[MIKO] Project",
 			"preLaunchTask": "npm: watch",
 			"configurations": [
-				"[MIKO] Web"
+				"[MIKO] Web",
+				"[MIKO] API"
 			]
 		}
 	]

@@ -21,13 +21,5 @@ export default {
 
 	router: {
 		middleware: ['auth']
-	},
-
-	build: {
-		extend(config: any, ctx: Context): void {
-			if (ctx.isDev) {
-				config.devtool = 'inline-source-map';
-			}
-		}
 	}
 };

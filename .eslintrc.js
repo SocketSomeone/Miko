@@ -44,7 +44,7 @@ module.exports = {
 		'@typescript-eslint/indent': ['error', 'tab'],
 		'@typescript-eslint/semi': ['error'],
 		'@typescript-eslint/consistent-type-imports': ['warn'],
-		'@typescript-eslint/no-inferrable-types': [true, 'ignore-params'],
+		'@typescript-eslint/no-inferrable-types': ['error', 'ignore-params'],
 		'import/extensions': [
 			'error',
 			'ignorePackages',

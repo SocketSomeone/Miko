@@ -1,7 +1,7 @@
 import moment, { duration } from 'moment';
 import MockDate from 'mockdate';
-import { LoadingCache } from '../src/cache';
-import type { ICacheOptions } from '../src/types';
+import { LoadingCache } from '../src';
+import type { ICacheOptions } from '../src';
 
 const defaultTestConfig: ICacheOptions<string, string> = {
 	refreshInterval: null,

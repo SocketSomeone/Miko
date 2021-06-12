@@ -5,13 +5,13 @@
 	"types": "./lib/index.d.ts",
 	"scripts": {
 		"build": "tsc --build ./tsconfig.package.json",
-		"watch": "yarn run build --watch",
-		"start": "node ./lib"
+		"watch": "nest start --watch",
+		"start": "nest start"
 	},
 	"dependencies": {},
 	"devDependencies": {},
 	"peerDependencies": {
-		"@miko/config": "*",
+		"@miko/common": "*",
 		"@miko/framework": "*"
 	}
 }

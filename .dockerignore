@@ -1,12 +1,15 @@
+.devcontainer
+
 .docker
 
 .git
 
 .github
 
+.vscode
+
 node_modules
 
 scripts
 
 test
-

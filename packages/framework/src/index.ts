@@ -1,5 +1,6 @@
-export * from './arguments';
 export * from './decorators';
-export * from './models';
+export * from './services';
+export * from './helpers';
 
-export * from './client';
+export * from './discord-client.provider';
+export * from './discord.module';

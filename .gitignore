@@ -9,6 +9,10 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+# Tests
+/coverage
+/.nyc_output
+
 # Runtime data
 pids
 *.pid
@@ -46,7 +50,8 @@ jspm_packages/
 
 # dotenv environment variables file
 .env
-*.env
+*.env.*
+!.env.pub
 
 # TypeScript cache
 *.tsbuildinfo
@@ -61,3 +66,19 @@ sw.*
 apps/*/lib
 packages/*/lib
 .nuxt
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json

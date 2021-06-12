@@ -4,10 +4,8 @@ import os from 'os';
 
 import extract from 'extract-zip';
 import { resolve } from 'path';
-import { Logger } from 'tslog';
 import { Translations } from '@crowdin/crowdin-api-client';
 import { glob } from 'glob';
-import { Config } from '@miko/config';
 
 const logger = new Logger({ name: 'Localization' });
 

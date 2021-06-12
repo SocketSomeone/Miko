@@ -5,9 +5,10 @@
 			"type": "npm",
 			"script": "watch",
 			"group": "build",
-			"problemMatcher": [],
+			"problemMatcher": "$tsc-watch",
 			"label": "npm: watch",
-			"detail": "yarn run typescript:watch"
+			"detail": "yarn run typescript:watch",
+			"isBackground": true
 		}
 	]
 }

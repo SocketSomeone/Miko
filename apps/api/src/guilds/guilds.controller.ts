@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { Token } from '../common/decorators';
-import type { GuildDTO } from './dto/guildDTO';
+import type { GuildDTO } from './dto/guild.dto';
 import { GuildsService } from './guilds.service';
 
 @Controller('/guilds')

@@ -4,19 +4,18 @@ on:
   push:
     branches:
       - main
-      - release/*
+      - "release/*"
     paths-ignore:
-      - '.dockerignore'
-      - '.github/**'
-      - '.vscode/**'
-      - '.gitignore'
-      - 'LICENSE'
-      - '**.md'
+      - ".dockerignore"
+      - ".github/**"
+      - ".vscode/**"
+      - ".gitignore"
+      - "LICENSE"
+      - "**.md"
   pull_request:
     branches:
       - main
-      - release/*
-      - develop
+      - "release/*"
 
 jobs:
   build:

@@ -12,18 +12,18 @@ export class GuildsService {
 		// const managedGuilds = await this.discordService.getManageableGuilds(token);
 
 		// return Promise.all(
-		// 	managedGuilds.map(async g => {
-		// 		const guild = await this.gatewayService.emit('GUILD_INFO', {
-		// 			guildId: g.id
-		// 		});
+		// managedGuilds.map(async g => {
+		// const guild = await this.gatewayService.emit('GUILD_INFO', {
+		// guildId: g.id
+		// });
 
-		// 		return new GuildDTO({
-		// 			id: g.id,
-		// 			name: g.name,
-		// 			icon: `${g.icon}${g.icon.startsWith('a_') ? '.gif' : '.png'}`,
-		// 			added: !!guild && !!guild.id
-		// 		});
-		// 	})
+		// return new GuildDTO({
+		// id: g.id,
+		// name: g.name,
+		// icon: `${g.icon}${g.icon.startsWith('a_') ? '.gif' : '.png'}`,
+		// added: !!guild && !!guild.id
+		// });
+		// })
 		// );
 	}
 }

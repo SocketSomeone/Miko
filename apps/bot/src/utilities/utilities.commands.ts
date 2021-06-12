@@ -7,6 +7,5 @@ export class UtilitiesCommands {
 	public constructor(private commandService: CommandService) {}
 
 	@Command('ping')
-	public async ping(context: CommandContext): Promise<void> {
-	}
+	public async ping(context: CommandContext): Promise<void> {}
 }

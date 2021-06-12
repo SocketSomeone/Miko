@@ -7,5 +7,6 @@ export class ModerationCommands {
 
 	@Command('ping')
 	public async ping(context: CommandContext): Promise<void> {
+		// NO-Op
 	}
 }

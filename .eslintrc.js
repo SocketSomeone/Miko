@@ -45,7 +45,7 @@ module.exports = {
 		'@typescript-eslint/semi': ['error'],
 		'@typescript-eslint/consistent-type-imports': ['warn'],
 		'@typescript-eslint/no-inferrable-types': ['error', {
-			'ignore-params': true
+			ignoreParameters: true
 		}],
 		'import/extensions': [
 			'error',

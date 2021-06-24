@@ -29,13 +29,6 @@
 		"update:languages": "ts-node scripts/update-languages.ts",
 		"prepare": "husky install"
 	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "lint-staged",
-			"commit-msg": "commitlint -c .commitlintrc.json -E HUSKY_GIT_PARAMS",
-			"pre-push": "lint-staged && yarn run test"
-		}
-	},
 	"lint-staged": {
 		"{apps,packages,scripts}/*/src/**/*.ts": [
 			"eslint --fix --ignore-path .gitignore {apps,packages,scripts}/*/src/**/*.ts"

@@ -14,9 +14,9 @@ const tempPath = os.tmpdir();
 const zipFilePath = resolve(tempPath, './translations.zip');
 const extractPath = resolve(tempPath, './translations');
 
-const { PROJECT_ID, TOKEN } = Config.crowdin;
+const PROJECT_ID = Number(process.env.PROJECT_ID);
 const API = new Translations({
-	token: TOKEN
+	token: process.env.TOKEN
 });
 
 const downloadTranslations = async () => {
@@ -72,7 +72,7 @@ const updateLanguages = async () => {
 	logger.log('Trying to download latest translation strings...');
 	await downloadTranslations();
 
-	logger.log('Translations dowloaded. Extracting...');
+	logger.log('Translations downloaded. Extracting...');
 	await extract(zipFilePath, { dir: extractPath });
 
 	logger.log('Extracted... Time to composing files and saving!');
@@ -86,4 +86,4 @@ const updateLanguages = async () => {
 	logger.log(`Languages updated!`);
 };
 
-updateLanguages();
+updateLanguages().catch(err => logger.error(err));

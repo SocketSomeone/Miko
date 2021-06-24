@@ -1,20 +1,8 @@
 {
 	"name": "miko-monorepo",
+	"license": "MIT",
 	"private": true,
 	"description": "Miko is simple, multipurpose bot that will help you with your server, which you can manage using the dashboard on our website.",
-	"keywords": [
-		"discord",
-		"discord-js",
-		"nuxt",
-		"nodejs",
-		"javascript",
-		"typescript",
-		"rabbitmq",
-		"postgresql",
-		"nestjs-backend",
-		"prometheus",
-		"grafana"
-	],
 	"homepage": "https://mikoapp.xyz/",
 	"bugs": {
 		"url": "https://github.com/SocketSomeone/Miko/issues",
@@ -24,7 +12,6 @@
 		"type": "git",
 		"url": "git+https://github.com/SocketSomeone/Miko.git"
 	},
-	"license": "MIT",
 	"author": {
 		"name": "Alexey | someone#6191",
 		"email": "socket.someone@gmail.com",
@@ -37,16 +24,21 @@
 	"scripts": {
 		"prebuild": "rimraf -rf ./{apps,packages}/*/{lib,*.tsbuildinfo}",
 		"build": "tsc --build ./typescript/tsconfig.project.json",
-		"test": "yarn run test:eslint && yarn run test:jest",
-		"test:jest": "jest --no-cache --config test/jest.config.json",
-		"test:eslint": "eslint --fix --ignore-path .gitignore {apps,packages,scripts}/*/src/**/*.ts",
+		"test": "jest --no-cache --config test/jest.config.json",
 		"update:tsconfig": "ts-node scripts/update-package-tsconfig.ts",
 		"update:languages": "ts-node scripts/update-languages.ts"
 	},
-	"config": {
-		"commitizen": {
-			"path": "cz-conventional-changelog"
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged",
+			"commit-msg": "commitlint -c .commitlintrc.json -E HUSKY_GIT_PARAMS",
+			"pre-push": "lint-staged && yarn run test"
 		}
+	},
+	"lint-staged": {
+		"{apps,packages,scripts}/*/src/**/*.{ts,json}": [
+			"eslint --fix --ignore-path .gitignore {apps,packages,scripts}/*/src/**/*.{ts,json}"
+		]
 	},
 	"dependencies": {
 		"@crowdin/crowdin-api-client": "1.11.0",
@@ -61,6 +53,8 @@
 		"rxjs": "^6.5.4"
 	},
 	"devDependencies": {
+		"@commitlint/cli": "12.1.4",
+		"@commitlint/config-angular": "12.1.4",
 		"@nestjs/cli": "^7.0.0",
 		"@nestjs/schematics": "^7.0.0",
 		"@nestjs/testing": "7.6.17",
@@ -72,7 +66,6 @@
 		"@types/ws": "7.4.4",
 		"@typescript-eslint/eslint-plugin": "4.26.0",
 		"@typescript-eslint/parser": "4.26.0",
-		"cz-conventional-changelog": "3.3.0",
 		"eslint": "7.27.0",
 		"eslint-config-airbnb-base": "14.2.1",
 		"eslint-config-prettier": "8.1.0",
@@ -80,6 +73,7 @@
 		"eslint-plugin-prettier": "3.3.1",
 		"husky": "6",
 		"jest": "26.6.3",
+		"lint-staged": "11.0.0",
 		"mockdate": "3.0.5",
 		"prettier": "2.3.0",
 		"rimraf": "3.0.2",

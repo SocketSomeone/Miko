@@ -14,8 +14,8 @@ let cache: LoadingCache<string, string> = new LoadingCache<string, string>(defau
 
 afterEach(() => cache.flush());
 
-test('[Cache] Saving', async () => {
-	expect(await cache.get('hello')).toBeNull();
+test('[Cache] Saving', () => {
+	expect(cache.get('hello')).resolves.toBeNull();
 
 	cache.set('hello', 'world');
 
@@ -24,7 +24,7 @@ test('[Cache] Saving', async () => {
 	expect(cache.size).toBe(1);
 });
 
-test('[Cache] Deleting', async () => {
+test('[Cache] Deleting', () => {
 	cache.set('hello', 'world');
 	cache.delete('hello');
 
@@ -37,7 +37,7 @@ test('[Cache] Deleting', async () => {
 	expect(cache.size).toBe(0);
 });
 
-test('[Cache] Evict by size', async () => {
+test('[Cache] Evict by size', () => {
 	cache.set('1', 'junk');
 	cache.set('2', 'junk');
 	cache.set('3', 'junk');
@@ -46,7 +46,7 @@ test('[Cache] Evict by size', async () => {
 	expect(cache.size).toBe(3);
 });
 
-test('[Cache] Evict by time', async () => {
+test('[Cache] Evict by time', () => {
 	cache.set('hello', 'world');
 
 	expect(cache.get('hello')).resolves.toBe('world');
@@ -56,7 +56,7 @@ test('[Cache] Evict by time', async () => {
 	expect(cache.get('hello')).resolves.toBeNull();
 });
 
-test('[Cache] Refreshing', async () => {
+test('[Cache] Refreshing', () => {
 	cache = new LoadingCache<string, string>({
 		...defaultTestConfig,
 		load: async () => {
@@ -64,9 +64,5 @@ test('[Cache] Refreshing', async () => {
 		}
 	});
 
-	cache.set('another', 'world');
-	await cache.refresh('another');
-
-	expect(cache.get('another')).resolves.toBe('Loaded');
-	expect(cache.size).toBe(1);
+	expect(cache.refresh('another')).resolves.toBe('Loaded');
 });

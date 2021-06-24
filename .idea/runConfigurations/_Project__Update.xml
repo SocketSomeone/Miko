@@ -1,0 +1,31 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="[Project] Update" type="js.build_tools.npm">
+    <package-json value="$PROJECT_DIR$/package.json" />
+    <command value="install" />
+    <node-interpreter value="project" />
+    <envs />
+    <method v="2">
+      <option name="NpmBeforeRunTask" enabled="true">
+        <package-json value="$PROJECT_DIR$/package.json" />
+        <command value="run" />
+        <scripts>
+          <script value="update:languages" />
+        </scripts>
+        <node-interpreter value="project" />
+        <envs>
+          <env name="PROJECT_ID" value="440630" />
+          <env name="TOKEN" value="ffd4b1d87ac1049aba9f356cc672acfeaac35c6b79bfb3ee6c6b801a7d63aae747341fe53ee8b1f2" />
+        </envs>
+      </option>
+      <option name="NpmBeforeRunTask" enabled="true">
+        <package-json value="$PROJECT_DIR$/package.json" />
+        <command value="run" />
+        <scripts>
+          <script value="update:tsconfig" />
+        </scripts>
+        <node-interpreter value="project" />
+        <envs />
+      </option>
+    </method>
+  </configuration>
+</component>

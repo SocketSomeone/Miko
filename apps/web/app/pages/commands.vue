@@ -1,7 +1,7 @@
 <template>
 	<v-container class="commands px-5">
 		<v-row justify="center">
-			<NavSidebar class="animated fadeIn">
+			<NavigationSidebar class="animated fadeIn">
 				<v-list-item-group>
 					<h3 class="primary--text pt-3">Search commands</h3>
 
@@ -28,7 +28,7 @@
 						</v-list-item-content>
 					</v-list-item>
 				</v-list-item-group>
-			</NavSidebar>
+			</NavigationSidebar>
 
 			<v-col cols="12" sm="7" md="8" lg="9" class="animated fadeIn">
 				<v-expansion-panels multiple accordion>

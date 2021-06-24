@@ -5,7 +5,7 @@
 				<v-toolbar-title class="primary--text nav-logo"> Miko </v-toolbar-title>
 			</nuxt-link>
 
-			<v-spacer />
+			<v-spacer/>
 
 			<ul class="header-nav hidden-sm-and-down">
 				<SafeLink
@@ -19,10 +19,10 @@
 
 			<v-spacer class="hidden-sm-and-down" />
 
-			<NavMenu />
+			<NavigationMenu />
 		</v-app-bar>
 
-		<NavBottom class="hidden-md-and-up" />
+		<NavigationBottom class="hidden-md-and-up" />
 	</div>
 </template>
 
@@ -33,7 +33,7 @@ import { Component, Vue } from "nuxt-property-decorator";
 	name: "Header"
 })
 export default class extends Vue {
-	links = [
+	private links = [
 		// {
 		// 	route: "https://docs.mikoapp.xyz/",
 		// 	string: "header.docs"

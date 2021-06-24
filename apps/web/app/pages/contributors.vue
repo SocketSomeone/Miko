@@ -50,6 +50,8 @@ import { Context } from "@nuxt/types";
 	}
 })
 export default class extends Vue {
+	public contributors = [];
+
 	async asyncData({ $axios }: Context) {
 		const contributors = await $axios.$get("/contributors");
 

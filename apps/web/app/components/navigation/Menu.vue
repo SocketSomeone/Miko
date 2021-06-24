@@ -25,7 +25,7 @@
 					class="animated fadeInRight d-flex align-center justify-center"
 				>
 					<v-list-item-avatar color="accent" size="28">
-						<img data-not-lazy :src="avatarUrl($auth.user)" />
+						<img data-not-lazy :src="avatarUrl($auth.user)"  alt=''/>
 					</v-list-item-avatar>
 
 					<v-list-item-content

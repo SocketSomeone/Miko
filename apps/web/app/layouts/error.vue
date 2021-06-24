@@ -2,7 +2,12 @@
 	<div class="page-container pattern">
 		<v-container class="error-container">
 			<v-row
-				class="flex-column-reverse flex-md-row justify-center align-center text-center"
+				class="
+					flex-column-reverse flex-md-row
+					justify-center
+					align-center
+					text-center
+				"
 			>
 				<v-col cols="12" md="6" lg="7">
 					<h1

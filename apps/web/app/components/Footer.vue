@@ -58,7 +58,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "nuxt-property-decorator";
+import { Component, Prop, Vue } from 'nuxt-property-decorator';
 
 import BodVote from "../assets/images/BodVote.svg";
 import TopVote from "../assets/images/TopVote.svg";

@@ -10,14 +10,14 @@
 			/>
 
 			<p class="animated fadeIn wait-p1s hero-text pt-2 px-1">
-				<strong><span class="text-highlight">test</span></strong
+				<strong><span class="text-highlight">Miko</span></strong
 				>&nbsp;{{ $t("home.introduction.paragraph") }}
 			</p>
 
 			<div
 				class="animated fadeIn wait-p2s group-btns flex-column flex-sm-row mb-5"
 			>
-				<v-btn large color="primary" :href="$config.inviteUrl">
+				<v-btn large color="primary" depressed :href="$config.inviteUrl">
 					<v-icon size="18" class="mr-3">mdi-discord</v-icon>
 					{{ $t("home.introduction.button.invite") }}
 				</v-btn>

@@ -22,7 +22,7 @@ import { UtilitiesModule } from './utilities/utilities.module';
 				status: 'online'
 			},
 			ws: {
-				compress: false,
+				compress: true,
 				intents: [
 					'DIRECT_MESSAGES',
 					'DIRECT_MESSAGE_REACTIONS',

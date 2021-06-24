@@ -13,15 +13,16 @@ export class SentryService extends Logger implements OnModuleInit {
 
 	public async onModuleInit(): Promise<void> {
 		const pkg = JSON.parse(readFileSync(join(process.cwd(), './package.json'), 'utf-8'));
-		const isDev = this.configService.get<string>('NODE_ENV') !== 'production';
+		const isDev = this.configService.get('NODE_ENV') !== 'production';
 
 		init({
-			dsn: this.configService.get<string>('SENTRY_DSN'),
+			dsn: this.configService.get('SENTRY_DSN'),
 			release: pkg.version,
 			environment: isDev ? 'development' : 'production',
 			debug: isDev,
 			initialScope: scope => {
 				scope.setTag('instance', pkg.name);
+				scope.setTag('node', this.configService.get('INSTANCE_NAME') || 'DEV');
 
 				return scope;
 			},

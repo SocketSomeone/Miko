@@ -1,6 +1,6 @@
 import type { DeleteResult, FindConditions } from 'typeorm';
 import { Repository } from 'typeorm';
-import type { BaseMemberEntity } from '../../models';
+import type { BaseMemberEntity } from '../../entities';
 
 export abstract class BaseMemberRepository<T extends BaseMemberEntity> extends Repository<T> {
 	public findByGuildIdAndUserId(guildId: string, userId: string): Promise<T> {

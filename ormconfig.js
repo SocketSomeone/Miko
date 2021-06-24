@@ -7,10 +7,10 @@ module.exports = {
 	database: process.env.DATABASE || 'miko-dev',
 	synchronize: process.env.NODE_ENV !== 'production',
 	logging: true,
-	entities: [`${__dirname}/packages/**/lib/database/models/*.entity.js`],
+	entities: [`${__dirname}/packages/**/lib/database/entities/*.entity.js`],
 	migrations: [`${__dirname}/packages/**/lib/migrations`],
 	cli: {
-		entitiesDir: 'src/database/entity',
+		entitiesDir: 'src/database/entities',
 		migrationsDir: 'src/migration'
 	}
 };

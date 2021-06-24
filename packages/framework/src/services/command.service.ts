@@ -6,9 +6,8 @@ import type { Constructor } from '@miko/common';
 import type { ICommandOptions } from '../interfaces';
 import type { CommandContext } from '../helpers';
 import type { BaseTypeReader } from '../readers/base/typereader.base';
-import { DiscordClientProvider } from '../discord-client.provider';
-import { BooleanTypeReader } from '../readers/boolean.typereader';
 import { MessageService } from './message.service';
+import { BooleanTypeReader } from '../readers';
 
 @Injectable()
 export class CommandService implements OnModuleInit {
@@ -24,23 +23,10 @@ export class CommandService implements OnModuleInit {
 		['“', '”']
 	]);
 
-	public constructor(
-		private client: DiscordClientProvider,
-		private messageService: MessageService,
-		private sentryService: SentryService
-	) {}
+	public constructor(private messageService: MessageService, private sentryService: SentryService) {}
 
 	public onModuleInit(): void {
 		this.addTypeReader(Boolean, BooleanTypeReader);
-	}
-
-	public addCommand(cmd: ICommandOptions): void {
-		if (this.commands.has(cmd.name)) {
-			this.logger.warn(`Command ${cmd.name} has duplicate, replacing...`);
-		}
-
-		this.commands.set(cmd.name, cmd);
-		this.logger.log(`Command ${cmd.name} added...`);
 	}
 
 	public addTypeReader(type: Function | string, Reader: Constructor<BaseTypeReader<unknown>>): void {
@@ -52,6 +38,15 @@ export class CommandService implements OnModuleInit {
 
 	private getTypeReader(type: Function | string): BaseTypeReader<unknown> {
 		return this.typeReaders.get(typeof type === 'function' ? type.name : type);
+	}
+
+	public addCommand(cmd: ICommandOptions): void {
+		if (this.commands.has(cmd.name)) {
+			this.logger.warn(`Command ${cmd.name} has duplicate, replacing...`);
+		}
+
+		this.commands.set(cmd.name, cmd);
+		this.logger.log(`Command ${cmd.name} added...`);
 	}
 
 	public async execute(context: CommandContext, argPos: number): Promise<void> {
@@ -74,7 +69,7 @@ export class CommandService implements OnModuleInit {
 		} catch (err) {
 			// NO-OP
 		} finally {
-			this.logger.log(`Command ${command.name} executed by ${context.user.username}`);
+			this.logger.log(this.getLogText(context, command));
 		}
 	}
 
@@ -110,5 +105,10 @@ export class CommandService implements OnModuleInit {
 		}
 
 		return args;
+	}
+
+	private getLogText(ctx: CommandContext, cmd: ICommandOptions): string {
+		// eslint-disable-next-line prettier/prettier
+		return `Executed ${cmd.name} for ${ctx.user.username} in ${ctx.guild ? `${ctx.guild.name}/${ctx.channel}` : ctx.channel.id}`;
 	}
 }

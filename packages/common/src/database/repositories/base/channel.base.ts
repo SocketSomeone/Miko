@@ -1,6 +1,6 @@
 import type { DeleteResult, FindConditions } from 'typeorm';
 import { Repository } from 'typeorm';
-import type { BaseChannelEntity } from '../../models';
+import type { BaseChannelEntity } from '../../entities';
 
 export abstract class BaseChannelRepository<T extends BaseChannelEntity> extends Repository<T> {
 	public findByChannelId(channelId: string): Promise<T> {

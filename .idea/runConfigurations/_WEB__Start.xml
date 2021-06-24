@@ -1,0 +1,25 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="[WEB] Start" type="js.build_tools.npm" singleton="false">
+    <package-json value="$PROJECT_DIR$/apps/web/package.json" />
+    <command value="run" />
+    <scripts>
+      <script value="start" />
+    </scripts>
+    <node-interpreter value="project" />
+    <envs>
+      <env name="NODE_ENV" value="development" />
+      <env name="SENTRY_DSN" value="https://0fa69e5b9d7a4b45bfddd8681d80a4ee@o423458.ingest.sentry.io/5353727" />
+    </envs>
+    <method v="2">
+      <option name="NpmBeforeRunTask" enabled="true">
+        <package-json value="$PROJECT_DIR$/apps/web/package.json" />
+        <command value="run" />
+        <scripts>
+          <script value="compile" />
+        </scripts>
+        <node-interpreter value="project" />
+        <envs />
+      </option>
+    </method>
+  </configuration>
+</component>

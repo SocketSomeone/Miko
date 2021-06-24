@@ -1,7 +1,7 @@
 import type { DeepPartial } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
-import { GuildConfig } from '../database/models';
+import { GuildConfig } from '../database/entities';
 import { CacheManager } from './cache-manager.service';
 import { DomainService } from './base';
 import { GuildConfigRepository } from '../database';

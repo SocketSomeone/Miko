@@ -30,6 +30,8 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # Dependency directories
 node_modules/
+apps/*/node_modules/
+packages/*/node_modules/
 jspm_packages/
 .github/husky/_
 
@@ -68,7 +70,6 @@ packages/*/lib
 .nuxt
 
 # IDEs and editors
-/.idea
 .project
 .classpath
 .c9/
@@ -76,9 +77,3 @@ packages/*/lib
 .settings/
 *.sublime-workspace
 
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json

@@ -1,6 +1,6 @@
 import type { DeepPartial } from 'typeorm';
 import type { Constructor } from '../../interfaces';
-import type { BaseGuildEntity } from '../../database/models';
+import type { BaseGuildEntity } from '../../database/entities';
 import type { BaseGuildRepository } from '../../database/repositories/base';
 import type { CacheManager } from '../cache-manager.service';
 

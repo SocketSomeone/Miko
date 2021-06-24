@@ -14,7 +14,7 @@
 		".+\\.d\\.ts"
 	],
 	"testMatch": [
-		"**/{apps,packages}/*/test/**/*.test.ts"
+		"**/{apps,packages}/*/test/**/*.spec.ts"
 	],
 	"moduleFileExtensions": [
 		"ts",

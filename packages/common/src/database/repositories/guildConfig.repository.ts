@@ -1,5 +1,5 @@
 import { EntityRepository } from 'typeorm';
-import { GuildConfig } from '../models';
+import { GuildConfig } from '../entities';
 import { BaseGuildRepository } from './base';
 
 @EntityRepository(GuildConfig)

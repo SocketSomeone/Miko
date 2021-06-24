@@ -15,6 +15,6 @@ export class CommandInfo implements ICommandOptions {
 	}
 
 	public async execute(ctx: CommandContext, content: string): Promise<void> {
-
+		// NO-OP
 	}
 }

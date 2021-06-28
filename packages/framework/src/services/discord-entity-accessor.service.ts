@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { GuildConfigService, SentryService } from '@miko/common';
 import type { GuildConfig } from '@miko/common';
-import type { Guild } from 'discord.js';
+import type { Guild, User } from 'discord.js';
 
 @Injectable()
 export class DiscordEntityAccessor {

@@ -4,7 +4,7 @@ import type { InstanceWrapper } from '@nestjs/core/injector/instance-wrapper';
 import { DiscoveryService, MetadataScanner, ModuleRef } from '@nestjs/core';
 import { getParamNames } from '@miko/common';
 import { DiscordMetadataAccessor } from './discord-metadata.accessor';
-import { EventType } from './enums/event-type.enum';
+import { EventType } from './enums';
 import { CommandService } from './services';
 import { DiscordClientProvider } from './discord-client.provider';
 import type { IEventOptions } from './interfaces/event-options.interface';

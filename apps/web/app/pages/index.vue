@@ -66,16 +66,18 @@
 				</v-btn>
 			</v-row>
 
-			<WaveDivider bottom />
+			<WaveDivider bottom/>
 		</div>
 	</v-layout>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
+import WaveDivider from '~/components/WaveDivider.vue';
 
 @Component({
 	name: "Home",
+	components: { WaveDivider },
 	auth: false,
 	head: {
 		title: "Home"

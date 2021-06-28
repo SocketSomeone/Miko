@@ -1,3 +1,5 @@
+import type { Context, NuxtConfig } from '@nuxt/types';
+
 export default {
 	cache: true,
 	ssr: true,
@@ -6,5 +8,8 @@ export default {
 		client: {
 			overlay: false
 		}
+	},
+	extend(config: any, { isClient }: Context) {
+		config.devtool = isClient ? 'eval-source-map' : 'inline-source-map';
 	}
 };

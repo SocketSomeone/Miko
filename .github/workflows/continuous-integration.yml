@@ -53,8 +53,6 @@ jobs:
           yarn
           yarn build
           yarn test --coverage
-        env:
-          CI: true
 
       - name: Coveralls
         uses: coverallsapp/github-action@master

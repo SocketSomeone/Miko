@@ -2,11 +2,20 @@ name: Sentry Deployment
 
 on:
   push:
+<<<<<<< HEAD
     branches:
       - main
 
 jobs:
   sentryDeploy:
+=======
+    branches: [main]
+    tags:
+      - '*'
+
+jobs:
+  deploy:
+>>>>>>> main
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -19,5 +28,8 @@ jobs:
           SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
         with:
+<<<<<<< HEAD
           tagName: ${{ github.sha }}
+=======
+>>>>>>> main
           environment: production

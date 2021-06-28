@@ -14,7 +14,6 @@ COPY apps/bot/package.json apps/bot/
 COPY apps/web/package.json apps/web/
 
 # Packages
-COPY packages/config/package.json packages/config/
 COPY packages/common/package.json packages/common/
 COPY packages/framework/package.json packages/framework/
 

@@ -1,22 +1,17 @@
-name: CI
+name: Continuous Integration
 
 on:
   push:
-    branches:
-      - main
-      - release/*
+    branches: [main, develop, "release/*"]
     paths-ignore:
-      - '.dockerignore'
-      - '.github/**'
-      - '.vscode/**'
-      - '.gitignore'
-      - 'LICENSE'
-      - '**.md'
+      - "**.md"
+      - ".github/**"
+      - ".vscode/**"
+      - .dockerignore
+      - .gitignore
+      - LICENSE
   pull_request:
-    branches:
-      - main
-      - release/*
-      - develop
+    branches: [main, develop, "release/*"]
 
 jobs:
   build:
@@ -57,6 +52,9 @@ jobs:
         run: |
           yarn
           yarn build
-          yarn test
-        env:
-          CI: true
+          yarn test --coverage
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}

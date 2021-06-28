@@ -1,57 +1,23 @@
-name: Continuous Integration
+name: Sentry Deployment
 
 on:
   push:
-    branches: [main, develop, "release/*"]
-    paths-ignore:
-      - "**.md"
-      - ".github/**"
-      - ".vscode/**"
-      - .dockerignore
-      - .gitignore
-      - LICENSE
-  pull_request:
-    branches: [main, develop, "release/*"]
+    branches: [main]
+    tags:
+      - '*'
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x]
-      fail-fast: true
-
     steps:
-      - uses: actions/checkout@v2.3.4
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2.1.5
+      - name: Create a Sentry release
+        uses: getsentry/action-release@v1
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
         with:
-          node-version: ${{ matrix.node-version }}
-          check-latest: true
-
-      - name: Get yarn cache directory path 🛠
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - name: Cache node_modules 📦
-        uses: actions/cache@v2
-        id: yarn-cache
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-      - name: Install yarn
-        run: |
-          npm -g i yarn
-      - name: npm install, build and test
-        run: |
-          yarn
-          yarn build
-          yarn test --coverage
-      - name: Coveralls
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          environment: production

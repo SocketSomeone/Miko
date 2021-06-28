@@ -2,8 +2,9 @@ name: Sentry Deployment
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+    tags:
+      - '!*'
 
 jobs:
   sentryDeploy:
@@ -19,4 +20,5 @@ jobs:
           SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
         with:
+          tagName: ${{ github.sha }}
           environment: production

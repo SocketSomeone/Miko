@@ -1,35 +1,57 @@
-name: Sentry Deployment
+name: Continuous Integration
 
 on:
   push:
-<<<<<<< HEAD
-    branches:
-      - main
+    branches: [main, develop, "release/*"]
+    paths-ignore:
+      - "**.md"
+      - ".github/**"
+      - ".vscode/**"
+      - .dockerignore
+      - .gitignore
+      - LICENSE
+  pull_request:
+    branches: [main, develop, "release/*"]
 
 jobs:
-  sentryDeploy:
-=======
-    branches: [main]
-    tags:
-      - '*'
-
-jobs:
-  deploy:
->>>>>>> main
+  build:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
 
-      - name: Create a Sentry release
-        uses: getsentry/action-release@v1
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
-          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x]
+      fail-fast: true
+
+    steps:
+      - uses: actions/checkout@v2.3.4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2.1.5
         with:
-<<<<<<< HEAD
-          tagName: ${{ github.sha }}
-=======
->>>>>>> main
-          environment: production
+          node-version: ${{ matrix.node-version }}
+          check-latest: true
+
+      - name: Get yarn cache directory path 🛠
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Cache node_modules 📦
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Install yarn
+        run: |
+          npm -g i yarn
+      - name: npm install, build and test
+        run: |
+          yarn
+          yarn build
+          yarn test --coverage
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}

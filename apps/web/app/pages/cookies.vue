@@ -99,7 +99,7 @@
 
 					<li>
 						<p>
-							Cookie assoiated with sites using CloudFlare, used to speed up
+							Cookie associated with sites using CloudFlare, used to speed up
 							page load times. According to CloudFlare it is used to override
 							any security restrictions based on the IP address the visitor is
 							coming from. It does not contain any user identification

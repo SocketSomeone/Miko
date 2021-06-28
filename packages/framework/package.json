@@ -3,15 +3,18 @@
 	"version": "1.0.0",
 	"main": "./lib/index.js",
 	"types": "./lib/index.d.ts",
-	"dependencies": {
-		"lexure": "0.17.0"
-	},
-	"devDependencies": {},
-	"peerDependencies": {
-		"@miko/common": "*",
-		"@miko/config": "*"
-	},
 	"scripts": {
 		"build": "tsc --build ./tsconfig.package.json"
+	},
+	"dependencies": {
+		"lexure": "0.17.0",
+		"moment": "2.29.1"
+	},
+	"devDependencies": {
+
+	},
+	"peerDependencies": {
+		"discord.js": "12.5.3",
+		"@miko/common": "*"
 	}
 }

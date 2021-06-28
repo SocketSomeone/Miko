@@ -1,58 +1,58 @@
 <template>
-	<div class="header-container">
-		<v-app-bar color="background" app absolute height="84" flat>
-			<nuxt-link class="animated fadeInLeft" to="/">
-				<v-toolbar-title class="primary--text nav-logo"> Miko </v-toolbar-title>
+	<div class='header-container'>
+		<v-app-bar color='background' app absolute height='84' flat>
+			<nuxt-link class='animated fadeInLeft' to='/'>
+				<v-toolbar-title class='primary--text nav-logo'> Miko</v-toolbar-title>
 			</nuxt-link>
 
 			<v-spacer />
 
-			<ul class="header-nav hidden-sm-and-down">
+			<ul class='header-nav hidden-sm-and-down'>
 				<SafeLink
 					:class="`animated fadeInDown ${i === 0 ? '' : `wait-p${i}s`}`"
-					v-for="(link, i) of links"
-					v-text="$t(link.string)"
-					:key="i"
-					:link="link.route"
+					v-for='(link, i) of links'
+					v-text='$t(link.string)'
+					:key='i'
+					:link='link.route'
 				/>
 			</ul>
 
-			<v-spacer class="hidden-sm-and-down" />
+			<v-spacer class='hidden-sm-and-down' />
 
-			<NavMenu />
+			<NavigationMenu />
 		</v-app-bar>
 
-		<NavBottom class="hidden-md-and-up" />
+		<NavigationBottom class='hidden-md-and-up' />
 	</div>
 </template>
 
-<script lang="ts">
-import { Component, Vue } from "nuxt-property-decorator";
+<script lang='ts'>
+import { Component, Vue } from 'nuxt-property-decorator';
 
 @Component({
-	name: "Header"
+	name: 'Header'
 })
 export default class extends Vue {
-	links = [
+	private links = [
 		// {
 		// 	route: "https://docs.mikoapp.xyz/",
 		// 	string: "header.docs"
 		// },
 		{
-			route: "/",
-			string: "header.home"
+			route: '/',
+			string: 'header.home'
 		},
 		{
-			route: "/commands",
-			string: "header.commands"
+			route: '/commands',
+			string: 'header.commands'
 		},
 		{
 			route: this.$config.inviteUrl,
-			string: "header.invite"
+			string: 'header.invite'
 		},
 		{
 			route: this.$config.supportUrl,
-			string: "header.support"
+			string: 'header.support'
 		},
 		// {
 		// 	route: "/status",
@@ -63,14 +63,14 @@ export default class extends Vue {
 		// 	string: "header.premium"
 		// },
 		{
-			route: "/contributors",
-			string: "header.contributors"
+			route: '/contributors',
+			string: 'header.contributors'
 		}
 	];
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 .nav-logo {
 	cursor: pointer;
 	text-transform: uppercase;

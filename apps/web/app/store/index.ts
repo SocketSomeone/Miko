@@ -1,3 +1,2 @@
-import { namespace } from 'nuxt-property-decorator';
-
-export const AuthStore = namespace('auth');
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */

@@ -15,9 +15,6 @@
 	],
 	"references": [
 		{
-			"path": "..\\..\\packages\\config\\tsconfig.package.json"
-		},
-		{
 			"path": "..\\..\\packages\\common\\tsconfig.package.json"
 		}
 	]

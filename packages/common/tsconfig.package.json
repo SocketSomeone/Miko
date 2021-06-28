@@ -13,9 +13,5 @@
 		"test",
 		"lib"
 	],
-	"references": [
-		{
-			"path": "..\\config\\tsconfig.package.json"
-		}
-	]
+	"references": []
 }

@@ -17,7 +17,7 @@
 			<div
 				class="animated fadeIn wait-p2s group-btns flex-column flex-sm-row mb-5"
 			>
-				<v-btn large color="primary" :href="$config.inviteUrl">
+				<v-btn large color="primary" depressed :href="$config.inviteUrl">
 					<v-icon size="18" class="mr-3">mdi-discord</v-icon>
 					{{ $t("home.introduction.button.invite") }}
 				</v-btn>
@@ -66,16 +66,18 @@
 				</v-btn>
 			</v-row>
 
-			<WaveDivider bottom />
+			<WaveDivider bottom/>
 		</div>
 	</v-layout>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
+import WaveDivider from '~/components/WaveDivider.vue';
 
 @Component({
 	name: "Home",
+	components: { WaveDivider },
 	auth: false,
 	head: {
 		title: "Home"
@@ -109,6 +111,10 @@ export default class extends Vue {
 			name: "ranking"
 		}
 	];
+
+	mounted() {
+		console.log(123);
+	}
 }
 </script>
 

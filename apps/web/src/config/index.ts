@@ -1,4 +1,3 @@
-import { config } from '@miko/config';
 import { join } from 'path';
 
 const rootDir = join(__dirname, '../..');
@@ -12,7 +11,7 @@ export default {
 
 	telemetry: false,
 
-	dev: config.isDev,
+	dev: process.env.NODE_ENV !== 'production',
 
 	css: ['~/assets/scss/root'],
 
@@ -20,9 +19,5 @@ export default {
 
 	router: {
 		middleware: ['auth']
-	},
-
-	build: {
-		transpile: ['vue-i18n']
 	}
 };

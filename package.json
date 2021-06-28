@@ -1,93 +1,86 @@
 {
-	"private": true,
-	"license": "MIT",
 	"name": "miko-monorepo",
+	"license": "MIT",
+	"private": true,
 	"description": "Miko is simple, multipurpose bot that will help you with your server, which you can manage using the dashboard on our website.",
-	"workspaces": [
-		"apps/*",
-		"packages/*"
-	],
-	"scripts": {
-		"build": "yarn run typescript:build",
-		"watch": "yarn run typescript:watch",
-		"clean": "yarn run typescript:clean",
-		"test": "yarn run test:eslint && yarn run test:jest",
-		"test:jest": "jest --no-cache --config test/jest.config.json",
-		"test:eslint": "eslint --fix --ignore-path .gitignore {apps,packages,scripts}/*/src/**/*.ts",
-		"typescript:build": "tsc --build ./typescript/tsconfig.project.json",
-		"typescript:watch": "yarn run typescript:build --watch",
-		"typescript:clean": "rimraf -rf ./{apps,packages}/*/{lib,*.tsbuildinfo}",
-		"update:tsconfig": "ts-node scripts/update-package-tsconfig.ts",
-		"update:languages": "ts-node scripts/update-languages.ts"
+	"homepage": "https://mikoapp.xyz/",
+	"bugs": {
+		"url": "https://github.com/SocketSomeone/Miko/issues",
+		"email": "socket.someone@gmail.com"
 	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/SocketSomeone/Miko.git"
 	},
-	"keywords": [
-		"discord",
-		"discord-js",
-		"nuxt",
-		"nodejs",
-		"javascript",
-		"typescript",
-		"typeorm",
-		"rabbitmq",
-		"postgresql",
-		"nestjs-backend",
-		"prometheus",
-		"grafana"
-	],
-	"engines": {
-		"node": ">=12.0.0"
-	},
 	"author": {
-		"email": "socket.someone@gmail.com",
 		"name": "Alexey | someone#6191",
+		"email": "socket.someone@gmail.com",
 		"url": "https://github.com/SocketSomeone"
 	},
-	"bugs": {
-		"email": "socket.someone@gmail.com",
-		"url": "https://github.com/SocketSomeone/Miko/issues"
+	"workspaces": [
+		"apps/*",
+		"packages/*"
+	],
+	"scripts": {
+		"prebuild": "rimraf -rf ./{apps,packages}/*/{lib,*.tsbuildinfo}",
+		"build": "tsc --build ./typescript/tsconfig.project.json",
+		"test": "jest --no-cache --config test/jest.config.json",
+		"update:tsconfig": "ts-node scripts/update-package-tsconfig.ts",
+		"update:languages": "ts-node scripts/update-languages.ts",
+		"prepare": "husky install .github/husky"
 	},
-	"homepage": "https://mikoapp.xyz/",
-	"config": {
-		"commitizen": {
-			"path": "cz-conventional-changelog"
-		}
+	"lint-staged": {
+		"{apps,packages,scripts}/*/src/**/*.ts": [
+			"eslint --fix --ignore-path .gitignore {apps,packages,scripts}/*/src/**/*.ts"
+		]
+	},
+	"dependencies": {
+		"@crowdin/crowdin-api-client": "1.11.0",
+		"@nestjs/common": "^7.0.0",
+		"@nestjs/config": "0.6.3",
+		"@nestjs/core": "^7.0.0",
+		"@nestjs/schedule": "0.4.3",
+		"@types/jest": "26.0.23",
+		"@types/supertest": "2.0.11",
+		"discord.js": "12.5.3",
+		"extract-zip": "2.0.1",
+		"glob": "7.1.7",
+		"jest": "27.0.5",
+		"moment": "2.29.1",
+		"reflect-metadata": "0.1.13",
+		"rxjs": "^6.5.4",
+		"supertest": "6.1.3",
+		"ts-jest": "27.0.3",
+		"tslib": "2.3.0"
 	},
 	"devDependencies": {
-		"@crowdin/crowdin-api-client": "1.11.0",
-		"@types/jest": "26.0.23",
+		"@commitlint/cli": "12.1.4",
+		"@commitlint/config-angular": "12.1.4",
+		"@nestjs/cli": "^7.0.0",
+		"@nestjs/schematics": "^7.0.0",
+		"@nestjs/testing": "7.6.17",
+		"@types/cron": "1.7.2",
+		"@types/i18n": "0.13.0",
 		"@types/moment": "2.13.0",
 		"@types/node": "14.14.35",
-		"@types/uuid": "8.3.0",
 		"@types/ws": "7.4.4",
 		"@typescript-eslint/eslint-plugin": "4.26.0",
 		"@typescript-eslint/parser": "4.26.0",
-		"cz-conventional-changelog": "3.3.0",
 		"eslint": "7.27.0",
 		"eslint-config-airbnb-base": "14.2.1",
 		"eslint-config-prettier": "8.1.0",
 		"eslint-plugin-import": "2.23.4",
 		"eslint-plugin-prettier": "3.3.1",
-		"extract-zip": "2.0.1",
-		"glob": "7.1.7",
-		"husky": "6",
-		"jest": "26.6.3",
+		"husky": "^6.0.0",
+		"lint-staged": "11.0.0",
 		"mockdate": "3.0.5",
 		"prettier": "2.3.0",
 		"rimraf": "3.0.2",
-		"ts-jest": "26.5.4",
+		"ts-loader": "8.3.0",
 		"ts-node": "9.1.1",
 		"tsconfig-paths": "3.9.0"
 	},
-	"dependencies": {
-		"discord.js": "12.5.3",
-		"moment": "2.29.1",
-		"reflect-metadata": "0.1.13",
-		"tslib": "2.1.0",
-		"tsyringe": "4.5.0",
-		"uuid": "8.3.2"
+	"engines": {
+		"node": ">=12.0.0"
 	}
 }

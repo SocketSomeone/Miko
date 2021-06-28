@@ -14,11 +14,12 @@
 		".+\\.d\\.ts"
 	],
 	"testMatch": [
-		"**/{apps,packages}/*/test/**/*.test.ts"
+		"**/{apps,packages}/*/test/**/*.spec.ts"
 	],
 	"moduleFileExtensions": [
 		"ts",
 		"tsx",
+		"json",
 		"js"
 	],
 	"setupFilesAfterEnv": [
@@ -27,6 +28,16 @@
 	"testEnvironment": "node",
 	"transform": {
 		"^.+\\.tsx?$": "ts-jest"
+	},
+	"roots": [
+		"<rootDir>/apps/",
+		"<rootDir>/packages/"
+	],
+	"moduleNameMapper": {
+		"@miko/common/(.*)": "<rootDir>/packages/common/src/$1",
+		"@miko/common": "<rootDir>/packages/common/src",
+		"@miko/framework/(.*)": "<rootDir>/packages/framework/src/$1",
+		"@miko/framework": "<rootDir>/packages/framework/src"
 	},
 	"verbose": true
 }

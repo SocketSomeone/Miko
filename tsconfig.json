@@ -5,9 +5,6 @@
 		"baseUrl": ".",
 		"composite": true,
 		"paths": {
-			"@miko/config": [
-				"packages/config/src"
-			],
 			"@miko/common": [
 				"packages/common/src"
 			],

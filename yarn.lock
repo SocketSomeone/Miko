@@ -6281,10 +6281,10 @@ fast-safe-stringify@2.0.7, fast-safe-stringify@^2.0.7:
   resolved "https://registry.yarnpkg.com/fast-safe-stringify/-/fast-safe-stringify-2.0.7.tgz#124aa885899261f68aedb42a7c080de9da608743"
   integrity sha512-Utm6CdzT+6xsDk2m8S6uL8VHxNwI6Jub+e9NYTcAms28T84pTa25GJQV9j0CY0N1rM8hK4x6grpF2BQf+2qwVA==
 
-fastify-compress@3.4.2:
-  version "3.4.2"
-  resolved "https://registry.yarnpkg.com/fastify-compress/-/fastify-compress-3.4.2.tgz#a2d1fed617114e9580ea8e9328f5a751241900b5"
-  integrity sha512-Vtia4OZlS6ZrFS3tMmaiOvPv3wKSAgvxz0ihuubxY31fAt67gmWosivyWh3MADgCu7pdziEODRwyZeNXHS41/Q==
+fastify-compress@3.6.0:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/fastify-compress/-/fastify-compress-3.6.0.tgz#07acff3a7fe375434945c090a39bd72f5616487a"
+  integrity sha512-K7GCSb8CMyhHKBhDcKzKQOpOj/5OUaaAEyBftBRDqoLdhgTsJr3syQ8Nk2u1TJDdqmx64bhAtj9Nr/BS3Ylueg==
   dependencies:
     encoding-negotiator "^2.0.1"
     fastify-plugin "^3.0.0"

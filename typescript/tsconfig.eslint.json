@@ -1,7 +1,9 @@
 {
 	"extends": "../tsconfig.json",
 	"include": [
-		"../**/*.ts"
+		"../**/*.ts",
+		"../.eslintrc.js",
+		"../**/ormconfig.js",
 	],
 	"exclude": [
 		// Disable build

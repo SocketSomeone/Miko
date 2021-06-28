@@ -1,1 +1,1 @@
-export * from './BaseService';
+export * from './domain-service.base';

@@ -1,7 +1,7 @@
 <template >
 	<v-container>
 		<v-row align="center">
-			<NavSidebar>
+			<NavigationSidebar>
 				<v-list-item-group class="mt-3">
 					<v-row d-flex align="center" class="primary--text title">
 						<v-avatar size="32" color="primary" class="mr-2"> </v-avatar>
@@ -22,7 +22,7 @@
 						</v-list-item-content>
 					</v-list-item> -->
 				</v-list-item-group>
-			</NavSidebar>
+			</NavigationSidebar>
 		</v-row>
 	</v-container>
 </template>

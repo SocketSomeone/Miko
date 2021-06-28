@@ -1,6 +1,6 @@
-import { AutoWired, GatewayService } from '@miko/common';
-import { Global, HttpModule, Module, OnModuleInit } from '@nestjs/common';
+import { Global, HttpModule, Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { DISCORD_URL } from './common/constants';
 import { DiscordAuth } from './common/guards';
 import { DiscordService } from './common/services/discord.service';
@@ -12,6 +12,10 @@ import { DiscordService } from './common/services/discord.service';
 			baseURL: DISCORD_URL,
 			timeout: 5000,
 			maxRedirects: 5
+		}),
+		ThrottlerModule.forRoot({
+			ttl: 60,
+			limit: 30
 		})
 	],
 	exports: [HttpModule, DiscordService],
@@ -20,6 +24,10 @@ import { DiscordService } from './common/services/discord.service';
 		{
 			provide: APP_GUARD,
 			useClass: DiscordAuth
+		},
+		{
+			provide: APP_GUARD,
+			useClass: ThrottlerGuard
 		}
 	]
 })

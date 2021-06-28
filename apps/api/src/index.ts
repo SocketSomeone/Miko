@@ -1,9 +1,8 @@
-import { createConnection } from '@miko/common';
 import { ValidationPipe, ClassSerializerInterceptor } from '@nestjs/common';
 import { NestFactory, Reflector } from '@nestjs/core';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import type { NestFastifyApplication } from '@nestjs/platform-fastify';
 import { FastifyAdapter } from '@nestjs/platform-fastify';
-import { Logger } from 'tslog';
 
 import helmet from 'fastify-helmet';
 import compression from 'fastify-compress';
@@ -11,8 +10,6 @@ import fastifyCookie from 'fastify-cookie';
 import fastifyCsrf from 'fastify-csrf';
 
 import { AppModule } from './app.module';
-
-const logger = new Logger({ name: 'BOOTSTRAP' });
 
 async function bootstrap() {
 	const app = await NestFactory.create<NestFastifyApplication>(
@@ -24,12 +21,21 @@ async function bootstrap() {
 	);
 
 	await Promise.all([
-		createConnection(String(process.env.NODE_ENV)).catch(err => logger.error(err)),
 		app.register(helmet),
 		app.register(compression),
 		app.register(fastifyCookie),
 		app.register(fastifyCsrf)
 	]);
+
+	const config = new DocumentBuilder()
+		.setTitle('Miko API')
+		.setDescription('Miko API description')
+		.setVersion('1.0')
+		.addTag('Miko')
+		.build();
+
+	const document = SwaggerModule.createDocument(app, config);
+	SwaggerModule.setup('api', app, document);
 
 	app.setGlobalPrefix('/api');
 	app.enableCors({ origin: true, credentials: true });
@@ -39,4 +45,4 @@ async function bootstrap() {
 	await app.listen(4000, '0.0.0.0');
 }
 
-bootstrap().catch(err => logger.error(err));
+bootstrap();

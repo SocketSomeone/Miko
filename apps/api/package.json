@@ -5,26 +5,22 @@
 	"types": "./lib/index.d.ts",
 	"scripts": {
 		"build": "tsc --build ./tsconfig.package.json",
-		"watch": "yarn run build --watch",
-		"start": "nest start --watch"
+		"watch": "nest start --watch",
+		"start": "nest start"
 	},
 	"dependencies": {
-		"@nestjs/common": "^7.0.0",
-		"@nestjs/core": "^7.0.0",
 		"@nestjs/platform-fastify": "7.6.15",
+		"@nestjs/swagger": "4.8.0",
+		"@nestjs/throttler": "1.1.4",
 		"class-transformer": "0.4.0",
 		"class-validator": "0.13.1",
 		"fastify-compress": "3.4.2",
 		"fastify-cookie": "5.3.1",
 		"fastify-csrf": "3.1.0",
 		"fastify-helmet": "5.3.1",
-		"rxjs": "^6.5.4"
+		"fastify-swagger": "4.7.0"
 	},
-	"devDependencies": {
-		"@nestjs/cli": "^7.0.0",
-		"@nestjs/schematics": "^7.0.0",
-		"@nestjs/testing": "^7.0.0"
-	},
+	"devDependencies": {},
 	"peerDependencies": {
 		"@miko/common": "*"
 	}

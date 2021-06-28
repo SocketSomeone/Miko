@@ -4,20 +4,19 @@ import os from 'os';
 
 import extract from 'extract-zip';
 import { resolve } from 'path';
-import { Logger } from 'tslog';
 import { Translations } from '@crowdin/crowdin-api-client';
 import { glob } from 'glob';
-import { Config } from '@miko/config';
+import { Logger } from '@nestjs/common';
 
-const logger = new Logger({ name: 'Localization' });
+const logger = new Logger('Localization');
 
 const tempPath = os.tmpdir();
 const zipFilePath = resolve(tempPath, './translations.zip');
 const extractPath = resolve(tempPath, './translations');
 
-const { PROJECT_ID, TOKEN } = Config.crowdin;
+const PROJECT_ID = Number(process.env.PROJECT_ID);
 const API = new Translations({
-	token: TOKEN
+	token: process.env.TOKEN
 });
 
 const downloadTranslations = async () => {
@@ -64,27 +63,27 @@ const composeJson = () => {
 				...getJson(languagePath, service)
 			});
 
-			logger.info(`Saved ${language.toUpperCase()} language of service ${service}!`);
+			logger.log(`Saved ${language.toUpperCase()} language of service ${service}!`);
 		}
 	}
 };
 
 const updateLanguages = async () => {
-	logger.info('Trying to download latest translation strings...');
+	logger.log('Trying to download latest translation strings...');
 	await downloadTranslations();
 
-	logger.info('Translations dowloaded. Extracting...');
+	logger.log('Translations downloaded. Extracting...');
 	await extract(zipFilePath, { dir: extractPath });
 
-	logger.info('Extracted... Time to composing files and saving!');
+	logger.log('Extracted... Time to composing files and saving!');
 	composeJson();
 
-	logger.info(`Ok, all saved, time to flush temp!`);
+	logger.log(`Ok, all saved, time to flush temp!`);
 	[zipFilePath, extractPath].forEach(path =>
 		fs.statSync(path).isDirectory() ? fs.rmdirSync(path, { recursive: true }) : fs.unlinkSync(path)
 	);
 
-	logger.info(`Languages updated!`);
+	logger.log(`Languages updated!`);
 };
 
-updateLanguages();
+updateLanguages().catch(err => logger.error(err));

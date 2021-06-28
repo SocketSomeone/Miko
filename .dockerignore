@@ -4,9 +4,10 @@
 
 .github
 
+.vscode
+
 node_modules
 
 scripts
 
 test
-

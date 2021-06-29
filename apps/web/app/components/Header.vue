@@ -19,18 +19,21 @@
 
 			<v-spacer class='hidden-sm-and-down' />
 
-			<NavigationMenu />
+			<nav-menu />
 		</v-app-bar>
 
-		<NavigationBottom class='hidden-md-and-up' />
+		<nav-bottom class='hidden-md-and-up' />
 	</div>
 </template>
 
 <script lang='ts'>
 import { Component, Vue } from 'nuxt-property-decorator';
+import NavMenu from '~/components/navigation/Menu.vue';
+import NavBottom from '~/components/navigation/Bottom.vue';
 
 @Component({
-	name: 'Header'
+	name: 'Header',
+	components: { NavBottom, NavMenu }
 })
 export default class extends Vue {
 	private links = [

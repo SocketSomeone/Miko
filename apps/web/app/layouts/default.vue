@@ -10,11 +10,14 @@
 	</v-app>
 </template>
 
-<script lang="ts">
-import { Component, Vue } from "nuxt-property-decorator";
+<script lang='ts'>
+import { Component, Vue } from 'nuxt-property-decorator';
+import Footer from '~/components/Footer.vue';
 
 @Component({
-	name: "Default"
+	name: 'Default',
+	components: { Footer }
 })
-export default class extends Vue {}
+export default class extends Vue {
+}
 </script>

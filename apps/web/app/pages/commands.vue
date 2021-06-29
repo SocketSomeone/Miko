@@ -32,9 +32,7 @@
 
 			<v-col cols="12" sm="7" md="8" lg="9" class="animated fadeIn">
 				<v-expansion-panels multiple accordion>
-					<v-fade-transition v-for="n in commands" :key="n">
-						<Command v-if="showCommand(n)" />
-					</v-fade-transition>
+					<Command v-for="(n, i) in commands" :key='n' v-if="showCommand(n)" />
 				</v-expansion-panels>
 			</v-col>
 		</v-row>
@@ -43,9 +41,11 @@
 
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
+import Command from '~/components/Command.vue';
 
 @Component({
 	name: "Commands",
+	components: { Command },
 	auth: false,
 	head: {
 		title: "Commands"

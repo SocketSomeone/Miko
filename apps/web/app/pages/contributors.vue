@@ -9,23 +9,14 @@
 
 				<v-slide-group center-active show-arrows>
 
-					<Contributor
-						:class="{ 'mx-auto': contributors.length <= 3 }"
-						v-for='(c, i) in contributors'
-						:contributor='c'
-						:key='i'
-					/>
-				</v-slide-group>
-			</v-container>
-
+				</v-slide-group></v-container>
 			<WaveDivider bottom />
 		</div>
 
 		<v-row class='help-container mt-5 mx-auto'>
 			<h1 class='section-header' v-text="$t('contributors.start.heading')"></h1>
 
-			<div class='group-btns flex-column flex-sm-row'>
-				<v-btn color='primary' link to='premium'>
+			<div class='group-btns flex-column flex-sm-row'><v-btn color='primary' link to='premium'>
 					<v-icon class='mr-2'>mdi-fire</v-icon>
 					{{ $t('contributors.start.button.premium') }}
 				</v-btn>

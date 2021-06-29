@@ -12,12 +12,12 @@
 							{{ $t("footer.infoBox.button.invite") }}
 						</v-btn>
 
-						<LanguageSwitcher class="hidden-lg-and-up" />
+						<language-switcher class="hidden-lg-and-up" />
 					</div>
 				</v-col>
 
 				<v-col class="hidden-md-and-down" lg="2">
-					<LanguageSwitcher />
+					<language-switcher/>
 				</v-col>
 
 				<v-col
@@ -63,10 +63,11 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator';
 import BodVote from "../assets/images/BodVote.svg";
 import TopVote from "../assets/images/TopVote.svg";
 import BotsVote from "../assets/images/BotsVote.svg";
+import LanguageSwitcher from '~/components/LanguageSwitcher.vue';
 
 @Component({
 	name: "Footer",
-	components: { BodVote, TopVote, BotsVote }
+	components: { LanguageSwitcher, BodVote, TopVote, BotsVote }
 })
 export default class extends Vue {
 	links = [

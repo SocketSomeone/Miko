@@ -17,18 +17,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x]
-      fail-fast: true
-
     steps:
       - uses: actions/checkout@v2.3.4
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js 14
         uses: actions/setup-node@v2.1.5
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 14
           check-latest: true
 
       - name: Get yarn cache directory path 🛠
@@ -52,21 +47,9 @@ jobs:
         run: |
           yarn
           yarn build
-          yarn test --coverage
+          yarn test --verbose --noStackTrace
 
-      - name: Coveralls
-        uses: coverallsapp/github-action@master
+      - name: Codecov
+        uses: codecov/codecov-action@v1
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          flag-name: run-${{ matrix.node-version }}
-          parallel: true
-
-  finish:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Coveralls Finished
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          parallel-finished: true
+            token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos

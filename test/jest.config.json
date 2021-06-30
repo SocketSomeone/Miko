@@ -2,42 +2,22 @@
 	"preset": "ts-jest",
 	"name": "miko-monorepo",
 	"rootDir": "../",
+	"testEnvironment": "node",
+	"testMatch": [
+		"**/{apps,packages}/*/test/**/*.spec.ts"
+	],
 	"clearMocks": true,
-	"coverageDirectory": "coverage",
+	"collectCoverage": true,
 	"collectCoverageFrom": [
 		"{apps,packages}/*/src/**/*.ts"
 	],
+	"coverageDirectory": "coverage",
 	"coveragePathIgnorePatterns": [
 		"/node_modules/",
 		"types\\.ts",
 		"index\\.ts",
 		".+\\.d\\.ts"
 	],
-	"testMatch": [
-		"**/{apps,packages}/*/test/**/*.spec.ts"
-	],
-	"moduleFileExtensions": [
-		"ts",
-		"tsx",
-		"json",
-		"js"
-	],
-	"setupFilesAfterEnv": [
-		"<rootDir>/test/jest.setup.ts"
-	],
-	"testEnvironment": "node",
-	"transform": {
-		"^.+\\.tsx?$": "ts-jest"
-	},
-	"roots": [
-		"<rootDir>/apps/",
-		"<rootDir>/packages/"
-	],
-	"moduleNameMapper": {
-		"@miko/common/(.*)": "<rootDir>/packages/common/src/$1",
-		"@miko/common": "<rootDir>/packages/common/src",
-		"@miko/framework/(.*)": "<rootDir>/packages/framework/src/$1",
-		"@miko/framework": "<rootDir>/packages/framework/src"
-	},
+	"setupFilesAfterEnv": ["<rootDir>/test/jest.setup.ts"],
 	"verbose": true
 }

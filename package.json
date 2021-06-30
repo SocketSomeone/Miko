@@ -24,7 +24,7 @@
 	"scripts": {
 		"prebuild": "rimraf -rf ./{apps,packages}/*/{lib,*.tsbuildinfo}",
 		"build": "tsc --build ./typescript/tsconfig.project.json",
-		"test": "jest --no-cache --config test/jest.config.json --collect-coverage",
+		"test": "jest --no-cache --config test/jest.config.json",
 		"update:tsconfig": "ts-node scripts/update-package-tsconfig.ts",
 		"update:languages": "ts-node scripts/update-languages.ts",
 		"prepare": "husky install .github/husky"

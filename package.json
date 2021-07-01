@@ -1,26 +1,12 @@
 {
 	"name": "miko-monorepo",
-	"license": "MIT",
 	"private": true,
-	"description": "Miko is simple, multipurpose bot that will help you with your server, which you can manage using the dashboard on our website.",
-	"homepage": "https://mikoapp.xyz/",
-	"bugs": {
-		"url": "https://github.com/SocketSomeone/Miko/issues",
-		"email": "socket.someone@gmail.com"
+	"license": "Apache-2.0",
+	"lint-staged": {
+		"{apps,packages,scripts}/*/src/**/*.ts": [
+			"eslint --fix --ignore-path .gitignore {apps,packages,scripts}/*/src/**/*.ts"
+		]
 	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/SocketSomeone/Miko.git"
-	},
-	"author": {
-		"name": "Alexey | someone#6191",
-		"email": "socket.someone@gmail.com",
-		"url": "https://github.com/SocketSomeone"
-	},
-	"workspaces": [
-		"apps/*",
-		"packages/*"
-	],
 	"scripts": {
 		"prebuild": "rimraf -rf ./{apps,packages}/*/{lib,*.tsbuildinfo}",
 		"build": "tsc --build ./typescript/tsconfig.project.json",
@@ -28,11 +14,6 @@
 		"update:tsconfig": "ts-node scripts/update-package-tsconfig.ts",
 		"update:languages": "ts-node scripts/update-languages.ts",
 		"prepare": "husky install .github/husky"
-	},
-	"lint-staged": {
-		"{apps,packages,scripts}/*/src/**/*.ts": [
-			"eslint --fix --ignore-path .gitignore {apps,packages,scripts}/*/src/**/*.ts"
-		]
 	},
 	"dependencies": {
 		"@crowdin/crowdin-api-client": "1.11.0",
@@ -82,5 +63,9 @@
 	},
 	"engines": {
 		"node": ">=12.0.0"
-	}
+	},
+	"workspaces": [
+		"apps/*",
+		"packages/*"
+	]
 }

@@ -4,7 +4,7 @@
 	"rootDir": "../",
 	"testEnvironment": "node",
 	"testMatch": [
-		"**/{apps,packages}/*/test/**/*.spec.ts"
+		"**/{apps,packages}/*/test/**/*.(spec|test).ts"
 	],
 	"clearMocks": true,
 	"collectCoverage": true,

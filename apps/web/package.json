@@ -19,7 +19,7 @@
 		"core-js": "^3.9.1",
 		"nuxt": "2.15.6",
 		"nuxt-i18n": "6.27.0",
-		"nuxt-lazy-load": "1.2.5",
+		"nuxt-lazy-load": "1.2.8",
 		"nuxt-property-decorator": "2.9.1"
 	},
 	"devDependencies": {

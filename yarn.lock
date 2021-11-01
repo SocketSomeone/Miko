@@ -9617,10 +9617,10 @@ nuxt-i18n@6.27.0:
     ufo "^0.7.2"
     vue-i18n "^8.24.4"
 
-nuxt-lazy-load@1.2.5:
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/nuxt-lazy-load/-/nuxt-lazy-load-1.2.5.tgz#f232fbdba1bccd14026b19cd6a4ef13d32d1e9c7"
-  integrity sha512-WgfJxLPYkPrYbo78VPLf9XwIFhuHmNBaiA/qyHA2r2K7gri34sNxrDxdPjU3hvSpGlypsuBlV7Uf9P/3uvy6xA==
+nuxt-lazy-load@1.2.9:
+  version "1.2.9"
+  resolved "https://registry.yarnpkg.com/nuxt-lazy-load/-/nuxt-lazy-load-1.2.9.tgz#cad74b0efbb106545d39c84c2277bc18841226aa"
+  integrity sha512-TB9k4s9d/M1k3hLasBQChkHFTSDlkov2AQNcE1d6vFuLuy4cjvVnoVO8VRHaVtIKPETbwmsDyc+mmi87LJZ7pg==
   dependencies:
     intersection-observer "^0.7.0"
     string-replace-loader "^2.1.1"

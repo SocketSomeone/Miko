@@ -9,7 +9,7 @@
 		"start": "nest start"
 	},
 	"dependencies": {
-		"@nestjs/platform-fastify": "7.6.15",
+		"@nestjs/platform-fastify": "8.2.0",
 		"@nestjs/swagger": "4.8.0",
 		"@nestjs/throttler": "1.1.4",
 		"class-transformer": "0.4.0",
